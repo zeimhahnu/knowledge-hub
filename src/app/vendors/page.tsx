@@ -14,6 +14,7 @@ import {
   TrendingUpIcon,
   FileTextIcon,
   NetworkIcon,
+  XIcon,
 } from "lucide-react";
 
 // ─── Glossary with tooltips ─────────────────────────────────────────────────
@@ -777,20 +778,58 @@ export default function VendorDashboard() {
       </header>
 
       {/* Glossary Panel */}
+
+      {/* ─── Floating Glossary FAB ─── */}
+      <button
+        onClick={() => setShowGlossary(!showGlossary)}
+        aria-label="Glossary"
+        className={`fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full shadow-lg transition-all hover:scale-105 active:scale-95 sm:bottom-8 sm:right-8 ${
+          showGlossary
+            ? "bg-amber-500 text-black"
+            : "bg-primary text-primary-foreground hover:bg-primary/90"
+        }`}
+      >
+        <BookOpenIcon className="h-5 w-5" />
+      </button>
+
+      {/* ─── Floating Glossary Popup ─── */}
       <AnimatePresence>
         {showGlossary && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="overflow-hidden border-b border-border"
-          >
-            <div className="mx-auto max-w-7xl px-6 py-6">
-              <div className="mb-4 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                All Glossary Terms — hover any highlighted term in the matrix to see its definition
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowGlossary(false)}
+              className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm sm:hidden"
+              aria-hidden="true"
+            />
+            {/* Panel */}
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              className="fixed bottom-20 right-4 z-50 w-[calc(100vw-2rem)] rounded-2xl border border-border bg-background shadow-2xl sm:bottom-8 sm:right-8 sm:w-96"
+            >
+              {/* Drag handle for mobile visual cue */}
+              <div className="mt-3 mb-1 flex justify-center">
+                <div className="h-1 w-8 rounded-full bg-border" />
               </div>
-              <div className="grid max-h-[50vh] grid-cols-1 xs:grid-cols-2 gap-3 overflow-y-auto sm:grid-cols-3 lg:grid-cols-4">
+              <div className="flex items-center justify-between px-4 pb-3">
+                <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                  Glossary
+                </div>
+                <button
+                  onClick={() => setShowGlossary(false)}
+                  className="rounded-lg border border-border p-1.5 text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
+                  aria-label="Close glossary"
+                >
+                  <XIcon className="h-4 w-4" />
+                </button>
+              </div>
+              <div className="max-h-[60vh] space-y-2 overflow-y-auto px-4 pb-4">
                 {GLOSSARY.map((g) => (
                   <div key={g.term} className="rounded-xl border border-border bg-card p-3">
                     <div className="mb-1 text-xs font-bold text-amber-400">{g.term}</div>
@@ -803,17 +842,18 @@ export default function VendorDashboard() {
                   </div>
                 ))}
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+          {/* ─── Page Content ─── */}
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6">
+            <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
 
-          {/* Left Sidebar */}
-          <aside className="w-full lg:w-52 shrink-0 order-2 lg:order-1">
-            <div className="lg:sticky lg:top-20">
+              {/* Left Sidebar */}
+              <aside className="w-full lg:w-52 shrink-0 order-2 lg:order-1">
+                <div className="lg:sticky lg:top-20">
               <div className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                 Event Taxonomy
               </div>
