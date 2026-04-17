@@ -1,101 +1,387 @@
 "use client";
-
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import {
+  ArrowLeftIcon,
   ArrowRightIcon,
   BookOpenIcon,
-  CheckCircleIcon,
-  CircleDotIcon,
+  ChevronDownIcon,
   CompassIcon,
+  ClockIcon,
+  FileTextIcon,
+  GlobeIcon,
+  HelpCircleIcon,
   LightbulbIcon,
-  MinusIcon,
-  SearchIcon,
-  TrendingUpIcon,
-  XCircleIcon,
+  NetworkIcon,
   ZapIcon,
 } from "lucide-react";
 
-// ─── Real example: Spin-Off differential ───────────────────────────────────
 
-type DiffOutcome = {
-  vendor: string;
-  result: string;
-  reason: string;
-  status: "showed" | "missed" | "pending";
+// ─── Coverage Data (T-5 for all vendors) ───────────────────────────────────
+
+const COVERAGE: Record<string, { coverage: string; asOf: string; coversUntil: string; note: string }> = {
+  MSCI: {
+    coverage: "T-5",
+    asOf: "16 Apr 2026 (close)",
+    coversUntil: "23 Apr 2026",
+    note: "End-of-day snapshot, 5 business day forward coverage",
+  },
+  "S&P DJI": {
+    coverage: "T-5",
+    asOf: "16 Apr 2026 (close)",
+    coversUntil: "23 Apr 2026",
+    note: "Includes preliminary constituent projections",
+  },
+  "FTSE Russell": {
+    coverage: "T-5",
+    asOf: "16 Apr 2026 (close)",
+    coversUntil: "23 Apr 2026",
+    note: "Open projection data updated daily",
+  },
+  STOXX: {
+    coverage: "T-5",
+    asOf: "16 Apr 2026 (close)",
+    coversUntil: "23 Apr 2026",
+    note: "Announced changes effective within 5 business days",
+  },
+  Solactive: {
+    coverage: "T-5",
+    asOf: "16 Apr 2026 (close)",
+    coversUntil: "23 Apr 2026",
+    note: "GPR Global 100: semi-annual rebalance (next: Jun 2026)",
+  },
+  Morningstar: {
+    coverage: "T-5",
+    asOf: "16 Apr 2026 (close)",
+    coversUntil: "23 Apr 2026",
+    note: "Global Index: daily updates; 40-day grace period on spin-offs",
+  },
+  VettaFi: {
+    coverage: "T-5",
+    asOf: "16 Apr 2026 (close)",
+    coversUntil: "23 Apr 2026",
+    note: "ETF-focused benchmarks",
+  },
 };
 
-type DiffStep = {
+// ─── Decision Tree Types ─────────────────────────────────────────────────────
+
+type Option = {
+  label: string;
+  sub: string;
+  color: string;
+  scenarios?: string[];
+};
+
+type Step = {
+  step: number;
   question: string;
-  explanation: string;
-  outcomes: DiffOutcome[];
+  hint: string;
+  options: Option[];
 };
 
-const SPINOFF_DIFF: DiffStep[] = [
-  {
-    question: "Is Company B eligible for the index?",
-    explanation:
-      "Before any vendor reacts, the spin-off company must qualify for index inclusion. If Company B fails size, liquidity, domicile, or sector criteria — it won't be added by any vendor, regardless of spin-off treatment.",
-    outcomes: [
-      { vendor: "MSCI", result: "Added if eligible", reason: "Uses when-issued price when available", status: "pending" },
-      { vendor: "S&P DJI", result: "Added if eligible", reason: "Zero price placeholder, 20-day grace", status: "pending" },
-      { vendor: "FTSE Russell", result: "Added if eligible", reason: "Estimated price, 20 business days grace", status: "pending" },
-      { vendor: "Solactive", result: "Added if eligible", reason: "Per methodology — semi-annual rebalance window", status: "pending" },
-      { vendor: "Morningstar", result: "Added — PLACEHOLDER ACTIVE", reason: "Zero price placeholder, 40-day grace period — showing in projections now", status: "showed" },
-    ],
-  },
-  {
-    question: "Has the spin-off been formally announced and confirmed?",
-    explanation:
-      "Vendors only react to confirmed events. A rumour or unconfirmed report doesn't trigger adjustment. The key date is when terms are formally announced. If MSTAR received the announcement earlier than FTSE or Solactive — that alone explains the projection gap.",
-    outcomes: [
-      { vendor: "MSCI", result: "Confirmed", reason: "Applied on effective or ex-date", status: "pending" },
-      { vendor: "S&P DJI", result: "Confirmed", reason: "Applied on effective date", status: "pending" },
-      { vendor: "FTSE Russell", result: "Pending confirmation", reason: "May not have received or processed the announcement yet", status: "missed" },
-      { vendor: "Solactive", result: "Pending confirmation", reason: "Semi-annual schedule — announcement may not have reached them yet", status: "missed" },
-      { vendor: "Morningstar", result: "Confirmed — ACTIVE", reason: "Data feed has processed and published the confirmed event", status: "showed" },
-    ],
-  },
-  {
-    question: "Does it exceed each vendor's recognition threshold?",
-    explanation:
-      "Even confirmed events can be deferred if below materiality thresholds. MSTAR's 40-day grace period with zero placeholder means it publishes to projection feeds immediately. FTSE and Solactive may be processing the same confirmed event but haven't yet published it to their projection outputs.",
-    outcomes: [
-      { vendor: "MSCI", result: "Above threshold", reason: "Eligible — but child treated as detached until distribution date", status: "pending" },
-      { vendor: "S&P DJI", result: "Above threshold", reason: "Grace period active — below radar until 20 days", status: "pending" },
-      { vendor: "FTSE Russell", result: "Pending", reason: "May be awaiting confirmed spin-off terms before publishing", status: "missed" },
-      { vendor: "Solactive", result: "Semi-annual only", reason: "GPR Global 100 is semi-annual — event falls between rebalance windows", status: "missed" },
-      { vendor: "Morningstar", result: "Confirmed — PUBLISHED", reason: "Zero-price placeholder now active in projection data", status: "showed" },
-    ],
-  },
-];
+// ─── Vendor Coverage Cards ───────────────────────────────────────────────────
 
-// ─── Status badge ────────────────────────────────────────────────────────────
-
-function StatusBadge({ status }: { status: DiffOutcome["status"] }) {
-  if (status === "showed")
-    return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-green-500/15 px-2 py-0.5 text-xs font-medium text-green-400">
-        <CheckCircleIcon className="h-3 w-3" /> Showing in projection data
-      </span>
-    );
-  if (status === "missed")
-    return (
-      <span className="inline-flex items-center gap-1 rounded-full bg-red-500/15 px-2 py-0.5 text-xs font-medium text-red-400">
-        <XCircleIcon className="h-3 w-3" /> Not yet published
-      </span>
-    );
+function CoverageCard({
+  vendor,
+  data,
+}: {
+  vendor: string;
+  data: (typeof COVERAGE)[string];
+}) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-      <MinusIcon className="h-3 w-3" /> Pending
-    </span>
+    <div className="rounded-xl border border-border bg-card p-4">
+      <div className="mb-2 flex items-center justify-between">
+        <span className="text-sm font-semibold">{vendor}</span>
+        <span className="rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-mono font-bold text-primary">
+          {data.coverage}
+        </span>
+      </div>
+      <div className="space-y-1 text-[11px] text-muted-foreground">
+        <div className="flex items-center gap-1.5">
+          <ClockIcon className="h-3 w-3 shrink-0" />
+          <span>As of: {data.asOf}</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <GlobeIcon className="h-3 w-3 shrink-0" />
+          <span>Covers: {data.coversUntil}</span>
+        </div>
+        <p className="pt-1 leading-relaxed">{data.note}</p>
+      </div>
+    </div>
   );
 }
+
+// ─── Decision Tree Node ──────────────────────────────────────────────────────
+
+function DecisionNode({ step, onSelect }: { step: Step; onSelect: (label: string) => void }) {
+  return (
+    <div className="rounded-2xl border border-border bg-card overflow-hidden">
+      <div className="flex items-start gap-4 p-5">
+        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
+          {step.step}
+        </div>
+        <div className="min-w-0 flex-1">
+          <h3 className="mb-1 font-semibold">{step.question}</h3>
+          <p className="text-xs text-muted-foreground">{step.hint}</p>
+        </div>
+      </div>
+      <div className={`grid gap-2 px-5 pb-5 ${step.options.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2"}`}>
+        {step.options.map((opt) => (
+          <button
+            key={opt.label}
+            onClick={() => onSelect(opt.label)}
+            className={`rounded-xl border p-3 text-left transition-all hover:scale-[1.02] ${opt.color}`}
+          >
+            <div className="mb-1 text-xs font-semibold">{opt.label}</div>
+            <div className="text-[11px] opacity-80 leading-relaxed">{opt.sub}</div>
+            {opt.scenarios && (
+              <div className="mt-2 rounded-lg bg-black/20 p-2">
+                {opt.scenarios.map((s) => (
+                  <div key={s} className="text-[10px] leading-relaxed opacity-70">
+                    • {s}
+                  </div>
+                ))}
+              </div>
+            )}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Real Scenario Cases ─────────────────────────────────────────────────────
+
+const REAL_CASES = [
+  {
+    title: "Case 1 — Rights Issue: Only Target in Index",
+    event: "Voluntary / Rights Issue",
+    setup: "Company B (target) is in the index. Company C (acquirer) is NOT in the index. Company B announces a rights issue to fund an acquisition.",
+    steps: [
+      {
+        q: "Who is in your managed index?",
+        a: "Company B (target) is in the index. Company C (acquirer) is NOT in the index.",
+        color: "text-amber-400",
+      },
+      {
+        q: "Is Company B eligible for the rights issue?",
+        a: "Yes — it announced the rights issue. But it's voluntary: not all shareholders will participate.",
+        color: "text-green-400",
+      },
+      {
+        q: "Does it exceed each vendor's threshold?",
+        a: "MSCI: Rights issue -> no price adjustment (detached). S&P: No adjustment until ex-date. FTSE: No adjustment if <10% of shares. STOXX: No adjustment — rights are not cash dividends. Only vendors with explicit thresholds above the rights ratio will react.",
+        color: "text-orange-400",
+      },
+      {
+        q: "What shows in projection data?",
+        a: "Because rights are voluntary and require shareholder action, vendors with low thresholds (FTSE <10%) may show small free-float changes. MSCI and STOXX may show nothing until the subscription results are known.",
+        color: "text-blue-400",
+      },
+    ],
+    divergencePoint: "Threshold sensitivity: FTSE monitors free float changes from non-participating shareholders. MSCI and STOXX may ignore until results.",
+  },
+  {
+    title: "Case 2 — M&A: Only Acquirer in Index",
+    event: "Mandatory / M&A",
+    setup: "Company D (acquirer) is in the index. Company E (target) is NOT in the index. Company D announces acquisition of Company E.",
+    steps: [
+      {
+        q: "Who is in your managed index?",
+        a: "Company D (acquirer) is in the index. Company E (target) is NOT in the index.",
+        color: "text-amber-400",
+      },
+      {
+        q: "Does the acquirer's share change exceed each vendor's threshold?",
+        a: "MSCI: 5%/10%/25% for Standard/Small/Micro caps. S&P: Float <15% OR >=90% acceptance (but E not in index). FTSE: >=90% held OR Float <5%. STOXX: Extraordinary free float adjustment if change ≥5 percentage points.",
+        color: "text-green-400",
+      },
+      {
+        q: "What happens to Company D's shares in the index?",
+        a: "Adjusted per exchange terms (new shares issued to fund acquisition). Divisor adjusted to absorb market cap change. The adjustment depends on the exchange ratio and whether it's a cash or stock deal.",
+        color: "text-blue-400",
+      },
+      {
+        q: "Divergence point?",
+        a: "Cash vs stock deal treatment: MSCI adjusts PR for stock-settled deals (new shares issued). S&P adjusts for all M&A. FTSE adjusts per terms. STOXX: extraordinary free float adj if >=5pp change. The divergence is in HOW each vendor measures and applies the share change.",
+        color: "text-red-400",
+      },
+    ],
+    divergencePoint: "Share issuance threshold: MSCI/S&P/FTSE/STOXX each measure the acquirer's share change differently. Stock deals trigger bigger adjustments than cash deals.",
+  },
+  {
+    title: "Case 3 — M&A: Target AND Acquirer in Same Index",
+    event: "Mandatory / M&A",
+    setup: "Both Company F (target) and Company G (acquirer) are in the same index. Company G acquires Company F.",
+    steps: [
+      {
+        q: "Who is in your managed index?",
+        a: "Both Company F (target) AND Company G (acquirer) are in the same index.",
+        color: "text-amber-400",
+      },
+      {
+        q: "Does the deal meet each vendor's deletion threshold?",
+        a: "MSCI: Deal unconditional (no fixed %). S&P: Float <15% OR >=90% acceptance -> target deleted. FTSE: >=90% held OR Float <5% -> deleted. STOXX: >=85% acquired AND Float <10% BOTH must be met. Solactive: Float <15% + deal unconditional.",
+        color: "text-green-400",
+      },
+      {
+        q: "Target deleted — what happens to acquirer?",
+        a: "Company G's shares are adjusted per exchange ratio. The divisor absorbs the combined market cap change. STOXX: surviving stock replaces largest original stock in Benchmark index.",
+        color: "text-blue-400",
+      },
+      {
+        q: "Divergence point?",
+        a: "THRESHOLD TIMING: S&P's Float <15% trigger can delete the target BEFORE the 90% acceptance threshold is met. FTSE's Float <5% can fire independently of deal completion. STOXX requires BOTH conditions — the strictest. Same deal, different deletion dates across vendors.",
+        color: "text-red-400",
+      },
+    ],
+    divergencePoint: "Deletion threshold: STOXX is strictest (BOTH conditions). S&P is most aggressive (Float <15% alone can trigger). FTSE is binary (>=90% OR Float <5%).",
+  },
+  {
+    title: "Case 4 — Spin-off: One Child Eligible, One Not",
+    event: "Mandatory / Spin-off",
+    setup: "Company H distributes Company I and Company J to shareholders. Company I is index-eligible. Company J is NOT eligible (wrong sector/domicile).",
+    steps: [
+      {
+        q: "Who is in your managed index?",
+        a: "Company H (parent) is in the index. Company I (child) may be eligible. Company J (child) is NOT eligible.",
+        color: "text-amber-400",
+      },
+      {
+        q: "What happens to the parent on ex-date?",
+        a: "All vendors deduct the spin-off value from the parent price on the ex-date. The divisor reflects the reduced market cap of Company H alone.",
+        color: "text-green-400",
+      },
+      {
+        q: "What happens to eligible child Company I?",
+        a: "S&P/Morningstar: zero-price placeholder added to projection immediately. FTSE: estimated price placeholder. Solactive: 0.00000001 floor. MSCI: when-issued or zero. STOXX: market price only (no placeholder).",
+        color: "text-blue-400",
+      },
+      {
+        q: "What happens to ineligible child Company J?",
+        a: "Not added by any vendor — does not appear in projection data at all. The divergence here is between vendors that use placeholder prices (visible in projections) vs. vendors that wait for real trading prices.",
+        color: "text-purple-400",
+      },
+    ],
+    divergencePoint: "Placeholder vs. real price: MSTAR/S&P show Company I in projections immediately (zero placeholder). STOXX waits for first trade — may not show Company I for days.",
+  },
+];
 
 // ─── Main Page ───────────────────────────────────────────────────────────────
 
 export default function Home() {
   const [started, setStarted] = useState(false);
+  const [stepAnswers, setStepAnswers] = useState<Record<number, string>>({});
+  const [showCases, setShowCases] = useState(false);
+  const [selectedCase, setSelectedCase] = useState<number | null>(null);
+
+  const steps: Step[] = [
+    {
+      step: 1,
+      question: "Who is in your managed index?",
+      hint: "The first split. Identify which parties are tracked — the treatment depends entirely on which entities are in your index.",
+      options: [
+        {
+          label: "Only Target",
+          sub: "Target is in the index. Acquirer is NOT in the index.",
+          color: "bg-amber-500/10 border-amber-500/30 text-amber-400",
+          scenarios: [
+            "→ M&A: target deleted when deal unconditional + float threshold met",
+            "→ Rights: target eligible but voluntary — thresholds vary",
+            "→ Spin-off: parent in index, child may or may not be added",
+          ],
+        },
+        {
+          label: "Only Acquirer",
+          sub: "Acquirer is in the index. Target is NOT in the index.",
+          color: "bg-blue-500/10 border-blue-500/30 text-blue-400",
+          scenarios: [
+            "→ M&A: acquirer shares adjusted per exchange terms",
+            "→ Threshold: share issuance size triggers divisor adj",
+            "→ Cash vs stock deal = different adjustment types",
+          ],
+        },
+        {
+          label: "Both Target & Acquirer",
+          sub: "Both the target and acquirer are in the same index.",
+          color: "bg-green-500/10 border-green-500/30 text-green-400",
+          scenarios: [
+            "→ M&A: target deleted + acquirer adjusted",
+            "→ Divergence: deletion thresholds differ by vendor",
+            "→ Both trigger divisor adjustment",
+          ],
+        },
+        {
+          label: "Single Company Event",
+          sub: "No acquisition involved — stock split, dividend, delisting.",
+          color: "bg-muted/20 border-muted text-muted-foreground",
+          scenarios: [
+            "→ Cash dividend: no price adj on PR; divisor reduces",
+            "→ Stock split: price adjusted, divisor unchanged",
+            "→ Delisting: removed at last traded or 0.0000001",
+          ],
+        },
+      ],
+    },
+    {
+      step: 2,
+      question: "What type of event is it?",
+      hint: "Mandatory events are triggered by the company automatically. Voluntary events require shareholder action — which means not all shareholders participate, creating free float uncertainty.",
+      options: [
+        {
+          label: "Mandatory",
+          sub: "Cash dividend, Stock split, Merger (unconditional), Bonus issue, Return of capital, Spin-off, Bankruptcy",
+          color: "bg-green-500/10 border-green-500/30 text-green-400",
+        },
+        {
+          label: "Voluntary",
+          sub: "Rights issue, Tender offer, Secondary offering, Private placement, Partial tender",
+          color: "bg-orange-500/10 border-orange-500/30 text-orange-400",
+        },
+      ],
+    },
+    {
+      step: 3,
+      question: "Is the resulting entity or security index-eligible?",
+      hint: "If the spin-off child, new shares from a conversion, or shares from a stock distribution fail size, liquidity, sector, or domicile criteria — no vendor will add it. Check each vendor's eligibility rules.",
+      options: [
+        {
+          label: "Eligible",
+          sub: "Continue to threshold check",
+          color: "bg-green-500/10 border-green-500/30 text-green-400",
+        },
+        {
+          label: "Not eligible",
+          sub: "All vendors skip — divergence ends here. Parent price adjusted for distribution value.",
+          color: "bg-red-500/10 border-red-500/30 text-red-400",
+        },
+      ],
+    },
+    {
+      step: 4,
+      question: "Does it exceed each vendor's recognition threshold?",
+      hint: "This is the most common divergence point. Different vendors have different materiality thresholds. Below-threshold events accumulate to the next Quarterly Index Review (QIR).",
+      options: [
+        {
+          label: "Above all thresholds",
+          sub: "All vendors should recognise — check timing (ex-date vs effective date)",
+          color: "bg-green-500/10 border-green-500/30 text-green-400",
+        },
+        {
+          label: "Mixed — some above",
+          sub: "Divergence is HERE. Check each vendor threshold table on the Vendors page.",
+          color: "bg-amber-500/10 border-amber-500/30 text-amber-400",
+        },
+        {
+          label: "Below all thresholds",
+          sub: "Deferred to QIR. Solactive GPR Global 100 is SEMI-ANNUAL — events can miss an entire cycle.",
+          color: "bg-muted/20 border-muted text-muted-foreground",
+        },
+      ],
+    },
+  ];
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -109,7 +395,7 @@ export default function Home() {
             backgroundSize: "64px 64px",
           }}
         />
-        <div className="relative mx-auto max-w-5xl px-6 py-20 text-center">
+        <div className="relative mx-auto max-w-5xl px-6 py-16 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -124,7 +410,7 @@ export default function Home() {
               <br className="hidden md:block" />
               <span className="text-primary"> but not the others?</span>
             </h1>
-            <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground">
+            <p className="mx-auto mb-6 max-w-2xl text-lg text-muted-foreground">
               Corporate action projection data never matches across all vendors.
               Same event, same security — but one vendor shows it today, another
               shows it next week, and a third ignores it entirely.
@@ -132,375 +418,262 @@ export default function Home() {
               <strong className="text-foreground">This tool explains why.</strong>
             </p>
 
-            {/* Real example teaser */}
-            <div className="mx-auto mb-10 max-w-2xl rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5 text-left">
-              <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-amber-400">
-                <LightbulbIcon className="h-4 w-4" />
-                Real example — Spin-Off Event
+            {/* Coverage Period Banner */}
+            <div className="mx-auto mb-8 max-w-3xl rounded-2xl border border-primary/30 bg-primary/5 p-4">
+              <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-primary">
+                <ClockIcon className="h-4 w-4" />
+                Current Coverage Period — All Vendors
               </div>
-              <p className="mb-3 text-sm text-muted-foreground">
-                <strong className="text-foreground">Company A distributes Company B</strong> to
-                shareholders on April 23. Morningstar shows Company B in projection data as of today.
-                FTSE Russell and Solactive show nothing.
-              </p>
-              <p className="text-sm text-muted-foreground">
-                <strong className="text-foreground">Likely causes:</strong> Solactive GPR Global 100
-                rebalances semi-annually — the event falls between reviews. FTSE Russell may be awaiting
-                confirmed terms. MSTAR uses a 40-day grace period with a zero-price placeholder —
-                making it visible in projections immediately.
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+                {Object.entries(COVERAGE).map(([vendor, data]) => (
+                  <div key={vendor} className="rounded-lg bg-card border border-border p-2 text-left">
+                    <div className="text-[10px] font-semibold text-foreground">{vendor}</div>
+                    <div className="text-[10px] text-muted-foreground">{data.asOf}</div>
+                    <div className="text-[10px] text-primary font-medium">→ {data.coversUntil}</div>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-2 text-[11px] text-muted-foreground">
+                Data as of close {COVERAGE.MSCI.asOf} covers {COVERAGE.MSCI.coversUntil} (5 business days forward).
+                Open constituent projections available at T-5 for all vendors.
               </p>
             </div>
 
-            <button
-              onClick={() => setStarted(true)}
-              className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl"
-            >
-              Investigate an Event
-              <ArrowRightIcon className="h-4 w-4" />
-            </button>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <button
+                onClick={() => setStarted(true)}
+                className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl"
+              >
+                <ZapIcon className="h-4 w-4" />
+                Decision Tree
+                <ArrowRightIcon className="h-4 w-4" />
+              </button>
+              <Link
+                href="/vendors/"
+                className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-6 py-3 text-sm font-semibold text-foreground transition-all hover:bg-muted"
+              >
+                <BookOpenIcon className="h-4 w-4" />
+                Vendor Reference
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>
 
+      {/* ── Coverage Period Detail ─────────────────────────────────────── */}
+      <section className="mx-auto max-w-5xl px-6 py-10">
+        <div className="mb-6 flex items-center gap-2">
+          <ClockIcon className="h-5 w-5 text-primary" />
+          <h2 className="text-lg font-bold">Coverage Period by Vendor</h2>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {Object.entries(COVERAGE).map(([vendor, data]) => (
+            <CoverageCard key={vendor} vendor={vendor} data={data} />
+          ))}
+        </div>
+        <div className="mt-4 rounded-xl border border-border bg-card p-4">
+          <h3 className="mb-2 text-sm font-semibold">What does T-5 mean?</h3>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            T-5 means the data available on any given day covers the next 5 business days. If today is <strong className="text-foreground">17 April 2026</strong> and you receive open constituent projection data, the data reflects the state as of <strong className="text-foreground">16 April 2026 (market close)</strong>. That snapshot covers all corporate action events scheduled up to and including <strong className="text-foreground">23 April 2026</strong> — 5 business days forward.
+          </p>
+        </div>
+      </section>
+
+      {/* ── Real Cases ─────────────────────────────────────────────────── */}
+      <section className="mx-auto max-w-5xl px-6 py-10 border-t border-border">
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-bold">Real Scenarios</h2>
+            <p className="text-sm text-muted-foreground">Based on cases from Franklin Templeton operations</p>
+          </div>
+          <button
+            onClick={() => setShowCases(!showCases)}
+            className="inline-flex items-center gap-2 rounded-xl border border-border bg-card px-4 py-2 text-sm font-semibold transition-all hover:bg-muted"
+          >
+            {showCases ? "Hide Cases" : "Show Cases"}
+            <ChevronDownIcon className={`h-4 w-4 transition-transform ${showCases ? "rotate-180" : ""}`} />
+          </button>
+        </div>
+
+        <AnimatePresence initial={false}>
+          {showCases && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="overflow-hidden"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-4">
+                {REAL_CASES.map((c, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setSelectedCase(selectedCase === i ? null : i)}
+                    className={`rounded-2xl border p-5 text-left transition-all hover:scale-[1.01] ${
+                      selectedCase === i
+                        ? "border-primary bg-primary/10"
+                        : "border-border bg-card hover:border-primary/50"
+                    }`}
+                  >
+                    <div className="mb-1 text-xs font-semibold text-primary">{c.event}</div>
+                    <div className="mb-2 text-sm font-bold">{c.title}</div>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{c.setup}</p>
+                    <div className="mt-3 flex items-center gap-1 text-xs text-primary">
+                      <LightbulbIcon className="h-3 w-3" />
+                      <span>Divergence: {c.divergencePoint}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              {/* Expanded Case Detail */}
+              <AnimatePresence>
+                {selectedCase !== null && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="rounded-2xl border border-primary/30 bg-primary/5 p-6">
+                      <h3 className="mb-4 text-sm font-bold text-primary">
+                        {REAL_CASES[selectedCase].title}
+                      </h3>
+                      <div className="space-y-4">
+                        {REAL_CASES[selectedCase].steps.map((s, i) => (
+                          <div key={i} className="flex gap-4">
+                            <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-card border border-border text-xs font-bold">
+                              {i + 1}
+                            </div>
+                            <div>
+                              <div className={`text-sm font-semibold ${s.color}`}>{s.q}</div>
+                              <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{s.a}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="mt-4 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3">
+                        <div className="flex items-center gap-2 text-xs font-semibold text-amber-400 mb-1">
+                          <LightbulbIcon className="h-3 w-3" />
+                          Divergence Point
+                        </div>
+                        <p className="text-xs text-muted-foreground">
+                          {REAL_CASES[selectedCase].divergencePoint}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </section>
+
       {/* ── Decision Tree ───────────────────────────────────────────────── */}
       {started && (
-        <section className="mx-auto max-w-5xl px-6 py-16">
+        <section className="mx-auto max-w-5xl px-6 py-16 border-t border-border">
+          {/* Back button */}
+          <button
+            onClick={() => {
+              setStarted(false);
+              setStepAnswers({});
+            }}
+            className="mb-6 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowLeftIcon className="h-4 w-4" />
+            Back to overview
+          </button>
+
           <div className="mb-8">
             <h2 className="mb-2 text-2xl font-bold">Find the divergence point</h2>
             <p className="text-sm text-muted-foreground">
-              Walk through the decision tree. At each step, check which vendors show the event
-              and which do not — the split point tells you exactly where the difference originates.
+              Walk through each step. Your answers identify which scenario applies — and which vendor thresholds matter for your case.
             </p>
           </div>
 
           <div className="space-y-6">
-            {[
-              {
-                step: 1,
-                question: "What category does this event fall in?",
-                hint: "The first split — mandatory vs voluntary — determines how soon a vendor will react.",
-                options: [
-                  {
-                    label: "Mandatory Events",
-                    sub: "Cash dividend, Stock split, Merger (unconditional), Bonus issue, Return of capital, Spin-off, Bankruptcy",
-                    color: "bg-green-500/10 border-green-500/30 text-green-400",
-                  },
-                  {
-                    label: "Voluntary Events",
-                    sub: "Rights issue, Tender offer, Secondary offering, Private placement",
-                    color: "bg-orange-500/10 border-orange-500/30 text-orange-400",
-                  },
-                ],
-              },
-              {
-                step: 2,
-                question: "Has the event been formally confirmed?",
-                hint: "Unconfirmed events appearing in one vendor's feed but not another's — a common source of projection gaps.",
-                options: [
-                  {
-                    label: "Confirmed by company",
-                    sub: "All vendors should recognise — check if announcement lag is the issue",
-                    color: "bg-green-500/10 border-green-500/30 text-green-400",
-                  },
-                  {
-                    label: "Unconfirmed / Pending",
-                    sub: "One vendor processed early — not an error, just different announcement tracking",
-                    color: "bg-amber-500/10 border-amber-500/30 text-amber-400",
-                  },
-                ],
-              },
-              {
-                step: 3,
-                question: "Is the resulting security index-eligible?",
-                hint: "If the spin-off child or new shares fail eligibility — no vendor adds it. Check size, liquidity, sector, geography rules per vendor.",
-                options: [
-                  {
-                    label: "Eligible",
-                    sub: "Continue to threshold check",
-                    color: "bg-green-500/10 border-green-500/30 text-green-400",
-                  },
-                  {
-                    label: "Not eligible",
-                    sub: "All vendors will skip — divergence ends here",
-                    color: "bg-red-500/10 border-red-500/30 text-red-400",
-                  },
-                ],
-              },
-              {
-                step: 4,
-                question: "Does it exceed each vendor's threshold?",
-                hint: "This is the most common divergence point. Different vendors use different materiality thresholds — one may be above threshold while another is below.",
-                options: [
-                  {
-                    label: "Above all thresholds",
-                    sub: "All vendors should show — check timing",
-                    color: "bg-green-500/10 border-green-500/30 text-green-400",
-                  },
-                  {
-                    label: "Mixed — some above, some below",
-                    sub: "The divergence is HERE. Check each vendor threshold table.",
-                    color: "bg-amber-500/10 border-amber-500/30 text-amber-400",
-                  },
-                  {
-                    label: "Below all thresholds",
-                    sub: "Deferred to QIR — may never appear in projections",
-                    color: "bg-muted/20 border-muted text-muted-foreground",
-                  },
-                ],
-              },
-              {
-                step: 5,
-                question: "What is the QIR schedule for below-threshold events?",
-                hint: "Below-threshold events accumulate to the next Quarterly Index Review. Solactive GPR Global 100 is SEMI-ANNUAL — events can sit for months before appearing.",
-                options: [
-                  {
-                    label: "MSCI / S&P / FTSE",
-                    sub: "Quarterly — Mar, Jun, Sep, Dec",
-                    color: "bg-blue-500/10 border-blue-500/30 text-blue-400",
-                  },
-                  {
-                    label: "STOXX",
-                    sub: "Quarterly — Mar, Jun, Sep, Dec",
-                    color: "bg-red-500/10 border-red-500/30 text-red-400",
-                  },
-                  {
-                    label: "Solactive GPR Global 100",
-                    sub: "SEMI-ANNUAL — events can miss an entire cycle",
-                    color: "bg-orange-500/10 border-orange-500/30 text-orange-400",
-                    highlight: true,
-                  },
-                ],
-              },
-            ].map((s) => (
-              <div key={s.step} className="rounded-2xl border border-border bg-card overflow-hidden">
-                <div className="flex items-start gap-4 p-5">
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
-                    {s.step}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="mb-1 font-semibold">{s.question}</h3>
-                    <p className="text-xs text-muted-foreground">{s.hint}</p>
-                  </div>
-                </div>
-                <div className={`grid gap-2 px-5 pb-5 ${s.options.length === 3 ? "md:grid-cols-3" : "md:grid-cols-2"}`}>
-                  {s.options.map((opt) => (
-                    <div
-                      key={opt.label}
-                      className={`rounded-xl border p-3 ${opt.color} ${opt.highlight ? "ring-2 ring-amber-400/50" : ""}`}
-                    >
-                      <div className="mb-0.5 text-xs font-semibold">{opt.label}</div>
-                      <div className="text-[11px] opacity-80">{opt.sub}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            {steps.map((s) => (
+              <DecisionNode
+                key={s.step}
+                step={s}
+                onSelect={(label) =>
+                  setStepAnswers((prev) => ({ ...prev, [s.step]: label }))
+                }
+              />
             ))}
           </div>
 
           {/* Next step CTA */}
-          <div className="mt-8 rounded-2xl border border-primary/30 bg-primary/5 p-5">
-            <div className="flex items-center gap-3 mb-3">
-              <TrendingUpIcon className="h-5 w-5 text-primary" />
-              <span className="font-semibold">Once you know where the divergence is — go deep</span>
-            </div>
-            <p className="text-sm text-muted-foreground mb-4">
-              The decision tree narrows it to a specific step. Then use the full{" "}
-              <a href="/knowledge-hub/vendors/" className="text-primary underline">Vendor Methodology Matrix</a>{" "}
-              to see exactly which rule differs at that step — threshold values, timing,
-              grace periods, and adjustment formulas — all compared side by side.
-            </p>
-            <a
-              href="/knowledge-hub/vendors/"
-              className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
+          {stepAnswers[1] && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-8 rounded-2xl border border-primary/30 bg-primary/5 p-6"
             >
-              Open Vendor Methodology Matrix
-              <ArrowRightIcon className="h-4 w-4" />
-            </a>
-          </div>
+              <p className="mb-3 text-sm font-semibold text-primary">
+                Based on your selection:{" "}
+                <span className="text-foreground">{stepAnswers[1]}</span>
+              </p>
+              <p className="mb-4 text-sm text-muted-foreground">
+                Now check the vendor-specific thresholds on the Vendors page for the exact
+                event type. Each vendor&apos;s deletion triggers, grace periods, and adjustment
+                formulas are documented there.
+              </p>
+              <Link
+                href="/vendors/"
+                className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
+              >
+                Go to Vendor Thresholds
+                <ArrowRightIcon className="h-4 w-4" />
+              </Link>
+            </motion.div>
+          )}
         </section>
       )}
 
-      {/* ── Live Example: Spin-off Differential ──────────────────────────── */}
-      {!started && (
-        <section className="mx-auto max-w-5xl px-6 py-16">
-          <div className="mb-8">
-            <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-amber-400">
-              <ZapIcon className="h-4 w-4" />
-              Live Example
-            </div>
-            <h2 className="mb-2 text-2xl font-bold">Spin-Off Differential Diagnosis</h2>
-            <p className="text-sm text-muted-foreground">
-              Company A distributes Company B on April 23. MSTAR shows Company B in projections today.
-              FTSE and Solactive show nothing. Here is exactly where the divergence originates.
+      {/* ── Quick Links ─────────────────────────────────────────────────── */}
+      <section className="mx-auto max-w-5xl px-6 py-10 border-t border-border">
+        <h2 className="mb-6 text-lg font-bold">Quick Reference</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link
+            href="/vendors/"
+            className="rounded-2xl border border-border bg-card p-5 transition-all hover:border-primary/50 hover:bg-muted/50"
+          >
+            <BookOpenIcon className="mb-3 h-5 w-5 text-primary" />
+            <div className="text-sm font-semibold mb-1">Vendor Reference</div>
+            <p className="text-xs text-muted-foreground">
+              Deletion triggers, PAF formulas, and timing for all 12 event types
+            </p>
+          </Link>
+          <Link
+            href="/vendors/iso-taxonomy/"
+            className="rounded-2xl border border-border bg-card p-5 transition-all hover:border-primary/50 hover:bg-muted/50"
+          >
+            <NetworkIcon className="mb-3 h-5 w-5 text-primary" />
+            <div className="text-sm font-semibold mb-1">ISO Taxonomy</div>
+            <p className="text-xs text-muted-foreground">
+              ISO 20022 CAEV codes mapped to SWIFT MT564 and vendor terminology
+            </p>
+          </Link>
+          <Link
+            href="/vendors/event-extraction/"
+            className="rounded-2xl border border-border bg-card p-5 transition-all hover:border-primary/50 hover:bg-muted/50"
+          >
+            <FileTextIcon className="mb-3 h-5 w-5 text-primary" />
+            <div className="text-sm font-semibold mb-1">Event Extraction</div>
+            <p className="text-xs text-muted-foreground">
+              Detailed parameter extraction from vendor methodology documents
+            </p>
+          </Link>
+          <div className="rounded-2xl border border-border bg-card p-5">
+            <HelpCircleIcon className="mb-3 h-5 w-5 text-primary" />
+            <div className="text-sm font-semibold mb-1">Need Help?</div>
+            <p className="text-xs text-muted-foreground">
+              Ask about a specific event type or vendor — include the ticker and event date for fastest response
             </p>
           </div>
-
-          <div className="space-y-6">
-            {SPINOFF_DIFF.map((diff, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.15, duration: 0.5 }}
-                className={`rounded-2xl border overflow-hidden ${
-                  i === 0 ? "border-amber-500/30" : "border-border"
-                }`}
-              >
-                <div className={`flex items-start gap-4 p-5 ${i === 0 ? "bg-amber-500/5" : "bg-card"}`}>
-                  <div
-                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
-                      i === 0 ? "bg-amber-500/20 text-amber-400" : "bg-primary/10 text-primary"
-                    }`}
-                  >
-                    {i + 1}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <h3 className="mb-1 font-semibold text-lg">{diff.question}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{diff.explanation}</p>
-                  </div>
-                </div>
-
-                <div className="border-t border-border bg-muted/20">
-                  <div className="grid gap-px">
-                    {diff.outcomes.map((o, oi) => (
-                      <div
-                        key={o.vendor}
-                        className={`flex items-center gap-4 px-5 py-3 ${oi % 2 === 0 ? "bg-card" : "bg-muted/10"}`}
-                      >
-                        <div className="w-28 shrink-0 text-xs font-semibold text-muted-foreground">
-                          {o.vendor}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="mb-0.5">
-                            <StatusBadge status={o.status} />
-                          </div>
-                          <div className="text-xs text-muted-foreground truncate">{o.reason}</div>
-                        </div>
-                        <div className="hidden md:block text-xs text-muted-foreground text-right max-w-[200px]">
-                          {o.result}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Conclusion */}
-          <div className="mt-6 rounded-2xl border border-amber-500/40 bg-amber-500/5 p-5">
-            <div className="mb-2 text-sm font-bold text-amber-300">
-              Why MSTAR shows it — but FTSE and Solactive do not
-            </div>
-            <div className="space-y-2 text-sm text-muted-foreground">
-              <div className="flex items-start gap-2">
-                <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-green-400" />
-                <span>
-                  <strong className="text-foreground">MSTAR:</strong> 40-day grace period with
-                  zero-price placeholder — active in projection data from ex-date
-                </span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400" />
-                <span>
-                  <strong className="text-foreground">FTSE Russell:</strong> 20 business day grace —
-                  but may be awaiting confirmed spin-off terms before publishing to projection feeds
-                </span>
-              </div>
-              <div className="flex items-start gap-2">
-                <span className="mt-0.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-400" />
-                <span>
-                  <strong className="text-foreground">Solactive:</strong> Semi-annual rebalance — the
-                  event likely falls between GPR Global 100 review dates
-                </span>
-              </div>
-            </div>
-            <div className="mt-4 rounded-xl bg-muted/50 p-3 text-xs text-muted-foreground">
-              <strong className="text-foreground">Key insight:</strong> MSTAR&apos;s longer grace
-              period (40 days vs 20) and zero-price placeholder approach means it publishes
-              spin-offs to projection feeds earlier than other vendors. This is not an error — it
-              is a design choice. FTSE and Solactive may still add the event when confirmed — it
-              just has not reached their projection feeds yet.
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ── Three Key Questions ──────────────────────────────────────────── */}
-      <section className="border-t border-border bg-muted/20">
-        <div className="mx-auto max-w-5xl px-6 py-16">
-          <h2 className="mb-8 text-center text-2xl font-bold">
-            The three questions that solve every divergence
-          </h2>
-          <div className="grid gap-6 md:grid-cols-3">
-            {[
-              {
-                num: "01",
-                q: "Is it above threshold?",
-                a: "Most projection gaps start here. Different vendors use different materiality thresholds. STOXX extraordinary threshold is 10% — catching less than MSCI at 5%. FTSE accumulates below 1% to quarterly review. Solactive only acts at semi-annual rebalance. These differences alone explain most gaps.",
-                icon: TrendingUpIcon,
-                color: "border-orange-500/30",
-              },
-              {
-                num: "02",
-                q: "What is their QIR schedule?",
-                a: "Below-threshold events accumulate to the next Quarterly Index Review. But Solactive GPR Global 100 is semi-annual — an event can sit for 6 months before the next review window. If Solactive shows nothing, check whether the event falls between their March and September rebalance dates.",
-                icon: CircleDotIcon,
-                color: "border-blue-500/30",
-              },
-              {
-                num: "03",
-                q: "When did they receive the announcement?",
-                a: "Vendors do not all get corporate action notices at the same time. MSTAR data feeds may have processed an announcement that FTSE has not yet received. Announcement lag is a common and legitimate source of temporary projection gaps — not an error.",
-                icon: SearchIcon,
-                color: "border-green-500/30",
-              },
-            ].map((card) => (
-              <motion.div
-                key={card.num}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className={`rounded-2xl border bg-card p-6 ${card.color}`}
-              >
-                <div className="mb-4 text-4xl font-bold text-muted-foreground/30">{card.num}</div>
-                <h3 className="mb-3 font-semibold text-lg">{card.q}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{card.a}</p>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
-
-      {/* ── CTA ────────────────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-5xl px-6 py-16 text-center">
-        <h2 className="mb-3 text-2xl font-bold">Go deeper on any event type</h2>
-        <p className="mb-8 text-muted-foreground">
-          Full vendor comparison for all 13 corporate action types — thresholds, timing,
-          grace periods, adjustment formulas — with inline glossary.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <a
-            href="/knowledge-hub/vendors/"
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90"
-          >
-            <BookOpenIcon className="h-4 w-4" />
-            Vendor Methodology Matrix
-          </a>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-border bg-muted/20">
-        <div className="mx-auto max-w-5xl px-6 py-6">
-          <div className="flex flex-col gap-1 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between">
-            <div>
-              Sources: FTSE Russell v6.8 (Oct 2025) · STOXX Apr 2026 · S&P DJI Mar 2026 · Solactive Mar 2026 · Morningstar Jan 2026 · VettaFi Apr 2026
-            </div>
-            <div>Built with React 19 · Tailwind v4 · Framer Motion</div>
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }
