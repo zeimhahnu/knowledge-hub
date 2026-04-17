@@ -851,60 +851,82 @@ export default function VendorDashboard() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6">
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
 
-              {/* Left Sidebar */}
-              <aside className="w-full lg:w-52 shrink-0 order-2 lg:order-1">
-                <div className="lg:sticky lg:top-20">
-              <div className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                Event Taxonomy
-              </div>
-              <div className="space-y-3">
-                {eventsByCategory.map((cat) => (
-                  <div key={cat.name}>
-                    <button
-                      onClick={() => toggleCategory(cat.name)}
-                      className="mb-1 flex w-full items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground"
-                    >
-                      <cat.icon className={`h-3.5 w-3.5 ${cat.color}`} />
-                      <span className="flex-1 text-left">{cat.name}</span>
-                      <ChevronRightIcon
-                        className={`h-3 w-3 transition-transform ${expandedCategories.has(cat.name) ? "rotate-90" : ""}`}
-                      />
-                    </button>
-                    <AnimatePresence>
-                      {expandedCategories.has(cat.name) && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                          className="overflow-hidden"
-                        >
-                          <div className="space-y-0.5 pl-5">
-                            {cat.events.map((evt) => (
-                              <button
-                                key={evt.id}
-                                onClick={() => setActiveId(evt.id)}
-                                className={`flex w-full items-center gap-1.5 rounded-lg px-2 py-1.5 text-[12px] transition-all ${
-                                  activeId === evt.id
-                                    ? "bg-primary/20 text-primary font-medium"
-                                    : "text-muted-foreground hover:bg-accent hover:text-foreground"
-                                }`}
-                              >
-                                <ArrowRightIcon
-                                  className={`h-2.5 w-2.5 shrink-0 transition-opacity ${activeId === evt.id ? "opacity-100" : "opacity-0"}`}
-                                />
-                                {evt.name}
-                              </button>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
+              {/* Left Sidebar: desktop only */}
+              <aside className="hidden lg:block w-52 shrink-0">
+                <div className="sticky top-20">
+                  <div className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                    Event Taxonomy
                   </div>
-                ))}
+                  <div className="space-y-3">
+                    {eventsByCategory.map((cat) => (
+                      <div key={cat.name}>
+                        <button
+                          onClick={() => toggleCategory(cat.name)}
+                          className="mb-1 flex w-full items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground"
+                        >
+                          <cat.icon className={`h-3.5 w-3.5 ${cat.color}`} />
+                          <span className="flex-1 text-left">{cat.name}</span>
+                          <ChevronRightIcon
+                            className={`h-3 w-3 transition-transform ${expandedCategories.has(cat.name) ? "rotate-90" : ""}`}
+                          />
+                        </button>
+                        <AnimatePresence>
+                          {expandedCategories.has(cat.name) && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="space-y-0.5 pl-5">
+                                {cat.events.map((evt) => (
+                                  <button
+                                    key={evt.id}
+                                    onClick={() => setActiveId(evt.id)}
+                                    className={`flex w-full items-center gap-1.5 rounded-lg px-2 py-1.5 text-[12px] transition-all ${
+                                      activeId === evt.id
+                                        ? "bg-primary/20 text-primary font-medium"
+                                        : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                                    }`}
+                                  >
+                                    <ArrowRightIcon
+                                      className={`h-2.5 w-2.5 shrink-0 transition-opacity ${activeId === evt.id ? "opacity-100" : "opacity-0"}`}
+                                    />
+                                    {evt.name}
+                                  </button>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </aside>
+
+              {/* Mobile event selector */}
+              <div className="mb-4 lg:hidden">
+                <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                  Select Event
+                </div>
+                <select
+                  value={activeId}
+                  onChange={(e) => setActiveId(e.target.value)}
+                  className="w-full rounded-xl border border-border bg-card px-3 py-2 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                >
+                  {eventsByCategory.map((cat) => (
+                    <optgroup key={cat.name} label={cat.name}>
+                      {cat.events.map((evt) => (
+                        <option key={evt.id} value={evt.id}>
+                          {evt.name}
+                        </option>
+                      ))}
+                    </optgroup>
+                  ))}
+                </select>
               </div>
-            </div>
-          </aside>
 
           {/* Main Content */}
           <main className="min-w-0 flex-1 order-1 lg:order-2">
