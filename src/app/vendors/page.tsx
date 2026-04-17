@@ -215,8 +215,15 @@ function GlossaryTerm({ term }: { term: string }) {
         if (timeoutRef.current) clearTimeout(timeoutRef.current);
         setShow(false);
       }}
+      onFocus={() => {
+        timeoutRef.current = setTimeout(() => setShow(true), 200);
+      }}
+      onBlur={() => {
+        if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        setShow(false);
+      }}
     >
-      <span className="cursor-help border-b border-dashed border-amber-400/60 text-amber-400 hover:border-amber-400 hover:bg-amber-400/10">
+      <span tabIndex={0} className="cursor-help border-b border-dashed border-amber-400/60 text-amber-400 hover:border-amber-400 hover:bg-amber-400/10 focus:border-amber-400 focus:bg-amber-400/10 focus:outline-none">
         {term}
       </span>
       <AnimatePresence>
@@ -227,6 +234,8 @@ function GlossaryTerm({ term }: { term: string }) {
             exit={{ opacity: 0, y: 4, scale: 0.97 }}
             transition={{ duration: 0.15 }}
             className="absolute left-0 top-full z-50 mt-2 w-80 rounded-xl border border-amber-500/40 bg-[oklch(0.15_0.015_260)] p-4 shadow-2xl"
+            role="tooltip"
+            aria-live="polite"
           >
             <div className="mb-1 text-sm font-bold text-amber-300">{entry.term}</div>
             <div className="mb-2 text-xs text-foreground">{entry.definition}</div>
@@ -659,13 +668,13 @@ function ComparisonTable({ fields }: { fields: ComparisonField[] }) {
         </thead>
         <tbody>
           {fields.map((row, ri) => (
-            <tr key={row.label} className={`border-b border-border/40 ${ri % 2 === 0 ? "bg-card" : "bg-muted/10"}`}>
+            <tr key={row.label} className={`border-b border-border/40 ${ri % 2 === 0 ? "bg-card" : "bg-muted/10"} hover:bg-accent/60 transition-colors`}>
               <td className="px-4 py-2.5 font-medium">{row.label}</td>
               {VENDORS.map((v) => {
                 const val = row.values[v] ?? "—";
                 const isCritical = val.includes("only") || val.includes("divisor only") || val.includes("unique") || val.includes("UNIQUE") || val.includes("No distinction");
                 return (
-                  <td key={v} className={`px-2 py-2.5 text-center ${isCritical ? "font-semibold text-amber-400" : "text-muted-foreground"}`}>
+                  <td key={v} className={`px-2 py-2.5 text-center tabular-nums ${isCritical ? "font-semibold text-amber-400" : "text-muted-foreground"}`}>
                     {val === "N/A" ? <span className="text-muted-foreground/50">{val}</span> : val}
                   </td>
                 );
