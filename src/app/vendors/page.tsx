@@ -91,8 +91,8 @@ const GLOSSARY: GEntry[] = [
   },
   {
     term: "Placeholder",
-    definition: "A temporary zero-value line in the index for a spin-off company that has not yet started trading.",
-    detail: "MSTAR and S&P use this approach: Company B is added at zero price until it begins trading at a real market price.",
+    definition: "A temporary floor price used when the spin-off child has not yet started trading.",
+    detail: "S&P and Morningstar use zero. Solactive uses 0.00000001 (not zero — avoids division-by-zero in index math). FTSE uses an estimated price. The placeholder is replaced with real market price once trading begins.",
   },
   {
     term: "Grace Period",
@@ -140,6 +140,11 @@ const GLOSSARY: GEntry[] = [
     detail: "Treated differently by most vendors: PAF is applied to the PR index. STOXX uniquely makes NO distinction — special dividends treated identically to ordinary dividends.",
   },
   {
+    term: "Swedish Redemption Share",
+    definition: "A temporary line of security issued in some Swedish corporate actions — redeemed to receive another line rather than parent company stock.",
+    detail: "Solactive does NOT add Swedish redemption shares to the index. Only the final form of the spun-off security is added. This prevents index contamination with temporary instruments that have no independent economic value. Version 1.4 of the Solactive ECA Guideline (Oct 2024) added this rule explicitly.",
+  },
+  {
     term: "Return of Capital",
     definition: "A distribution to shareholders from invested capital or asset sales — not from earnings.",
     detail: "Not income. Treated as a special dividend by most vendors. FTSE Russell treats it as a direct price adjustment on the ex-date.",
@@ -147,7 +152,7 @@ const GLOSSARY: GEntry[] = [
   {
     term: "Spin-Off",
     definition: "Separation of a subsidiary into a standalone entity distributed to parent shareholders.",
-    detail: "Parent price drops by approximately the distribution value on the ex-date. Key divergence: S&P and Morningstar use zero price on ex-date; FTSE uses estimated; MSCI uses when-issued or market price.",
+    detail: "Five vendors, five approaches to the same problem: S&P and Morningstar use ZERO on ex-date; Solactive uses 0.00000001 floor; FTSE uses estimated price; MSCI uses when-issued or market price; STOXX waits until real trading begins. Swedish redemption shares (temporary lines) are excluded by Solactive — only the final form enters the index.",
   },
   {
     term: "Highly Dilutive Rights Issue (HDRI)",
@@ -369,7 +374,7 @@ const EVENTS: EventType[] = [
       { vendor: "S&P DJI", value: "In-the-money: value of rights formula + shares. OTM: no adj.", note: "S&P explicitly assumes rational investors exercise ITM rights" },
       { vendor: "FTSE Russell", value: "If at a discount to market price: adjust. Creates 3 temp lines for nil-paid rights.", note: "FTSE nil-paid rights handling is the most complex of all vendors" },
       { vendor: "STOXX", value: "Standard: adjust. HDRI if >5% market cap impact: special safeguards.", note: "HDRI = Highly Dilutive Rights Issue — >5% mkt cap dilution triggers additional logic" },
-      { vendor: "Solactive", value: "In-the-money: adjust. Out-of-the-money: no adjustment.", note: "Consistent with MSCI approach" },
+      { vendor: "Solactive", value: "In-the-money: adjust. Out-of-the-money: no adjustment.", note: "Consistent with MSCI approach. Variable terms: Solactive may calculate a theoretical value to match the effective date rather than wait for exact terms" },
       { vendor: "Morningstar", value: "In-the-money: TERP + shares adjusted. OTM: no adjustment.", note: "Uses TERP to determine ITM/OTM status" },
     ],
     timingFlow: [
@@ -400,7 +405,7 @@ const EVENTS: EventType[] = [
       { vendor: "S&P DJI", value: ">=5% of issued shares AND >=USD150M market value — BOTH must be met", note: "Dual threshold: 5% alone insufficient. $150M floor prevents large-price-small-percentage events slipping through" },
       { vendor: "FTSE Russell", value: ">1% cumulative per quarter -> quarterly review. Extraordinary events: immediate.", note: "1% is the lowest threshold — catches more events but defers most to QIR" },
       { vendor: "STOXX", value: "+/-10% extraordinary -> immediate. Below: next quarterly review.", note: "10% threshold is highest — only truly large events trigger immediate. Price adjustment: NO — divisor ONLY" },
-      { vendor: "Solactive", value: "Per ex-date announcement. Materiality assessment.", note: "Applied when confirmed per methodology" },
+      { vendor: "Solactive", value: "Case-by-case. ECAs with free float <15% + unconditional: immediate with 2 Business Days notice.", note: "Spin-offs are mandatory and applied on effective date at 0.00000001 floor until trading" },
       { vendor: "Morningstar", value: "Materiality assessment. No explicit percentage threshold.", note: "Subjective — leaves room for interpretation" },
     ],
     timingFlow: [
@@ -430,7 +435,7 @@ const EVENTS: EventType[] = [
       { vendor: "S&P DJI", value: "Applied on completion if unconditional. No minimum threshold.", note: "S&P applies immediately on completion — unlike MSCI which defers most private placements to QIR" },
       { vendor: "FTSE Russell", value: "Treated as extraordinary if >=1% cumulative per quarter.", note: "Same as secondary offerings — the 1% threshold catches private placements too" },
       { vendor: "STOXX", value: "Per methodology — extraordinary threshold applies (+/-10% market cap impact).", note: "STOXX 10% extraordinary threshold means most private placements are deferred to quarterly review" },
-      { vendor: "Solactive", value: "Per methodology — applied when confirmed.", note: "Consistent with their general approach" },
+      { vendor: "Solactive", value: "No explicit percentage threshold. ECAs: free float <15% + unconditional -> 2 Business Days notice minimum.", note: "Same free-float trigger as S&P. Applied when effective date is confirmed" },
       { vendor: "Morningstar", value: "Materiality assessment.", note: "Subjective — no explicit threshold documented" },
     ],
     timingFlow: [
@@ -454,21 +459,29 @@ const EVENTS: EventType[] = [
     summary: "Separation of a subsidiary into a standalone entity distributed to parent shareholders.",
     whyAdj: "When Company B is spun off, Company A shareholders receive Company B shares. Company A's market cap should drop by approximately Company B's value — the value left the company. The PAF deducts this from the parent on ex-date. The challenge: if Company B has not started trading yet, there is no market price. Different vendors handle this gap differently — which is the primary source of divergence.",
     recognitionTiming: "Announcement date (terms confirmed)",
-    adjustmentTiming: "Ex-date for parent; child added after grace period or when trading",
-    thresholds: [],
-    timingFlow: [
-      { phase: "Announcement", what: "Company announces spin-off: ratio, distribution date, child entity details", who: ["All vendors"] },
-      { phase: "Last Cum-Date", what: "Last day parent trades with spin-off entitlement", who: ["All vendors"] },
-      { phase: "Ex-Date (Parent)", what: "Parent price drops by distribution value. Child: if eligible and trading -> added.", who: ["Divisor adjustment for parent. Child treatment varies by vendor."] },
-      { phase: "Grace Period", what: "Child in index at temporary price. S&P: zero. FTSE: estimated. MSTAR: zero.", who: ["S&P: 20 days. FTSE: 20 business days. Morningstar: 40 days (India: 60)."] },
-      { phase: "Distribution Date", what: "Child shares distributed. Real price discovered. Index weight established.", who: ["Divisor finalised. Child at market price."] },
+    adjustmentTiming: "Ex-date for parent; child added on effective date when trading begins",
+    thresholds: [
+      { vendor: "MSCI", value: "Added on distribution date. Uses when-issued price if available; zero if not trading.", note: "Detached security: child is added as detached on distribution date, replaced with actual market price when it begins trading" },
+      { vendor: "S&P DJI", value: "Added on ex-date at zero price. Held at zero for up to 20 calendar days.", note: "Zero-placebo approach: avoids guessing. Replaced with real price once child starts trading" },
+      { vendor: "FTSE Russell", value: "Estimated price used until real price is available. Zero if no estimate possible.", note: "Estimated using parent price difference method. Switches to market price when child begins trading" },
+      { vendor: "STOXX", value: "Added at market price on first trading day. No placeholder.", note: "No grace period — STOXX waits until real price exists before adding" },
+      { vendor: "Solactive", value: "Added at 0.00000001 floor on effective date. Switches to official prices when trading begins.", note: "0.00000001 is the same floor STOXX uses for delistings. Swedish redemption shares: only the final form is added, not the temporary redemption line" },
+      { vendor: "Morningstar", value: "Zero price on ex-date. Placeholder held for 40 calendar days (India: 60).", note: "Longest grace period of all vendors — can appear in MSTAR projection data before competitors" },
     ],
-    keyTerms: ["Spin-Off", "When-Issuued", "Placeholder", "Grace Period", "Divisor Adjustment", "Detached Security"],
-    criticalRule: "S&P and Morningstar set the child price to ZERO on ex-date. FTSE uses estimated price. MSCI uses when-issued or market price. The zero-price approach is most conservative — avoids guessing. The grace period determines how long the placeholder sits before being replaced by real trading price.",
+    timingFlow: [
+      { phase: "Announcement", what: "Company announces spin-off: ratio, distribution date, child entity details. Solactive: Swedish redemption shares (temporary lines) are NOT added — only the final form of security enters the index.", who: ["All vendors"] },
+      { phase: "Last Cum-Date", what: "Last day parent trades with spin-off entitlement", who: ["All vendors"] },
+      { phase: "Ex-Date (Parent)", what: "Parent price drops by distribution value. Child: S&P/Morningstar/Solactive add at zero/0.00000001. FTSE adds at estimated. MSCI adds at when-issued or zero. STOXX waits for real price.", who: ["Divisor adjustment for parent. Child treatment varies by vendor."] },
+      { phase: "Trading Begins", what: "Solactive switches to official market prices once child starts trading. S&P: zero held up to 20 days. FTSE: estimated until real price. Morningstar: zero held up to 40 days.", who: ["Solactive, S&P, FTSE, Morningstar: each has own grace/transition logic"] },
+      { phase: "Guru Indices (Solactive)", what: "Spin-offs treated as a special dividend in Guru Indices — different from standard Solactive index treatment.", who: ["Solactive Guru Indices only"] },
+    ],
+    keyTerms: ["Spin-Off", "When-Issuued", "Placeholder", "Grace Period", "Divisor Adjustment", "Detached Security", "Swedish Redemption Share"],
+    criticalRule: "Five different approaches to the same problem: (1) S&P and Morningstar = zero placeholder, (2) Solactive = 0.00000001 floor, (3) FTSE = estimated price, (4) MSCI = when-issued or market price, (5) STOXX = waits for real trading. The placeholder price determines when the child appears in projection feeds — MSTAR's 40-day placeholder is the longest, which is why it often shows spin-offs before competitors.",
     comparisonFields: [
-      { label: "Parent Price Adj", values: { MSCI: "Deducted (distribution value)", "S&P DJI": "No adj on ex-date", "FTSE Russell": "Deducted (distribution value)", STOXX: "Spin-off value deducted", Solactive: "Yes", Morningstar: "Deducted (distribution value)", VettaFi: "N/A" } },
-      { label: "Child Ex-Date Price", values: { MSCI: "Market or zero", "S&P DJI": "ZERO on ex-date", "FTSE Russell": "Estimated if not trading", STOXX: "Market price", Solactive: "Per methodology", Morningstar: "Zero price", VettaFi: "N/A" } },
-      { label: "Grace Period", values: { MSCI: "None (detached)", "S&P DJI": "20 days", "FTSE Russell": "20 business days", STOXX: "None", Solactive: "—", Morningstar: "40 days (India: 60)", VettaFi: "N/A" } },
+      { label: "Child Addition Price", values: { MSCI: "When-issued or zero", "S&P DJI": "Zero", "FTSE Russell": "Estimated", STOXX: "Market price (no placeholder)", Solactive: "0.00000001 floor", Morningstar: "Zero", VettaFi: "N/A" } },
+      { label: "Grace / Transition", values: { MSCI: "Until real price", "S&P DJI": "20 calendar days max", "FTSE Russell": "Until real price", STOXX: "No grace period", Solactive: "Until trading begins", Morningstar: "40 days (India: 60)", VettaFi: "N/A" } },
+      { label: "Parent Price Adj", values: { MSCI: "Deducted on ex-date", "S&P DJI": "No on ex-date", "FTSE Russell": "Deducted on ex-date", STOXX: "Spin-off value deducted", Solactive: "Deducted on ex-date", Morningstar: "Deducted on ex-date", VettaFi: "N/A" } },
+      { label: "Special Case", values: { MSCI: "Detached security added", "S&P DJI": "Zero placeholder", "FTSE Russell": "Estimated price", STOXX: "No special treatment", Solactive: "Guru Indices: special div treatment; Swedish redemptions excluded", Morningstar: "Longest grace period", VettaFi: "N/A" } },
     ],
   },
   {
@@ -492,9 +505,9 @@ const EVENTS: EventType[] = [
       { phase: "Effective Date", what: "Target deleted at last traded price. Acquirer shares adjusted per exchange ratio. Divisor adjusted.", who: ["All vendors: same conceptual treatment, different thresholds"] },
     ],
     keyTerms: ["Divisor Adjustment", "M&A", "Effective Date", "Conditional vs Unconditional"],
-    criticalRule: "S&P Float <15% trigger can delete the target before 90% acceptance — this is aggressive. FTSE requires >=90% held OR Float <5%. STOXX requires >=85% acquired. These different thresholds can cause the same deal to appear in one vendor's projection data before another's.",
+    criticalRule: "S&P Float <15% trigger can delete the target before 90% acceptance — this is aggressive. FTSE requires >=90% held OR Float <5%. STOXX requires >=85% acquired. Solactive requires Float <15% + unconditional. These different thresholds can cause the same deal to appear in one vendor's projection data before another's.",
     comparisonFields: [
-      { label: "Deletion Threshold", values: { MSCI: "Deal unconditional", "S&P DJI": "Float <15% OR >=90% acceptance", "FTSE Russell": ">=90% held OR Float <5%", STOXX: ">=85% acquired OR Float <10%", Solactive: "When effective", Morningstar: "When completed", VettaFi: "N/A" } },
+      { label: "Deletion Threshold", values: { MSCI: "Deal unconditional", "S&P DJI": "Float <15% OR >=90% acceptance", "FTSE Russell": ">=90% held OR Float <5%", STOXX: ">=85% acquired OR Float <10%", Solactive: "Float <15% + unconditional (2 BD notice)", Morningstar: "When completed", VettaFi: "N/A" } },
       { label: "Acquirer Adjustment", values: { MSCI: "Per exchange terms", "S&P DJI": "Per exchange terms", "FTSE Russell": "Per exchange terms", STOXX: "Adjusted", Solactive: "Adjusted", Morningstar: "Adjusted", VettaFi: "N/A" } },
     ],
   },
@@ -560,9 +573,9 @@ const EVENTS: EventType[] = [
       { phase: "Removal", what: "Security deleted. Divisor adjusted. Remaining constituents unaffected.", who: ["All vendors"] },
     ],
     keyTerms: ["Delisting", "Bankruptcy"],
-    criticalRule: "STOXX removes at 0.0000001 (not zero) — a technical fix to avoid division-by-zero errors in index calculation. FTSE removes at cash terms if halted. All others use zero or last traded price.",
+    criticalRule: "STOXX removes at 0.0000001 (not zero) — a technical fix to avoid division-by-zero errors. Solactive also uses 0.00000001 (same logic). FTSE removes at cash terms if halted. Solactive: last available price used; if none available then 0.00000001. All others use zero or last traded price.",
     comparisonFields: [
-      { label: "Removal Price", values: { MSCI: "Zero or last traded", "S&P DJI": "Zero (if no primary price)", "FTSE Russell": "Cash terms if halted", STOXX: "0.0000001 (not zero)", Solactive: "Zero", Morningstar: "Zero or nominal", VettaFi: "N/A" } },
+      { label: "Removal Price", values: { MSCI: "Zero or last traded", "S&P DJI": "Zero (if no primary price)", "FTSE Russell": "Cash terms if halted", STOXX: "0.0000001 (not zero)", Solactive: "Last available price; if none: 0.00000001", Morningstar: "Zero or nominal", VettaFi: "N/A" } },
       { label: "Divisor Change", values: { MSCI: "Yes", "S&P DJI": "Yes", "FTSE Russell": "Yes", STOXX: "Yes", Solactive: "Yes", Morningstar: "Yes", VettaFi: "N/A" } },
     ],
   },
