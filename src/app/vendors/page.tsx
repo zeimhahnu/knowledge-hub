@@ -634,7 +634,7 @@ function TimingFlow({ flow }: { flow: EventType["timingFlow"] }) {
       <div className="absolute left-4 top-0 h-full w-px bg-border" />
       <div className="space-y-3">
         {flow.map((step, i) => (
-          <div key={i} className="relative flex gap-4 pl-20">
+          <div key={i} className="relative flex gap-4 pl-8 sm:pl-20">
             <div className="absolute left-3.5 top-1.5 h-1 w-1 rounded-full bg-primary ring-2 ring-background" />
             <div className="min-w-0 flex-1 rounded-xl border border-border bg-card p-3">
               <div className="mb-1 text-xs font-semibold text-primary">{step.phase}</div>
@@ -657,7 +657,8 @@ function TimingFlow({ flow }: { flow: EventType["timingFlow"] }) {
 function ComparisonTable({ fields }: { fields: ComparisonField[] }) {
   return (
     <div className="overflow-x-auto rounded-2xl border border-border">
-      <table className="w-full text-xs">
+      <div className="overflow-x-auto">
+      <table className="w-full text-xs min-w-[600px]">
         <thead>
           <tr className="border-b border-border bg-muted/40">
             <th className="min-w-[140px] px-4 py-3 text-left font-semibold text-muted-foreground">Field</th>
@@ -685,6 +686,7 @@ function ComparisonTable({ fields }: { fields: ComparisonField[] }) {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }
@@ -719,27 +721,21 @@ export default function VendorDashboard() {
 
       {/* Top Navigation */}
       <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
-        <div className="mx-auto max-w-7xl px-6 py-3">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3">
           <div className="flex items-center justify-between gap-4">
             <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
               <ArrowLeftIcon className="h-4 w-4" />
-              Index Vendor Intelligence
+              <span className="hidden sm:inline">Index Vendor Intelligence</span>
+              <span className="sm:hidden">Vendors</span>
             </Link>
-            <div className="flex items-center gap-3">
-              <Link href="/" className="rounded-lg border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent transition-colors">
-                Home
-              </Link>
-              <Link
-                href="/vendors/iso-taxonomy"
-                className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent transition-colors"
-              >
+
+            {/* Desktop nav */}
+            <div className="hidden sm:flex flex-wrap items-center gap-3">
+              <Link href="/vendors/iso-taxonomy" className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent transition-colors">
                 <NetworkIcon className="h-3.5 w-3.5" />
                 ISO CAEV Taxonomy
               </Link>
-              <Link
-                href="/vendors/event-extraction"
-                className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent transition-colors"
-              >
+              <Link href="/vendors/event-extraction" className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent transition-colors">
                 <FileTextIcon className="h-3.5 w-3.5" />
                 Event Parameters
               </Link>
@@ -753,6 +749,27 @@ export default function VendorDashboard() {
               >
                 <BookOpenIcon className="h-3.5 w-3.5" />
                 Glossary
+              </button>
+            </div>
+
+            {/* Mobile nav: icon-only compact */}
+            <div className="flex sm:hidden items-center gap-2">
+              <Link href="/vendors/iso-taxonomy" className="rounded-lg border border-border bg-card p-2 hover:bg-accent transition-colors" aria-label="ISO CAEV Taxonomy">
+                <NetworkIcon className="h-4 w-4" />
+              </Link>
+              <Link href="/vendors/event-extraction" className="rounded-lg border border-border bg-card p-2 hover:bg-accent transition-colors" aria-label="Event Parameters">
+                <FileTextIcon className="h-4 w-4" />
+              </Link>
+              <button
+                onClick={() => setShowGlossary(!showGlossary)}
+                className={`rounded-lg border p-2 transition-all ${
+                  showGlossary
+                    ? "border-amber-500/50 bg-amber-500/10 text-amber-400"
+                    : "border-border bg-card hover:bg-accent"
+                }`}
+                aria-label="Toggle Glossary"
+              >
+                <BookOpenIcon className="h-4 w-4" />
               </button>
             </div>
           </div>
@@ -773,7 +790,7 @@ export default function VendorDashboard() {
               <div className="mb-4 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                 All Glossary Terms — hover any highlighted term in the matrix to see its definition
               </div>
-              <div className="grid max-h-[50vh] grid-cols-2 gap-3 overflow-y-auto md:grid-cols-3 lg:grid-cols-4">
+              <div className="grid max-h-[50vh] grid-cols-1 xs:grid-cols-2 gap-3 overflow-y-auto sm:grid-cols-3 lg:grid-cols-4">
                 {GLOSSARY.map((g) => (
                   <div key={g.term} className="rounded-xl border border-border bg-card p-3">
                     <div className="mb-1 text-xs font-bold text-amber-400">{g.term}</div>
@@ -791,12 +808,12 @@ export default function VendorDashboard() {
         )}
       </AnimatePresence>
 
-      <div className="mx-auto max-w-7xl px-6 py-6">
-        <div className="flex gap-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
 
           {/* Left Sidebar */}
-          <aside className="w-52 shrink-0">
-            <div className="sticky top-20">
+          <aside className="w-full lg:w-52 shrink-0 order-2 lg:order-1">
+            <div className="lg:sticky lg:top-20">
               <div className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                 Event Taxonomy
               </div>
@@ -850,7 +867,7 @@ export default function VendorDashboard() {
           </aside>
 
           {/* Main Content */}
-          <main className="min-w-0 flex-1">
+          <main className="min-w-0 flex-1 order-1 lg:order-2">
 
             {/* Event Header */}
             <div className="mb-6">
@@ -906,8 +923,8 @@ export default function VendorDashboard() {
                 <h3 className="mb-3 text-sm font-semibold">Threshold Rules</h3>
                 <div className="space-y-2">
                   {active.thresholds.map((t) => (
-                    <div key={t.vendor} className="flex items-start gap-3 rounded-xl border border-border bg-card p-3">
-                      <span className="min-w-[90px] text-xs font-semibold text-muted-foreground">{t.vendor}</span>
+                    <div key={t.vendor} className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3 rounded-xl border border-border bg-card p-3">
+                      <span className="min-w-0 sm:min-w-[90px] text-xs font-semibold text-muted-foreground">{t.vendor}</span>
                       <span className="flex-1 text-xs leading-relaxed">{t.value}</span>
                       {t.note && (
                         <span className="shrink-0 text-[11px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">
