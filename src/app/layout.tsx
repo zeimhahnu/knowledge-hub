@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Knowledge Hub — Index Vendor Intelligence",
+  title: "Index Vendor Intelligence",
   description:
-    "Interactive reference for index provider corporate action methodology. Compare MSCI, S&P DJI, FTSE Russell, STOXX, Solactive, Morningstar, and VettaFi.",
+    "Corporate action methodology comparison across MSCI, S&P DJI, FTSE Russell, STOXX, Solactive, Morningstar, and VettaFi. Understand why vendor projection data diverges.",
   icons: {
     icon: "/favicon.svg",
   },
@@ -27,8 +27,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className="dark" suppressHydrationWarning>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-background font-sans antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
