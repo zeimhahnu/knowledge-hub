@@ -983,18 +983,31 @@ export default function VendorDashboard() {
             {active.thresholds.length > 0 && (
               <div className="mb-6">
                 <h3 className="mb-3 text-sm font-semibold">Threshold Rules</h3>
-                <div className="space-y-2">
-                  {active.thresholds.map((t) => (
-                    <div key={t.vendor} className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-3 rounded-xl border border-border bg-card p-3">
-                      <span className="min-w-0 sm:min-w-[90px] text-xs font-semibold text-muted-foreground">{t.vendor}</span>
-                      <span className="flex-1 text-xs leading-relaxed">{t.value}</span>
-                      {t.note && (
-                        <span className="shrink-0 text-[11px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full">
-                          {t.note}
-                        </span>
-                      )}
-                    </div>
-                  ))}
+                <div className="rounded-xl border border-border overflow-hidden">
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="border-b border-border bg-muted/50">
+                        <th className="px-4 py-2.5 text-left font-semibold text-muted-foreground w-[120px]">Vendor</th>
+                        <th className="px-4 py-2.5 text-left font-semibold text-muted-foreground">Threshold Rule</th>
+                        <th className="px-4 py-2.5 text-left font-semibold text-muted-foreground w-[280px]">Notes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {active.thresholds.map((t, i) => (
+                        <tr key={t.vendor} className={`border-b border-border/40 ${i % 2 === 0 ? "bg-card" : "bg-muted/5"}`}>
+                          <td className="px-4 py-3 align-top font-semibold text-foreground">{t.vendor}</td>
+                          <td className="px-4 py-3 align-top leading-relaxed">{t.value}</td>
+                          <td className="px-4 py-3 align-top">
+                            {t.note && (
+                              <span className="text-[11px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full leading-relaxed">
+                                {t.note}
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
             )}
