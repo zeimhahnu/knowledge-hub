@@ -37,13 +37,14 @@ created: 2026-04-17
 - **Threshold**: NULL
 
 ### STOXX
-- **PAF Formula**: `padj = pt-1 - dividend`
+- **PAF Formula**: `padj = pt-1 - Divt` (PR: no adj; GR: `padj = pt-1 - Divt`; NTR: `padj = pt-1 - Divt × (1 – 𝜏)`)
 - **Divisor Impact**: Yes — decreases
-- **PR Treatment**: Price reduced by dividend amount
-- **TR/NTR Treatment**: Net of withholding tax for NTR
-- **Timing**: Ex-date
-- **Grace Period**: Standard 2-day implementation
-- **Threshold**: NULL
+- **PR Treatment**: Price index NOT adjusted for regular cash dividends (dividend reinvested only in GR/NTR)
+- **TR/NTR Treatment**: Gross Return: `padj = pt-1 - Divt`. Net Return: net of withholding tax 𝜏
+- **Timing**: Ex-date — 2 trading days' notice required, implemented next trading day after announcement
+- **Grace Period**: 2 trading days' notice; effective next trading day after implementation
+- **Threshold**: No materiality threshold — all regular cash dividends applied immediately
+- **Source**: STOXX Calculation Guide §8.1.1 (Apr 2026)
 
 ### Solactive
 - **PAF Formula**: NULL — reference to Equity Index Methodology
@@ -104,13 +105,15 @@ created: 2026-04-17
 - **Threshold**: If recurring on >3 consecutive occasions, 4th becomes ordinary
 
 ### STOXX
-- **PAF Formula**: `padj = pt-1 × A / (A + B)` where A=pre-event shares, B=new shares from distribution
-- **Divisor Impact**: Yes — increases
-- **PR Treatment**: Price adjusted
-- **TR/NTR Treatment**: Net of tax adjustment
-- **Timing**: Ex-date
-- **Grace Period**: 2-day notice for extraordinary changes
-- **Threshold**: 10% rule for extraordinary adjustments
+- **PAF Formula**: `padj = pt-1 - Divt` (Gross Return); `padj = pt-1 - Divt × (1 – 𝜏)` (Price and Net Return indices) — STOXX UNIQUE: Price index IS adjusted for special cash dividends
+- **Divisor Impact**: Yes — decreases
+- **PR Treatment**: Price indices adjusted for special cash dividends — unique to STOXX among all vendors
+- **TR/NTR Treatment**: Gross Return: `padj = pt-1 - Divt`. Net Return: `padj = pt-1 - Divt × (1 – 𝜏)`
+- **Timing**: Ex-date — 2 trading days' notice required, implemented next trading day after announcement
+- **Grace Period**: 2 trading days' notice; effective next trading day after implementation
+- **Threshold**: No formal percentage threshold — company-defined extraordinary distributions trigger immediate treatment
+- **Key Difference**: STOXX is the ONLY vendor that adjusts the Price Return index for special dividends. MSCI, S&P, FTSE, Morningstar only adjust PR if threshold is met. This is a fundamental divergence.
+- **Source**: STOXX Calculation Guide §8.1.2 (Apr 2026)
 
 ### Solactive
 - **PAF Formula**: NULL
@@ -171,13 +174,14 @@ created: 2026-04-17
 - **Threshold**: NULL
 
 ### STOXX
-- **PAF Formula**: `padj = pt-1 × A / (A + B)` where A=pre-event shares, B=new shares
-- **Divisor Impact**: Yes — increases
-- **PR Treatment**: Price adjusted
-- **TR/NTR Treatment**: Adjusted
-- **Timing**: Ex-date
-- **Grace Period**: Immediate implementation
-- **Threshold**: NULL
+- **PAF Formula**: Ordinary: `padj = pt-1 × A / (A + B)`. Treasury Stock: `padj = pt-1 - pt-1 × B / (A + B)`. Another Company: `padj = [(pt-1 × A) – [(1 – 𝜏) × price of other company × B]] / A`. All with `sadj = st-1 × (A + B) / A` for free-float market cap indices.
+- **Divisor Impact**: Yes — increases for ordinary; decreases for treasury stock / redeemable shares treated as cash dividend
+- **PR Treatment**: Price index adjusted: `padj = pt-1 × A / (A + B)` for ordinary stock dividend
+- **TR/NTR Treatment**: Net Return: same PAF with withholding tax adjustment where applicable
+- **Timing**: Ex-date — 2 trading days' notice; extraordinary changes (≥±10% share change) announced immediately, implemented 2 trading days later
+- **Grace Period**: 2 trading days for standard; 2 trading days' notice for extraordinary
+- **Threshold**: ±10% share change from one trading day to next = extraordinary (announced immediately)
+- **Source**: STOXX Calculation Guide §8.1.5 (Ordinary), §8.1.5.2 (Treasury Stock), §8.1.5.3 (Redeemable Shares), §8.1.5.4 (Another Company) (Apr 2026)
 
 ### Solactive
 - **PAF Formula**: NULL
@@ -238,11 +242,14 @@ created: 2026-04-17
 - **Threshold**: NULL
 
 ### STOXX
-- **PAF Formula**: `padj = (pt-1 × A – price of spun-off shares × B) / A`
-- **Divisor Impact**: No — on ex-date (divisor changes if spun-off deleted later)
-- **PR Treatment**: Parent price adjusted
-- **TR/NTR Treatment**: Unchanged on ex-date
-- **Timing**: Ex-date, announced immediately, implemented 2 trading days later
+- **PAF Formula**: `padj = (pt-1 × A – price of spun-off shares × B) / A` on ex-date. Spin-off added at estimated price, not zero. No placeholder approach.
+- **Divisor Impact**: No change on ex-date (spun-off company added at estimated price with new shares = `st-1 × B/A`)
+- **PR Treatment**: Parent price: `padj = (pt-1 × A – spun-off price × B) / A`. Spin-off added to parent index at estimated price.
+- **TR/NTR Treatment**: Divisor unchanged on ex-date. Spin-off qualifies for TMI indices if on latest quarterly review list.
+- **Timing**: Ex-date — spin-off qualifies if within upper (higher) buffer on latest selection list for benchmark/blue-chip indices. Announced immediately, implemented 2 trading days later.
+- **Grace Period**: No grace period — STOXX adds at market price on first trading day. No placeholder used. Spin-off stock is deleted at close if it does not qualify (no traded price available).
+- **Threshold**: Qualifies for STOXX Benchmark/Blue-Chip indices if within upper buffer on latest selection list. Replaces lowest ranked stock. For TMI: added if qualifies as of latest quarterly review.
+- **Source**: STOXX Calculation Guide §8.1.8, §8.4 (Apr 2026)
 - **Grace Period**: 2-day notice
 - **Threshold**: Spin-off added if qualifying for TMI indices
 
@@ -305,13 +312,14 @@ created: 2026-04-17
 - **Threshold**: NULL
 
 ### STOXX
-- **PAF Formula**: `padj = [pt-1 × A + SP × C] / (A + C)` where SP=subscription price, C=new shares from rights
-- **Divisor Impact**: Yes — increases
-- **PR Treatment**: Price adjusted
-- **TR/NTR Treatment**: Adjusted
-- **Timing**: Ex-date
-- **Grace Period**: Immediate for share changes
-- **Threshold**: NULL
+- **PAF Formula**: Standard Rights: `padj = (pt-1 × A + SP × B) / (A + B)`, `sadj = st-1 × (A + B) / A`. HDRI (B/A ≥ 200%): fully underwritten = treated as standard; not fully underwritten + tradable = included at theoretical price then removed at close; not fully underwritten + not tradable = removed at 0.0000001.
+- **Divisor Impact**: Yes — increases for standard rights. For HDRI: unchanged on ex-date, decreases after rights deletion (if tradable), increases on day of share increase if ffmcap index.
+- **PR Treatment**: Price adjusted for in-the-money rights. If OTM (SP ≥ closing price) = no adjustment.
+- **TR/NTR Treatment**: Adjusted with withholding tax where applicable
+- **Timing**: Ex-date — if subscription price available and in-the-money. If price range: both lower and upper range must be in-the-money, use average. OTM = no adjustment.
+- **Grace Period**: 2 trading days' notice for extraordinary share changes (≥±10% from one trading day to next)
+- **Threshold**: HDRI trigger: share ratio B/A ≥ 200% (Highly Dilutive). OTM trigger: SP ≥ closing price on day before ex-date.
+- **Source**: STOXX Calculation Guide §8.1.4, §8.1.4.1, §8.1.4.2 (Apr 2026)
 
 ### Solactive
 - **PAF Formula**: NULL
@@ -373,13 +381,14 @@ created: 2026-04-17
 - **Threshold**: NULL
 
 ### STOXX
-- **PAF Formula**: `padj = pt-1 × A / B`
-- **Divisor Impact**: Yes — increases
-- **PR Treatment**: Price adjusted
-- **TR/NTR Treatment**: Adjusted
-- **Timing**: Ex-date
-- **Grace Period**: Immediate implementation
-- **Threshold**: NULL
+- **PAF Formula**: `padj = pt-1 × A / B`. Free float market cap weighted: `sadj = st-1 × B / A`. Price weighted with weighting factors: `wfadj = wft-1 × B / A`.
+- **Divisor Impact**: No change — divisor absorbs the market cap change from adjusted price × new shares
+- **PR Treatment**: Price index adjusted: `padj = pt-1 × A / B` (split) or `padj = pt-1 × A / B` with `sadj = st-1 × B / A` (reverse split/consolidation)
+- **TR/NTR Treatment**: Same as price index — no separate treatment for split/consolidation
+- **Timing**: Ex-date — 2 trading days' notice for extraordinary share changes
+- **Grace Period**: 2 trading days' notice for extraordinary changes (≥±10% share change from one trading day to next)
+- **Threshold**: ±10% share change from one trading day to next = extraordinary announcement
+- **Source**: STOXX Calculation Guide §8.1.3 (Apr 2026)
 
 ### Solactive
 - **PAF Formula**: NULL
@@ -440,13 +449,14 @@ created: 2026-04-17
 - **Threshold**: 10% rule for tax adjustments if >10% of share price
 
 ### STOXX
-- **PAF Formula**: `padj = pt-1 × A / (A + B)` similar to special dividend
-- **Divisor Impact**: Yes
-- **PR Treatment**: Price adjusted
-- **TR/NTR Treatment**: Adjusted
-- **Timing**: Ex-date
-- **Grace Period**: 2-day notice
-- **Threshold**: NULL
+- **PAF Formula**: Treated as combination of cash/special dividend with reverse split. Regular cash dividend: `padj = pt-1 - Divt` (GR), `padj = pt-1 - Divt × (1 – 𝜏)` (NTR/PR for special). Special dividend: `padj = [pt-1 - capital return × (1 – 𝜏)] × A / B`. `sadj = st-1 × B / A` for free float market cap indices.
+- **Divisor Impact**: Yes — decreases (treated as dividend component + reverse split share adjustment)
+- **PR Treatment**: Treated as special cash dividend: Price index adjusted (`padj = [pt-1 - capital return × (1 – 𝜏)] × A / B`). Regular cash dividend: no PR adjustment.
+- **TR/NTR Treatment**: Gross Return: `padj = pt-1 - Divt`. Net Return: `padj = pt-1 - Divt × (1 – 𝜏)`. Withholding tax applied where 𝜏 > 0.
+- **Timing**: Ex-date — 2 trading days' notice required, implemented next trading day after announcement
+- **Grace Period**: 2 trading days' notice for implementation
+- **Threshold**: Company-defined as extraordinary distribution = immediate treatment
+- **Source**: STOXX Calculation Guide §8.1.6 (Apr 2026)
 
 ### Solactive
 - **PAF Formula**: NULL
@@ -507,13 +517,15 @@ created: 2026-04-17
 - **Threshold**: NULL
 
 ### STOXX
-- **PAF Formula**: Artificial price: Cash=Cash term, Stock=Close×Stock term, Cash&Stock=Cash+Close×Stock
-- **Divisor Impact**: Yes
-- **PR Treatment**: Deleted at terms price
-- **TR/NTR Treatment**: Adjusted
-- **Timing**: Upon completion, announced immediately
-- **Grace Period**: 2-day implementation
-- **Threshold**: 85% acquisition or <10% free float for deletion
+- **PAF Formula**: Deletion at last traded price; if not trading: artificial price = Cash term | Close price acquirer × Stock term | Cash + Close price acquirer × Stock term | Cash term (for Cash or Stock default option). For free float market cap indices: `sadj = st-1 × B / A`. `wfadj = wft-1 × pt-1 / padj` for price weighted indices.
+- **Divisor Impact**: Yes — adjusts to maintain index continuity when target deleted and surviving stock replaces largest original
+- **PR Treatment**: Target: deleted at last traded or artificial price. Acquirer: divisor absorbs market cap change. Surviving stock replaces largest original stock in Benchmark indices.
+- **TR/NTR Treatment**: Same as price index — no separate TR/NTR treatment for M&A
+- **Timing**: When ALL conditions fulfilled (shareholder approval, regulatory approval, minimum acceptances, other conditions). Changes announced immediately, implemented 2 trading days later, effective next trading day after implementation.
+- **Grace Period**: 2 trading days' notice. If deletion effective within 2 trading days after review effective date → implemented at review effective date (if 2 days' notice can be given).
+- **Threshold**: Deletion trigger (M&A): ≥85% of shares acquired through tender offer AND remaining free float <10%. If only one condition met: deferred to next quarterly review. Free float adjustment: change ≥5 percentage points in free float factor triggers extraordinary adjustment.
+- **Key Difference**: STOXX requires BOTH ≥85% acquired AND Float <10%. S&P uses Float <15% OR ≥90% acceptance. FTSE uses ≥90% held OR Float <5%. Solactive uses Float <15% + unconditional deal. Scoped to STOXX Europe 600 (SXXR) and STOXX Europe 600 PAB (SXXPPAB).
+- **Source**: STOXX Calculation Guide §8.3.1, §8.3.2 (Apr 2026)
 
 ### Solactive
 - **PAF Formula**: NULL
@@ -574,13 +586,14 @@ created: 2026-04-17
 - **Threshold**: NULL
 
 ### STOXX
-- **PAF Formula**: Target free float adjustment during tender
-- **Divisor Impact**: Yes
-- **PR Treatment**: Free float adjusted at 85%/10% threshold
-- **TR/NTR Treatment**: Adjusted
-- **Timing**: Upon results publication
-- **Grace Period**: 2-day implementation
-- **Threshold**: 85% acquisition or <10% free float
+- **PAF Formula**: Free float adjustment of target during tender offer: if conditions met (≥85% acquired AND Float <10%) → target deleted. If only one condition met → no immediate deletion. Extraordinary free float adjustment if change ≥5 percentage points.
+- **Divisor Impact**: Yes — when target deleted, surviving stock replaces largest original stock. Divisor adjusted to absorb market cap change.
+- **PR Treatment**: Target deleted at last traded or artificial price. Acquirer shares adjusted per exchange terms.
+- **TR/NTR Treatment**: Same as PR — no separate TR/NTR treatment
+- **Timing**: Upon publication of results of each tender offer period (or extension result). Changes announced immediately, implemented 2 trading days later, effective next trading day after implementation.
+- **Grace Period**: 2 trading days' notice. Extraordinary free float adjustment: if effective during review implementation week → aligned with review effective date (provided 2 trading days' notice can be given).
+- **Threshold**: Deletion: ≥85% acquired through tender AND remaining Float <10%. Free float adjustment trigger: change ≥5 percentage points.
+- **Source**: STOXX Calculation Guide §8.3.1, §8.3.1.1 (Apr 2026)
 
 ### Solactive
 - **PAF Formula**: NULL
@@ -775,13 +788,14 @@ created: 2026-04-17
 - **Threshold**: NULL
 
 ### STOXX
-- **PAF Formula**: `padj = pt-1 × A / (A + B)` or similar
-- **Divisor Impact**: Yes
-- **PR Treatment**: Price adjusted
-- **TR/NTR Treatment**: Adjusted
-- **Timing**: Ex-date
-- **Grace Period**: 2-day
-- **Threshold**: NULL
+- **PAF Formula**: Treated as special cash dividend: Regular cash dividend component: `padj = pt-1 - Divt` (GR only) or `padj = pt-1 - Divt × (1 – 𝜏)` (NTR/PR). Special dividend component: `padj = pt-1 - Divt × (1 – 𝜏)` for Price, GR, NTR. With reverse split component: `padj = [pt-1 - capital return × (1 – 𝜏)] × A / B`.
+- **Divisor Impact**: Yes — decreases from dividend component; reverse split adjusts shares (`sadj = st-1 × B / A`)
+- **PR Treatment**: Price index adjusted when treated as special dividend: `padj = [pt-1 - capital return × (1 – 𝜏)] × A / B`. Regular cash dividend: no PR adjustment.
+- **TR/NTR Treatment**: Gross Return: `padj = pt-1 - Divt`. Net Return: `padj = pt-1 - Divt × (1 – 𝜏)`. Withholding tax 𝜏 applied where applicable.
+- **Timing**: Ex-date — 2 trading days' notice required
+- **Grace Period**: 2 trading days' notice for implementation
+- **Threshold**: Company-defined as extraordinary = immediate treatment. No formal percentage threshold.
+- **Source**: STOXX Calculation Guide §8.1.6 (Return of Capital and Share Consolidation) (Apr 2026)
 
 ### Solactive
 - **PAF Formula**: NULL

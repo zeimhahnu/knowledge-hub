@@ -12,6 +12,8 @@ import {
   AlertTriangleIcon,
   ScaleIcon,
   TrendingUpIcon,
+  FileTextIcon,
+  NetworkIcon,
 } from "lucide-react";
 
 // ─── Glossary with tooltips ─────────────────────────────────────────────────
@@ -726,6 +728,20 @@ export default function VendorDashboard() {
             <div className="flex items-center gap-3">
               <Link href="/" className="rounded-lg border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent transition-colors">
                 Home
+              </Link>
+              <Link
+                href="/vendors/iso-taxonomy"
+                className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent transition-colors"
+              >
+                <NetworkIcon className="h-3.5 w-3.5" />
+                ISO CAEV Taxonomy
+              </Link>
+              <Link
+                href="/vendors/event-extraction"
+                className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent transition-colors"
+              >
+                <FileTextIcon className="h-3.5 w-3.5" />
+                Event Parameters
               </Link>
               <button
                 onClick={() => setShowGlossary(!showGlossary)}
