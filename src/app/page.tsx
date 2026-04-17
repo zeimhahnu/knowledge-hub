@@ -108,21 +108,39 @@ const TREE_STEPS = [
   },
   {
     step: 3,
-    question: "Is the resulting entity index-eligible?",
-    hint: "Spin-off child, new shares, or distributed security — must meet size, liquidity, sector, domicile rules.",
+    question: "Is the resulting entity INDEX-ELIGIBLE?",
+    hint: "This checks if the spin-off child, new shares, or distributed security is ALLOWED in the index at all — size, liquidity, sector, domicile. If NOT eligible: no vendor adds it. Divergence ends.",
     options: [
-      { label: "Eligible", sub: "Continue to threshold check", color: "bg-green-500/10 border-green-500/30 text-green-400" },
-      { label: "Not eligible", sub: "All vendors skip — divergence ends here", color: "bg-red-500/10 border-red-500/30 text-red-400" },
+      { label: "Eligible", sub: "Could be added — continue to Step 4", color: "bg-green-500/10 border-green-500/30 text-green-400" },
+      { label: "Not eligible", sub: "No vendor adds it — divergence ends here", color: "bg-red-500/10 border-red-500/30 text-red-400" },
     ],
   },
   {
     step: 4,
-    question: "Does it exceed each vendor's recognition threshold?",
-    hint: "Most common divergence point. Below-threshold = deferred to QIR. Solactive GPR Global 100 is semi-annual.",
+    question: "Does it exceed each vendor's MATERIALITY threshold?",
+    hint: "Different from Step 3. Step 3 = can this entity be in the index at all? Step 4 = is this event BIG enough to trigger adjustment NOW? Below threshold = deferred to QIR. This is the most common divergence point.",
     options: [
-      { label: "Above all", sub: "All vendors should recognise", color: "bg-green-500/10 border-green-500/30 text-green-400" },
-      { label: "Mixed", sub: "Divergence is HERE — check vendor thresholds", color: "bg-amber-500/10 border-amber-500/30 text-amber-400" },
-      { label: "Below all", sub: "Deferred to QIR or semi-annual review", color: "bg-muted/20 border-muted text-muted-foreground" },
+      { label: "Above all thresholds", sub: "All vendors recognise — check timing", color: "bg-green-500/10 border-green-500/30 text-green-400" },
+      { label: "Mixed — some above, some below", sub: "Divergence is HERE — check each vendor threshold table", color: "bg-amber-500/10 border-amber-500/30 text-amber-400" },
+      { label: "Below all thresholds", sub: "Deferred to QIR. Solactive GPR Global 100 is semi-annual — events can miss an entire cycle", color: "bg-muted/20 border-muted text-muted-foreground" },
+    ],
+  },
+  {
+    step: 5,
+    question: "Is it within each vendor's coverage window?",
+    hint: "All vendors use T-5: data received on 17 Apr reflects 16 Apr close, covering up to 23 Apr. If the event falls within the T-5 coverage window, vendors send projection data. If outside the window, it may not appear in projections until the next update cycle.",
+    options: [
+      { label: "Within coverage window", sub: "T-5 coverage — vendor sends projection data", color: "bg-green-500/10 border-green-500/30 text-green-400" },
+      { label: "Outside coverage window", sub: "Not yet in projection data — watch for next update cycle", color: "bg-amber-500/10 border-amber-500/30 text-amber-400" },
+    ],
+  },
+  {
+    step: 6,
+    question: "When does each vendor actually process it?",
+    hint: "Projection data ≠ effective adjustment. The ex-date and effective date may differ from when vendors first publish the event. Check the timing flow on the Vendors page for each event type.",
+    options: [
+      { label: "Check vendor timing flow", sub: "Ex-date vs effective date — each vendor handles differently", color: "bg-blue-500/10 border-blue-500/30 text-blue-400" },
+      { label: "Timeline is aligned", sub: "All vendors show at same time — no timing divergence", color: "bg-muted/20 border-muted text-muted-foreground" },
     ],
   },
 ];
@@ -293,17 +311,71 @@ export default function Home() {
               <span className="text-foreground">{stepAnswers[1]}</span>
             </p>
             <p className="mb-4 text-sm text-muted-foreground">
-              Now check the exact vendor thresholds for this scenario on the Vendors page.
+              Now check the exact vendor thresholds, timing flow, and coverage window on the Vendors page.
             </p>
             <Link
               href="/vendors/"
               className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
             >
-              Go to Vendor Thresholds
+              Go to Vendor Thresholds &amp; Timing
               <ArrowRightIcon className="h-4 w-4" />
             </Link>
           </motion.div>
         )}
+
+        {/* ── Event Timeline ──────────────────────────────────────────── */}
+        <div className="mt-12 rounded-2xl border border-border bg-card p-6">
+          <h3 className="mb-4 text-sm font-semibold">How a Corporate Action Moves Through the System</h3>
+          <div className="relative">
+            {/* Timeline line */}
+            <div className="absolute left-4 top-0 bottom-0 w-px bg-border" />
+            <div className="space-y-5">
+              {[
+                {
+                  phase: "1. Announcement",
+                  desc: "Company announces the event: terms, ratio, distribution date. All vendors receive and monitor.",
+                  vendors: "All vendors",
+                  icon: "📢",
+                },
+                {
+                  phase: "2. Coverage Window (T-5)",
+                  desc: "Data as of Apr 16 (close) covers events up to Apr 23. Vendors publish open constituent projections — this is what appears in your feed.",
+                  vendors: "All vendors: T-5 window",
+                  icon: "📡",
+                },
+                {
+                  phase: "3. Projection Data Sent",
+                  desc: "Vendor sends the event to your projection feed. Some vendors (MSCI, MSTAR) may publish earlier due to longer grace periods. Others wait for confirmed terms.",
+                  vendors: "MSCI, S&P, FTSE, STOXX, Solactive, Morningstar, VettaFi",
+                  icon: "📤",
+                },
+                {
+                  phase: "4. Ex-Date",
+                  desc: "First day the security trades without the dividend/right/entitlement. Price adjustment applied to parent. Spin-off child begins transition. Vendor-specific grace periods active.",
+                  vendors: "All vendors apply on ex-date (with vendor-specific logic)",
+                  icon: "📅",
+                },
+                {
+                  phase: "5. Effective / Completion Date",
+                  desc: "Deal closes, spin-off distribution completes, shares settled. Target deleted. Acquirer adjusted. Divisor finalised. All remaining placeholder prices resolved.",
+                  vendors: "All vendors finalise on effective date",
+                  icon: "✅",
+                },
+              ].map((item, i) => (
+                <div key={i} className="relative flex items-start gap-4 pl-10">
+                  <div className="absolute left-2.5 top-1 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-border bg-card text-[10px]">
+                    {i + 1}
+                  </div>
+                  <div>
+                    <div className="mb-0.5 text-xs font-semibold text-foreground">{item.phase}</div>
+                    <p className="mb-1 text-[11px] text-muted-foreground leading-relaxed">{item.desc}</p>
+                    <div className="rounded-full bg-muted/50 px-2 py-0.5 text-[10px] text-muted-foreground">{item.vendors}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ── Coverage Period (supplementary) ───────────────────────────── */}
