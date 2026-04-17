@@ -305,12 +305,12 @@ export default function Home() {
             </div>
             <p className="text-sm text-muted-foreground mb-4">
               The decision tree narrows it to a specific step. Then use the full{" "}
-              <a href="/vendors" className="text-primary underline">Vendor Methodology Matrix</a>{" "}
+              <a href="/knowledge-hub/vendors/" className="text-primary underline">Vendor Methodology Matrix</a>{" "}
               to see exactly which rule differs at that step — threshold values, timing,
               grace periods, and adjustment formulas — all compared side by side.
             </p>
             <a
-              href="/vendors"
+              href="/knowledge-hub/vendors/"
               className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90"
             >
               Open Vendor Methodology Matrix
@@ -481,7 +481,7 @@ export default function Home() {
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <a
-            href="/vendors"
+            href="/knowledge-hub/vendors/"
             className="inline-flex items-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90"
           >
             <BookOpenIcon className="h-4 w-4" />
