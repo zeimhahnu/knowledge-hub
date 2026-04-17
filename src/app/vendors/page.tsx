@@ -497,7 +497,7 @@ const EVENTS: EventType[] = [
       { vendor: "MSCI", value: "Applied when the deal is unconditional — all regulatory and shareholder approvals received.", note: "No fixed percentage threshold — judgment based on deal certainty" },
       { vendor: "S&P DJI", value: "Float <15% OR >=90% shareholder acceptance -> immediate.", note: "Two separate triggers. Float <15% can fire before 90% acceptance — target removed before deal closes" },
       { vendor: "FTSE Russell", value: ">=90% held OR Float <5% -> deleted.", note: ">=90% held: similar to S&P 90% acceptance. Float <5%: independent of deal completion" },
-      { vendor: "STOXX", value: ">=85% acquired OR Float <10% -> deleted.", note: "85% is slightly more aggressive than S&P/FTSE. Float <10% is less aggressive than FTSE <5%." },
+      { vendor: "STOXX", value: ">=85% acquired through tender offer AND remaining Float <10% -> deleted.", note: "Two conditions must BOTH be met. 85% threshold applies only to the acquired stake through the offer (not total shares). If <85%: no immediate action — deferred to quarterly review.¹" },
     ],
     timingFlow: [
       { phase: "Announcement", what: "Deal announced: exchange ratio, conditions, timeline. All vendors monitor.", who: ["All vendors"] },
@@ -505,9 +505,9 @@ const EVENTS: EventType[] = [
       { phase: "Effective Date", what: "Target deleted at last traded price. Acquirer shares adjusted per exchange ratio. Divisor adjusted.", who: ["All vendors: same conceptual treatment, different thresholds"] },
     ],
     keyTerms: ["Divisor Adjustment", "M&A", "Effective Date", "Conditional vs Unconditional"],
-    criticalRule: "S&P Float <15% trigger can delete the target before 90% acceptance — this is aggressive. FTSE requires >=90% held OR Float <5%. STOXX requires >=85% acquired. Solactive requires Float <15% + unconditional. These different thresholds can cause the same deal to appear in one vendor's projection data before another's.",
+    criticalRule: "S&P Float <15% trigger can delete the target before 90% acceptance — this is aggressive. FTSE requires >=90% held OR Float <5%. STOXX requires BOTH conditions met (>=85% acquired AND Float <10%). Solactive requires Float <15% + unconditional. These different thresholds can cause the same deal to appear in one vendor's projection data before another's.¹",
     comparisonFields: [
-      { label: "Deletion Threshold", values: { MSCI: "Deal unconditional", "S&P DJI": "Float <15% OR >=90% acceptance", "FTSE Russell": ">=90% held OR Float <5%", STOXX: ">=85% acquired OR Float <10%", Solactive: "Float <15% + unconditional (2 BD notice)", Morningstar: "When completed", VettaFi: "N/A" } },
+      { label: "Deletion Threshold", values: { MSCI: "Deal unconditional", "S&P DJI": "Float <15% OR >=90% acceptance", "FTSE Russell": ">=90% held OR Float <5%", STOXX: ">=85% acquired¹ AND Float <10%", Solactive: "Float <15% + unconditional (2 BD notice)", Morningstar: "When completed", VettaFi: "N/A" } },
       { label: "Acquirer Adjustment", values: { MSCI: "Per exchange terms", "S&P DJI": "Per exchange terms", "FTSE Russell": "Per exchange terms", STOXX: "Adjusted", Solactive: "Adjusted", Morningstar: "Adjusted", VettaFi: "N/A" } },
     ],
   },
@@ -958,6 +958,12 @@ export default function VendorDashboard() {
               <div>Morningstar — Corporate Actions Methodology (Jan 2026)</div>
               <div>VettaFi — Corporate Action Initiators Methodology + Index Maintenance Policy (Apr 2026)</div>
               <div>MSCI — Corporate Events Methodology (2026)</div>
+
+              {/* Footnotes */}
+              <div className="mt-4 space-y-1 border-t border-border/50 pt-3">
+                <div className="font-semibold uppercase tracking-wider text-muted-foreground/60">Footnotes</div>
+                <div><sup>1</sup> STOXX thresholds apply specifically to <strong>STOXX Europe 600 (SXXR)</strong> and <strong>STOXX Europe 600 PAB (SXXPPAB)</strong>. The deletion trigger requires BOTH: (a) ≥85% of shares acquired through the tender offer, AND (b) remaining free float of the target falls below 10%. If condition (a) is not met, no immediate deletion occurs — action is deferred to the next quarterly review. This is distinct from Solactive's trigger, which is free float &lt;15% (regardless of acceptance level) plus deal being unconditional.</div>
+              </div>
             </div>
           </main>
         </div>
