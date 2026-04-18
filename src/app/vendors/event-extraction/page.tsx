@@ -106,12 +106,12 @@ function renderMarkdown(md: string): string {
     const bodyRows = rows.slice(1);
     let table = `<table style="width:100%;border-collapse:collapse;font-size:0.8rem;margin-bottom:1.5rem;overflow-x:auto;display:block;">`;
     table += `<thead><tr style="background:oklch(0.2 0.015 260);">`;
-    table += headerCells.map((c, i) => `<th style="padding:0.5rem 0.75rem;text-align:left;font-weight:600;color:oklch(0.72 0.19 250);border-bottom:1px solid oklch(0.25 0.015 260);white-space:nowrap;">${inline(c)}</th>`).join("");
+    table += headerCells.map((c) => `<th style="padding:0.5rem 0.75rem;text-align:left;font-weight:600;color:oklch(0.72 0.19 250);border-bottom:1px solid oklch(0.25 0.015 260);white-space:nowrap;">${inline(c)}</th>`).join("");
     table += `</tr></thead><tbody>`;
     bodyRows.forEach(row => {
       const cells = row.slice(1, -1).split("|").map(c => c.trim());
       table += `<tr style="border-bottom:1px solid oklch(0.2 0.015 260);">`;
-      table += cells.map((c, i) => `<td style="padding:0.4rem 0.75rem;vertical-align:top;color:oklch(0.75 0.01 260);white-space:nowrap;">${inline(c)}</td>`).join("");
+      table += cells.map((c) => `<td style="padding:0.4rem 0.75rem;vertical-align:top;color:oklch(0.75 0.01 260);white-space:nowrap;">${inline(c)}</td>`).join("");
       table += `</tr>`;
     });
     table += `</tbody></table>`;

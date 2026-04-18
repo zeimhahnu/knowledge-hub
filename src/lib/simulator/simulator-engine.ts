@@ -34,7 +34,7 @@ function businessDaysAfterThrough(fromIso: string, toIso: string): number | null
   const to = new Date(toIso + "T12:00:00");
   if (Number.isNaN(from.getTime()) || Number.isNaN(to.getTime())) return null;
   if (to.getTime() < from.getTime()) return 0;
-  let cur = new Date(from.getTime());
+  const cur = new Date(from.getTime());
   let count = 0;
   while (true) {
     cur.setDate(cur.getDate() + 1);
