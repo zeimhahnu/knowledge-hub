@@ -30,8 +30,17 @@ export type IndexReturnVariant = "pr" | "tr" | "ntr" | "unknown";
 
 export type Relevance = "high" | "medium" | "low";
 
+/** Optional numeric hints — empty string in UI means “not provided”. */
+export type SimulatorMetrics = {
+  dividendYieldPct: string;
+  freeFloatChangePp: string;
+  tenderAcceptancePct: string;
+  rightsDiscountPct: string;
+};
+
 export type SimulatorInput = {
-  eventClass: EventClass;
+  /** High-level filter for which event types appear — class is implied by `eventFamily`. */
+  eventCategory: EventClass;
   eventFamily: EventFamily;
   /** Sub-fields — only relevant subsets used per family */
   rightsItm: RightsItm;
@@ -42,6 +51,7 @@ export type SimulatorInput = {
   spinoffPhase: SpinoffPhase;
   dividendFlavor: DividendFlavor;
   indexReturnVariant: IndexReturnVariant;
+  metrics: SimulatorMetrics;
   effectiveDate: string; // YYYY-MM-DD
   exDate: string;
   dataAsOf: string; // YYYY-MM-DD

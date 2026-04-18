@@ -212,7 +212,7 @@ export default function Home() {
                 </div>
               </motion.div>
             </div>
-            <div className="lg:sticky lg:top-8">
+            <div className="min-w-0 lg:self-start">
               <ProjectionGapSimulator />
             </div>
           </div>

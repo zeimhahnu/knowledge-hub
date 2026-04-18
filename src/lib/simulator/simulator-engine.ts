@@ -1,5 +1,6 @@
 import type { VendorId } from "@/lib/vendors";
 import { vendorLabel } from "@/lib/vendors";
+import { getEventClassFromFamily, humanFamily } from "@/lib/simulator/taxonomy";
 import type {
   EventFamily,
   Hypothesis,
@@ -8,7 +9,7 @@ import type {
   SimulatorResult,
 } from "@/lib/simulator/types";
 
-const RULES_VERSION = "1.0.0";
+const RULES_VERSION = "1.1.0";
 
 const DISCLAIMER =
   "This simulator produces possible explanations only. It does not replace official vendor methodology, notices, or your internal policy. Always confirm with vendor documentation and primary sources.";
@@ -26,7 +27,6 @@ function formatIsoDate(iso: string): string {
 
 /**
  * Business days strictly after `fromIso` through `toIso` inclusive (Mon–Fri only; ignores holidays).
- * Wed → next Wed = 5.
  */
 function businessDaysAfterThrough(fromIso: string, toIso: string): number | null {
   if (!fromIso || !toIso) return null;
@@ -75,8 +75,17 @@ function onlyMissingPresent(
   return { onlyMissing, onlyPresent };
 }
 
+function parseOptionalPct(raw: string): number | null {
+  const t = raw.trim().replace(/%/g, "");
+  if (t === "") return null;
+  const n = Number.parseFloat(t);
+  if (!Number.isFinite(n)) return null;
+  return n;
+}
+
 function buildSummary(input: SimulatorInput): string {
-  const eventLabel = `${input.eventClass === "mandatory" ? "Mandatory" : "Voluntary"} / ${humanFamily(input.eventFamily)}`;
+  const cls = getEventClassFromFamily(input.eventFamily);
+  const eventLabel = `${cls === "mandatory" ? "Mandatory" : "Voluntary"} — ${humanFamily(input.eventFamily)}`;
   const eff = formatIsoDate(input.effectiveDate);
   const asOf = formatIsoDate(input.dataAsOf);
   const miss = listVendors(input.missingVendors);
@@ -87,27 +96,17 @@ function buildSummary(input: SimulatorInput): string {
   return `You described a ${eventLabel} with effective date ${eff}. Projection files as of ${asOf} appear missing for: ${miss || "—"}. Present from: ${pres || "—"}.${note}`;
 }
 
-function humanFamily(f: EventFamily): string {
-  const map: Record<EventFamily, string> = {
-    dividend: "Dividend",
-    split: "Stock split / consolidation",
-    merger: "M&A",
-    spinoff: "Spin-off",
-    rights: "Rights issue",
-    tender: "Tender / buyback",
-    return_of_capital: "Return of capital",
-    delisting: "Delisting",
-    other: "Other corporate action",
-  };
-  return map[f];
-}
-
 export function runSimulator(input: SimulatorInput): SimulatorResult {
   const hypotheses: Hypothesis[] = [];
   const { onlyMissing, onlyPresent } = onlyMissingPresent(
     input.missingVendors,
     input.presentVendors,
   );
+  const eventClass = getEventClassFromFamily(input.eventFamily);
+  const divYield = parseOptionalPct(input.metrics.dividendYieldPct);
+  const ffDelta = parseOptionalPct(input.metrics.freeFloatChangePp);
+  const tenderPct = parseOptionalPct(input.metrics.tenderAcceptancePct);
+  const rightsDisc = parseOptionalPct(input.metrics.rightsDiscountPct);
 
   const dup = overlap(input.missingVendors, input.presentVendors);
   if (dup.length > 0) {
@@ -135,8 +134,8 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
   if (bdDataToEffective !== null && bdDataToEffective > 5) {
     hypotheses.push({
       id: "t5-window",
-      title: "T-5 style coverage window",
-      explanation: `Your "as of" data date (${formatIsoDate(input.dataAsOf)}) is more than five business days before the effective date (${formatIsoDate(input.effectiveDate)}). Vendors commonly publish open-constituent projections for events that fall within a forward coverage window from the data date. Events far outside that window may not appear in projection feeds yet for some vendors, even if others publish earlier placeholders or notices.`,
+      title: "Coverage window vs effective date",
+      explanation: `Your "as of" data date (${formatIsoDate(input.dataAsOf)}) is more than five business days before the effective date (${formatIsoDate(input.effectiveDate)}). Vendors often publish open-constituent projections for events within a forward window from the data date. Events far outside that window may not appear in some feeds yet, even if others publish earlier placeholders or notices.`,
       relevance: "high",
       appliesToVendors: onlyMissing,
     });
@@ -155,13 +154,73 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     }
   }
 
-  if (input.eventClass === "voluntary") {
+  if (eventClass === "voluntary") {
     hypotheses.push({
       id: "voluntary-uncertainty",
-      title: "Voluntary event — participation unknown",
+      title: "Voluntary event — participation may still be open",
       explanation:
-        "Rights issues, tenders, and similar voluntary actions often require confirmed subscription or acceptance levels before all vendors adjust floats or share counts. It is common for one vendor to reflect partial information (or an early line) while another waits for final results — especially where free-float or materiality thresholds differ.",
+        "Rights issues, tenders, and similar voluntary actions often need confirmed subscription or acceptance before every vendor adjusts floats or share counts. One feed may show an early or provisional line while another waits for final results — especially where free-float or materiality thresholds differ.",
       relevance: "high",
+      appliesToVendors: onlyMissing,
+    });
+  }
+
+  if (input.eventFamily === "dividend" && divYield !== null) {
+    if (input.dividendFlavor === "special" && divYield >= 5) {
+      hypotheses.push({
+        id: "div-yield-special-large",
+        title: "Large special dividend relative to price",
+        explanation: `You indicated a dividend yield of about ${divYield}% of price. A large special distribution can change how vendors classify the event (e.g. return of capital vs dividend) and whether it is deferred or treated across PR vs TR series. Some feeds wait for confirmed gross or net amounts before publishing a projection line.`,
+        relevance: "high",
+        appliesToVendors: onlyMissing,
+      });
+    } else if (divYield >= 3 && input.dividendFlavor !== "ordinary") {
+      hypotheses.push({
+        id: "div-yield-material",
+        title: "Materiality relative to price",
+        explanation: `A dividend of roughly ${divYield}% of price may cross materiality thresholds for some vendors but not others, or may be handled differently on PR vs TR. Below-threshold amounts can be deferred to the next review cycle on some indices.`,
+        relevance: "medium",
+        appliesToVendors: onlyMissing,
+      });
+    }
+  }
+
+  if (ffDelta !== null && Math.abs(ffDelta) >= 5) {
+    hypotheses.push({
+      id: "float-delta",
+      title: "Meaningful free-float change",
+      explanation: `You entered about ${ffDelta >= 0 ? "+" : ""}${ffDelta} percentage points of free-float change. Several vendors apply extraordinary float adjustments or different timing when float moves by roughly five points or more. That alone can explain why one feed already reflects a line and another does not.`,
+      relevance: "high",
+      appliesToVendors: onlyMissing,
+    });
+  }
+
+  if (input.eventFamily === "tender" && tenderPct !== null) {
+    if (tenderPct < 50) {
+      hypotheses.push({
+        id: "tender-low",
+        title: "Low acceptance so far",
+        explanation: `With acceptance around ${tenderPct}%, some methodologies will not treat the offer as sufficiently progressed to adjust or delete lines, while others may publish provisional scenarios. Divergence often appears around the acceptance thresholds each vendor publishes.`,
+        relevance: "medium",
+        appliesToVendors: onlyMissing,
+      });
+    } else if (tenderPct >= 85) {
+      hypotheses.push({
+        id: "tender-high",
+        title: "High acceptance — deletion timing may still differ",
+        explanation: `Around ${tenderPct}% acceptance often crosses key thresholds, but vendors still disagree on when a target line is removed or when float is updated — especially if conditions combine acceptance % with free-float tests.`,
+        relevance: "medium",
+        appliesToVendors: onlyMissing,
+      });
+    }
+  }
+
+  if (input.eventFamily === "rights" && rightsDisc !== null && rightsDisc > 0) {
+    hypotheses.push({
+      id: "rights-discount",
+      title: "Rights trading below intrinsic",
+      explanation: `You noted the rights trade roughly ${rightsDisc}% below theoretical value. Deep discounts can correlate with low exercise expectations; some vendors delay or omit adjustments until the outcome is clearer, while others publish nil-paid lines earlier.`,
+      relevance: "low",
       appliesToVendors: onlyMissing,
     });
   }
@@ -180,7 +239,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     if (input.mnaIndexParties === "acquirer_only") {
       hypotheses.push({
         id: "mna-acquirer-only",
-        title: "Acquirer-only index — adjustment type varies by deal consideration",
+        title: "Acquirer-only index — consideration still drives timing",
         explanation:
           "If only the acquirer is in the index, vendors still disagree on how and when to reflect share count and float changes for stock vs cash consideration, and on confirmation gates. One feed may show an early divisor-related adjustment while another waits for settlement or exchange confirmation.",
         relevance: "medium",
@@ -221,7 +280,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
       if (input.spinoffPhase === "placeholder") {
         hypotheses.push({
           id: "spinoff-phase-placeholder",
-          title: "You are still in the placeholder phase",
+          title: "Still in the placeholder phase",
           explanation:
             "If the child has not yet traded regularly, vendors that require a market price may omit the line from projections until first trade, while others already show a floor or estimated price.",
           relevance: "high",
@@ -269,7 +328,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
         id: "div-special",
         title: "Special dividend — different treatment vs ordinary",
         explanation:
-          "Special dividends can be classified and adjusted differently across vendors (price return vs total return series, timing vs ex-date, and materiality). A vendor missing the line may be applying a different event classification or waiting for confirmed gross/net amounts.",
+          "Special dividends can be classified and adjusted differently across vendors (price return vs total return series, timing vs ex-date, and materiality). A vendor missing the line may be applying a different event classification or waiting for confirmed gross or net amounts.",
         relevance: "medium",
         appliesToVendors: onlyMissing,
       });
@@ -279,7 +338,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
         id: "div-pr-tr-ntr",
         title: "PR vs TR vs NTR series",
         explanation:
-          "Dividend impact is most visible on total-return variants. If you are comparing price-return screens to TR/NTR feeds, apparent mismatches can be series selection rather than missing corporate action data.",
+          "Dividend impact is most visible on total-return variants. If you are comparing price-return screens to TR or NTR feeds, apparent mismatches can be series selection rather than missing corporate action data.",
         relevance: "low",
         appliesToVendors: onlyMissing,
       });
@@ -318,9 +377,9 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
   if (!pilotFamilies.includes(input.eventFamily)) {
     hypotheses.push({
       id: "pilot-stub",
-      title: "Deeper rules coming in a later release",
+      title: "Broader reference may be needed",
       explanation:
-        "Pilot coverage in this version focuses on dividends, splits, M&A, spin-offs, and rights. For this event family, use the Vendor reference for thresholds and timing, and treat simulator output as high-level only.",
+        "The richest rule set here focuses on dividends, splits, M&A, spin-offs, and rights. For this event type, lean on the vendor reference for thresholds and timing, and treat simulator output as a starting point.",
       relevance: "low",
       appliesToVendors: onlyMissing,
     });
@@ -335,8 +394,8 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
   );
 
   const nextStepLinks = [
-    { label: "Vendor thresholds & timing", href: "/vendors/" },
-    { label: "ISO taxonomy cross-reference", href: "/vendors/iso-taxonomy/" },
+    { label: "Vendor thresholds and timing", href: "/vendors/" },
+    { label: "ISO taxonomy", href: "/vendors/iso-taxonomy/" },
     { label: "Event extraction notes", href: "/vendors/event-extraction/" },
   ];
 
