@@ -9,7 +9,7 @@ import type {
   SimulatorResult,
 } from "@/lib/simulator/types";
 
-const RULES_VERSION = "1.1.0";
+const RULES_VERSION = "1.1.1";
 
 const DISCLAIMER =
   "This simulator produces possible explanations only. It does not replace official vendor methodology, notices, or your internal policy. Always confirm with vendor documentation and primary sources.";
