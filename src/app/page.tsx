@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ProjectionGapSimulator } from "@/components/projection-gap-simulator";
+import { SurfaceSection } from "@/components/surface-section";
 import {
   ArrowDownIcon,
   ArrowRightIcon,
@@ -221,7 +222,7 @@ export default function Home() {
 
       {/* ── Real Scenarios ─────────────────────────────────────────────── */}
       <section className="mx-auto max-w-6xl px-6 py-16">
-        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-6 shadow-xl ring-1 ring-white/5 sm:p-8 md:p-10">
+        <SurfaceSection padding="comfortable">
         <div className="mb-8">
           <h2 className="mb-2 text-2xl font-bold">Real Scenarios from Operations</h2>
           <p className="text-sm text-muted-foreground">
@@ -282,12 +283,12 @@ export default function Home() {
             </motion.div>
           )}
         </AnimatePresence>
-        </div>
+        </SurfaceSection>
       </section>
 
       {/* ── Decision Tree ───────────────────────────────────────────────── */}
       <section id="decision-tree" className="mx-auto max-w-6xl border-t border-border px-6 py-16">
-        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-6 shadow-xl ring-1 ring-white/5 sm:p-8 md:p-10">
+        <SurfaceSection padding="comfortable">
         <div className="mb-8">
           <h2 className="mb-2 text-2xl font-bold">Find the Divergence Point</h2>
           <p className="text-sm text-muted-foreground">
@@ -400,12 +401,12 @@ export default function Home() {
             </div>
           </div>
         </div>
-        </div>
+        </SurfaceSection>
       </section>
 
       {/* ── Coverage Period (supplementary) ───────────────────────────── */}
       <section className="mx-auto max-w-6xl border-t border-border px-6 py-12">
-        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-6 shadow-xl ring-1 ring-white/5 sm:p-8">
+        <SurfaceSection padding="compact">
         <div className="mb-4">
           <h2 className="text-sm font-semibold text-muted-foreground">Supplementary — Coverage Period</h2>
         </div>
@@ -426,12 +427,12 @@ export default function Home() {
             ))}
           </div>
         </div>
-        </div>
+        </SurfaceSection>
       </section>
 
       {/* ── Quick Links ─────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-6xl border-t border-border px-6 py-12">
-        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-6 shadow-xl ring-1 ring-white/5 sm:p-8">
+        <SurfaceSection padding="compact">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <Link
             href="/vendors/"
@@ -461,7 +462,7 @@ export default function Home() {
             </p>
           </div>
         </div>
-        </div>
+        </SurfaceSection>
       </section>
     </main>
   );

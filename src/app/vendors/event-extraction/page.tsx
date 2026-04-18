@@ -1,6 +1,8 @@
 import { promises as fs } from "fs";
 import path from "path";
 
+import { SurfaceSection } from "@/components/surface-section";
+
 export default async function EventExtractionPage() {
   const filePath = path.join(
     process.cwd(),
@@ -31,7 +33,7 @@ export default async function EventExtractionPage() {
       </header>
 
       <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
-        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-5 shadow-xl ring-1 ring-white/5 sm:p-8">
+        <SurfaceSection padding="tight">
         <div
           className="prose prose-invert max-w-none"
           style={{
@@ -40,7 +42,7 @@ export default async function EventExtractionPage() {
           }}
           dangerouslySetInnerHTML={{ __html: renderMarkdown(content) }}
         />
-        </div>
+        </SurfaceSection>
       </main>
     </div>
   );

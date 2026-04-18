@@ -127,7 +127,7 @@
     @apply bg-background text-foreground antialiased;
   }
   html {
-    @apply scroll-smooth;
+    @apply scroll-smooth overflow-x-hidden;
   }
   ::-webkit-scrollbar {
     width: 6px;

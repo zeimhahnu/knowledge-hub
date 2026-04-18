@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeftIcon, ArrowRightIcon, CheckIcon } from "lucide-react";
 
+import { surfaceOuterClass } from "@/components/surface-section";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { VENDOR_IDS, vendorLabel, type VendorId } from "@/lib/vendors";
@@ -180,7 +181,10 @@ export function ProjectionGapSimulator() {
   return (
     <section
       id="projection-gap-simulator"
-      className="relative w-full max-w-full min-w-0 overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-5 shadow-2xl shadow-black/25 ring-1 ring-white/5 sm:p-8 md:p-10"
+      className={cn(
+        "relative w-full max-w-full min-w-0 overflow-hidden p-5 shadow-2xl shadow-black/25 sm:p-8 md:p-10",
+        surfaceOuterClass,
+      )}
       aria-labelledby="simulator-heading"
     >
       <div className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-primary/15 blur-3xl" aria-hidden />
@@ -188,7 +192,7 @@ export function ProjectionGapSimulator() {
 
       <div className="relative flex min-w-0 flex-col gap-8 xl:flex-row xl:gap-8">
         <nav
-          className="w-full shrink-0 xl:w-40 xl:max-w-[11rem]"
+          className="w-full shrink-0 xl:w-40 xl:max-w-[11rem] xl:shrink-0"
           aria-label="Simulator steps"
         >
           <span className="mb-1 block text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground xl:sr-only">
