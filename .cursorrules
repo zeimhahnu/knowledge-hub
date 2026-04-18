@@ -1,3 +1,8 @@
+---
+description: 
+alwaysApply: true
+---
+
 # .cursorrules — Knowledge Hub Agent Behavior
 
 > This file defines permanent rules for every Cursor agent working on this codebase.
@@ -57,40 +62,52 @@ Goop → monitors GitHub → Telegram → Alex: "Deployed! [URL]"
 
 ---
 
-## Design Rules (Never Break These)
+## UI/UX & Design Architecture (Universally Adopted Principles)
 
-### Colors
-- Primary: `#007bff` (CTAs, links)
-- Secondary: `#6c757d` (muted text)
-- Background: `#f8f9fa` (light) / `#0f1117` (dark)
-- Border: `#e5e7eb`
-- Always use Tailwind token classes: `bg-primary`, `text-foreground`, `border-border`
+You are not just a coder; you are a Senior UX/UI Architect. Do not rely on arbitrary styling. Every UI decision must be defensible via established design principles.
 
-### Icons
-- **Lucide React ONLY** — never emoji, never raw SVG unless it's a custom logo
-- Sizes: `h-4 w-4` (inline), `h-5 w-5` (buttons), `h-8 w-8` (feature icons)
+### 1. Color Theory & Palette Architecture
+- **No Hardcoded Values:** Never use static hex codes (e.g., `#007bff`). Always use Tailwind CSS semantic variables mapped to HSL or OKLCH spaces (e.g., `bg-primary`, `text-muted-foreground`).
+- **The 60-30-10 Rule:** - 60% Dominant Base (Deep slate/dark mode backgrounds: `bg-background`, `bg-card`).
+  - 30% Secondary (Subtle borders, secondary surfaces, muted text).
+  - 10% Accent/Primary (CTAs, active states, key data highlights).
+- **Semantic Consistency:** Use destructive/success/warning colors exclusively for their intended UX feedback states.
 
-### Components
-- **shadcn/ui primitives first** — button, card, badge, dialog, tabs, table, accordion
-- One component per file: `CorporateActionCard.tsx`
-- Props interface always at top: `interface Props { ... }`
+### 2. Textbook UX Flows & Cognitive Laws
+- **Progressive Disclosure:** Do not overwhelm the user with dense financial data. Use Accordions, Tabs, and Hover Cards (via shadcn/ui) to hide secondary information until requested.
+- **Hick’s Law (Decision Fatigue):** Minimize navigation choices. Group related actions. Avoid complex multi-level dropdowns if a mega-menu or unified dashboard works better.
+- **Fitts’s Law (Click Targets):** Ensure all interactive elements (buttons, links, toggles) have adequate padding (minimum 44x44px touch target).
+- **System Status Visibility:** Never leave the user guessing. Always implement Skeleton loaders for data fetching, disabled states for processing buttons, and Toast notifications for success/error feedback.
 
-### Styling
-- Tailwind ONLY — no inline styles, no CSS modules
-- Standard spacing: `p-2` `p-4` `p-6` `gap-4` `gap-6`
-- Never arbitrary values: `top-[17px]` → use Tailwind scale
+### 3. Layout & Gestalt Principles
+- **The 8pt Grid System:** All padding, margins, and heights must be multiples of 8px (Tailwind scales: `p-2`, `p-4`, `p-8`, `gap-6`). 
+- **Gestalt Law of Proximity:** Group related data visually using Bento Box layouts. Use subtle borders (`border-border`) or elevated cards (`bg-card rounded-xl`) to define data zones.
+- **Negative Space (Macro vs. Micro):** Use generous macro-whitespace between distinct sections to let the layout breathe. Use tight micro-whitespace within components to show relationships.
 
-### Animations
-- **Framer Motion** — fade, stagger, spring presets in design-system.md
-- No CSS transitions for React components
+### 4. Typography & Visual Hierarchy
+- **Scale:** Use a strict typographic scale. Headlines must establish immediate visual dominance (e.g., `text-3xl font-semibold tracking-tight`).
+- **Line Length (Measure):** Text blocks must never exceed ~70 characters per line for readability. Apply `max-w-prose` to article/wiki bodies.
+- **Contrast & Weight:** Differentiate data points using font weight and muted colors (e.g., Label: `text-sm text-muted-foreground`, Value: `text-base font-medium`). 
 
-### Accessibility
-- WCAG 2.1 AA minimum
-- Keyboard navigation on all interactive elements
-- ARIA labels on icon-only buttons
-- Color contrast 4.5:1 minimum
+### 5. Motion UX (Framer Motion)
+- **Purposeful Animation:** Motion must aid spatial orientation, not just look flashy. 
+- **Easing:** Use spring physics for physical interactions (modals, dropdowns) to feel natural. Use linear/ease-in-out for opacity fades.
+- **Staggering:** When rendering lists of financial data or search results, use `staggerChildren` to create a smooth, cascading entrance.
+
+### 6. Accessibility (A11y)
+- **WCAG 2.1 AA Minimum:** Color contrast must meet 4.5:1 for standard text.
+- **Keyboard Navigation:** Every actionable element must be reachable via `Tab` and executable via `Enter/Space`. Include visible `focus-visible:ring` states.
+- **Screen Readers:** Use `aria-label` or `sr-only` text for icon buttons. Ensure tables have `<th>` scopes.
 
 ---
+
+## Technical & Component Constraints
+
+- **shadcn/ui primitives first:** Do not build custom Selects, Dialogs, or Accordions. Import and compose shadcn primitives.
+- **One component per file:** Keep files modular. Define prop interfaces explicitly: `interface Props { ... }` at the top.
+- **Tailwind ONLY:** No inline `style={{}}` attributes, no separate CSS files
+
+
 
 ## File Conventions
 
