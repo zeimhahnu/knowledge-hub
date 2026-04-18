@@ -171,16 +171,16 @@ export function ProjectionGapSimulator() {
   return (
     <section
       id="projection-gap-simulator"
-      className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-5 shadow-2xl shadow-black/25 ring-1 ring-white/5 sm:p-8 md:p-10"
+      className="relative w-full max-w-full min-w-0 overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-5 shadow-2xl shadow-black/25 ring-1 ring-white/5 sm:p-8 md:p-10"
       aria-labelledby="simulator-heading"
     >
       <div className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-primary/15 blur-3xl" aria-hidden />
       <div className="pointer-events-none absolute -bottom-32 -left-16 size-64 rounded-full bg-foreground/5 blur-3xl" aria-hidden />
 
-      <div className="relative flex flex-col gap-8 lg:flex-row lg:gap-10">
+      <div className="relative flex min-w-0 flex-col gap-8 lg:flex-row lg:gap-10">
         {/* Step rail — full labels, no truncation */}
         <nav
-          className="shrink-0 lg:w-52"
+          className="min-w-0 shrink-0 lg:w-52"
           aria-label="Simulator steps"
         >
           <p className="mb-1 text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -236,14 +236,14 @@ export function ProjectionGapSimulator() {
         </nav>
 
         {/* Main panel */}
-        <div className="min-w-0 flex-1">
+        <div className="min-w-0 w-full max-w-full flex-1">
           <div className="mb-6">
             <p className="text-sm leading-relaxed text-muted-foreground">
               A calm walkthrough — tell us what you are seeing. We will suggest plausible reasons, not vendor rulings.
             </p>
           </div>
 
-          <div className="max-h-[min(70vh,640px)] min-h-0 overflow-y-auto overflow-x-hidden pr-1 [-webkit-overflow-scrolling:touch]">
+          <div className="max-h-[min(70vh,640px)] min-h-0 min-w-0 overflow-y-auto overflow-x-auto pr-1 [-webkit-overflow-scrolling:touch]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={step}
@@ -261,7 +261,7 @@ export function ProjectionGapSimulator() {
                     <p className="text-sm leading-relaxed text-muted-foreground">
                       This only filters which event types you can pick next — the simulator still infers mandatory vs voluntary from the event itself.
                     </p>
-                    <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                       <button
                         type="button"
                         onClick={() =>
@@ -275,14 +275,14 @@ export function ProjectionGapSimulator() {
                           })
                         }
                         className={cn(
-                          "rounded-3xl border px-5 py-6 text-left transition-all duration-200",
+                          "min-w-0 rounded-3xl border px-5 py-6 text-left transition-all duration-200",
                           input.eventCategory === "mandatory"
                             ? "border-primary/40 bg-primary/10 shadow-md ring-1 ring-primary/20"
                             : "border-border/80 bg-background/40 hover:border-primary/25 hover:bg-background/60",
                         )}
                       >
                         <span className="text-base font-semibold text-foreground">Mandatory</span>
-                        <span className="mt-2 block text-sm leading-relaxed text-muted-foreground">
+                        <span className="mt-2 block text-pretty text-sm leading-relaxed text-muted-foreground">
                           Dividends, splits, mergers, spin-offs, return of capital, delisting, and similar confirmed actions.
                         </span>
                       </button>
@@ -299,14 +299,14 @@ export function ProjectionGapSimulator() {
                           })
                         }
                         className={cn(
-                          "rounded-3xl border px-5 py-6 text-left transition-all duration-200",
+                          "min-w-0 rounded-3xl border px-5 py-6 text-left transition-all duration-200",
                           input.eventCategory === "voluntary"
                             ? "border-primary/40 bg-primary/10 shadow-md ring-1 ring-primary/20"
                             : "border-border/80 bg-background/40 hover:border-primary/25 hover:bg-background/60",
                         )}
                       >
                         <span className="text-base font-semibold text-foreground">Voluntary</span>
-                        <span className="mt-2 block text-sm leading-relaxed text-muted-foreground">
+                        <span className="mt-2 block text-pretty text-sm leading-relaxed text-muted-foreground">
                           Rights issues, tenders, buybacks — outcomes depend on shareholder participation.
                         </span>
                       </button>
@@ -323,7 +323,7 @@ export function ProjectionGapSimulator() {
                       Showing types that match <span className="font-medium text-foreground">{input.eventCategory === "mandatory" ? "mandatory" : "voluntary"}</span> flows.
                       {impliedClass === "voluntary" ? " Class: voluntary." : " Class: mandatory."}
                     </p>
-                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
                       {allowedFamilies.map((value) => (
                         <button
                           key={value}
@@ -579,7 +579,7 @@ export function ProjectionGapSimulator() {
                       <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                         Rough percentages are fine. Leave blank if unknown — the simulator will ignore that signal.
                       </p>
-                      <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
                         <label className="block space-y-1.5">
                           <span className="text-xs font-medium text-muted-foreground">
                             Dividend yield (% of price)
@@ -698,7 +698,7 @@ export function ProjectionGapSimulator() {
                 {step === 4 && (
                   <div className="space-y-6">
                     <p className="text-base font-medium text-foreground">Vendor picture</p>
-                    <div className="grid gap-6 sm:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                       <div className="rounded-2xl border border-border/70 bg-background/30 p-4">
                         <p className="mb-3 text-sm font-medium text-foreground">Looks missing or empty</p>
                         <div className="flex flex-wrap gap-2">

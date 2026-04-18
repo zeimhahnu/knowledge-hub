@@ -165,14 +165,14 @@ export default function Home() {
           }}
         />
         <div className="relative mx-auto max-w-6xl px-6 py-12 md:py-16">
-          <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-12">
-            <div className="text-center lg:text-left">
+          <div className="grid gap-10 xl:grid-cols-2 xl:items-start xl:gap-12">
+            <div className="min-w-0 text-center xl:text-left">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-4 py-1.5 text-sm lg:mx-0">
+                <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-4 py-1.5 text-sm xl:mx-0">
                   <CompassIcon className="h-4 w-4 text-primary" />
                   Vendor Corp. Action Intelligence
                 </div>
@@ -181,13 +181,13 @@ export default function Home() {
                   <br className="hidden md:block" />
                   <span className="text-primary"> but not the others?</span>
                 </h1>
-                <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground lg:mx-0">
+                <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground xl:mx-0">
                   Same event, same security, different projection data. Use the simulator
                   for a quick hypothesis, or walk the full decision tree — then check vendor
                   thresholds in the reference.
                 </p>
 
-                <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap lg:justify-start">
+                <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap xl:justify-start">
                   <button
                     type="button"
                     onClick={() => {
@@ -212,7 +212,7 @@ export default function Home() {
                 </div>
               </motion.div>
             </div>
-            <div className="min-w-0 lg:self-start">
+            <div className="min-w-0 w-full max-w-full xl:self-start">
               <ProjectionGapSimulator />
             </div>
           </div>
