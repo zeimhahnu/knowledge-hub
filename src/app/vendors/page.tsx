@@ -964,7 +964,7 @@ export default function VendorDashboard() {
               </div>
 
           {/* Main Content */}
-          <main className="min-w-0 flex-1 order-1 lg:order-2">
+          <main className="order-1 min-w-0 flex-1 rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-5 shadow-xl ring-1 ring-white/5 sm:p-8 lg:order-2">
 
             {/* Event Header */}
             <div className="mb-6">

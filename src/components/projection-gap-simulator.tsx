@@ -27,6 +27,15 @@ const STEP_LABELS = [
   "Results",
 ] as const;
 
+const STEP_LABELS_SHORT = [
+  "Category",
+  "Type",
+  "Context",
+  "Dates",
+  "Vendors",
+  "Results",
+] as const;
+
 function todayIso(): string {
   const d = new Date();
   const y = d.getFullYear();
@@ -177,29 +186,34 @@ export function ProjectionGapSimulator() {
       <div className="pointer-events-none absolute -right-24 -top-24 size-72 rounded-full bg-primary/15 blur-3xl" aria-hidden />
       <div className="pointer-events-none absolute -bottom-32 -left-16 size-64 rounded-full bg-foreground/5 blur-3xl" aria-hidden />
 
-      <div className="relative flex min-w-0 flex-col gap-8 lg:flex-row lg:gap-10">
-        {/* Step rail — full labels, no truncation */}
+      <div className="relative flex min-w-0 flex-col gap-8 xl:flex-row xl:gap-8">
         <nav
-          className="min-w-0 shrink-0 lg:w-52"
+          className="w-full shrink-0 xl:w-40 xl:max-w-[11rem]"
           aria-label="Simulator steps"
         >
-          <p className="mb-1 text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground">
+          <span className="mb-1 block text-[11px] font-medium uppercase tracking-[0.2em] text-muted-foreground xl:sr-only">
             Guide
-          </p>
-          <h2 id="simulator-heading" className="mb-6 text-lg font-semibold tracking-tight text-foreground sm:text-xl">
-            Projection gap
+          </span>
+          <h2
+            id="simulator-heading"
+            className="mb-4 text-lg font-semibold tracking-tight text-foreground sm:text-xl xl:mb-3 xl:text-base"
+          >
+            Steps
+            <span className="sr-only"> — projection gap simulator</span>
           </h2>
-          <ol className="flex flex-row gap-1 overflow-x-auto pb-1 lg:flex-col lg:gap-0 lg:overflow-visible lg:pb-0">
+          <ol className="flex flex-row gap-1 overflow-x-auto pb-1 xl:flex-col xl:gap-0.5 xl:overflow-visible xl:pb-0">
             {STEP_LABELS.map((label, i) => {
               const done = i < step || (i === STEP_COUNT - 1 && result !== null);
               const active = i === step;
+              const short = STEP_LABELS_SHORT[i];
               return (
-                <li key={label} className="min-w-0 shrink-0 lg:min-w-0">
+                <li key={label} className="min-w-0 shrink-0">
                   <button
                     type="button"
                     onClick={() => goToStep(i)}
+                    title={label}
                     className={cn(
-                      "flex w-full items-start gap-3 rounded-2xl px-3 py-2.5 text-left transition-colors lg:px-3 lg:py-3",
+                      "flex w-full min-w-0 items-start gap-2 rounded-2xl px-3 py-2.5 text-left transition-colors xl:gap-2 xl:px-2 xl:py-2",
                       active
                         ? "bg-foreground/[0.06] text-foreground"
                         : "text-muted-foreground hover:bg-foreground/[0.04] hover:text-foreground",
@@ -218,13 +232,12 @@ export function ProjectionGapSimulator() {
                     >
                       {done && !active ? <CheckIcon className="size-3.5" /> : i + 1}
                     </span>
-                    <span className="min-w-0 pt-0.5">
-                      <span className="block text-sm font-medium leading-snug whitespace-normal">
-                        {label}
-                      </span>
+                    <span className="min-w-0 flex-1 pt-0.5">
+                      <span className="block text-sm font-medium leading-snug xl:hidden">{label}</span>
+                      <span className="hidden text-xs font-medium leading-snug xl:block">{short}</span>
                       {i === 1 && (
-                        <span className="mt-0.5 block text-xs leading-snug text-muted-foreground whitespace-normal">
-                          {input.eventCategory === "mandatory" ? "Company-driven" : "Shareholder choice"}
+                        <span className="mt-0.5 hidden text-[10px] leading-snug text-muted-foreground xl:block">
+                          {input.eventCategory === "mandatory" ? "Mandatory" : "Voluntary"}
                         </span>
                       )}
                     </span>
@@ -235,15 +248,14 @@ export function ProjectionGapSimulator() {
           </ol>
         </nav>
 
-        {/* Main panel */}
-        <div className="min-w-0 w-full max-w-full flex-1">
+        <div className="min-w-0 w-full max-w-full flex-1 basis-0">
           <div className="mb-6">
             <p className="text-sm leading-relaxed text-muted-foreground">
               A calm walkthrough — tell us what you are seeing. We will suggest plausible reasons, not vendor rulings.
             </p>
           </div>
 
-          <div className="max-h-[min(70vh,640px)] min-h-0 min-w-0 overflow-y-auto overflow-x-auto pr-1 [-webkit-overflow-scrolling:touch]">
+          <div className="max-h-[min(70vh,640px)] min-h-0 min-w-0 overflow-y-auto overflow-x-hidden pr-1 [-webkit-overflow-scrolling:touch]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={step}
@@ -698,12 +710,14 @@ export function ProjectionGapSimulator() {
 
                 {step === 4 && (
                   <div className="space-y-6">
-                    <p className="text-base font-medium text-foreground">Vendor picture</p>
-                    {/* One column until xl so narrow hero columns do not split ~94px tracks; min-w-0 fixes grid/flex overflow */}
-                    <div className="grid min-w-0 grid-cols-1 gap-6 xl:grid-cols-2">
+                    <p className="text-base font-medium text-foreground">Vendors</p>
+                    <div className="grid min-w-0 grid-cols-1 gap-6 2xl:grid-cols-2">
                       <div className="min-w-0 overflow-hidden rounded-2xl border border-border/70 bg-background/30 p-4 sm:p-5">
-                        <p className="mb-3 text-pretty text-sm font-medium leading-snug text-foreground">
-                          Missing or empty in the feed
+                        <p
+                          className="mb-3 text-sm font-medium leading-tight text-foreground"
+                          title="Vendors missing from your projection feed or showing an empty line"
+                        >
+                          Missing in feed
                         </p>
                         <div className="flex min-w-0 flex-wrap gap-2">
                           {VENDOR_IDS.map((id) => (
@@ -717,7 +731,7 @@ export function ProjectionGapSimulator() {
                                 }))
                               }
                               className={cn(
-                                "inline-flex min-h-9 min-w-0 max-w-full shrink break-words rounded-2xl border px-3 py-2 text-center text-xs font-medium leading-snug transition-all sm:text-sm",
+                                "inline-flex min-h-9 shrink-0 whitespace-nowrap rounded-full border px-3 py-2 text-left text-xs font-medium transition-all sm:text-sm",
                                 input.missingVendors.includes(id)
                                   ? "border-primary/50 bg-primary/20 text-foreground"
                                   : "border-border/80 bg-background/60 text-muted-foreground hover:border-primary/30",
@@ -729,8 +743,11 @@ export function ProjectionGapSimulator() {
                         </div>
                       </div>
                       <div className="min-w-0 overflow-hidden rounded-2xl border border-border/70 bg-background/30 p-4 sm:p-5">
-                        <p className="mb-3 text-pretty text-sm font-medium leading-snug text-foreground">
-                          Already in the projection file
+                        <p
+                          className="mb-3 text-sm font-medium leading-tight text-foreground"
+                          title="Vendors that already published this event in the projection file"
+                        >
+                          In the file
                         </p>
                         <div className="flex min-w-0 flex-wrap gap-2">
                           {VENDOR_IDS.map((id) => (
@@ -744,7 +761,7 @@ export function ProjectionGapSimulator() {
                                 }))
                               }
                               className={cn(
-                                "inline-flex min-h-9 min-w-0 max-w-full shrink break-words rounded-2xl border px-3 py-2 text-center text-xs font-medium leading-snug transition-all sm:text-sm",
+                                "inline-flex min-h-9 shrink-0 whitespace-nowrap rounded-full border px-3 py-2 text-left text-xs font-medium transition-all sm:text-sm",
                                 input.presentVendors.includes(id)
                                   ? "border-primary/50 bg-primary/20 text-foreground"
                                   : "border-border/80 bg-background/60 text-muted-foreground hover:border-primary/30",

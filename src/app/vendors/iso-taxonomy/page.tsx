@@ -300,7 +300,8 @@ export default function IsoTaxonomyPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 py-8 space-y-8">
+      <main className="mx-auto max-w-7xl space-y-8 px-4 py-8 sm:px-6">
+        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-5 shadow-xl ring-1 ring-white/5 sm:p-8 space-y-8">
         {/* Hero */}
         <div className="rounded-2xl border border-border bg-gradient-to-br from-card to-background p-6 sm:p-8">
           <div className="flex items-start gap-4">
@@ -502,6 +503,7 @@ export default function IsoTaxonomyPage() {
             <div>:36B:  ELIG/UNIT/1000</div>
             <div>:70E:  ADDB/OFFEROR/ACME CORP</div>
           </div>
+        </div>
         </div>
       </main>
     </div>

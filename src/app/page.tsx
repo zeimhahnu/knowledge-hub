@@ -164,8 +164,8 @@ export default function Home() {
             backgroundSize: "64px 64px",
           }}
         />
-        <div className="relative mx-auto max-w-6xl px-6 py-12 md:py-16">
-          <div className="grid gap-10 xl:grid-cols-2 xl:items-start xl:gap-12">
+        <div className="relative mx-auto max-w-7xl px-6 py-12 md:py-16">
+          <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] xl:items-start xl:gap-12">
             <div className="min-w-0 text-center xl:text-left">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -220,7 +220,8 @@ export default function Home() {
       </section>
 
       {/* ── Real Scenarios ─────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-5xl px-6 py-16">
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-6 shadow-xl ring-1 ring-white/5 sm:p-8 md:p-10">
         <div className="mb-8">
           <h2 className="mb-2 text-2xl font-bold">Real Scenarios from Operations</h2>
           <p className="text-sm text-muted-foreground">
@@ -281,10 +282,12 @@ export default function Home() {
             </motion.div>
           )}
         </AnimatePresence>
+        </div>
       </section>
 
       {/* ── Decision Tree ───────────────────────────────────────────────── */}
-      <section id="decision-tree" className="mx-auto max-w-5xl px-6 py-16 border-t border-border">
+      <section id="decision-tree" className="mx-auto max-w-6xl border-t border-border px-6 py-16">
+        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-6 shadow-xl ring-1 ring-white/5 sm:p-8 md:p-10">
         <div className="mb-8">
           <h2 className="mb-2 text-2xl font-bold">Find the Divergence Point</h2>
           <p className="text-sm text-muted-foreground">
@@ -294,7 +297,7 @@ export default function Home() {
 
         <div className="space-y-6">
           {TREE_STEPS.map((s) => (
-            <div key={s.step} className="rounded-2xl border border-border bg-card overflow-hidden">
+            <div key={s.step} className="overflow-hidden rounded-xl border border-border bg-background/40">
               <div className="flex items-start gap-4 p-5">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">
                   {s.step}
@@ -345,7 +348,7 @@ export default function Home() {
         )}
 
         {/* ── Event Timeline ──────────────────────────────────────────── */}
-        <div className="mt-12 rounded-2xl border border-border bg-card p-6">
+        <div className="mt-12 rounded-xl border border-border bg-background/40 p-6">
           <h3 className="mb-4 text-sm font-semibold">How a Corporate Action Moves Through the System</h3>
           <div className="relative">
             {/* Timeline line */}
@@ -397,10 +400,12 @@ export default function Home() {
             </div>
           </div>
         </div>
+        </div>
       </section>
 
       {/* ── Coverage Period (supplementary) ───────────────────────────── */}
-      <section className="mx-auto max-w-5xl px-6 py-12 border-t border-border">
+      <section className="mx-auto max-w-6xl border-t border-border px-6 py-12">
+        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-6 shadow-xl ring-1 ring-white/5 sm:p-8">
         <div className="mb-4">
           <h2 className="text-sm font-semibold text-muted-foreground">Supplementary — Coverage Period</h2>
         </div>
@@ -421,11 +426,13 @@ export default function Home() {
             ))}
           </div>
         </div>
+        </div>
       </section>
 
       {/* ── Quick Links ─────────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-5xl px-6 py-12 border-t border-border">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <section className="mx-auto max-w-6xl border-t border-border px-6 py-12">
+        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-6 shadow-xl ring-1 ring-white/5 sm:p-8">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <Link
             href="/vendors/"
             className="rounded-2xl border border-border bg-card p-5 transition-all hover:border-primary/50 hover:bg-muted/50"
@@ -453,6 +460,7 @@ export default function Home() {
               Include ticker and event date for fastest response
             </p>
           </div>
+        </div>
         </div>
       </section>
     </main>

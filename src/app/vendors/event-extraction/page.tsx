@@ -30,7 +30,8 @@ export default async function EventExtractionPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-4 sm:px-6 py-8">
+      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+        <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 p-5 shadow-xl ring-1 ring-white/5 sm:p-8">
         <div
           className="prose prose-invert max-w-none"
           style={{
@@ -39,6 +40,7 @@ export default async function EventExtractionPage() {
           }}
           dangerouslySetInnerHTML={{ __html: renderMarkdown(content) }}
         />
+        </div>
       </main>
     </div>
   );
