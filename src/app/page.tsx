@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { ProjectionGapSimulator } from "@/components/projection-gap-simulator";
 import {
   ArrowDownIcon,
   ArrowRightIcon,
@@ -163,38 +164,58 @@ export default function Home() {
             backgroundSize: "64px 64px",
           }}
         />
-        <div className="relative mx-auto max-w-5xl px-6 py-16 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-4 py-1.5 text-sm">
-              <CompassIcon className="h-4 w-4 text-primary" />
-              Vendor Corp. Action Intelligence
-            </div>
-            <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
-              Why does one vendor show it —
-              <br className="hidden md:block" />
-              <span className="text-primary"> but not the others?</span>
-            </h1>
-            <p className="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground">
-              Same event, same security, different projection data. Walk through the
-              decision tree to find exactly where the divergence originates — then
-              check vendor thresholds in the reference.
-            </p>
+        <div className="relative mx-auto max-w-6xl px-6 py-12 md:py-16">
+          <div className="grid gap-10 lg:grid-cols-2 lg:items-start lg:gap-12">
+            <div className="text-center lg:text-left">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-4 py-1.5 text-sm lg:mx-0">
+                  <CompassIcon className="h-4 w-4 text-primary" />
+                  Vendor Corp. Action Intelligence
+                </div>
+                <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+                  Why does one vendor show it —
+                  <br className="hidden md:block" />
+                  <span className="text-primary"> but not the others?</span>
+                </h1>
+                <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground lg:mx-0">
+                  Same event, same security, different projection data. Use the simulator
+                  for a quick hypothesis, or walk the full decision tree — then check vendor
+                  thresholds in the reference.
+                </p>
 
-            <button
-              onClick={() => {
-                document.getElementById("decision-tree")?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="inline-flex items-center gap-2 rounded-xl bg-primary px-8 py-4 text-base font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl"
-            >
-              <ZapIcon className="h-5 w-5" />
-              Start the Decision Tree
-              <ArrowDownIcon className="h-4 w-4" />
-            </button>
-          </motion.div>
+                <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap lg:justify-start">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      document.getElementById("projection-gap-simulator")?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3.5 text-base font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl sm:px-8 sm:py-4"
+                  >
+                    <ZapIcon className="h-5 w-5" />
+                    Projection gap simulator
+                    <ArrowDownIcon className="h-4 w-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      document.getElementById("decision-tree")?.scrollIntoView({ behavior: "smooth" });
+                    }}
+                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-6 py-3.5 text-base font-semibold text-foreground shadow-sm transition-all hover:border-primary/50 hover:bg-muted/50 sm:px-8 sm:py-4"
+                  >
+                    Decision tree
+                    <ArrowDownIcon className="h-4 w-4" />
+                  </button>
+                </div>
+              </motion.div>
+            </div>
+            <div className="lg:sticky lg:top-8">
+              <ProjectionGapSimulator />
+            </div>
+          </div>
         </div>
       </section>
 
