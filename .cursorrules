@@ -1,0 +1,156 @@
+# .cursorrules — Knowledge Hub Agent Behavior
+
+> This file defines permanent rules for every Cursor agent working on this codebase.
+> It is the "System Prompt" for the knowledge-hub project.
+> Lil Claw / Goop updates this file when architecture decisions change.
+> Read this file at the start of every session.
+
+---
+
+## Project Context
+
+**What this is:** A finance knowledge hub — transforming dense wiki content (corporate actions, index methodology, vendor comparisons) into a beautiful, interactive web interface.
+
+**Stack:** React 19 + Next.js (App Router) + Tailwind CSS v4 + shadcn/ui + Framer Motion + Lucide React + TypeScript (strict)
+
+**Design philosophy:** "Modern, Clean, Smooth, Minimalist" — glassmorphism, bento box layouts, high-contrast typography, dark mode default.
+
+**Live URL:** https://zeimhahnu.github.io/knowledge-hub/
+
+---
+
+## Communication Protocol
+
+### The Three Channels
+- **GitHub** = Source of truth for code and specs
+- **Obsidian** = Executive dashboard (Alex's view of knowledge)
+- **Telegram** = Real-time chat with Lil Claw / Goop
+
+### Who Does What
+
+| Agent | Role | Responsibility |
+|-------|------|----------------|
+| **Lil Claw** | Orchestrator | Market intel, research, strategic oversight |
+| **Goop** | Product Owner | Specs, design system, frontend decisions |
+| **Cursor** | Developer | Code implementation, UI perfection |
+| **Alex** | Executive / QA | Approves specs, reviews visually |
+
+### The Handoff Protocol
+
+```
+Alex → Telegram → Lil Claw: "I want [feature]"
+         ↓
+Lil Claw → Telegram → Goop: "New feature request — write spec"
+         ↓
+Goop → SPECS/inbox/ → [writes feature-idea.md]
+         ↓
+Cursor → reads SPECS/inbox/ → drafts PRD → SPECS/outbox/
+         ↓
+Lil Claw → reads PRD → Telegram → Alex: "Here's the PRD, approve?"
+         ↓
+Alex → "approved" → Goop moves to SPECS/approved/
+         ↓
+Cursor → implements → git push → GitHub Pages deploys
+         ↓
+Goop → monitors GitHub → Telegram → Alex: "Deployed! [URL]"
+```
+
+---
+
+## Design Rules (Never Break These)
+
+### Colors
+- Primary: `#007bff` (CTAs, links)
+- Secondary: `#6c757d` (muted text)
+- Background: `#f8f9fa` (light) / `#0f1117` (dark)
+- Border: `#e5e7eb`
+- Always use Tailwind token classes: `bg-primary`, `text-foreground`, `border-border`
+
+### Icons
+- **Lucide React ONLY** — never emoji, never raw SVG unless it's a custom logo
+- Sizes: `h-4 w-4` (inline), `h-5 w-5` (buttons), `h-8 w-8` (feature icons)
+
+### Components
+- **shadcn/ui primitives first** — button, card, badge, dialog, tabs, table, accordion
+- One component per file: `CorporateActionCard.tsx`
+- Props interface always at top: `interface Props { ... }`
+
+### Styling
+- Tailwind ONLY — no inline styles, no CSS modules
+- Standard spacing: `p-2` `p-4` `p-6` `gap-4` `gap-6`
+- Never arbitrary values: `top-[17px]` → use Tailwind scale
+
+### Animations
+- **Framer Motion** — fade, stagger, spring presets in design-system.md
+- No CSS transitions for React components
+
+### Accessibility
+- WCAG 2.1 AA minimum
+- Keyboard navigation on all interactive elements
+- ARIA labels on icon-only buttons
+- Color contrast 4.5:1 minimum
+
+---
+
+## File Conventions
+
+| Pattern | Example |
+|---------|---------|
+| Components | `PascalCase.tsx` — `CorporateActionCard.tsx` |
+| Hooks | `camelCase.ts` — `useAnimationState.ts` |
+| Utilities | `camelCase.ts` — `formatCurrency.ts` |
+| Specs | `kebab-case.md` — `dark-mode-toggle.md` |
+
+---
+
+## Before Every Commit
+
+Run these checks:
+```bash
+npm run lint
+npx tsc --noEmit
+```
+
+---
+
+## Specs Workflow
+
+### Folder Structure
+```
+SPECS/
+  inbox/        ← Feature ideas from Lil Claw / Goop
+  outbox/       ← Draft PRDs from Cursor
+  approved/     ← Alex-approved specs (ready to build)
+  archive/      ← Completed specs
+```
+
+### Spec File Template
+```markdown
+# Feature: [Name]
+
+## Context
+Why does this feature exist? What problem does it solve?
+
+## Design Direction
+How should it look? (参考: design-system.md)
+
+## Technical Notes
+Any constraints, dependencies, or technical considerations?
+
+## Acceptance Criteria
+- [ ] Criteria 1
+- [ ] Criteria 2
+```
+
+---
+
+## Git Protocol
+
+- Commit messages: `feat:`, `fix:`, `refactor:`, `docs:`, `style:`
+- One logical unit per commit (one component, one fix)
+- Branch: `main` only — no feature branches
+- After every successful commit: GitHub Pages auto-deploys
+
+---
+
+*This file is maintained by Lil Claw / Goop. Last updated: 2026-04-18*
