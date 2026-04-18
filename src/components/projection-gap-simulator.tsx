@@ -261,7 +261,7 @@ export function ProjectionGapSimulator() {
                     <p className="text-sm leading-relaxed text-muted-foreground">
                       This only filters which event types you can pick next — the simulator still infers mandatory vs voluntary from the event itself.
                     </p>
-                    <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                    <div className="grid min-w-0 grid-cols-1 gap-3 md:grid-cols-2">
                       <button
                         type="button"
                         onClick={() =>
@@ -323,14 +323,15 @@ export function ProjectionGapSimulator() {
                       Showing types that match <span className="font-medium text-foreground">{input.eventCategory === "mandatory" ? "mandatory" : "voluntary"}</span> flows.
                       {impliedClass === "voluntary" ? " Class: voluntary." : " Class: mandatory."}
                     </p>
-                    <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+                    {/* min-w-0: grid items default to min-width:auto and refuse to shrink — caused ~93px spill */}
+                    <div className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2">
                       {allowedFamilies.map((value) => (
                         <button
                           key={value}
                           type="button"
                           onClick={() => setInput((p) => ({ ...p, eventFamily: value }))}
                           className={cn(
-                            "rounded-2xl border px-4 py-3.5 text-left text-sm font-medium leading-snug transition-all",
+                            "min-w-0 max-w-full break-words rounded-2xl border px-4 py-3.5 text-left text-sm font-medium leading-snug transition-all",
                             input.eventFamily === value
                               ? "border-primary/45 bg-primary/12 text-foreground"
                               : "border-border/70 bg-background/35 text-muted-foreground hover:border-primary/30 hover:text-foreground",
