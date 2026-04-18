@@ -699,10 +699,13 @@ export function ProjectionGapSimulator() {
                 {step === 4 && (
                   <div className="space-y-6">
                     <p className="text-base font-medium text-foreground">Vendor picture</p>
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                      <div className="rounded-2xl border border-border/70 bg-background/30 p-4">
-                        <p className="mb-3 text-sm font-medium text-foreground">Looks missing or empty</p>
-                        <div className="flex flex-wrap gap-2">
+                    {/* One column until xl so narrow hero columns do not split ~94px tracks; min-w-0 fixes grid/flex overflow */}
+                    <div className="grid min-w-0 grid-cols-1 gap-6 xl:grid-cols-2">
+                      <div className="min-w-0 overflow-hidden rounded-2xl border border-border/70 bg-background/30 p-4 sm:p-5">
+                        <p className="mb-3 text-pretty text-sm font-medium leading-snug text-foreground">
+                          Missing or empty in the feed
+                        </p>
+                        <div className="flex min-w-0 flex-wrap gap-2">
                           {VENDOR_IDS.map((id) => (
                             <button
                               key={`m-${id}`}
@@ -714,7 +717,7 @@ export function ProjectionGapSimulator() {
                                 }))
                               }
                               className={cn(
-                                "rounded-full border px-3 py-1.5 text-xs font-medium transition-all sm:text-sm",
+                                "inline-flex min-h-9 min-w-0 max-w-full shrink break-words rounded-2xl border px-3 py-2 text-center text-xs font-medium leading-snug transition-all sm:text-sm",
                                 input.missingVendors.includes(id)
                                   ? "border-primary/50 bg-primary/20 text-foreground"
                                   : "border-border/80 bg-background/60 text-muted-foreground hover:border-primary/30",
@@ -725,9 +728,11 @@ export function ProjectionGapSimulator() {
                           ))}
                         </div>
                       </div>
-                      <div className="rounded-2xl border border-border/70 bg-background/30 p-4">
-                        <p className="mb-3 text-sm font-medium text-foreground">Already in the file</p>
-                        <div className="flex flex-wrap gap-2">
+                      <div className="min-w-0 overflow-hidden rounded-2xl border border-border/70 bg-background/30 p-4 sm:p-5">
+                        <p className="mb-3 text-pretty text-sm font-medium leading-snug text-foreground">
+                          Already in the projection file
+                        </p>
+                        <div className="flex min-w-0 flex-wrap gap-2">
                           {VENDOR_IDS.map((id) => (
                             <button
                               key={`p-${id}`}
@@ -739,7 +744,7 @@ export function ProjectionGapSimulator() {
                                 }))
                               }
                               className={cn(
-                                "rounded-full border px-3 py-1.5 text-xs font-medium transition-all sm:text-sm",
+                                "inline-flex min-h-9 min-w-0 max-w-full shrink break-words rounded-2xl border px-3 py-2 text-center text-xs font-medium leading-snug transition-all sm:text-sm",
                                 input.presentVendors.includes(id)
                                   ? "border-primary/50 bg-primary/20 text-foreground"
                                   : "border-border/80 bg-background/60 text-muted-foreground hover:border-primary/30",
