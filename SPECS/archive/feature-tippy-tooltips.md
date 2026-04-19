@@ -128,4 +128,4 @@ Add to `src/app/globals.css`:
 - [ ] 200ms delay, fade animation
 - [ ] Keyboard accessible (tab to term, Enter to show tooltip)
 - [ ] TypeScript compiles, ESLint passes
-- [ ] Git push → GitHub Pages deploys
+- [ ] Merge to `main` → Vercel production deploys (see `SPECS/HANDOFF-OPENCLAW-GOOP-VERCEL.md`)
