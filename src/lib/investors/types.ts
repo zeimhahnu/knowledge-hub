@@ -24,6 +24,7 @@ export type InvestorTickerResponse = {
   dividends: InvestorDividendRow[];
   splits: InvestorSplitRow[];
   calendar?: InvestorCalendar;
+  /** `dividendYield` is a percentage for display (e.g. 2.5 means 2.5%), from Yahoo raw × 100. */
   metrics?: { dividendRate?: number; dividendYield?: number };
   warnings: string[];
 };

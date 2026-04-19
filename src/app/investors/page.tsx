@@ -11,6 +11,7 @@ import { InvestorQuoteStrip } from "@/components/investors/investor-quote-strip"
 import { DividendSummaryCard } from "@/components/investors/dividend-summary-card";
 import { SplitHistoryCard } from "@/components/investors/split-history-card";
 import { UpcomingEventsCard } from "@/components/investors/upcoming-events-card";
+import { InvestorDataWarnings } from "@/components/investors/investor-data-warnings";
 import type { InvestorTickerResponse } from "@/lib/investors/types";
 
 export default function InvestorsPage() {
@@ -116,6 +117,9 @@ export default function InvestorsPage() {
               quote={data?.quote}
               loading={loading}
             />
+            {data && data.warnings.length > 0 && (
+              <InvestorDataWarnings key={data.ticker} warnings={data.warnings} />
+            )}
             <div className="grid gap-6 md:grid-cols-1">
               <DividendSummaryCard
                 dividends={data?.dividends ?? []}
@@ -128,13 +132,6 @@ export default function InvestorsPage() {
                 <UpcomingEventsCard calendar={data?.calendar} loading={loading} />
               </div>
             </div>
-            {data && data.warnings.length > 0 && (
-              <ul className="text-xs text-muted-foreground">
-                {data.warnings.map((w) => (
-                  <li key={w}>· {w}</li>
-                ))}
-              </ul>
-            )}
           </motion.div>
         )}
 

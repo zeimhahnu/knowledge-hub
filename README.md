@@ -67,6 +67,10 @@ GitHub Actions on `main` runs lint, typecheck, and `npm run build` (see `.github
 
 **Agent handoff (Goop / OpenClaw):** `SPECS/HANDOFF-OPENCLAW-GOOP-VERCEL.md`
 
+### Investor snapshot data
+
+The `/investors/` page and `GET /api/investors/quote?ticker=SYMBOL` load delayed market data from **Yahoo Finance** over HTTPS (chart `v8/finance/chart` for dividends, splits, and meta price; `v10/finance/quoteSummary` for sector, dividend rate/yield, and calendar hints). There is no Python or subprocess on Vercel. See `SPECS/approved/prd-investor-snapshot-data-source.md` for the API contract (`InvestorTickerResponse` in `src/lib/investors/types.ts`).
+
 ## Live Pages
 
 | Page | URL (on production host) |
