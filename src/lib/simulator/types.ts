@@ -1,17 +1,15 @@
+import type { CanonicalEventId } from "@/lib/event-taxonomy";
 import type { VendorId } from "@/lib/vendors";
 
 export type EventClass = "mandatory" | "voluntary";
 
-export type EventFamily =
-  | "dividend"
-  | "split"
-  | "merger"
-  | "spinoff"
-  | "rights"
-  | "tender"
-  | "return_of_capital"
-  | "delisting"
-  | "other";
+/**
+ * The simulator’s event family is the canonical 13-type ISO CAEV taxonomy
+ * defined in `@/lib/event-taxonomy` — same ids the Vendor Reference uses.
+ * This guarantees the simulator, the homepage decision tree, and the vendor
+ * comparison page stay in lockstep.
+ */
+export type EventFamily = CanonicalEventId;
 
 /** Rights issue sub-options */
 export type RightsItm = "itm" | "otm" | "unknown";
@@ -24,8 +22,7 @@ export type MnaIndexParties = "target_only" | "acquirer_only" | "both";
 export type SpinoffChildEligible = "yes" | "no" | "unknown";
 export type SpinoffPhase = "placeholder" | "live_trade" | "unknown";
 
-/** Dividend sub-options */
-export type DividendFlavor = "ordinary" | "special" | "unknown";
+/** Dividend sub-options — applies to cash-dividend & special-dividend */
 export type IndexReturnVariant = "pr" | "tr" | "ntr" | "unknown";
 
 export type Relevance = "high" | "medium" | "low";
@@ -49,7 +46,6 @@ export type SimulatorInput = {
   mnaIndexParties: MnaIndexParties;
   spinoffChildEligible: SpinoffChildEligible;
   spinoffPhase: SpinoffPhase;
-  dividendFlavor: DividendFlavor;
   indexReturnVariant: IndexReturnVariant;
   metrics: SimulatorMetrics;
   effectiveDate: string; // YYYY-MM-DD
@@ -66,10 +62,14 @@ export type Hypothesis = {
   explanation: string;
   relevance: Relevance;
   appliesToVendors: VendorId[];
+  /** Optional pointer to the methodology section that backs the explanation. */
+  citation?: string;
 };
 
 export type SimulatorResult = {
   summary: string;
+  /** One short, definite sentence stating WHY the divergence occurred. */
+  verdict: string;
   hypotheses: Hypothesis[];
   nextStepLinks: { label: string; href: string }[];
   disclaimer: string;

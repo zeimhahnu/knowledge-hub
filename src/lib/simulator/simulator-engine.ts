@@ -1,18 +1,21 @@
-import type { VendorId } from "@/lib/vendors";
-import { vendorAbbr } from "@/lib/vendors";
+import { canonicalEventById, type CanonicalEventId } from "@/lib/event-taxonomy";
 import { getEventClassFromFamily, humanFamily } from "@/lib/simulator/taxonomy";
 import type {
-  EventFamily,
   Hypothesis,
   Relevance,
   SimulatorInput,
   SimulatorResult,
 } from "@/lib/simulator/types";
+import type { VendorId } from "@/lib/vendors";
+import { vendorAbbr, vendorLabel } from "@/lib/vendors";
+import { getVendorRule, type VendorRule } from "@/lib/simulator/vendor-rules";
 
-const RULES_VERSION = "1.1.1";
+const RULES_VERSION = "2.0.0";
 
 const DISCLAIMER =
-  "This simulator produces possible explanations only. It does not replace official vendor methodology, notices, or your internal policy. Always confirm with vendor documentation and primary sources.";
+  "Simulator output is a deterministic read of the documented vendor rules in SOURCES/index-vendor-methodology.md. It does not replace official vendor notices or your internal policy — always confirm with primary sources.";
+
+// ─── Helpers ────────────────────────────────────────────────────────────────
 
 function formatIsoDate(iso: string): string {
   if (!iso) return "—";
@@ -25,10 +28,7 @@ function formatIsoDate(iso: string): string {
   });
 }
 
-/**
- * Business days strictly after `fromIso` through `toIso` inclusive (Mon–Fri only; ignores holidays).
- */
-function businessDaysAfterThrough(fromIso: string, toIso: string): number | null {
+function businessDaysBetween(fromIso: string, toIso: string): number | null {
   if (!fromIso || !toIso) return null;
   const from = new Date(fromIso + "T12:00:00");
   const to = new Date(toIso + "T12:00:00");
@@ -83,9 +83,168 @@ function parseOptionalPct(raw: string): number | null {
   return n;
 }
 
+// ─── Per-vendor reasoning ───────────────────────────────────────────────────
+
+type VendorVerdict = {
+  vendorId: VendorId;
+  rule: VendorRule;
+  /** Concise sentence saying whether this vendor would publish, and why. */
+  decision: string;
+  /** "publish" = vendor would have a line in the projection feed; "suppress" = not yet. */
+  status: "publish" | "suppress" | "indeterminate";
+};
+
+function judgeVendor(
+  event: CanonicalEventId,
+  vendorId: VendorId,
+  input: SimulatorInput,
+): VendorVerdict | null {
+  const rule = getVendorRule(event, vendorId);
+  if (!rule) return null;
+
+  const yieldPct = parseOptionalPct(input.metrics.dividendYieldPct);
+  const ffDelta = parseOptionalPct(input.metrics.freeFloatChangePp);
+  const tenderPct = parseOptionalPct(input.metrics.tenderAcceptancePct);
+  // Rights discount captured for downstream OTM/ITM heuristics — not yet wired into vendor judgement.
+  void parseOptionalPct(input.metrics.rightsDiscountPct);
+
+  let status: VendorVerdict["status"] = "publish";
+  let decision = rule.reason;
+
+  switch (rule.trigger) {
+    case "always":
+      status = "publish";
+      break;
+
+    case "no-coverage":
+      status = "indeterminate";
+      decision = `${vendorLabel(vendorId)} has no documented path for ${humanFamily(event)} in the sourced methodology — absence in this feed is expected, not anomalous.`;
+      break;
+
+    case "threshold-size": {
+      // Map to whichever metric is meaningful for this event family.
+      const metric =
+        event === "secondary-offering" || event === "private-placement"
+          ? ffDelta
+          : event === "special-dividend"
+            ? yieldPct
+            : null;
+      if (metric === null) {
+        status = "indeterminate";
+        decision = `${vendorLabel(vendorId)}: ${rule.reason} You did not provide a size hint, so the simulator cannot say for certain whether the threshold was crossed.`;
+      } else if (
+        rule.thresholdPct !== undefined &&
+        Math.abs(metric) >= rule.thresholdPct
+      ) {
+        status = "publish";
+        decision = `${vendorLabel(vendorId)}: size ≈ ${metric}% meets the ${rule.thresholdPct}% trigger, so this vendor SHOULD publish a projection line. ${rule.reason}`;
+      } else if (rule.thresholdPct !== undefined) {
+        status = "suppress";
+        decision = `${vendorLabel(vendorId)}: size ≈ ${metric}% is below the ${rule.thresholdPct}% trigger, so the change is deferred to the next quarterly review and will not show in the open-constituents projection feed yet. ${rule.reason}`;
+      }
+      break;
+    }
+
+    case "threshold-recurrence":
+      status = "indeterminate";
+      decision = `${vendorLabel(vendorId)}: classification depends on the consecutive-occurrence count for this issuer (the simulator does not have that history). ${rule.reason}`;
+      break;
+
+    case "threshold-float":
+      if (ffDelta === null) {
+        status = "indeterminate";
+        decision = `${vendorLabel(vendorId)}: ${rule.reason} Add an estimated free-float change to firm up the prediction.`;
+      } else if (
+        rule.thresholdPct !== undefined &&
+        Math.abs(ffDelta) >= rule.thresholdPct
+      ) {
+        status = "publish";
+        decision = `${vendorLabel(vendorId)}: free-float change ≈ ${ffDelta}pp crosses the ${rule.thresholdPct}% threshold, so this vendor should action it — a missing line is unusual. ${rule.reason}`;
+      } else if (rule.thresholdPct !== undefined) {
+        status = "suppress";
+        decision = `${vendorLabel(vendorId)}: free-float change ≈ ${ffDelta}pp is below the ${rule.thresholdPct}% threshold — deferred to the next review and not in the projection feed yet. ${rule.reason}`;
+      }
+      break;
+
+    case "threshold-acceptance":
+      if (tenderPct === null) {
+        status = "indeterminate";
+        decision = `${vendorLabel(vendorId)}: ${rule.reason} Provide an acceptance % to make the prediction definite.`;
+      } else if (
+        rule.thresholdPct !== undefined &&
+        tenderPct >= rule.thresholdPct
+      ) {
+        status = "publish";
+        decision = `${vendorLabel(vendorId)}: acceptance ≈ ${tenderPct}% meets the ${rule.thresholdPct}% trigger — this vendor would already publish the deletion line. ${rule.reason}`;
+      } else if (rule.thresholdPct !== undefined) {
+        status = "suppress";
+        decision = `${vendorLabel(vendorId)}: acceptance ≈ ${tenderPct}% is below the ${rule.thresholdPct}% trigger — no deletion line in the projection feed yet. ${rule.reason}`;
+      }
+      break;
+
+    case "itm-only":
+      if (input.rightsItm === "otm") {
+        status = "suppress";
+        decision = `${vendorLabel(vendorId)}: rights are OUT-OF-THE-MONEY, so this vendor does NOT adjust — absence in the feed is expected and correct. ${rule.reason}`;
+      } else if (input.rightsItm === "itm") {
+        status = "publish";
+        decision = `${vendorLabel(vendorId)}: rights are IN-THE-MONEY, so this vendor DOES adjust — a missing line would be a true gap. ${rule.reason}`;
+      } else {
+        status = "indeterminate";
+        decision = `${vendorLabel(vendorId)}: ITM/OTM is unconfirmed in the inputs. ${rule.reason}`;
+      }
+      break;
+
+    case "completion-gate":
+      status = "indeterminate";
+      decision = `${vendorLabel(vendorId)}: ${rule.reason} Until the deal/offer is unconditional, missing-from-projection is the documented behaviour, not a gap.`;
+      break;
+
+    case "scheduled-review":
+      status = "suppress";
+      decision = `${vendorLabel(vendorId)}: this event is batched into the next scheduled review — absence in the open-constituents projection is expected. ${rule.reason}`;
+      break;
+
+    case "placeholder-immediate":
+      status = "publish";
+      decision = `${vendorLabel(vendorId)}: this vendor adds the line immediately at a placeholder price — a missing entry is unusual unless the event is outside the T-5 window. ${rule.reason}`;
+      break;
+
+    case "wait-real-trade":
+      if (input.spinoffPhase === "live_trade") {
+        status = "publish";
+        decision = `${vendorLabel(vendorId)}: the child is in regular trading, so this vendor should now have a real-price line. ${rule.reason}`;
+      } else {
+        status = "suppress";
+        decision = `${vendorLabel(vendorId)}: the child is still in placeholder/when-issued phase, so this vendor will not add it until first real trade. ${rule.reason}`;
+      }
+      break;
+
+    case "estimated-price":
+      status = "publish";
+      decision = `${vendorLabel(vendorId)}: this vendor uses an estimated price until real trading begins — the line should be present. ${rule.reason}`;
+      break;
+
+    case "direct-price-adj":
+      status = "publish";
+      decision = `${vendorLabel(vendorId)}: applies a direct price adjustment rather than a separate line — if you are looking for a dividend line you will not find one here even though the index level is adjusted. ${rule.reason}`;
+      break;
+
+    case "notice-required":
+      status = "suppress";
+      decision = `${vendorLabel(vendorId)}: requires ${rule.noticeDays ?? 2} trading days of advance notice — even when the threshold is met, the deletion line lags peers by that many days. ${rule.reason}`;
+      break;
+  }
+
+  return { vendorId, rule, decision, status };
+}
+
+// ─── Verdict / summary ──────────────────────────────────────────────────────
+
 function buildSummary(input: SimulatorInput): string {
   const cls = getEventClassFromFamily(input.eventFamily);
-  const eventUpper = `${cls.toUpperCase()} · ${humanFamily(input.eventFamily).toUpperCase()}`;
+  const meta = canonicalEventById(input.eventFamily);
+  const eventUpper = `${cls.toUpperCase()} · ${(meta?.name ?? humanFamily(input.eventFamily)).toUpperCase()}`;
   const eff = formatIsoDate(input.effectiveDate);
   const miss = input.missingVendors.map(vendorAbbr).join(" + ") || "—";
   const pres = input.presentVendors.map(vendorAbbr).join(" + ") || "—";
@@ -95,24 +254,68 @@ function buildSummary(input: SimulatorInput): string {
   return `${eventUpper} | ${eff} eff | ${miss}: ABSENT ←→ ${pres}: PRESENT${note}`;
 }
 
+function buildVerdict(
+  input: SimulatorInput,
+  judgements: Map<VendorId, VendorVerdict>,
+): string {
+  const meta = canonicalEventById(input.eventFamily);
+  const event = meta?.name ?? humanFamily(input.eventFamily);
+  const missing = input.missingVendors;
+  const present = input.presentVendors;
+
+  const missingExpected = missing
+    .map((v) => judgements.get(v))
+    .filter(
+      (j): j is VendorVerdict =>
+        j !== undefined && (j.status === "suppress" || j.status === "indeterminate"),
+    );
+  const missingUnexpected = missing
+    .map((v) => judgements.get(v))
+    .filter((j): j is VendorVerdict => j !== undefined && j.status === "publish");
+  const presentExpected = present
+    .map((v) => judgements.get(v))
+    .filter((j): j is VendorVerdict => j !== undefined && j.status === "publish");
+
+  if (missing.length === 0 && present.length === 0) {
+    return `Pick at least one vendor in each column so the simulator can compare ${event} treatments side by side.`;
+  }
+
+  if (missingUnexpected.length > 0) {
+    const names = missingUnexpected.map((j) => vendorLabel(j.vendorId)).join(", ");
+    return `Likely a true data gap: ${names} ${missingUnexpected.length === 1 ? "should" : "should each"} have published this ${event} based on its documented rule, so the absence is anomalous and worth escalating.`;
+  }
+
+  if (missingExpected.length > 0 && presentExpected.length > 0) {
+    const expectedNames = missingExpected.map((j) => vendorLabel(j.vendorId)).join(", ");
+    const presentNames = presentExpected.map((j) => vendorLabel(j.vendorId)).join(", ");
+    return `Methodology divergence — not a data gap: ${expectedNames} ${missingExpected.length === 1 ? "is" : "are"} CORRECTLY silent under its own ${event} rule, while ${presentNames} ${presentExpected.length === 1 ? "is" : "are"} CORRECTLY publishing under theirs. The same event hits different thresholds.`;
+  }
+
+  if (missingExpected.length > 0) {
+    const names = missingExpected.map((j) => vendorLabel(j.vendorId)).join(", ");
+    return `Expected silence: ${names} ${missingExpected.length === 1 ? "follows a rule" : "each follow a rule"} that defers or suppresses this ${event} in the projection feed — absence here is the documented behaviour.`;
+  }
+
+  return `${event}: every selected vendor is acting consistently with its documented rule — the divergence may be timing or feed lag rather than methodology.`;
+}
+
+// ─── Engine ─────────────────────────────────────────────────────────────────
+
 export function runSimulator(input: SimulatorInput): SimulatorResult {
   const hypotheses: Hypothesis[] = [];
+  const event = input.eventFamily as CanonicalEventId;
+
   const { onlyMissing, onlyPresent } = onlyMissingPresent(
     input.missingVendors,
     input.presentVendors,
   );
-  const eventClass = getEventClassFromFamily(input.eventFamily);
-  const divYield = parseOptionalPct(input.metrics.dividendYieldPct);
-  const ffDelta = parseOptionalPct(input.metrics.freeFloatChangePp);
-  const tenderPct = parseOptionalPct(input.metrics.tenderAcceptancePct);
-  const rightsDisc = parseOptionalPct(input.metrics.rightsDiscountPct);
 
   const dup = overlap(input.missingVendors, input.presentVendors);
   if (dup.length > 0) {
     hypotheses.push({
       id: "input-overlap",
       title: "OVERLAPPING VENDOR SELECTION",
-      explanation: `The same vendor cannot be both "missing" and "sent projection" for this exercise: ${listVendors(dup)}. Adjust the selections so each vendor is in at most one list; other hypotheses below assume non-overlapping lists.`,
+      explanation: `The same vendor cannot be both "missing" and "sent projection" for this exercise: ${listVendors(dup)}. Adjust the selections so each vendor is in at most one list; the verdict assumes non-overlapping lists.`,
       relevance: "high",
       appliesToVendors: dup,
     });
@@ -123,267 +326,122 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
       id: "no-gap",
       title: "NO GAP SELECTED",
       explanation:
-        "Select at least one vendor that appears missing and one that sent a projection file so the simulator can contrast behaviour. If everyone is aligned, divergence may be timing-only or already resolved.",
+        "Select at least one vendor that appears missing and one that already sent a file so the engine can contrast their documented rules.",
       relevance: "medium",
       appliesToVendors: [],
     });
   }
 
-  const bdDataToEffective = businessDaysAfterThrough(input.dataAsOf, input.effectiveDate);
+  const judgements = new Map<VendorId, VendorVerdict>();
+  for (const v of [...input.missingVendors, ...input.presentVendors]) {
+    if (judgements.has(v)) continue;
+    const j = judgeVendor(event, v, input);
+    if (j) judgements.set(v, j);
+  }
+
+  // One hypothesis per missing vendor — high relevance — explaining why it is silent.
+  for (const v of onlyMissing) {
+    const j = judgements.get(v);
+    if (!j) continue;
+    hypotheses.push({
+      id: `missing-${v}`,
+      title: `${vendorLabel(v).toUpperCase()} — ${j.status === "publish" ? "TRUE GAP" : j.status === "suppress" ? "EXPECTED SILENCE" : "AMBIGUOUS"}`,
+      explanation: j.decision,
+      relevance: j.status === "publish" ? "high" : "medium",
+      appliesToVendors: [v],
+      citation: j.rule.citation,
+    });
+  }
+
+  // One hypothesis per present vendor — medium relevance — explaining why it published.
+  for (const v of onlyPresent) {
+    const j = judgements.get(v);
+    if (!j) continue;
+    hypotheses.push({
+      id: `present-${v}`,
+      title: `${vendorLabel(v).toUpperCase()} — PUBLISHED PER RULE`,
+      explanation: j.decision,
+      relevance: "medium",
+      appliesToVendors: [v],
+      citation: j.rule.citation,
+    });
+  }
+
+  // ── Cross-cutting timing checks (unchanged from v1.x) ────────────────────
+  const bdDataToEffective = businessDaysBetween(input.dataAsOf, input.effectiveDate);
   if (bdDataToEffective !== null && bdDataToEffective > 5) {
     hypotheses.push({
       id: "t5-window",
       title: "T-5 WINDOW EXCEEDED",
-      explanation: `Your "as of" data date (${formatIsoDate(input.dataAsOf)}) is more than five business days before the effective date (${formatIsoDate(input.effectiveDate)}). Vendors often publish open-constituent projections for events within a forward window from the data date. Events far outside that window may not appear in some feeds yet, even if others publish earlier placeholders or notices.`,
+      explanation: `Your "as of" data date (${formatIsoDate(input.dataAsOf)}) is ${bdDataToEffective} business days before the effective date (${formatIsoDate(input.effectiveDate)}) — outside the documented T-5 forward window. Vendors with strict T-5 publication will not yet have this line in the open-constituents projection.`,
       relevance: "high",
       appliesToVendors: onlyMissing,
+      citation: "Vendor Coverage Overview (T-5)",
     });
   }
 
   if (input.exDate && input.dataAsOf) {
-    const bdToEx = businessDaysAfterThrough(input.dataAsOf, input.exDate);
+    const bdToEx = businessDaysBetween(input.dataAsOf, input.exDate);
     if (bdToEx !== null && bdToEx > 5) {
       hypotheses.push({
         id: "ex-before-coverage",
-        title: "EX-DATE FAR FROM SNAPSHOT",
-        explanation: `Ex-date is ${formatIsoDate(input.exDate)} relative to data as of ${formatIsoDate(input.dataAsOf)}. Some vendors emphasise ex-date adjustments and grace-period logic; others may delay spin-off child lines until first trade. A large gap between snapshot and ex-date can produce "missing now, appears later" patterns.`,
+        title: "EX-DATE OUTSIDE COVERAGE WINDOW",
+        explanation: `Ex-date (${formatIsoDate(input.exDate)}) is ${bdToEx} business days from the as-of date (${formatIsoDate(input.dataAsOf)}). Even vendors that would normally publish may not yet show this event because it falls outside their T-5 forward window.`,
         relevance: "medium",
         appliesToVendors: onlyMissing,
       });
     }
   }
 
-  if (eventClass === "voluntary") {
+  // ── Event-specific contextual notes ─────────────────────────────────────
+  if (event === "rights-issue" && !input.rightsSubscriptionKnown) {
     hypotheses.push({
-      id: "voluntary-uncertainty",
-      title: "VOLUNTARY EVENT — PARTICIPATION OPEN",
+      id: "rights-unknown-terms",
+      title: "RIGHTS — TERMS NOT FINAL",
       explanation:
-        "Rights issues, tenders, and similar voluntary actions often need confirmed subscription or acceptance before every vendor adjusts floats or share counts. One feed may show an early or provisional line while another waits for final results — especially where free-float or materiality thresholds differ.",
+        "Final subscription price/ratio are not yet confirmed. Vendors that gate on terms (MSCI, Morningstar, Solactive) typically suppress projection updates until terms are final; FTSE may publish a provisional nil-paid line.",
+      relevance: "medium",
+      appliesToVendors: onlyMissing,
+    });
+  }
+
+  if (event === "merger" && input.mnaIndexParties === "both") {
+    hypotheses.push({
+      id: "mna-both-deletion-triggers",
+      title: "M&A — TARGET + ACQUIRER BOTH IN INDEX",
+      explanation:
+        "Because both parties are constituents, the divergence is dominated by the deletion threshold (S&P Float<15% OR ≥90%, FTSE ≥90% OR Float<5%, STOXX BOTH ≥85% AND Float<10%). Same deal — different effective removal dates by design.",
       relevance: "high",
-      appliesToVendors: onlyMissing,
+      appliesToVendors: [...onlyMissing, ...onlyPresent],
+      citation: "§11",
     });
   }
 
-  if (input.eventFamily === "dividend" && divYield !== null) {
-    if (input.dividendFlavor === "special" && divYield >= 5) {
-      hypotheses.push({
-        id: "div-yield-special-large",
-        title: "LARGE SPECIAL DIVIDEND",
-        explanation: `You indicated a dividend yield of about ${divYield}% of price. A large special distribution can change how vendors classify the event (e.g. return of capital vs dividend) and whether it is deferred or treated across PR vs TR series. Some feeds wait for confirmed gross or net amounts before publishing a projection line.`,
-        relevance: "high",
-        appliesToVendors: onlyMissing,
-      });
-    } else if (divYield >= 3 && input.dividendFlavor !== "ordinary") {
-      hypotheses.push({
-        id: "div-yield-material",
-        title: "MATERIAL DIVIDEND — THRESHOLD RISK",
-        explanation: `A dividend of roughly ${divYield}% of price may cross materiality thresholds for some vendors but not others, or may be handled differently on PR vs TR. Below-threshold amounts can be deferred to the next review cycle on some indices.`,
-        relevance: "medium",
-        appliesToVendors: onlyMissing,
-      });
-    }
+  if (event === "merger" && input.mnaIndexParties === "acquirer_only") {
+    hypotheses.push({
+      id: "mna-acquirer-only",
+      title: "M&A — ACQUIRER-ONLY INDEX",
+      explanation:
+        "With only the acquirer in the index, deletion thresholds are irrelevant — what matters is the acquirer share-count change. MSCI uses 5%/10%/25% by cap tier; STOXX/FTSE flag extraordinary float changes ≥5pp.",
+      relevance: "medium",
+      appliesToVendors: [...onlyMissing, ...onlyPresent],
+      citation: "§11 Scenario C",
+    });
   }
 
-  if (ffDelta !== null && Math.abs(ffDelta) >= 5) {
+  if (event === "spin-off" && input.spinoffChildEligible === "no") {
     hypotheses.push({
-      id: "float-delta",
-      title: "FREE-FLOAT CHANGE DETECTED",
-      explanation: `You entered about ${ffDelta >= 0 ? "+" : ""}${ffDelta} percentage points of free-float change. Several vendors apply extraordinary float adjustments or different timing when float moves by roughly five points or more. That alone can explain why one feed already reflects a line and another does not.`,
+      id: "spinoff-ineligible",
+      title: "SPIN-OFF CHILD INELIGIBLE",
+      explanation:
+        "If the distributed security is not index-eligible (sector, liquidity, domicile), no vendor adds a child line — the only line you should expect is the parent price adjustment.",
       relevance: "high",
-      appliesToVendors: onlyMissing,
+      appliesToVendors: input.missingVendors,
+      citation: "§6",
     });
   }
 
-  if (input.eventFamily === "tender" && tenderPct !== null) {
-    if (tenderPct < 50) {
-      hypotheses.push({
-        id: "tender-low",
-        title: "LOW TENDER ACCEPTANCE",
-        explanation: `With acceptance around ${tenderPct}%, some methodologies will not treat the offer as sufficiently progressed to adjust or delete lines, while others may publish provisional scenarios. Divergence often appears around the acceptance thresholds each vendor publishes.`,
-        relevance: "medium",
-        appliesToVendors: onlyMissing,
-      });
-    } else if (tenderPct >= 85) {
-      hypotheses.push({
-        id: "tender-high",
-        title: "HIGH ACCEPTANCE — TIMING DIVERGES",
-        explanation: `Around ${tenderPct}% acceptance often crosses key thresholds, but vendors still disagree on when a target line is removed or when float is updated — especially if conditions combine acceptance % with free-float tests.`,
-        relevance: "medium",
-        appliesToVendors: onlyMissing,
-      });
-    }
-  }
-
-  if (input.eventFamily === "rights" && rightsDisc !== null && rightsDisc > 0) {
-    hypotheses.push({
-      id: "rights-discount",
-      title: "RIGHTS BELOW THEORETICAL",
-      explanation: `You noted the rights trade roughly ${rightsDisc}% below theoretical value. Deep discounts can correlate with low exercise expectations; some vendors delay or omit adjustments until the outcome is clearer, while others publish nil-paid lines earlier.`,
-      relevance: "low",
-      appliesToVendors: onlyMissing,
-    });
-  }
-
-  if (input.eventFamily === "merger") {
-    if (input.mnaIndexParties === "both") {
-      hypotheses.push({
-        id: "mna-both-deletion-triggers",
-        title: "M&A: TARGET + ACQUIRER IN INDEX",
-        explanation:
-          "When target and acquirer are both index constituents, deletion and float rules diverge materially across vendors (e.g. different combinations of acceptance % and free-float conditions). The same deal can therefore show different effective removal dates or interim placeholder treatment in projections.",
-        relevance: "high",
-        appliesToVendors: onlyMissing,
-      });
-    }
-    if (input.mnaIndexParties === "acquirer_only") {
-      hypotheses.push({
-        id: "mna-acquirer-only",
-        title: "M&A: ACQUIRER-ONLY INDEX",
-        explanation:
-          "If only the acquirer is in the index, vendors still disagree on how and when to reflect share count and float changes for stock vs cash consideration, and on confirmation gates. One feed may show an early divisor-related adjustment while another waits for settlement or exchange confirmation.",
-        relevance: "medium",
-        appliesToVendors: onlyMissing,
-      });
-    }
-    if (input.mnaDealType === "cash") {
-      hypotheses.push({
-        id: "mna-cash",
-        title: "CASH DEAL — DIFFERENT ADJUSTMENT",
-        explanation:
-          "Cash mergers are often treated differently from stock mergers for divisor and continuity. A vendor that already published a projection line may be using a different confirmation or price basis than one that is still silent.",
-        relevance: "medium",
-        appliesToVendors: onlyMissing,
-      });
-    }
-  }
-
-  if (input.eventFamily === "spinoff") {
-    if (input.spinoffChildEligible === "no") {
-      hypotheses.push({
-        id: "spinoff-ineligible",
-        title: "SPIN-OFF CHILD INELIGIBLE",
-        explanation:
-          "If the distributed security is not index-eligible (sector, liquidity, domicile), many methodologies never add a child line in projections. Missing vendors may simply not publish a placeholder for a security outside index rules.",
-        relevance: "high",
-        appliesToVendors: onlyMissing,
-      });
-    } else if (input.spinoffChildEligible === "yes") {
-      hypotheses.push({
-        id: "spinoff-placeholder-vs-trade",
-        title: "SPIN-OFF: PLACEHOLDER VS LIVE TRADE",
-        explanation:
-          "For an eligible spin-off child, vendors disagree on zero vs estimated vs when-issued pricing, and on how long to wait for real trading. Vendors that use immediate placeholders often appear in feeds earlier than those that require a live market price.",
-        relevance: "high",
-        appliesToVendors: onlyMissing,
-      });
-      if (input.spinoffPhase === "placeholder") {
-        hypotheses.push({
-          id: "spinoff-phase-placeholder",
-          title: "SPIN-OFF: STILL IN PLACEHOLDER PHASE",
-          explanation:
-            "If the child has not yet traded regularly, vendors that require a market price may omit the line from projections until first trade, while others already show a floor or estimated price.",
-          relevance: "high",
-          appliesToVendors: onlyMissing,
-        });
-      }
-    }
-  }
-
-  if (input.eventFamily === "rights") {
-    if (input.rightsItm === "otm") {
-      hypotheses.push({
-        id: "rights-otm",
-        title: "OTM RIGHTS — VENDORS IGNORE",
-        explanation:
-          "OTM rights are often economically irrelevant for index replication; several methodologies do not adjust until or unless terms change or the issue becomes in-the-money. A vendor showing nothing may be consistent with that policy.",
-        relevance: "high",
-        appliesToVendors: onlyMissing,
-      });
-    } else if (input.rightsItm === "itm") {
-      hypotheses.push({
-        id: "rights-itm",
-        title: "ITM RIGHTS — TIMING + FLOAT DIVERGE",
-        explanation:
-          "ITM rights usually require attention, but vendors still differ on nil-paid lines, subscription results, and free-float effects from non-participation. One vendor may publish a provisional line while another waits for final take-up.",
-        relevance: "medium",
-        appliesToVendors: onlyMissing,
-      });
-    }
-    if (!input.rightsSubscriptionKnown) {
-      hypotheses.push({
-        id: "rights-unknown-terms",
-        title: "Incomplete terms — vendor gating",
-        explanation:
-          "If subscription price or ratio is not yet final, some vendors suppress projection updates until terms are confirmed, while others publish provisional lines subject to revision.",
-        relevance: "medium",
-        appliesToVendors: onlyMissing,
-      });
-    }
-  }
-
-  if (input.eventFamily === "dividend") {
-    if (input.dividendFlavor === "special") {
-      hypotheses.push({
-        id: "div-special",
-        title: "Special dividend — different treatment vs ordinary",
-        explanation:
-          "Special dividends can be classified and adjusted differently across vendors (price return vs total return series, timing vs ex-date, and materiality). A vendor missing the line may be applying a different event classification or waiting for confirmed gross or net amounts.",
-        relevance: "medium",
-        appliesToVendors: onlyMissing,
-      });
-    }
-    if (input.indexReturnVariant !== "unknown") {
-      hypotheses.push({
-        id: "div-pr-tr-ntr",
-        title: "PR vs TR vs NTR series",
-        explanation:
-          "Dividend impact is most visible on total-return variants. If you are comparing price-return screens to TR or NTR feeds, apparent mismatches can be series selection rather than missing corporate action data.",
-        relevance: "low",
-        appliesToVendors: onlyMissing,
-      });
-    }
-  }
-
-  if (input.eventFamily === "other" || input.eventFamily === "delisting" || input.eventFamily === "tender") {
-    hypotheses.push({
-      id: "generic-methodology",
-      title: "Methodology or feed lag",
-      explanation:
-        "For less common or boundary cases, divergence often comes down to confirmation gates, exchange notices, or feed publication lag rather than disagreement on the economic event. Compare vendor timing tables and check whether the missing feed has published any notice without yet updating open constituents.",
-      relevance: "low",
-      appliesToVendors: onlyMissing,
-    });
-  }
-
-  if (input.eventFamily === "split") {
-    hypotheses.push({
-      id: "split-timing",
-      title: "Split ratio confirmation",
-      explanation:
-        "Stock splits are usually straightforward once confirmed, but vendors can still differ on the snapshot date used for divisor adjustment vs when the split first appears in projection files.",
-      relevance: "low",
-      appliesToVendors: onlyMissing,
-    });
-  }
-
-  const pilotFamilies: EventFamily[] = [
-    "dividend",
-    "split",
-    "merger",
-    "spinoff",
-    "rights",
-  ];
-  if (!pilotFamilies.includes(input.eventFamily)) {
-    hypotheses.push({
-      id: "pilot-stub",
-      title: "Broader reference may be needed",
-      explanation:
-        "The richest rule set here focuses on dividends, splits, M&A, spin-offs, and rights. For this event type, lean on the vendor reference for thresholds and timing, and treat simulator output as a starting point.",
-      relevance: "low",
-      appliesToVendors: onlyMissing,
-    });
-  }
-
+  // ── Sort, dedup, finalise ───────────────────────────────────────────────
   const dedup = new Map<string, Hypothesis>();
   for (const h of hypotheses) {
     if (!dedup.has(h.id)) dedup.set(h.id, h);
@@ -400,7 +458,8 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
 
   return {
     summary: buildSummary(input),
-    hypotheses: sorted.slice(0, 8),
+    verdict: buildVerdict(input, judgements),
+    hypotheses: sorted.slice(0, 12),
     nextStepLinks,
     disclaimer: DISCLAIMER,
     rulesVersion: RULES_VERSION,
