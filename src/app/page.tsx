@@ -433,7 +433,7 @@ export default function Home() {
       {/* ── Quick Links ─────────────────────────────────────────────────── */}
       <section className="mx-auto max-w-6xl border-t border-border px-6 py-12">
         <SurfaceSection padding="compact">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <Link
             href="/vendors/"
             className="rounded-2xl border border-border bg-card p-5 transition-all hover:border-primary/50 hover:bg-muted/50"
@@ -452,6 +452,16 @@ export default function Home() {
             <div className="mb-1 text-sm font-semibold">ISO Taxonomy</div>
             <p className="text-xs text-muted-foreground">
               ISO 20022 CAEV codes mapped to SWIFT MT564 and vendor terminology
+            </p>
+          </Link>
+          <Link
+            href="/investors/"
+            className="rounded-2xl border border-border bg-card p-5 transition-all hover:border-primary/50 hover:bg-muted/50"
+          >
+            <GlobeIcon className="mb-3 h-5 w-5 text-primary" />
+            <div className="mb-1 text-sm font-semibold">Investor snapshot</div>
+            <p className="text-xs text-muted-foreground">
+              Dividends, splits, and calendar hints by ticker (delayed data)
             </p>
           </Link>
           <div className="rounded-2xl border border-border bg-card p-5">

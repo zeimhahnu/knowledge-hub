@@ -74,6 +74,7 @@ GitHub Actions on `main` runs lint, typecheck, and `npm run build` (see `.github
 | ISO CAEV Taxonomy | `/vendors/iso-taxonomy/` |
 | Event Extraction | `/vendors/event-extraction/` |
 | API health check | `/api/test/` |
+| Investor snapshot (by ticker) | `/investors/` |
 
 ## Event Types Covered
 
