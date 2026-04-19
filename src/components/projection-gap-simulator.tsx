@@ -11,7 +11,15 @@ import { cn } from "@/lib/utils";
 import { VENDOR_IDS, vendorLabel, vendorAbbr, type VendorId } from "@/lib/vendors";
 import { runSimulator } from "@/lib/simulator/simulator-engine";
 import { familiesForClass, humanFamily } from "@/lib/simulator/taxonomy";
-import { eventNamesSentence, mandatoryEventCount, voluntaryEventCount } from "@/lib/event-taxonomy";
+import {
+  CANONICAL_EVENTS,
+  canonicalEventById,
+  eventNamesSentence,
+  mandatoryEventCount,
+  voluntaryEventCount,
+  type CanonicalEventId,
+  type EventCategory,
+} from "@/lib/event-taxonomy";
 import type { EventFamily, SimulatorInput, SimulatorResult } from "@/lib/simulator/types";
 
 const STEP_COUNT = 6;
@@ -33,6 +41,13 @@ const STEP_LABELS_SHORT = [
   "Vendors",
   "Results",
 ] as const;
+
+const CATEGORY_ORDER: EventCategory[] = [
+  "Equity Income",
+  "Corporate Structure",
+  "Equity Offerings",
+  "M&A",
+];
 
 function todayIso(): string {
   const d = new Date();
@@ -58,7 +73,6 @@ const defaultInput = (): SimulatorInput => ({
   mnaIndexParties: "both",
   spinoffChildEligible: "unknown",
   spinoffPhase: "unknown",
-  dividendFlavor: "unknown",
   indexReturnVariant: "unknown",
   metrics: defaultMetrics(),
   effectiveDate: "",
@@ -98,6 +112,17 @@ function coerceFamilyForCategory(
   return allowed[0] ?? current;
 }
 
+const FAMILIES_NEEDING_CONTEXT: Set<CanonicalEventId> = new Set([
+  "rights-issue",
+  "merger",
+  "tender-offer",
+  "spin-off",
+  "cash-dividend",
+  "special-dividend",
+  "secondary-offering",
+  "private-placement",
+]);
+
 export function ProjectionGapSimulator() {
   const [step, setStep] = useState(0);
   const [input, setInput] = useState<SimulatorInput>(defaultInput);
@@ -109,15 +134,21 @@ export function ProjectionGapSimulator() {
     [input.eventCategory],
   );
 
-  const canShowSubdetails = useMemo(() => {
-    const f = input.eventFamily;
-    return (
-      f === "rights" ||
-      f === "merger" ||
-      f === "spinoff" ||
-      f === "dividend"
-    );
-  }, [input.eventFamily]);
+  const groupedFamilies = useMemo(() => {
+    const set = new Set(allowedFamilies);
+    return CATEGORY_ORDER.map((cat) => ({
+      category: cat,
+      events: CANONICAL_EVENTS.filter((e) => e.category === cat && set.has(e.id)),
+    })).filter((g) => g.events.length > 0);
+  }, [allowedFamilies]);
+
+  const canShowSubdetails = useMemo(
+    () => FAMILIES_NEEDING_CONTEXT.has(input.eventFamily as CanonicalEventId),
+    [input.eventFamily],
+  );
+
+  const isDividendLike =
+    input.eventFamily === "cash-dividend" || input.eventFamily === "special-dividend";
 
   function validateStep(s: number): string | null {
     if (s === 3) {
@@ -256,7 +287,7 @@ export function ProjectionGapSimulator() {
         <div className="min-w-0 w-full max-w-full flex-1 basis-0">
           <div className="mb-6">
             <p className="text-sm leading-relaxed text-muted-foreground">
-              A calm walkthrough — tell us what you are seeing. We will suggest plausible reasons, not vendor rulings.
+              A calm walkthrough — tell us what you are seeing. The verdict and per-vendor reasoning are derived from the documented rules in the Vendor Reference.
             </p>
           </div>
 
@@ -276,7 +307,7 @@ export function ProjectionGapSimulator() {
                       What kind of situation is this?
                     </p>
                     <p className="text-sm leading-relaxed text-muted-foreground">
-                      This matches the Vendor Reference taxonomy ({mandatoryEventCount()} mandatory, {voluntaryEventCount()} voluntary). The next step only lists high-level families that fit the category you pick here.
+                      Same taxonomy as the Vendor Reference: {mandatoryEventCount()} mandatory and {voluntaryEventCount()} voluntary event types (13 in total). The next step lists the canonical types within the category you pick.
                     </p>
                     <div className="grid min-w-0 grid-cols-1 gap-3 md:grid-cols-2">
                       <button
@@ -298,7 +329,9 @@ export function ProjectionGapSimulator() {
                             : "border-border/80 bg-background/40 hover:border-primary/25 hover:bg-background/60",
                         )}
                       >
-                        <span className="text-base font-semibold text-foreground">Mandatory</span>
+                        <span className="text-base font-semibold text-foreground">
+                          Mandatory · {mandatoryEventCount()} types
+                        </span>
                         <span className="mt-2 block text-pretty text-sm leading-relaxed text-muted-foreground">
                           {eventNamesSentence("mandatory")} — confirmed corporate actions without shareholder opt-in.
                         </span>
@@ -322,7 +355,9 @@ export function ProjectionGapSimulator() {
                             : "border-border/80 bg-background/40 hover:border-primary/25 hover:bg-background/60",
                         )}
                       >
-                        <span className="text-base font-semibold text-foreground">Voluntary</span>
+                        <span className="text-base font-semibold text-foreground">
+                          Voluntary · {voluntaryEventCount()} types
+                        </span>
                         <span className="mt-2 block text-pretty text-sm leading-relaxed text-muted-foreground">
                           {eventNamesSentence("voluntary")} — treatment depends on participation, thresholds, or classification rules.
                         </span>
@@ -337,28 +372,38 @@ export function ProjectionGapSimulator() {
                       Which event is it?
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      Showing simulator families grouped under{" "}
+                      Showing the {allowedFamilies.length} canonical{" "}
                       <span className="font-medium text-foreground">
                         {input.eventCategory === "mandatory" ? "mandatory" : "voluntary"}
                       </span>{" "}
-                      on the vendor reference. The selected family drives the hypotheses below.
+                      types from the Vendor Reference (ISO 20022 CAEV).
                     </p>
-                    {/* min-w-0: grid items default to min-width:auto and refuse to shrink — caused ~93px spill */}
-                    <div className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2">
-                      {allowedFamilies.map((value) => (
-                        <button
-                          key={value}
-                          type="button"
-                          onClick={() => setInput((p) => ({ ...p, eventFamily: value }))}
-                          className={cn(
-                            "min-w-0 max-w-full break-words rounded-2xl border px-4 py-3.5 text-left text-sm font-medium leading-snug transition-all",
-                            input.eventFamily === value
-                              ? "border-primary/45 bg-primary/12 text-foreground"
-                              : "border-border/70 bg-background/35 text-muted-foreground hover:border-primary/30 hover:text-foreground",
-                          )}
-                        >
-                          {familyLabel(value)}
-                        </button>
+                    <div className="space-y-5">
+                      {groupedFamilies.map((group) => (
+                        <fieldset key={group.category} className="space-y-2">
+                          <legend className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
+                            {group.category}
+                          </legend>
+                          <div className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2">
+                            {group.events.map((evt) => (
+                              <button
+                                key={evt.id}
+                                type="button"
+                                onClick={() =>
+                                  setInput((p) => ({ ...p, eventFamily: evt.id as EventFamily }))
+                                }
+                                className={cn(
+                                  "min-w-0 max-w-full break-words rounded-2xl border px-4 py-3.5 text-left text-sm font-medium leading-snug transition-all",
+                                  input.eventFamily === evt.id
+                                    ? "border-primary/45 bg-primary/12 text-foreground"
+                                    : "border-border/70 bg-background/35 text-muted-foreground hover:border-primary/30 hover:text-foreground",
+                                )}
+                              >
+                                {familyLabel(evt.id as EventFamily)}
+                              </button>
+                            ))}
+                          </div>
+                        </fieldset>
                       ))}
                     </div>
                   </div>
@@ -369,17 +414,17 @@ export function ProjectionGapSimulator() {
                     <div>
                       <p className="text-base font-medium text-foreground">Event context</p>
                       <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                        Optional detail helps narrow the story. Skip anything you do not know yet.
+                        Optional detail tightens the per-vendor verdict. Skip anything you do not know yet.
                       </p>
                     </div>
 
                     {!canShowSubdetails ? (
                       <p className="rounded-2xl border border-dashed border-border/80 bg-background/30 px-4 py-4 text-sm leading-relaxed text-muted-foreground">
-                        No extra prompts for this event type. Optional numbers below still apply if relevant (for example free-float change around a tender).
+                        No extra prompts for {humanFamily(input.eventFamily).toLowerCase()}. Optional numbers below still apply if relevant (for example free-float change around a tender).
                       </p>
                     ) : (
                       <div className="space-y-6">
-                        {input.eventFamily === "rights" && (
+                        {input.eventFamily === "rights-issue" && (
                           <fieldset className="space-y-3">
                             <legend className="text-sm font-medium text-foreground">Rights</legend>
                             <div className="flex flex-wrap gap-2">
@@ -419,34 +464,36 @@ export function ProjectionGapSimulator() {
                           </fieldset>
                         )}
 
-                        {input.eventFamily === "merger" && (
+                        {(input.eventFamily === "merger" || input.eventFamily === "tender-offer") && (
                           <div className="space-y-5">
-                            <fieldset className="space-y-3">
-                              <legend className="text-sm font-medium text-foreground">Deal</legend>
-                              <div className="flex flex-wrap gap-2">
-                                {(
-                                  [
-                                    ["stock", "Mostly stock"],
-                                    ["cash", "Mostly cash"],
-                                    ["mixed", "Mixed or unclear"],
-                                  ] as const
-                                ).map(([v, label]) => (
-                                  <button
-                                    key={v}
-                                    type="button"
-                                    onClick={() => setInput((p) => ({ ...p, mnaDealType: v }))}
-                                    className={cn(
-                                      "rounded-full border px-4 py-2 text-sm transition-all",
-                                      input.mnaDealType === v
-                                        ? "border-primary/50 bg-primary/15 text-foreground"
-                                        : "border-border bg-background/50 text-muted-foreground hover:text-foreground",
-                                    )}
-                                  >
-                                    {label}
-                                  </button>
-                                ))}
-                              </div>
-                            </fieldset>
+                            {input.eventFamily === "merger" && (
+                              <fieldset className="space-y-3">
+                                <legend className="text-sm font-medium text-foreground">Deal</legend>
+                                <div className="flex flex-wrap gap-2">
+                                  {(
+                                    [
+                                      ["stock", "Mostly stock"],
+                                      ["cash", "Mostly cash"],
+                                      ["mixed", "Mixed or unclear"],
+                                    ] as const
+                                  ).map(([v, label]) => (
+                                    <button
+                                      key={v}
+                                      type="button"
+                                      onClick={() => setInput((p) => ({ ...p, mnaDealType: v }))}
+                                      className={cn(
+                                        "rounded-full border px-4 py-2 text-sm transition-all",
+                                        input.mnaDealType === v
+                                          ? "border-primary/50 bg-primary/15 text-foreground"
+                                          : "border-border bg-background/50 text-muted-foreground hover:text-foreground",
+                                      )}
+                                    >
+                                      {label}
+                                    </button>
+                                  ))}
+                                </div>
+                              </fieldset>
+                            )}
                             <fieldset className="space-y-3">
                               <legend className="text-sm font-medium text-foreground">Index membership</legend>
                               <div className="flex flex-wrap gap-2">
@@ -476,7 +523,7 @@ export function ProjectionGapSimulator() {
                           </div>
                         )}
 
-                        {input.eventFamily === "spinoff" && (
+                        {input.eventFamily === "spin-off" && (
                           <div className="space-y-5">
                             <fieldset className="space-y-3">
                               <legend className="text-sm font-medium text-foreground">Spin-off child</legend>
@@ -535,62 +582,36 @@ export function ProjectionGapSimulator() {
                           </div>
                         )}
 
-                        {input.eventFamily === "dividend" && (
-                          <div className="space-y-5">
-                            <fieldset className="space-y-3">
-                              <legend className="text-sm font-medium text-foreground">Dividend</legend>
-                              <div className="flex flex-wrap gap-2">
-                                {(
-                                  [
-                                    ["ordinary", "Ordinary"],
-                                    ["special", "Special"],
-                                    ["unknown", "Unknown"],
-                                  ] as const
-                                ).map(([v, label]) => (
-                                  <button
-                                    key={v}
-                                    type="button"
-                                    onClick={() => setInput((p) => ({ ...p, dividendFlavor: v }))}
-                                    className={cn(
-                                      "rounded-full border px-4 py-2 text-sm transition-all",
-                                      input.dividendFlavor === v
-                                        ? "border-primary/50 bg-primary/15 text-foreground"
-                                        : "border-border bg-background/50 text-muted-foreground hover:text-foreground",
-                                    )}
-                                  >
-                                    {label}
-                                  </button>
-                                ))}
-                              </div>
-                            </fieldset>
-                            <fieldset className="space-y-3">
-                              <legend className="text-sm font-medium text-foreground">Index variant you are comparing</legend>
-                              <div className="flex flex-wrap gap-2">
-                                {(
-                                  [
-                                    ["pr", "PR"],
-                                    ["tr", "TR"],
-                                    ["ntr", "NTR"],
-                                    ["unknown", "Not applicable"],
-                                  ] as const
-                                ).map(([v, label]) => (
-                                  <button
-                                    key={v}
-                                    type="button"
-                                    onClick={() => setInput((p) => ({ ...p, indexReturnVariant: v }))}
-                                    className={cn(
-                                      "rounded-full border px-4 py-2 text-sm transition-all",
-                                      input.indexReturnVariant === v
-                                        ? "border-primary/50 bg-primary/15 text-foreground"
-                                        : "border-border bg-background/50 text-muted-foreground hover:text-foreground",
-                                    )}
-                                  >
-                                    {label}
-                                  </button>
-                                ))}
-                              </div>
-                            </fieldset>
-                          </div>
+                        {isDividendLike && (
+                          <fieldset className="space-y-3">
+                            <legend className="text-sm font-medium text-foreground">
+                              Index variant you are comparing
+                            </legend>
+                            <div className="flex flex-wrap gap-2">
+                              {(
+                                [
+                                  ["pr", "PR"],
+                                  ["tr", "TR"],
+                                  ["ntr", "NTR"],
+                                  ["unknown", "Not applicable"],
+                                ] as const
+                              ).map(([v, label]) => (
+                                <button
+                                  key={v}
+                                  type="button"
+                                  onClick={() => setInput((p) => ({ ...p, indexReturnVariant: v }))}
+                                  className={cn(
+                                    "rounded-full border px-4 py-2 text-sm transition-all",
+                                    input.indexReturnVariant === v
+                                      ? "border-primary/50 bg-primary/15 text-foreground"
+                                      : "border-border bg-background/50 text-muted-foreground hover:text-foreground",
+                                  )}
+                                >
+                                  {label}
+                                </button>
+                              ))}
+                            </div>
+                          </fieldset>
                         )}
                       </div>
                     )}
@@ -598,7 +619,7 @@ export function ProjectionGapSimulator() {
                     <div className="rounded-3xl border border-border/60 bg-background/25 p-5 sm:p-6">
                       <p className="text-sm font-medium text-foreground">Optional numbers</p>
                       <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                        Rough percentages are fine. Leave blank if unknown — the simulator will ignore that signal.
+                        Rough percentages are fine. Leave blank if unknown — the simulator will say it cannot make the call rather than guess.
                       </p>
                       <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
                         <label className="block space-y-1.5">
@@ -621,7 +642,7 @@ export function ProjectionGapSimulator() {
                         </label>
                         <label className="block space-y-1.5">
                           <span className="text-xs font-medium text-muted-foreground">
-                            Free-float change (points)
+                            Free-float change (points) / share-count change (%)
                           </span>
                           <input
                             type="text"
@@ -809,6 +830,27 @@ export function ProjectionGapSimulator() {
                         {result.summary}
                       </p>
                     </div>
+
+                    {result.verdict && (
+                      <div className="rounded-2xl border border-primary/35 bg-primary/10 px-4 py-4 sm:px-5 sm:py-5">
+                        <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-wide text-primary">
+                          Verdict
+                        </p>
+                        <p className="text-sm leading-relaxed text-foreground">
+                          {result.verdict}
+                        </p>
+                        {(() => {
+                          const meta = canonicalEventById(input.eventFamily);
+                          if (!meta) return null;
+                          return (
+                            <p className="mt-2 text-[11px] uppercase tracking-wide text-muted-foreground">
+                              {meta.badge} · {meta.category} · {meta.name}
+                            </p>
+                          );
+                        })()}
+                      </div>
+                    )}
+
                     <ul className="space-y-3">
                       {result.hypotheses.map((h) => (
                         <li
@@ -830,6 +872,13 @@ export function ProjectionGapSimulator() {
                               <span className="font-semibold text-foreground">
                                 {h.appliesToVendors.map(vendorAbbr).join(", ")}
                               </span>
+                              {h.citation && (
+                                <>
+                                  <span className="mx-2 text-border">·</span>
+                                  <span className="uppercase tracking-wide">Source: </span>
+                                  <span className="text-foreground">{h.citation}</span>
+                                </>
+                              )}
                             </p>
                           )}
                         </li>

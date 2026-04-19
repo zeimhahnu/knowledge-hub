@@ -1,34 +1,33 @@
+import {
+  CANONICAL_EVENTS,
+  canonicalEventById,
+  type CanonicalEventId,
+  type EventBadge,
+} from "@/lib/event-taxonomy";
 import type { EventClass, EventFamily } from "@/lib/simulator/types";
 
 /**
- * Coarse simulator families (not the full 13-type vendor list).
- * Canonical names and mandatory/voluntary counts live in `@/lib/event-taxonomy`.
+ * Single source of truth: every simulator family IS a canonical event id from
+ * `@/lib/event-taxonomy` (the same 13 ISO CAEV types the Vendor Reference uses).
+ * The simulator no longer maintains its own coarse taxonomy.
  */
 
-/** Event class is determined by the selected family — no separate user step. */
-export const FAMILY_TO_CLASS: Record<EventFamily, EventClass> = {
-  dividend: "mandatory",
-  split: "mandatory",
-  merger: "mandatory",
-  spinoff: "mandatory",
-  return_of_capital: "mandatory",
-  delisting: "mandatory",
-  rights: "voluntary",
-  tender: "voluntary",
-  other: "mandatory",
+const BADGE_TO_CLASS: Record<EventBadge, EventClass> = {
+  mandatory: "mandatory",
+  voluntary: "voluntary",
 };
 
-export const MANDATORY_FAMILIES: EventFamily[] = [
-  "dividend",
-  "split",
-  "merger",
-  "spinoff",
-  "return_of_capital",
-  "delisting",
-  "other",
-];
+export const FAMILY_TO_CLASS: Record<EventFamily, EventClass> = Object.fromEntries(
+  CANONICAL_EVENTS.map((e) => [e.id, BADGE_TO_CLASS[e.badge]]),
+) as Record<EventFamily, EventClass>;
 
-export const VOLUNTARY_FAMILIES: EventFamily[] = ["rights", "tender"];
+export const MANDATORY_FAMILIES: EventFamily[] = CANONICAL_EVENTS.filter(
+  (e) => e.badge === "mandatory",
+).map((e) => e.id as CanonicalEventId);
+
+export const VOLUNTARY_FAMILIES: EventFamily[] = CANONICAL_EVENTS.filter(
+  (e) => e.badge === "voluntary",
+).map((e) => e.id as CanonicalEventId);
 
 export function getEventClassFromFamily(family: EventFamily): EventClass {
   return FAMILY_TO_CLASS[family] ?? "mandatory";
@@ -39,16 +38,5 @@ export function familiesForClass(eventClass: EventClass): EventFamily[] {
 }
 
 export function humanFamily(f: EventFamily): string {
-  const map: Record<EventFamily, string> = {
-    dividend: "Dividend",
-    split: "Stock split or consolidation",
-    merger: "M&A",
-    spinoff: "Spin-off",
-    rights: "Rights issue",
-    tender: "Tender or buyback",
-    return_of_capital: "Return of capital",
-    delisting: "Delisting",
-    other: "Other corporate action",
-  };
-  return map[f];
+  return canonicalEventById(f)?.name ?? f;
 }
