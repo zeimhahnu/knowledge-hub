@@ -9,7 +9,7 @@ import type {
   SimulatorResult,
 } from "@/lib/simulator/types";
 
-const RULES_VERSION = "1.1.0";
+const RULES_VERSION = "1.2.0";
 
 const DISCLAIMER =
   "This simulator produces possible explanations only. It does not replace official vendor methodology, notices, or your internal policy. Always confirm with vendor documentation and primary sources.";
@@ -106,6 +106,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
   const ffDelta = parseOptionalPct(input.metrics.freeFloatChangePp);
   const tenderPct = parseOptionalPct(input.metrics.tenderAcceptancePct);
   const rightsDisc = parseOptionalPct(input.metrics.rightsDiscountPct);
+  const offeringSizePct = parseOptionalPct(input.metrics.offeringSizePctOfMc);
 
   const dup = overlap(input.missingVendors, input.presentVendors);
   if (dup.length > 0) {
@@ -158,7 +159,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
       id: "voluntary-uncertainty",
       title: "VOLUNTARY EVENT — PARTICIPATION OPEN",
       explanation:
-        "Rights issues, tenders, and similar voluntary actions often need confirmed subscription or acceptance before every vendor adjusts floats or share counts. One feed may show an early or provisional line while another waits for final results — especially where free-float or materiality thresholds differ.",
+        "Rights issues, tenders, secondary offerings, private placements, and similar voluntary actions often need confirmed subscription, acceptance, or allocation before every vendor adjusts floats or share counts. One feed may show an early or provisional line while another waits for final results — especially where free-float or materiality thresholds differ.",
       relevance: "high",
       appliesToVendors: onlyMissing,
     });
@@ -222,6 +223,64 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
       relevance: "low",
       appliesToVendors: onlyMissing,
     });
+  }
+
+  if (input.eventFamily === "secondary_offering") {
+    if (offeringSizePct !== null && offeringSizePct >= 5) {
+      hypotheses.push({
+        id: "secondary-offering-large",
+        title: "LARGE SECONDARY OFFERING",
+        explanation: `You indicated the new issue is on the order of ${offeringSizePct}% of market cap (roughly the “~5%” stress band many desks use). At that scale, float and share-count narratives skew toward immediate or near-term adjustment in several methodologies, while others may still wait for settlement, exchange notice, or confirmed allocation — producing the gap you are seeing.`,
+        relevance: "high",
+        appliesToVendors: onlyMissing,
+      });
+    } else if (offeringSizePct !== null && offeringSizePct < 5) {
+      hypotheses.push({
+        id: "secondary-offering-below-threshold",
+        title: "SECONDARY OFFERING BELOW SIZE STRESS BAND",
+        explanation: `Around ${offeringSizePct}% of market cap sits below the common ~5% “large deal” heuristic. Smaller issues are more often treated as below immediate materiality: some vendors defer to the next quarterly index review (QIR) language while another feed already carries a placeholder or early line.`,
+        relevance: "medium",
+        appliesToVendors: onlyMissing,
+      });
+    } else {
+      hypotheses.push({
+        id: "secondary-offering-materiality",
+        title: "SECONDARY OFFERING — SIZE AND FLOAT",
+        explanation:
+          "Secondary offerings are materiality- and free-float sensitive. Vendors disagree on when share count updates versus when lines first appear in open-constituent files. Add a rough % of market cap under optional numbers if you can — the simulator uses ~5% as a simple split between “more immediate adjustment” vs “more QIR / deferred” framing.",
+        relevance: "medium",
+        appliesToVendors: onlyMissing,
+      });
+    }
+  }
+
+  if (input.eventFamily === "private_placement") {
+    if (offeringSizePct !== null && offeringSizePct >= 5) {
+      hypotheses.push({
+        id: "private-placement-material",
+        title: "MATERIAL PRIVATE PLACEMENT",
+        explanation: `You indicated roughly ${offeringSizePct}% of market cap. Above the common ~5% materiality heuristic, several vendors lean toward immediate adjustment or urgent divisor-related updates once terms are confirmed; others may still lag on feed publication — not because they disagree on economics, but because of confirmation gates.`,
+        relevance: "high",
+        appliesToVendors: onlyMissing,
+      });
+    } else if (offeringSizePct !== null && offeringSizePct < 5) {
+      hypotheses.push({
+        id: "private-placement-below-material",
+        title: "PRIVATE PLACEMENT — BELOW MATERIALITY HEURISTIC",
+        explanation: `Around ${offeringSizePct}% of market cap is below the ~5% band used here as a simple materiality split. Below-threshold placements are often aligned with deferred-to-QIR narratives on some indices while another vendor already reflects a provisional line — match this to Step 4 style materiality questions in your own process.`,
+        relevance: "medium",
+        appliesToVendors: onlyMissing,
+      });
+    } else {
+      hypotheses.push({
+        id: "private-placement-materiality-unknown",
+        title: "PRIVATE PLACEMENT — MATERIALITY GATE",
+        explanation:
+          "Private placements usually turn on whether the issue crosses each vendor’s materiality threshold relative to float and index rules. Without a rough issue size, treat divergence as timing and confirmation: one feed may wait for regulatory or exchange finality while another publishes earlier. Add % of market cap under optional numbers for a sharper split.",
+        relevance: "medium",
+        appliesToVendors: onlyMissing,
+      });
+    }
   }
 
   if (input.eventFamily === "merger") {
@@ -372,13 +431,16 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     "merger",
     "spinoff",
     "rights",
+    "tender",
+    "secondary_offering",
+    "private_placement",
   ];
   if (!pilotFamilies.includes(input.eventFamily)) {
     hypotheses.push({
       id: "pilot-stub",
       title: "Broader reference may be needed",
       explanation:
-        "The richest rule set here focuses on dividends, splits, M&A, spin-offs, and rights. For this event type, lean on the vendor reference for thresholds and timing, and treat simulator output as a starting point.",
+        "The richest rule set here focuses on dividends, splits, M&A, spin-offs, rights, tenders, secondary offerings, and private placements. For this event type, lean on the vendor reference for thresholds and timing, and treat simulator output as a starting point.",
       relevance: "low",
       appliesToVendors: onlyMissing,
     });

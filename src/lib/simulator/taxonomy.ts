@@ -10,6 +10,8 @@ export const FAMILY_TO_CLASS: Record<EventFamily, EventClass> = {
   delisting: "mandatory",
   rights: "voluntary",
   tender: "voluntary",
+  secondary_offering: "voluntary",
+  private_placement: "voluntary",
   other: "mandatory",
 };
 
@@ -23,7 +25,12 @@ export const MANDATORY_FAMILIES: EventFamily[] = [
   "other",
 ];
 
-export const VOLUNTARY_FAMILIES: EventFamily[] = ["rights", "tender"];
+export const VOLUNTARY_FAMILIES: EventFamily[] = [
+  "rights",
+  "tender",
+  "secondary_offering",
+  "private_placement",
+];
 
 export function getEventClassFromFamily(family: EventFamily): EventClass {
   return FAMILY_TO_CLASS[family] ?? "mandatory";
@@ -41,6 +48,8 @@ export function humanFamily(f: EventFamily): string {
     spinoff: "Spin-off",
     rights: "Rights issue",
     tender: "Tender or buyback",
+    secondary_offering: "Secondary offering",
+    private_placement: "Private placement",
     return_of_capital: "Return of capital",
     delisting: "Delisting",
     other: "Other corporate action",
