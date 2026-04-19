@@ -59,17 +59,21 @@ npx tsc --noEmit # TypeScript check
 
 ## Deployment
 
-Pushed to `main` → GitHub Pages auto-deploys to:
-**https://zeimhahnu.github.io/knowledge-hub/**
+Pushed to `main` → **Vercel** builds and deploys the app (Next.js serverless, no static export).
+
+**Production:** https://corporate-action.vercel.app/
+
+GitHub Actions on `main` runs lint, typecheck, and `npm run build` (see `.github/workflows/deploy.yml`).
 
 ## Live Pages
 
-| Page | URL |
+| Page | URL (on production host) |
 |------|-----|
 | Homepage (Decision Tree) | `/` |
 | Vendor Reference | `/vendors/` |
 | ISO CAEV Taxonomy | `/vendors/iso-taxonomy/` |
 | Event Extraction | `/vendors/event-extraction/` |
+| API health check | `/api/test/` |
 
 ## Event Types Covered
 

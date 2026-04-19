@@ -20,7 +20,7 @@ alwaysApply: true
 
 **Design philosophy:** "Modern, Clean, Smooth, Minimalist" — glassmorphism, bento box layouts, high-contrast typography, dark mode default.
 
-**Live URL:** https://zeimhahnu.github.io/knowledge-hub/
+**Live URL:** https://corporate-action.vercel.app/
 
 ---
 
@@ -166,8 +166,8 @@ Any constraints, dependencies, or technical considerations?
 - Commit messages: `feat:`, `fix:`, `refactor:`, `docs:`, `style:`
 - One logical unit per commit (one component, one fix)
 - Branch: `main` only — no feature branches
-- After every successful commit: GitHub Pages auto-deploys
+- After every successful merge to `main`: Vercel auto-deploys production
 
 ---
 
-*This file is maintained by Lil Claw / Goop. Last updated: 2026-04-18*
+*This file is maintained by Lil Claw / Goop. Last updated: 2026-04-19*
