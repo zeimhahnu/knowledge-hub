@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { surfaceOuterClass } from "@/components/surface-section";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import Tippy from "@tippyjs/react";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -204,55 +205,56 @@ const GLOSSARY: GEntry[] = [
 
 function GlossaryTerm({ term }: { term: string }) {
   const entry = GLOSSARY.find((g) => g.term === term);
-  const [show, setShow] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
   if (!entry) return <span>{term}</span>;
 
   return (
-    <span
-      className="relative inline-block"
-      onMouseEnter={() => {
-        timeoutRef.current = setTimeout(() => setShow(true), 200);
-      }}
-      onMouseLeave={() => {
-        if (timeoutRef.current) clearTimeout(timeoutRef.current);
-        setShow(false);
-      }}
-      onFocus={() => {
-        timeoutRef.current = setTimeout(() => setShow(true), 200);
-      }}
-      onBlur={() => {
-        if (timeoutRef.current) clearTimeout(timeoutRef.current);
-        setShow(false);
-      }}
+    <Tippy
+      content={
+        <div className="max-w-[260px]">
+          <p className="mb-1 text-[13px] font-semibold text-white">{entry.term}</p>
+          <p className="mb-2 text-[12px] leading-relaxed text-white/80">{entry.definition}</p>
+          {entry.detail && (
+            <p className="rounded-lg bg-white/10 p-2.5 text-[11px] leading-relaxed text-white/60">
+              {entry.detail}
+            </p>
+          )}
+        </div>
+      }
+      placement="top"
+      duration={200}
+      delay={[200, 0]}
     >
-      <span tabIndex={0} className="cursor-help border-b border-dashed border-amber-400/60 text-amber-400 hover:border-amber-400 hover:bg-amber-400/10 focus:border-amber-400 focus:bg-amber-400/10 focus:outline-none">
+      <span className="cursor-help border-b border-dashed border-amber-400/60 text-amber-400 hover:border-amber-400 hover:bg-amber-400/10">
         {term}
       </span>
-      <AnimatePresence>
-        {show && (
-          <motion.div
-            initial={{ opacity: 0, y: 4, scale: 0.97 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 4, scale: 0.97 }}
-            transition={{ duration: 0.15 }}
-            className="absolute left-0 top-full z-50 mt-2 w-80 rounded-xl border border-amber-500/40 bg-[oklch(0.15_0.015_260)] p-4 shadow-2xl"
-            role="tooltip"
-            aria-live="polite"
-          >
-            <div className="mb-1 text-sm font-bold text-amber-300">{entry.term}</div>
-            <div className="mb-2 text-xs text-foreground">{entry.definition}</div>
-            {entry.detail && (
-              <div className="rounded-lg bg-black/20 p-2.5 text-xs leading-relaxed text-muted-foreground">
-                {entry.detail}
-              </div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </span>
+    </Tippy>
   );
+}
+
+/**
+ * Renders a string, automatically wrapping any glossary term it contains
+ * with <GlossaryTerm> so jargon is immediately identifiable.
+ */
+function GlossaryText({ text }: { text: string }) {
+  if (!text) return null;
+  // Sort longest term first to avoid partial matches
+  const terms = [...GLOSSARY].sort((a, b) => b.term.length - a.term.length);
+  const regex = new RegExp(`(${terms.map((t) => escapeRegex(t.term)).join("|")})`, "g");
+  const parts = text.split(regex);
+
+  return (
+    <>
+      {parts.map((part, i) => {
+        const matched = terms.find((t) => t.term === part);
+        if (matched) return <GlossaryTerm key={i} term={matched.term} />;
+        return <span key={i}>{part}</span>;
+      })}
+    </>
+  );
+}
+
+function escapeRegex(s: string) {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 // ─── Event data ───────────────────────────────────────────────────────────────
@@ -675,7 +677,7 @@ function TimingFlow({ flow }: { flow: EventType["timingFlow"] }) {
             <div className="absolute left-3.5 sm:left-4.5 top-1.5 h-1 w-1 rounded-full bg-primary ring-2 ring-background" />
             <div className="min-w-0 flex-1 rounded-xl border border-border bg-card p-3">
               <div className="mb-1 text-xs font-semibold text-primary">{step.phase}</div>
-              <div className="text-xs leading-relaxed text-muted-foreground">{step.what}</div>
+              <div className="text-xs leading-relaxed text-muted-foreground"><GlossaryText text={step.what} /></div>
               <div className="mt-2 flex flex-wrap gap-1">
                 {step.who.map((w) => (
                   <span key={w} className="rounded-full bg-muted/60 px-2 py-0.5 text-[10px] text-muted-foreground">
@@ -713,9 +715,10 @@ function ComparisonTable({ fields }: { fields: ComparisonField[] }) {
               {VENDORS.map((v) => {
                 const val = row.values[v] ?? "—";
                 const isCritical = val.includes("only") || val.includes("divisor only") || val.includes("unique") || val.includes("UNIQUE") || val.includes("No distinction");
+                const cellClass = isCritical ? "px-2 py-2.5 text-center tabular-nums font-semibold text-amber-400" : "px-2 py-2.5 text-center tabular-nums text-muted-foreground";
                 return (
-                  <td key={v} className={`px-2 py-2.5 text-center tabular-nums ${isCritical ? "font-semibold text-amber-400" : "text-muted-foreground"}`}>
-                    {val === "N/A" ? <span className="text-muted-foreground/50">{val}</span> : val}
+                  <td key={v} className={cellClass}>
+                    {val === "N/A" ? <span className="text-muted-foreground/50">{val}</span> : <GlossaryText text={val} />}
                   </td>
                 );
               })}
@@ -976,7 +979,7 @@ export default function VendorDashboard() {
                 <span className="text-xs text-muted-foreground">{active.category}</span>
               </div>
               <h2 className="mb-2 text-2xl font-bold">{active.name}</h2>
-              <p className="text-sm leading-relaxed text-muted-foreground">{active.summary}</p>
+              <p className="text-sm leading-relaxed text-muted-foreground"><GlossaryText text={active.summary} /></p>
             </div>
 
             {/* Why No Adjustment */}
@@ -985,7 +988,7 @@ export default function VendorDashboard() {
                 <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-blue-400">
                   Why is there NO price adjustment?
                 </div>
-                <p className="text-sm leading-relaxed">{active.whyNoAdj}</p>
+                <p className="text-sm leading-relaxed"><GlossaryText text={active.whyNoAdj} /></p>
               </div>
             )}
 
@@ -995,7 +998,7 @@ export default function VendorDashboard() {
                 <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-amber-400">
                   Why IS there a price adjustment?
                 </div>
-                <p className="text-sm leading-relaxed">{active.whyAdj}</p>
+                <p className="text-sm leading-relaxed"><GlossaryText text={active.whyAdj} /></p>
               </div>
             )}
 
@@ -1035,11 +1038,11 @@ export default function VendorDashboard() {
                         {active.thresholds.map((t, i) => (
                           <tr key={t.vendor} className={`border-b border-border/40 ${i % 2 === 0 ? "bg-card" : "bg-muted/5"}`}>
                             <td className="px-4 py-3 align-top font-semibold text-foreground whitespace-nowrap">{t.vendor}</td>
-                            <td className="px-4 py-3 align-top leading-relaxed">{t.value}</td>
+                            <td className="px-4 py-3 align-top leading-relaxed"><GlossaryText text={t.value} /></td>
                             <td className="px-4 py-3 align-top">
                               {t.note && (
                                 <span className="inline-block text-[11px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full leading-relaxed">
-                                  {t.note}
+                                  <GlossaryText text={t.note} />
                                 </span>
                               )}
                             </td>
@@ -1085,7 +1088,7 @@ export default function VendorDashboard() {
                 <AlertTriangleIcon className="h-4 w-4" />
                 Critical Rule to Watch
               </div>
-              <p className="text-sm leading-relaxed">{active.criticalRule}</p>
+              <p className="text-sm leading-relaxed"><GlossaryText text={active.criticalRule} /></p>
             </div>
 
             {/* Vendor Comparison Table */}

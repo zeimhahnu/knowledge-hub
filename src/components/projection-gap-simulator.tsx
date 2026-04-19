@@ -8,7 +8,7 @@ import { ArrowLeftIcon, ArrowRightIcon, CheckIcon } from "lucide-react";
 import { surfaceOuterClass } from "@/components/surface-section";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { VENDOR_IDS, vendorLabel, type VendorId } from "@/lib/vendors";
+import { VENDOR_IDS, vendorLabel, vendorAbbr, type VendorId } from "@/lib/vendors";
 import { runSimulator } from "@/lib/simulator/simulator-engine";
 import {
   familiesForClass,
@@ -77,6 +77,12 @@ function relevanceTone(r: "high" | "medium" | "low"): string {
   if (r === "medium") return "bg-amber-500/8 border-amber-500/20";
   return "bg-muted/40 border-border";
 }
+
+const SIGNAL_ICON: Record<string, string> = {
+  high: "🔴",
+  medium: "🟡",
+  low: "⚪",
+};
 
 function toggleVendor(list: VendorId[], id: VendorId): VendorId[] {
   return list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
@@ -795,9 +801,16 @@ export function ProjectionGapSimulator() {
 
                 {step === 5 && result && (
                   <div className="space-y-6">
-                    <p className="rounded-2xl border border-border/60 bg-background/40 px-4 py-4 text-sm leading-relaxed text-foreground">
-                      {result.summary}
-                    </p>
+                    <div className="rounded-2xl border border-border/60 bg-background/40 px-4 py-4">
+                      <div className="mb-1 flex items-center gap-2 text-[11px] uppercase tracking-wide text-muted-foreground">
+                        <span>{result.hypotheses.filter((h) => h.relevance === "high").length > 0 && `🔴 ×${result.hypotheses.filter((h) => h.relevance === "high").length}`}</span>
+                        <span>{result.hypotheses.filter((h) => h.relevance === "medium").length > 0 && `🟡 ×${result.hypotheses.filter((h) => h.relevance === "medium").length}`}</span>
+                        <span>{result.hypotheses.filter((h) => h.relevance === "low").length > 0 && `⚪ ×${result.hypotheses.filter((h) => h.relevance === "low").length}`}</span>
+                      </div>
+                      <p className="font-mono text-[13px] leading-relaxed text-foreground">
+                        {result.summary}
+                      </p>
+                    </div>
                     <ul className="space-y-3">
                       {result.hypotheses.map((h) => (
                         <li
@@ -807,18 +820,17 @@ export function ProjectionGapSimulator() {
                             relevanceTone(h.relevance),
                           )}
                         >
-                          <div className="mb-2 flex flex-wrap items-baseline gap-2 gap-y-1">
-                            <span className="text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">
-                              {h.relevance} likelihood
+                          <div className="mb-1.5 flex flex-wrap items-center gap-2">
+                            <span className="text-[13px] font-bold tracking-wide uppercase text-foreground">
+                              {SIGNAL_ICON[h.relevance]} {h.title}
                             </span>
                           </div>
-                          <p className="text-base font-semibold leading-snug text-foreground">{h.title}</p>
-                          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{h.explanation}</p>
+                          <p className="text-sm font-mono leading-relaxed text-muted-foreground">{h.explanation}</p>
                           {h.appliesToVendors.length > 0 && (
-                            <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-                              Most relevant where missing:{" "}
-                              <span className="font-medium text-foreground">
-                                {h.appliesToVendors.map(vendorLabel).join(", ")}
+                            <p className="mt-2 text-[11px] text-muted-foreground">
+                              <span className="uppercase tracking-wide">Vendors: </span>
+                              <span className="font-semibold text-foreground">
+                                {h.appliesToVendors.map(vendorAbbr).join(", ")}
                               </span>
                             </p>
                           )}

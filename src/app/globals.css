@@ -144,3 +144,31 @@
     background: oklch(0.72 0.19 250 / 0.3);
   }
 }
+
+/* ─── Tippy dark tooltips ─────────────────────────────────────────────────── */
+.tippy-box {
+  background: oklch(0.16 0.015 260) !important;
+  color: #f0f0f0 !important;
+  border-radius: 12px !important;
+  font-size: 13px !important;
+  border: 1px solid oklch(0.28 0.015 260);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+.tippy-content {
+  padding: 8px 12px !important;
+}
+.tippy-arrow {
+  color: oklch(0.16 0.015 260) !important;
+}
+.tippy-box[data-placement^="top"] > .tippy-arrow {
+  color: oklch(0.16 0.015 260) !important;
+}
+.tippy-box[data-placement^="bottom"] > .tippy-arrow {
+  color: oklch(0.16 0.015 260) !important;
+}
+.tippy-box[data-placement^="left"] > .tippy-arrow {
+  color: oklch(0.16 0.015 260) !important;
+}
+.tippy-box[data-placement^="right"] > .tippy-arrow {
+  color: oklch(0.16 0.015 260) !important;
+}

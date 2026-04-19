@@ -1,5 +1,5 @@
 import type { VendorId } from "@/lib/vendors";
-import { vendorLabel } from "@/lib/vendors";
+import { vendorAbbr } from "@/lib/vendors";
 import { getEventClassFromFamily, humanFamily } from "@/lib/simulator/taxonomy";
 import type {
   EventFamily,
@@ -56,7 +56,7 @@ function uniqueVendors(ids: VendorId[]): VendorId[] {
 }
 
 function listVendors(ids: VendorId[]): string {
-  return uniqueVendors(ids).map(vendorLabel).join(", ");
+  return uniqueVendors(ids).map(vendorAbbr).join(", ");
 }
 
 function overlap(a: VendorId[], b: VendorId[]): VendorId[] {
@@ -85,15 +85,14 @@ function parseOptionalPct(raw: string): number | null {
 
 function buildSummary(input: SimulatorInput): string {
   const cls = getEventClassFromFamily(input.eventFamily);
-  const eventLabel = `${cls === "mandatory" ? "Mandatory" : "Voluntary"} — ${humanFamily(input.eventFamily)}`;
+  const eventUpper = `${cls.toUpperCase()} · ${humanFamily(input.eventFamily).toUpperCase()}`;
   const eff = formatIsoDate(input.effectiveDate);
-  const asOf = formatIsoDate(input.dataAsOf);
-  const miss = listVendors(input.missingVendors);
-  const pres = listVendors(input.presentVendors);
+  const miss = input.missingVendors.map(vendorAbbr).join(" + ") || "—";
+  const pres = input.presentVendors.map(vendorAbbr).join(" + ") || "—";
   const note = input.notes.trim()
-    ? ` Context: ${input.notes.trim().slice(0, 200)}${input.notes.trim().length > 200 ? "…" : ""}`
+    ? ` | ${input.notes.trim().slice(0, 120)}${input.notes.trim().length > 120 ? "…" : ""}`
     : "";
-  return `You described a ${eventLabel} with effective date ${eff}. Projection files as of ${asOf} appear missing for: ${miss || "—"}. Present from: ${pres || "—"}.${note}`;
+  return `${eventUpper} | ${eff} eff | ${miss}: ABSENT ←→ ${pres}: PRESENT${note}`;
 }
 
 export function runSimulator(input: SimulatorInput): SimulatorResult {
@@ -112,7 +111,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
   if (dup.length > 0) {
     hypotheses.push({
       id: "input-overlap",
-      title: "Overlapping vendor selection",
+      title: "OVERLAPPING VENDOR SELECTION",
       explanation: `The same vendor cannot be both "missing" and "sent projection" for this exercise: ${listVendors(dup)}. Adjust the selections so each vendor is in at most one list; other hypotheses below assume non-overlapping lists.`,
       relevance: "high",
       appliesToVendors: dup,
@@ -122,7 +121,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
   if (onlyMissing.length === 0 && onlyPresent.length === 0) {
     hypotheses.push({
       id: "no-gap",
-      title: "No vendor gap selected",
+      title: "NO GAP SELECTED",
       explanation:
         "Select at least one vendor that appears missing and one that sent a projection file so the simulator can contrast behaviour. If everyone is aligned, divergence may be timing-only or already resolved.",
       relevance: "medium",
@@ -134,7 +133,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
   if (bdDataToEffective !== null && bdDataToEffective > 5) {
     hypotheses.push({
       id: "t5-window",
-      title: "Coverage window vs effective date",
+      title: "T-5 WINDOW EXCEEDED",
       explanation: `Your "as of" data date (${formatIsoDate(input.dataAsOf)}) is more than five business days before the effective date (${formatIsoDate(input.effectiveDate)}). Vendors often publish open-constituent projections for events within a forward window from the data date. Events far outside that window may not appear in some feeds yet, even if others publish earlier placeholders or notices.`,
       relevance: "high",
       appliesToVendors: onlyMissing,
@@ -146,7 +145,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     if (bdToEx !== null && bdToEx > 5) {
       hypotheses.push({
         id: "ex-before-coverage",
-        title: "Ex-date vs projection snapshot",
+        title: "EX-DATE FAR FROM SNAPSHOT",
         explanation: `Ex-date is ${formatIsoDate(input.exDate)} relative to data as of ${formatIsoDate(input.dataAsOf)}. Some vendors emphasise ex-date adjustments and grace-period logic; others may delay spin-off child lines until first trade. A large gap between snapshot and ex-date can produce "missing now, appears later" patterns.`,
         relevance: "medium",
         appliesToVendors: onlyMissing,
@@ -157,7 +156,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
   if (eventClass === "voluntary") {
     hypotheses.push({
       id: "voluntary-uncertainty",
-      title: "Voluntary event — participation may still be open",
+      title: "VOLUNTARY EVENT — PARTICIPATION OPEN",
       explanation:
         "Rights issues, tenders, and similar voluntary actions often need confirmed subscription or acceptance before every vendor adjusts floats or share counts. One feed may show an early or provisional line while another waits for final results — especially where free-float or materiality thresholds differ.",
       relevance: "high",
@@ -169,7 +168,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     if (input.dividendFlavor === "special" && divYield >= 5) {
       hypotheses.push({
         id: "div-yield-special-large",
-        title: "Large special dividend relative to price",
+        title: "LARGE SPECIAL DIVIDEND",
         explanation: `You indicated a dividend yield of about ${divYield}% of price. A large special distribution can change how vendors classify the event (e.g. return of capital vs dividend) and whether it is deferred or treated across PR vs TR series. Some feeds wait for confirmed gross or net amounts before publishing a projection line.`,
         relevance: "high",
         appliesToVendors: onlyMissing,
@@ -177,7 +176,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     } else if (divYield >= 3 && input.dividendFlavor !== "ordinary") {
       hypotheses.push({
         id: "div-yield-material",
-        title: "Materiality relative to price",
+        title: "MATERIAL DIVIDEND — THRESHOLD RISK",
         explanation: `A dividend of roughly ${divYield}% of price may cross materiality thresholds for some vendors but not others, or may be handled differently on PR vs TR. Below-threshold amounts can be deferred to the next review cycle on some indices.`,
         relevance: "medium",
         appliesToVendors: onlyMissing,
@@ -188,7 +187,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
   if (ffDelta !== null && Math.abs(ffDelta) >= 5) {
     hypotheses.push({
       id: "float-delta",
-      title: "Meaningful free-float change",
+      title: "FREE-FLOAT CHANGE DETECTED",
       explanation: `You entered about ${ffDelta >= 0 ? "+" : ""}${ffDelta} percentage points of free-float change. Several vendors apply extraordinary float adjustments or different timing when float moves by roughly five points or more. That alone can explain why one feed already reflects a line and another does not.`,
       relevance: "high",
       appliesToVendors: onlyMissing,
@@ -199,7 +198,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     if (tenderPct < 50) {
       hypotheses.push({
         id: "tender-low",
-        title: "Low acceptance so far",
+        title: "LOW TENDER ACCEPTANCE",
         explanation: `With acceptance around ${tenderPct}%, some methodologies will not treat the offer as sufficiently progressed to adjust or delete lines, while others may publish provisional scenarios. Divergence often appears around the acceptance thresholds each vendor publishes.`,
         relevance: "medium",
         appliesToVendors: onlyMissing,
@@ -207,7 +206,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     } else if (tenderPct >= 85) {
       hypotheses.push({
         id: "tender-high",
-        title: "High acceptance — deletion timing may still differ",
+        title: "HIGH ACCEPTANCE — TIMING DIVERGES",
         explanation: `Around ${tenderPct}% acceptance often crosses key thresholds, but vendors still disagree on when a target line is removed or when float is updated — especially if conditions combine acceptance % with free-float tests.`,
         relevance: "medium",
         appliesToVendors: onlyMissing,
@@ -218,7 +217,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
   if (input.eventFamily === "rights" && rightsDisc !== null && rightsDisc > 0) {
     hypotheses.push({
       id: "rights-discount",
-      title: "Rights trading below intrinsic",
+      title: "RIGHTS BELOW THEORETICAL",
       explanation: `You noted the rights trade roughly ${rightsDisc}% below theoretical value. Deep discounts can correlate with low exercise expectations; some vendors delay or omit adjustments until the outcome is clearer, while others publish nil-paid lines earlier.`,
       relevance: "low",
       appliesToVendors: onlyMissing,
@@ -229,7 +228,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     if (input.mnaIndexParties === "both") {
       hypotheses.push({
         id: "mna-both-deletion-triggers",
-        title: "Target deletion triggers differ when both names are in the index",
+        title: "M&A: TARGET + ACQUIRER IN INDEX",
         explanation:
           "When target and acquirer are both index constituents, deletion and float rules diverge materially across vendors (e.g. different combinations of acceptance % and free-float conditions). The same deal can therefore show different effective removal dates or interim placeholder treatment in projections.",
         relevance: "high",
@@ -239,7 +238,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     if (input.mnaIndexParties === "acquirer_only") {
       hypotheses.push({
         id: "mna-acquirer-only",
-        title: "Acquirer-only index — consideration still drives timing",
+        title: "M&A: ACQUIRER-ONLY INDEX",
         explanation:
           "If only the acquirer is in the index, vendors still disagree on how and when to reflect share count and float changes for stock vs cash consideration, and on confirmation gates. One feed may show an early divisor-related adjustment while another waits for settlement or exchange confirmation.",
         relevance: "medium",
@@ -249,7 +248,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     if (input.mnaDealType === "cash") {
       hypotheses.push({
         id: "mna-cash",
-        title: "Cash deal — different adjustment mechanics vs stock",
+        title: "CASH DEAL — DIFFERENT ADJUSTMENT",
         explanation:
           "Cash mergers are often treated differently from stock mergers for divisor and continuity. A vendor that already published a projection line may be using a different confirmation or price basis than one that is still silent.",
         relevance: "medium",
@@ -262,7 +261,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     if (input.spinoffChildEligible === "no") {
       hypotheses.push({
         id: "spinoff-ineligible",
-        title: "Ineligible spin-off child — not all vendors will add a line",
+        title: "SPIN-OFF CHILD INELIGIBLE",
         explanation:
           "If the distributed security is not index-eligible (sector, liquidity, domicile), many methodologies never add a child line in projections. Missing vendors may simply not publish a placeholder for a security outside index rules.",
         relevance: "high",
@@ -271,7 +270,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     } else if (input.spinoffChildEligible === "yes") {
       hypotheses.push({
         id: "spinoff-placeholder-vs-trade",
-        title: "Placeholder vs first-trade price",
+        title: "SPIN-OFF: PLACEHOLDER VS LIVE TRADE",
         explanation:
           "For an eligible spin-off child, vendors disagree on zero vs estimated vs when-issued pricing, and on how long to wait for real trading. Vendors that use immediate placeholders often appear in feeds earlier than those that require a live market price.",
         relevance: "high",
@@ -280,7 +279,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
       if (input.spinoffPhase === "placeholder") {
         hypotheses.push({
           id: "spinoff-phase-placeholder",
-          title: "Still in the placeholder phase",
+          title: "SPIN-OFF: STILL IN PLACEHOLDER PHASE",
           explanation:
             "If the child has not yet traded regularly, vendors that require a market price may omit the line from projections until first trade, while others already show a floor or estimated price.",
           relevance: "high",
@@ -294,7 +293,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     if (input.rightsItm === "otm") {
       hypotheses.push({
         id: "rights-otm",
-        title: "Out-of-the-money rights — many vendors ignore",
+        title: "OTM RIGHTS — VENDORS IGNORE",
         explanation:
           "OTM rights are often economically irrelevant for index replication; several methodologies do not adjust until or unless terms change or the issue becomes in-the-money. A vendor showing nothing may be consistent with that policy.",
         relevance: "high",
@@ -303,7 +302,7 @@ export function runSimulator(input: SimulatorInput): SimulatorResult {
     } else if (input.rightsItm === "itm") {
       hypotheses.push({
         id: "rights-itm",
-        title: "In-the-money rights — timing and float still diverge",
+        title: "ITM RIGHTS — TIMING + FLOAT DIVERGE",
         explanation:
           "ITM rights usually require attention, but vendors still differ on nil-paid lines, subscription results, and free-float effects from non-participation. One vendor may publish a provisional line while another waits for final take-up.",
         relevance: "medium",
