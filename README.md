@@ -69,7 +69,7 @@ GitHub Actions on `main` runs lint, typecheck, and `npm run build` (see `.github
 
 ### Investor snapshot data
 
-The `/investors/` page and `GET /api/investors/quote?ticker=SYMBOL` load delayed market data from **Yahoo Finance** over HTTPS (chart `v8/finance/chart` for dividends, splits, and meta price; `v10/finance/quoteSummary` for sector, dividend rate/yield, and calendar hints). There is no Python or subprocess on Vercel. See `SPECS/approved/prd-investor-snapshot-data-source.md` for the API contract (`InvestorTickerResponse` in `src/lib/investors/types.ts`).
+The `/investors/` page calls **`GET /api/investors/quote?ticker=SYMBOL`**, which fetches Yahoo Finance JSON server-side: chart **`v8/finance/chart`** (dividends, splits, meta price) and **`v10/finance/quoteSummary`** (sector, dividend rate/yield, calendar hints). Data is delayed; there is **no API key** and **no Python** on Vercel. Successful responses include **CDN `Cache-Control`** (`s-maxage=300`, stale-while-revalidate) and an **in-memory** cache of about five minutes per normalized ticker **per serverless instance**. See `SPECS/approved/prd-investor-snapshot-data-source.md` for the contract (`InvestorTickerResponse` in `src/lib/investors/types.ts`).
 
 ## Live Pages
 

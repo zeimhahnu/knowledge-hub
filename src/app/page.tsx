@@ -9,12 +9,20 @@ import {
   ArrowRightIcon,
   BookOpenIcon,
   CompassIcon,
+  GitBranchIcon,
   GlobeIcon,
   HelpCircleIcon,
   LightbulbIcon,
+  LineChartIcon,
   NetworkIcon,
-  ZapIcon,
 } from "lucide-react";
+
+function scrollToId(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+}
+
+const heroActionClassName =
+  "motion-safe:transition-transform motion-safe:hover:scale-[1.02] inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-xl border border-border bg-card px-4 py-3 text-sm font-semibold text-foreground shadow-sm outline-none transition-colors hover:border-primary/50 hover:bg-muted/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:min-h-12 sm:px-5 sm:py-3.5 sm:text-base";
 
 // ─── Real Scenarios ──────────────────────────────────────────────────────────
 
@@ -159,11 +167,8 @@ export default function Home() {
       {/* ── Hero ───────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden border-b border-border">
         <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `linear-gradient(var(--foreground) 1px, transparent 1px), linear-gradient(90deg, var(--foreground) 1px, transparent 1px)`,
-            backgroundSize: "64px 64px",
-          }}
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.03] [background-image:linear-gradient(var(--foreground)_1px,transparent_1px),linear-gradient(90deg,var(--foreground)_1px,transparent_1px)] [background-size:64px_64px]"
         />
         <div className="relative mx-auto max-w-7xl px-6 py-12 md:py-16">
           <div className="grid gap-10 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)] xl:items-start xl:gap-12">
@@ -188,40 +193,80 @@ export default function Home() {
                   thresholds in the reference.
                 </p>
 
-                <div className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap xl:justify-start">
+                <div className="grid grid-cols-2 gap-3 sm:max-w-xl xl:max-w-none">
+                  <Link href="/vendors/" className={heroActionClassName}>
+                    <BookOpenIcon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+                    Vendor thresholds
+                  </Link>
+                  <Link href="/investors/" className={heroActionClassName}>
+                    <LineChartIcon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+                    Investor snapshot
+                  </Link>
                   <button
                     type="button"
-                    onClick={() => {
-                      document.getElementById("projection-gap-simulator")?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3.5 text-base font-semibold text-primary-foreground shadow-lg transition-all hover:bg-primary/90 hover:shadow-xl sm:px-8 sm:py-4"
+                    onClick={() => scrollToId("decision-tree")}
+                    className={heroActionClassName}
                   >
-                    <ZapIcon className="h-5 w-5" />
-                    Projection gap simulator
-                    <ArrowDownIcon className="h-4 w-4" />
+                    <GitBranchIcon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+                    Find divergence point
+                    <ArrowDownIcon className="h-4 w-4 shrink-0 opacity-70" aria-hidden />
                   </button>
                   <button
                     type="button"
-                    onClick={() => {
-                      document.getElementById("decision-tree")?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-card px-6 py-3.5 text-base font-semibold text-foreground shadow-sm transition-all hover:border-primary/50 hover:bg-muted/50 sm:px-8 sm:py-4"
+                    onClick={() => scrollToId("real-scenarios")}
+                    className={heroActionClassName}
                   >
-                    Decision tree
-                    <ArrowDownIcon className="h-4 w-4" />
+                    <LightbulbIcon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
+                    Real scenarios
+                    <ArrowDownIcon className="h-4 w-4 shrink-0 opacity-70" aria-hidden />
                   </button>
                 </div>
               </motion.div>
             </div>
-            <div className="min-w-0 w-full max-w-full xl:self-start">
+            <div className="flex min-w-0 w-full max-w-full flex-col gap-6 xl:self-start">
               <ProjectionGapSimulator />
+              <div className="rounded-xl border border-border bg-card/60 px-4 py-4 sm:px-5">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  Related tools
+                </p>
+                <div className="flex flex-col gap-2 text-sm sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2">
+                  <Link
+                    href="/vendors/"
+                    className="inline-flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md outline-none"
+                  >
+                    <BookOpenIcon className="h-4 w-4 shrink-0" aria-hidden />
+                    Vendor thresholds
+                  </Link>
+                  <span className="hidden text-border sm:inline" aria-hidden>
+                    ·
+                  </span>
+                  <Link
+                    href="/investors/"
+                    className="inline-flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md outline-none"
+                  >
+                    <LineChartIcon className="h-4 w-4 shrink-0" aria-hidden />
+                    Investor snapshot
+                  </Link>
+                  <span className="hidden text-border sm:inline" aria-hidden>
+                    ·
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => scrollToId("decision-tree")}
+                    className="inline-flex min-h-11 items-center gap-2 rounded-md text-left text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background outline-none sm:min-h-0"
+                  >
+                    <CompassIcon className="h-4 w-4 shrink-0" aria-hidden />
+                    Find divergence point
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* ── Real Scenarios ─────────────────────────────────────────────── */}
-      <section className="mx-auto max-w-6xl px-6 py-16">
+      <section id="real-scenarios" className="mx-auto max-w-6xl px-6 py-16 scroll-mt-8">
         <SurfaceSection padding="comfortable">
         <div className="mb-8">
           <h2 className="mb-2 text-2xl font-bold">Real Scenarios from Operations</h2>
