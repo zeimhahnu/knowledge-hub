@@ -218,41 +218,6 @@ export default function Home() {
             </div>
             <div className="flex min-w-0 w-full max-w-full flex-col gap-6 xl:self-start">
               <ProjectionGapSimulator />
-              <div className="rounded-xl border border-border bg-card/60 px-4 py-4 sm:px-5">
-                <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                  Related tools
-                </p>
-                <div className="flex flex-col gap-2 text-sm sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-4 sm:gap-y-2">
-                  <Link
-                    href="/vendors/"
-                    className="inline-flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md outline-none"
-                  >
-                    <BookOpenIcon className="h-4 w-4 shrink-0" aria-hidden />
-                    Vendor thresholds
-                  </Link>
-                  <span className="hidden text-border sm:inline" aria-hidden>
-                    ·
-                  </span>
-                  <Link
-                    href="/investors/"
-                    className="inline-flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-md outline-none"
-                  >
-                    <LineChartIcon className="h-4 w-4 shrink-0" aria-hidden />
-                    Investor snapshot
-                  </Link>
-                  <span className="hidden text-border sm:inline" aria-hidden>
-                    ·
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => scrollToId("decision-tree")}
-                    className="inline-flex min-h-11 items-center gap-2 rounded-md text-left text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background outline-none sm:min-h-0"
-                  >
-                    <CompassIcon className="h-4 w-4 shrink-0" aria-hidden />
-                    Find divergence point
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -499,7 +464,7 @@ export default function Home() {
             <GlobeIcon className="mb-3 h-5 w-5 text-primary" />
             <div className="mb-1 text-sm font-semibold">Investor snapshot</div>
             <p className="text-xs text-muted-foreground">
-              Dividends, splits, and calendar hints by ticker (delayed data)
+              Global dividends, splits, calendar, and fundamentals — search any Yahoo-covered symbol or company
             </p>
           </Link>
           <div className="rounded-2xl border border-border bg-card p-5">

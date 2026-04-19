@@ -14,6 +14,16 @@ import { UpcomingEventsCard } from "@/components/investors/upcoming-events-card"
 import { InvestorDataWarnings } from "@/components/investors/investor-data-warnings";
 import type { InvestorTickerResponse } from "@/lib/investors/types";
 
+const EXAMPLE_TICKERS: Array<{ symbol: string; label: string }> = [
+  { symbol: "AAPL", label: "AAPL · Apple" },
+  { symbol: "MSFT", label: "MSFT · Microsoft" },
+  { symbol: "0005.HK", label: "0005.HK · HSBC" },
+  { symbol: "7203.T", label: "7203.T · Toyota" },
+  { symbol: "VOD.L", label: "VOD.L · Vodafone" },
+  { symbol: "SAP.DE", label: "SAP.DE · SAP" },
+  { symbol: "BHP.AX", label: "BHP.AX · BHP" },
+];
+
 export default function InvestorsPage() {
   const reduceMotion = useReducedMotion();
   const [input, setInput] = useState("");
@@ -67,9 +77,11 @@ export default function InvestorsPage() {
           </div>
           <h1 className="mb-3 text-3xl font-semibold tracking-tight">Investor intelligence</h1>
           <p className="max-w-prose text-sm text-muted-foreground">
-            Enter a US-listed symbol for a quick read on recent dividends, splits, and
-            calendar hints. Data is third-party and delayed — not advice, not a substitute
-            for your broker or official notices. For{" "}
+            Search any company or symbol covered by Yahoo Finance — US, Europe,
+            Hong Kong, Japan, Australia, emerging markets, ADRs, and ETFs. Type a
+            name (<em>Apple</em>, <em>Toyota</em>, <em>HSBC</em>) or a symbol with
+            suffix (<code>0005.HK</code>, <code>7203.T</code>, <code>VOD.L</code>).
+            Data is third-party and delayed — not advice. For{" "}
             <Link href="/vendors/" className="text-primary underline-offset-4 hover:underline">
               index vendor methodology
             </Link>
@@ -83,17 +95,28 @@ export default function InvestorsPage() {
           <InvestorSearchBar
             value={input}
             onChange={setInput}
-            onSubmit={() => runSearch(input)}
+            onSubmit={(symbol) => {
+              setInput(symbol);
+              void runSearch(symbol);
+            }}
             loading={loading}
           />
-          <p className="mt-4 text-xs text-muted-foreground">
-            Try <button type="button" className="text-primary hover:underline" onClick={() => { setInput("AAPL"); void runSearch("AAPL"); }}>AAPL</button>
-            {", "}
-            <button type="button" className="text-primary hover:underline" onClick={() => { setInput("MSFT"); void runSearch("MSFT"); }}>MSFT</button>
-            {", or "}
-            <button type="button" className="text-primary hover:underline" onClick={() => { setInput("JPM"); void runSearch("JPM"); }}>JPM</button>
-            .
-          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+            <span>Try:</span>
+            {EXAMPLE_TICKERS.map((t) => (
+              <button
+                key={t.symbol}
+                type="button"
+                className="rounded-full border border-border bg-background/60 px-2.5 py-1 font-medium text-foreground transition-colors hover:border-primary/40 hover:bg-muted/40"
+                onClick={() => {
+                  setInput(t.symbol);
+                  void runSearch(t.symbol);
+                }}
+              >
+                {t.label}
+              </button>
+            ))}
+          </div>
         </SurfaceSection>
 
         {error && (
@@ -125,6 +148,9 @@ export default function InvestorsPage() {
                 dividends={data?.dividends ?? []}
                 dividendRate={data?.metrics?.dividendRate}
                 dividendYield={data?.metrics?.dividendYield}
+                payoutRatio={data?.metrics?.payoutRatio}
+                fiveYearAvgDividendYield={data?.metrics?.fiveYearAvgDividendYield}
+                currency={data?.quote?.currency}
                 loading={loading}
               />
               <div className="grid gap-6 sm:grid-cols-2">
@@ -138,7 +164,10 @@ export default function InvestorsPage() {
         <footer className="mt-12 border-t border-border pt-8 text-xs text-muted-foreground">
           <p className="max-w-prose leading-relaxed">
             Quotes and events are aggregated from public market data feeds and may be
-            incomplete or delayed. This page is for orientation only.
+            incomplete or delayed. Coverage depends on Yahoo Finance — most global
+            exchanges are supported via suffixes (<code>.HK</code>, <code>.T</code>,
+            <code>.L</code>, <code>.DE</code>, <code>.TO</code>, <code>.AX</code>,
+            …). This page is for orientation only.
           </p>
         </footer>
       </div>

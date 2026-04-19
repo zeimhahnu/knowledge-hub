@@ -7,6 +7,7 @@ import { ArrowLeftIcon, ArrowRightIcon, CheckIcon } from "lucide-react";
 
 import { surfaceOuterClass } from "@/components/surface-section";
 import { Button } from "@/components/ui/button";
+import { GlossaryTerm } from "@/components/ui/glossary-term";
 import { cn } from "@/lib/utils";
 import { VENDOR_IDS, vendorLabel, vendorAbbr, type VendorId } from "@/lib/vendors";
 import { runSimulator } from "@/lib/simulator/simulator-engine";
@@ -122,6 +123,134 @@ const FAMILIES_NEEDING_CONTEXT: Set<CanonicalEventId> = new Set([
   "secondary-offering",
   "private-placement",
 ]);
+
+type ChoiceOption<T extends string> = {
+  value: T;
+  label: string;
+  /** Tooltip — why it matters and how it shifts the verdict. */
+  hint?: string;
+};
+
+function ChoiceGroup<T extends string>({
+  legend,
+  hint,
+  options,
+  value,
+  onChange,
+  variant = "pill",
+}: {
+  legend: string;
+  hint?: string;
+  options: ReadonlyArray<ChoiceOption<T>>;
+  value: T;
+  onChange: (v: T) => void;
+  variant?: "pill" | "tile";
+}) {
+  if (variant === "tile") {
+    return (
+      <fieldset className="space-y-3">
+        <legend className="text-sm font-medium text-foreground">
+          {hint ? (
+            <GlossaryTerm term={legend} definition={hint}>
+              {legend}
+            </GlossaryTerm>
+          ) : (
+            legend
+          )}
+        </legend>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+          {options.map((o) => (
+            <button
+              key={o.value}
+              type="button"
+              onClick={() => onChange(o.value)}
+              aria-pressed={value === o.value}
+              title={o.hint}
+              className={cn(
+                "min-w-0 rounded-2xl border px-3 py-2.5 text-left text-sm transition-all",
+                value === o.value
+                  ? "border-primary/50 bg-primary/15 text-foreground"
+                  : "border-border bg-background/50 text-muted-foreground hover:border-primary/30 hover:text-foreground",
+              )}
+            >
+              <span className="block text-sm font-semibold">{o.label}</span>
+              {o.hint && (
+                <span className="mt-1 block text-[11px] leading-snug text-muted-foreground">
+                  {o.hint}
+                </span>
+              )}
+            </button>
+          ))}
+        </div>
+      </fieldset>
+    );
+  }
+
+  return (
+    <fieldset className="space-y-3">
+      <legend className="text-sm font-medium text-foreground">
+        {hint ? (
+          <GlossaryTerm term={legend} definition={hint}>
+            {legend}
+          </GlossaryTerm>
+        ) : (
+          legend
+        )}
+      </legend>
+      <div className="flex flex-wrap gap-2">
+        {options.map((o) => (
+          <button
+            key={o.value}
+            type="button"
+            onClick={() => onChange(o.value)}
+            title={o.hint}
+            aria-pressed={value === o.value}
+            className={cn(
+              "rounded-full border px-4 py-2 text-sm transition-all",
+              value === o.value
+                ? "border-primary/50 bg-primary/15 text-foreground"
+                : "border-border bg-background/50 text-muted-foreground hover:text-foreground",
+            )}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
+    </fieldset>
+  );
+}
+
+function MetricField({
+  label,
+  hint,
+  placeholder,
+  value,
+  onChange,
+}: {
+  label: string;
+  hint: string;
+  placeholder: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <label className="flex min-w-0 flex-col gap-1.5">
+      <span className="flex min-h-[2.75rem] items-start text-xs font-medium leading-snug text-muted-foreground">
+        <GlossaryTerm term={label} definition={hint}>
+          {label}
+        </GlossaryTerm>
+      </span>
+      <input
+        type="text"
+        inputMode="decimal"
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="h-11 w-full rounded-xl border border-border bg-background px-3 text-sm outline-none ring-0 transition-shadow focus-visible:border-primary/50 focus-visible:shadow-[0_0_0_3px_oklch(0.72_0.19_250/0.25)]"
+      />
+    </label>
+  );
+}
 
 export function ProjectionGapSimulator() {
   const [step, setStep] = useState(0);
@@ -425,31 +554,18 @@ export function ProjectionGapSimulator() {
                     ) : (
                       <div className="space-y-6">
                         {input.eventFamily === "rights-issue" && (
-                          <fieldset className="space-y-3">
-                            <legend className="text-sm font-medium text-foreground">Rights</legend>
-                            <div className="flex flex-wrap gap-2">
-                              {(
-                                [
-                                  ["itm", "In the money"],
-                                  ["otm", "Out of the money"],
-                                  ["unknown", "Not sure yet"],
-                                ] as const
-                              ).map(([v, label]) => (
-                                <button
-                                  key={v}
-                                  type="button"
-                                  onClick={() => setInput((p) => ({ ...p, rightsItm: v }))}
-                                  className={cn(
-                                    "rounded-full border px-4 py-2 text-sm transition-all",
-                                    input.rightsItm === v
-                                      ? "border-primary/50 bg-primary/15 text-foreground"
-                                      : "border-border bg-background/50 text-muted-foreground hover:text-foreground",
-                                  )}
-                                >
-                                  {label}
-                                </button>
-                              ))}
-                            </div>
+                          <div className="space-y-4">
+                            <ChoiceGroup
+                              legend="Rights moneyness"
+                              hint="In the money (ITM) means exercising is profitable — high participation is likely, so share count rises. Out of the money (OTM) rights are usually left to lapse — less impact. Vendors vary on how they project this before subscription data is known."
+                              value={input.rightsItm}
+                              onChange={(v) => setInput((p) => ({ ...p, rightsItm: v }))}
+                              options={[
+                                { value: "itm", label: "In the money", hint: "Exercise likely → share count ↑. Vendors with smaller thresholds react first." },
+                                { value: "otm", label: "Out of the money", hint: "Rights usually lapse → minimal share change. Only vendors using theoretical PAF may still adjust." },
+                                { value: "unknown", label: "Not sure yet", hint: "Simulator won't guess — verdict will note the uncertainty." },
+                              ]}
+                            />
                             <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-border/60 bg-background/30 px-4 py-3 text-sm">
                               <input
                                 type="checkbox"
@@ -459,159 +575,106 @@ export function ProjectionGapSimulator() {
                                 }
                                 className="mt-0.5 size-4 rounded border-border"
                               />
-                              <span className="leading-snug">Final subscription price and ratio are known.</span>
+                              <span className="leading-snug">
+                                <GlossaryTerm
+                                  term="Final terms known"
+                                  definition="Until final subscription price and ratio are announced, FTSE and STOXX often wait and MSCI may use theoretical price. Knowing the final terms lets all vendors project the same adjustment."
+                                >
+                                  Final subscription price and ratio are known.
+                                </GlossaryTerm>
+                              </span>
                             </label>
-                          </fieldset>
+                          </div>
                         )}
 
                         {(input.eventFamily === "merger" || input.eventFamily === "tender-offer") && (
                           <div className="space-y-5">
                             {input.eventFamily === "merger" && (
-                              <fieldset className="space-y-3">
-                                <legend className="text-sm font-medium text-foreground">Deal</legend>
-                                <div className="flex flex-wrap gap-2">
-                                  {(
-                                    [
-                                      ["stock", "Mostly stock"],
-                                      ["cash", "Mostly cash"],
-                                      ["mixed", "Mixed or unclear"],
-                                    ] as const
-                                  ).map(([v, label]) => (
-                                    <button
-                                      key={v}
-                                      type="button"
-                                      onClick={() => setInput((p) => ({ ...p, mnaDealType: v }))}
-                                      className={cn(
-                                        "rounded-full border px-4 py-2 text-sm transition-all",
-                                        input.mnaDealType === v
-                                          ? "border-primary/50 bg-primary/15 text-foreground"
-                                          : "border-border bg-background/50 text-muted-foreground hover:text-foreground",
-                                      )}
-                                    >
-                                      {label}
-                                    </button>
-                                  ))}
-                                </div>
-                              </fieldset>
+                              <ChoiceGroup
+                                legend="Deal consideration"
+                                hint="Cash deals trigger deletion and divisor changes; stock deals also change the acquirer's share count, which each vendor quantifies differently. Mixed deals behave somewhere in between."
+                                value={input.mnaDealType}
+                                onChange={(v) => setInput((p) => ({ ...p, mnaDealType: v }))}
+                                options={[
+                                  { value: "stock", label: "Mostly stock", hint: "Acquirer issues new shares → free float and share count change. Larger divergence across vendors." },
+                                  { value: "cash", label: "Mostly cash", hint: "Target deleted, acquirer unchanged in count. Divergence is mostly about deletion timing." },
+                                  { value: "mixed", label: "Mixed or unclear", hint: "Combination of above — expect both deletion and share-count effects." },
+                                ]}
+                              />
                             )}
-                            <fieldset className="space-y-3">
-                              <legend className="text-sm font-medium text-foreground">Index membership</legend>
-                              <div className="flex flex-wrap gap-2">
-                                {(
-                                  [
-                                    ["target_only", "Target only"],
-                                    ["acquirer_only", "Acquirer only"],
-                                    ["both", "Both in the same index"],
-                                  ] as const
-                                ).map(([v, label]) => (
-                                  <button
-                                    key={v}
-                                    type="button"
-                                    onClick={() => setInput((p) => ({ ...p, mnaIndexParties: v }))}
-                                    className={cn(
-                                      "rounded-full border px-4 py-2 text-sm transition-all",
-                                      input.mnaIndexParties === v
-                                        ? "border-primary/50 bg-primary/15 text-foreground"
-                                        : "border-border bg-background/50 text-muted-foreground hover:text-foreground",
-                                    )}
-                                  >
-                                    {label}
-                                  </button>
-                                ))}
-                              </div>
-                            </fieldset>
+                            <ChoiceGroup
+                              legend="Index membership"
+                              hint="Who is in your managed index decides everything. Only the target, only the acquirer, or both — each path triggers different vendor rules (deletion triggers for the target, share-count adjustments for the acquirer)."
+                              value={input.mnaIndexParties}
+                              onChange={(v) => setInput((p) => ({ ...p, mnaIndexParties: v }))}
+                              options={[
+                                { value: "target_only", label: "Target only", hint: "Expect deletion event — vendor-specific acceptance/float thresholds drive the date." },
+                                { value: "acquirer_only", label: "Acquirer only", hint: "Expect share-count / free-float change on the acquirer — thresholds differ per vendor." },
+                                { value: "both", label: "Both in the same index", hint: "Most complex — deletion of target and adjustment of acquirer can happen on different dates per vendor." },
+                              ]}
+                            />
                           </div>
                         )}
 
                         {input.eventFamily === "spin-off" && (
                           <div className="space-y-5">
-                            <fieldset className="space-y-3">
-                              <legend className="text-sm font-medium text-foreground">Spin-off child</legend>
-                              <div className="flex flex-wrap gap-2">
-                                {(
-                                  [
-                                    ["yes", "Eligible for the index"],
-                                    ["no", "Not eligible"],
-                                    ["unknown", "Unknown"],
-                                  ] as const
-                                ).map(([v, label]) => (
-                                  <button
-                                    key={v}
-                                    type="button"
-                                    onClick={() => setInput((p) => ({ ...p, spinoffChildEligible: v }))}
-                                    className={cn(
-                                      "rounded-full border px-4 py-2 text-sm transition-all",
-                                      input.spinoffChildEligible === v
-                                        ? "border-primary/50 bg-primary/15 text-foreground"
-                                        : "border-border bg-background/50 text-muted-foreground hover:text-foreground",
-                                    )}
-                                  >
-                                    {label}
-                                  </button>
-                                ))}
-                              </div>
-                            </fieldset>
+                            <ChoiceGroup
+                              legend="Spin-off child eligibility"
+                              hint="Is the distributed child allowed in the index at all? If not eligible, no vendor adds it — divergence ends. If eligible, each vendor uses a different placeholder convention before real trading."
+                              value={input.spinoffChildEligible}
+                              onChange={(v) => setInput((p) => ({ ...p, spinoffChildEligible: v }))}
+                              options={[
+                                { value: "yes", label: "Eligible", hint: "Each vendor uses its own placeholder price — divergence in projections is common." },
+                                { value: "no", label: "Not eligible", hint: "No vendor adds it. Parent adjusts only." },
+                                { value: "unknown", label: "Unknown", hint: "Simulator flags eligibility as the key question to answer first." },
+                              ]}
+                            />
                             {input.spinoffChildEligible !== "no" && (
-                              <fieldset className="space-y-3">
-                                <legend className="text-sm font-medium text-foreground">Trading</legend>
-                                <div className="flex flex-wrap gap-2">
-                                  {(
-                                    [
-                                      ["placeholder", "Placeholder or when-issued only"],
-                                      ["live_trade", "Regular market trading"],
-                                      ["unknown", "Unknown"],
-                                    ] as const
-                                  ).map(([v, label]) => (
-                                    <button
-                                      key={v}
-                                      type="button"
-                                      onClick={() => setInput((p) => ({ ...p, spinoffPhase: v }))}
-                                      className={cn(
-                                        "rounded-full border px-4 py-2 text-sm transition-all",
-                                        input.spinoffPhase === v
-                                          ? "border-primary/50 bg-primary/15 text-foreground"
-                                          : "border-border bg-background/50 text-muted-foreground hover:text-foreground",
-                                      )}
-                                    >
-                                      {label}
-                                    </button>
-                                  ))}
-                                </div>
-                              </fieldset>
+                              <ChoiceGroup
+                                legend="Trading phase"
+                                hint="Before regular trading starts, vendors diverge the most: some use theoretical price, some when-issued price, some a zero placeholder, some wait. Once live trades print, most converge."
+                                value={input.spinoffPhase}
+                                onChange={(v) => setInput((p) => ({ ...p, spinoffPhase: v }))}
+                                options={[
+                                  { value: "placeholder", label: "Placeholder / when-issued", hint: "Expect price divergence — S&P, MSCI, FTSE, STOXX, Solactive each use different placeholders." },
+                                  { value: "live_trade", label: "Regular market trading", hint: "Real last-trade price — divergence narrows significantly." },
+                                  { value: "unknown", label: "Unknown", hint: "Verdict highlights timing phase as the likely cause." },
+                                ]}
+                              />
                             )}
                           </div>
                         )}
 
                         {isDividendLike && (
-                          <fieldset className="space-y-3">
-                            <legend className="text-sm font-medium text-foreground">
-                              Index variant you are comparing
-                            </legend>
-                            <div className="flex flex-wrap gap-2">
-                              {(
-                                [
-                                  ["pr", "PR"],
-                                  ["tr", "TR"],
-                                  ["ntr", "NTR"],
-                                  ["unknown", "Not applicable"],
-                                ] as const
-                              ).map(([v, label]) => (
-                                <button
-                                  key={v}
-                                  type="button"
-                                  onClick={() => setInput((p) => ({ ...p, indexReturnVariant: v }))}
-                                  className={cn(
-                                    "rounded-full border px-4 py-2 text-sm transition-all",
-                                    input.indexReturnVariant === v
-                                      ? "border-primary/50 bg-primary/15 text-foreground"
-                                      : "border-border bg-background/50 text-muted-foreground hover:text-foreground",
-                                  )}
-                                >
-                                  {label}
-                                </button>
-                              ))}
-                            </div>
-                          </fieldset>
+                          <ChoiceGroup
+                            variant="tile"
+                            legend="Index Variant (PR / TR / NTR)"
+                            hint="Return variants decide how vendors treat dividends. PR ignores dividends (price-only) so special cash dividends above threshold still adjust price. TR reinvests the gross dividend — no price adjustment unless it's classified as special. NTR reinvests the net-of-withholding-tax dividend — same rule as TR but each vendor uses its own tax table. Pick the variant you are comparing across vendors."
+                            value={input.indexReturnVariant}
+                            onChange={(v) => setInput((p) => ({ ...p, indexReturnVariant: v }))}
+                            options={[
+                              {
+                                value: "pr",
+                                label: "PR",
+                                hint: "Price Return — dividends not reinvested. Only specials above vendor threshold cause a price adjustment. Biggest driver of divergence: what each vendor labels 'special'.",
+                              },
+                              {
+                                value: "tr",
+                                label: "TR",
+                                hint: "Gross Total Return — all dividends reinvested at gross. No price adjustment for ordinary cash; specials may still adjust. Divergence comes from the ordinary-vs-special classification.",
+                              },
+                              {
+                                value: "ntr",
+                                label: "NTR",
+                                hint: "Net Total Return — dividends reinvested after withholding tax. Each vendor uses its own tax-rate table per country, so the reinvested amount differs even when the cash dividend is identical.",
+                              },
+                              {
+                                value: "unknown",
+                                label: "Not applicable",
+                                hint: "Simulator won't use variant-specific logic.",
+                              },
+                            ]}
+                          />
                         )}
                       </div>
                     )}
@@ -619,81 +682,57 @@ export function ProjectionGapSimulator() {
                     <div className="rounded-3xl border border-border/60 bg-background/25 p-5 sm:p-6">
                       <p className="text-sm font-medium text-foreground">Optional numbers</p>
                       <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                        Rough percentages are fine. Leave blank if unknown — the simulator will say it cannot make the call rather than guess.
+                        Rough percentages are fine. Leave blank if unknown — the simulator will say it cannot make the call rather than guess. Hover a label for how each metric is used.
                       </p>
-                      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
-                        <label className="block space-y-1.5">
-                          <span className="text-xs font-medium text-muted-foreground">
-                            Dividend yield (% of price)
-                          </span>
-                          <input
-                            type="text"
-                            inputMode="decimal"
-                            placeholder="e.g. 5"
-                            value={input.metrics.dividendYieldPct}
-                            onChange={(e) =>
-                              setInput((p) => ({
-                                ...p,
-                                metrics: { ...p.metrics, dividendYieldPct: e.target.value },
-                              }))
-                            }
-                            className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none ring-0 transition-shadow focus-visible:border-primary/50 focus-visible:shadow-[0_0_0_3px_oklch(0.72_0.19_250/0.25)]"
-                          />
-                        </label>
-                        <label className="block space-y-1.5">
-                          <span className="text-xs font-medium text-muted-foreground">
-                            Free-float change (points) / share-count change (%)
-                          </span>
-                          <input
-                            type="text"
-                            inputMode="decimal"
-                            placeholder="e.g. 6 or -3"
-                            value={input.metrics.freeFloatChangePp}
-                            onChange={(e) =>
-                              setInput((p) => ({
-                                ...p,
-                                metrics: { ...p.metrics, freeFloatChangePp: e.target.value },
-                              }))
-                            }
-                            className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus-visible:border-primary/50 focus-visible:shadow-[0_0_0_3px_oklch(0.72_0.19_250/0.25)]"
-                          />
-                        </label>
-                        <label className="block space-y-1.5">
-                          <span className="text-xs font-medium text-muted-foreground">
-                            Tender acceptance (%)
-                          </span>
-                          <input
-                            type="text"
-                            inputMode="decimal"
-                            placeholder="e.g. 72"
-                            value={input.metrics.tenderAcceptancePct}
-                            onChange={(e) =>
-                              setInput((p) => ({
-                                ...p,
-                                metrics: { ...p.metrics, tenderAcceptancePct: e.target.value },
-                              }))
-                            }
-                            className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus-visible:border-primary/50 focus-visible:shadow-[0_0_0_3px_oklch(0.72_0.19_250/0.25)]"
-                          />
-                        </label>
-                        <label className="block space-y-1.5">
-                          <span className="text-xs font-medium text-muted-foreground">
-                            Rights discount vs theoretical (%)
-                          </span>
-                          <input
-                            type="text"
-                            inputMode="decimal"
-                            placeholder="e.g. 15"
-                            value={input.metrics.rightsDiscountPct}
-                            onChange={(e) =>
-                              setInput((p) => ({
-                                ...p,
-                                metrics: { ...p.metrics, rightsDiscountPct: e.target.value },
-                              }))
-                            }
-                            className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus-visible:border-primary/50 focus-visible:shadow-[0_0_0_3px_oklch(0.72_0.19_250/0.25)]"
-                          />
-                        </label>
+                      <div className="mt-5 grid min-w-0 grid-cols-1 items-start gap-x-5 gap-y-5 md:grid-cols-2">
+                        <MetricField
+                          label="Dividend yield (% of price)"
+                          hint="The cash dividend divided by the latest price. Used to flag 'special' dividends — when yield exceeds each vendor's threshold (e.g. S&P > 5% of price for some indices), the dividend triggers a PR adjustment instead of being treated as ordinary."
+                          placeholder="e.g. 5"
+                          value={input.metrics.dividendYieldPct}
+                          onChange={(v) =>
+                            setInput((p) => ({
+                              ...p,
+                              metrics: { ...p.metrics, dividendYieldPct: v },
+                            }))
+                          }
+                        />
+                        <MetricField
+                          label="Free-float change (pp) / share-count change (%)"
+                          hint="Change in free-float points or share count after the event. Vendors use different materiality thresholds (e.g. 5 pp, 5 %, 10 %), so the same change can trigger adjustments at some vendors and be deferred to the next review at others."
+                          placeholder="e.g. 6 or -3"
+                          value={input.metrics.freeFloatChangePp}
+                          onChange={(v) =>
+                            setInput((p) => ({
+                              ...p,
+                              metrics: { ...p.metrics, freeFloatChangePp: v },
+                            }))
+                          }
+                        />
+                        <MetricField
+                          label="Tender acceptance (%)"
+                          hint="Share of the target accepted in a tender or M&A. Vendors use different deletion triggers — e.g. S&P may delete at 90 % or earlier if free float drops below 15 %; STOXX needs both ≥ 85 % accepted and free float < 10 %."
+                          placeholder="e.g. 72"
+                          value={input.metrics.tenderAcceptancePct}
+                          onChange={(v) =>
+                            setInput((p) => ({
+                              ...p,
+                              metrics: { ...p.metrics, tenderAcceptancePct: v },
+                            }))
+                          }
+                        />
+                        <MetricField
+                          label="Rights discount vs theoretical (%)"
+                          hint="How far the rights subscription price sits below the theoretical ex-rights price. A deeper discount means the rights are more in-the-money, higher participation is expected, and the adjustment factor each vendor applies diverges more."
+                          placeholder="e.g. 15"
+                          value={input.metrics.rightsDiscountPct}
+                          onChange={(v) =>
+                            setInput((p) => ({
+                              ...p,
+                              metrics: { ...p.metrics, rightsDiscountPct: v },
+                            }))
+                          }
+                        />
                       </div>
                     </div>
                   </div>

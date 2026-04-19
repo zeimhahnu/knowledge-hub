@@ -24,12 +24,16 @@ function Row({
   term,
   definition,
   date,
+  dateEnd,
 }: {
   label: string;
   term: string;
   definition: string;
   date?: string;
+  dateEnd?: string;
 }) {
+  const display =
+    date && dateEnd && dateEnd !== date ? `${date} → ${dateEnd}` : date;
   const d = daysUntil(date);
   return (
     <div className="flex flex-wrap items-baseline gap-2 text-sm">
@@ -38,15 +42,17 @@ function Row({
         <span className="font-medium text-foreground">{label}</span>
       </GlossaryTerm>
       <span className="text-muted-foreground">:</span>
-      {date ? (
+      {display ? (
         <>
-          <span className="tabular-nums text-foreground">{date}</span>
+          <span className="tabular-nums text-foreground">{display}</span>
           {d != null && (
-            <span className="text-xs text-muted-foreground">({d === 0 ? "today" : `in ${d} day${d === 1 ? "" : "s"}`})</span>
+            <span className="text-xs text-muted-foreground">
+              ({d === 0 ? "today" : `in ${d} day${d === 1 ? "" : "s"}`})
+            </span>
           )}
         </>
       ) : (
-        <span className="text-muted-foreground">—</span>
+        <span className="text-muted-foreground">Not announced</span>
       )}
     </div>
   );
@@ -55,23 +61,33 @@ function Row({
 export function UpcomingEventsCard({ calendar, loading }: Props) {
   if (loading) return <SkeletonCard />;
 
+  const hasAny =
+    calendar?.exDividendDate != null || calendar?.earningsDate != null;
+
   return (
     <div className="rounded-xl border border-border bg-card/80 p-6">
-      <h3 className="mb-4 text-sm font-semibold text-foreground">Upcoming</h3>
-      <div className="space-y-3">
-        <Row
-          label="Ex-dividend"
-          term="Ex-dividend date"
-          definition="First date the stock trades without the declared dividend; buyers on or after this date do not receive that payment."
-          date={calendar?.exDividendDate}
-        />
-        <Row
-          label="Earnings"
-          term="Earnings date"
-          definition="When the company is scheduled to report quarterly results, if provided by the data source."
-          date={calendar?.earningsDate}
-        />
-      </div>
+      <h3 className="mb-4 text-sm font-semibold text-foreground">Upcoming events</h3>
+      {!hasAny ? (
+        <p className="text-sm text-muted-foreground">
+          No scheduled ex-dividend or earnings dates reported.
+        </p>
+      ) : (
+        <div className="space-y-3">
+          <Row
+            label="Ex-dividend"
+            term="Ex-dividend date"
+            definition="First date the stock trades without the declared dividend; buyers on or after this date do not receive that payment."
+            date={calendar?.exDividendDate}
+          />
+          <Row
+            label="Earnings"
+            term="Earnings date"
+            definition="When the company is scheduled to report quarterly results. Yahoo sometimes gives a window (start → end) rather than a single day."
+            date={calendar?.earningsDate}
+            dateEnd={calendar?.earningsDateEnd}
+          />
+        </div>
+      )}
     </div>
   );
 }
