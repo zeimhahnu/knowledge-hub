@@ -67,6 +67,8 @@ GitHub Actions on `main` runs lint, typecheck, and `npm run build` (see `.github
 
 **Agent handoff (Goop / OpenClaw):** `SPECS/HANDOFF-OPENCLAW-GOOP-VERCEL.md`
 
+**Investor snapshot (production):** The `/investors/` page calls the Next.js route handler `GET /api/investors/quote`, which fetches Yahoo Finance JSON server-side (chart `v8` with dividend/split events, plus `v10` quote summary for sector, dividend metrics, and calendar hints). No API key. Responses are cached in memory for five minutes per normalized ticker inside that handler (per serverless instance).
+
 ## Live Pages
 
 | Page | URL (on production host) |
