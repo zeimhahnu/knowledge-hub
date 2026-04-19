@@ -1,19 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Static export for GitHub Pages
-  output: "export",
-  
-  // GitHub Pages is served from /knowledge-hub subdirectory
-  basePath: "/knowledge-hub",
-  
-  // Ensure trailing slashes for static export compatibility
+  // Vercel: no output: "export" — enables Route Handlers / serverless functions
+  // No basePath — app is served from the deployment root
   trailingSlash: true,
-  
-  // Disable image optimization for static export
-  images: {
-    unoptimized: true,
-  },
 };
 
 export default nextConfig;
