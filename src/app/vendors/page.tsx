@@ -19,6 +19,16 @@ import {
   XIcon,
 } from "lucide-react";
 
+import {
+  assertVendorEventsMatchCanonical,
+  eventNamesSentence,
+  mandatoryEventCount,
+  voluntaryEventCount,
+} from "@/lib/event-taxonomy";
+
+const GLOSSARY_MANDATORY_TYPE_LIST = `${mandatoryEventCount()} mandatory types: ${eventNamesSentence("mandatory")}`;
+const GLOSSARY_VOLUNTARY_TYPE_LIST = `${voluntaryEventCount()} voluntary types: ${eventNamesSentence("voluntary")}`;
+
 // ─── Glossary with tooltips ─────────────────────────────────────────────────
 
 type GEntry = { term: string; definition: string; detail?: string };
@@ -90,7 +100,7 @@ const GLOSSARY: GEntry[] = [
     detail: "Formula: TERP = (OldMktCap + NewShares x SubscriptionPrice) / (OldShares + NewShares). Used by MSCI/S&P to validate whether a rights issue is in-the-money.",
   },
   {
-    term: "When-Issuued",
+    term: "When-Issued",
     definition: "Trading of a security before its official distribution date.",
     detail: "Used in spin-offs: when-issued Company B trades before the distribution date. MSCI uses this price for spin-off inclusions.",
   },
@@ -107,12 +117,12 @@ const GLOSSARY: GEntry[] = [
   {
     term: "Mandatory Event",
     definition: "A corporate action that is automatically processed because it is confirmed by the company.",
-    detail: "Cash dividends, stock splits, mergers (unconditional), bonus issues, spin-offs, return of capital, bankruptcy — all confirmed facts. No discretion by the vendor.",
+    detail: `${GLOSSARY_MANDATORY_TYPE_LIST}. All are confirmed facts once terms are set — no shareholder opt-in. Vendor applies per methodology without discretion over whether the event exists.`,
   },
   {
     term: "Voluntary Event",
     definition: "A corporate action where participation depends on a shareholder decision.",
-    detail: "Rights issues (exercise or lapse), tender offers (accept or do not), secondary offerings. Vendor adjusts only if confirmed and above threshold.",
+    detail: `${GLOSSARY_VOLUNTARY_TYPE_LIST}. Vendor treatment often depends on thresholds, participation outcomes, or classification rules.`,
   },
   {
     term: "Primary Offering",
@@ -492,7 +502,7 @@ const EVENTS: EventType[] = [
       { phase: "Trading Begins", what: "Solactive switches to official market prices once child starts trading. S&P: zero held up to 20 days. FTSE: estimated until real price. Morningstar: zero held up to 40 days.", who: ["Solactive, S&P, FTSE, Morningstar: each has own grace/transition logic"] },
       { phase: "Guru Indices (Solactive)", what: "Spin-offs treated as a special dividend in Guru Indices — different from standard Solactive index treatment.", who: ["Solactive Guru Indices only"] },
     ],
-    keyTerms: ["Spin-Off", "When-Issuued", "Placeholder", "Grace Period", "Divisor Adjustment", "Detached Security", "Swedish Redemption Share"],
+    keyTerms: ["Spin-Off", "When-Issued", "Placeholder", "Grace Period", "Divisor Adjustment", "Detached Security", "Swedish Redemption Share"],
     criticalRule: "Five different approaches to the same problem: (1) S&P and Morningstar = zero placeholder, (2) Solactive = 0.00000001 floor, (3) FTSE = estimated price, (4) MSCI = when-issued or market price, (5) STOXX = waits for real trading. The placeholder price determines when the child appears in projection feeds — MSTAR's 40-day placeholder is the longest, which is why it often shows spin-offs before competitors.",
     comparisonFields: [
       { label: "Child Addition Price", values: { MSCI: "When-issued or zero", "S&P DJI": "Zero", "FTSE Russell": "Estimated", STOXX: "Market price (no placeholder)", Solactive: "0.00000001 floor", Morningstar: "Zero", VettaFi: "N/A" } },
@@ -634,6 +644,8 @@ const EVENTS: EventType[] = [
     ],
   },
 ];
+
+assertVendorEventsMatchCanonical(EVENTS);
 
 // ─── Taxonomy tree ────────────────────────────────────────────────────────────
 

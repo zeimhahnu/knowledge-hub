@@ -1,5 +1,10 @@
 import type { EventClass, EventFamily } from "@/lib/simulator/types";
 
+/**
+ * Coarse simulator families (not the full 13-type vendor list).
+ * Canonical names and mandatory/voluntary counts live in `@/lib/event-taxonomy`.
+ */
+
 /** Event class is determined by the selected family — no separate user step. */
 export const FAMILY_TO_CLASS: Record<EventFamily, EventClass> = {
   dividend: "mandatory",

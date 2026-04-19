@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ProjectionGapSimulator } from "@/components/projection-gap-simulator";
+import { buildDecisionTreeStep2, METHODOLOGY_T5_COVERAGE } from "@/lib/event-taxonomy";
 import { SurfaceSection } from "@/components/surface-section";
 import {
   ArrowDownIcon,
@@ -107,15 +108,7 @@ const TREE_STEPS = [
       { label: "Single Company Event", sub: "Split, dividend, delisting", color: "bg-muted/20 border-muted text-muted-foreground" },
     ],
   },
-  {
-    step: 2,
-    question: "What type of event is it?",
-    hint: "Mandatory = company triggers automatically. Voluntary = shareholder action required.",
-    options: [
-      { label: "Mandatory", sub: "Dividend, split, merger, spin-off, bonus, return of capital", color: "bg-green-500/10 border-green-500/30 text-green-400" },
-      { label: "Voluntary", sub: "Rights, tender offer, secondary offering, partial tender", color: "bg-orange-500/10 border-orange-500/30 text-orange-400" },
-    ],
-  },
+  buildDecisionTreeStep2(),
   {
     step: 3,
     question: "Is the resulting entity INDEX-ELIGIBLE?",
@@ -138,7 +131,7 @@ const TREE_STEPS = [
   {
     step: 5,
     question: "Is it within each vendor's coverage window?",
-    hint: "All vendors use T-5: data received on 17 Apr reflects 16 Apr close, covering up to 23 Apr. If the event falls within the T-5 coverage window, vendors send projection data. If outside the window, it may not appear in projections until the next update cycle.",
+    hint: `${METHODOLOGY_T5_COVERAGE} If the event falls within that forward window, vendors send projection data. If outside the window, it may not appear until the next update cycle.`,
     options: [
       { label: "Within coverage window", sub: "T-5 coverage — vendor sends projection data", color: "bg-green-500/10 border-green-500/30 text-green-400" },
       { label: "Outside coverage window", sub: "Not yet in projection data — watch for next update cycle", color: "bg-amber-500/10 border-amber-500/30 text-amber-400" },
@@ -409,7 +402,7 @@ export default function Home() {
                 },
                 {
                   phase: "2. Coverage Window (T-5)",
-                  desc: "Data as of Apr 16 (close) covers events up to Apr 23. Vendors publish open constituent projections — this is what appears in your feed.",
+                  desc: `${METHODOLOGY_T5_COVERAGE} This is what appears in your projection feed when the event falls inside the window.`,
                   vendors: "All vendors: T-5 window",
                   icon: "📡",
                 },
@@ -461,7 +454,7 @@ export default function Home() {
             <span className="text-sm font-semibold">All vendors: T-5 coverage period</span>
           </div>
           <p className="mb-4 text-xs text-muted-foreground leading-relaxed">
-            Data as of <strong className="text-foreground">16 Apr 2026 (close)</strong> covers all events up to <strong className="text-foreground">23 Apr 2026</strong> — 5 business days forward. Open constituent projections available at T-5 for all vendors. If you receive data on 17 Apr, the most up-to-date snapshot reflects 16 Apr close.
+            {METHODOLOGY_T5_COVERAGE} Example: if you receive files on Tuesday, the snapshot reflects Monday&apos;s close and includes corporate actions scheduled through the end of the same five-business-day window.
           </p>
           <div className="flex flex-wrap gap-2">
             {COVERAGE.map((c) => (

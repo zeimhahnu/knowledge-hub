@@ -10,11 +10,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { VENDOR_IDS, vendorLabel, vendorAbbr, type VendorId } from "@/lib/vendors";
 import { runSimulator } from "@/lib/simulator/simulator-engine";
-import {
-  familiesForClass,
-  getEventClassFromFamily,
-  humanFamily,
-} from "@/lib/simulator/taxonomy";
+import { familiesForClass, humanFamily } from "@/lib/simulator/taxonomy";
+import { eventNamesSentence, mandatoryEventCount, voluntaryEventCount } from "@/lib/event-taxonomy";
 import type { EventFamily, SimulatorInput, SimulatorResult } from "@/lib/simulator/types";
 
 const STEP_COUNT = 6;
@@ -111,8 +108,6 @@ export function ProjectionGapSimulator() {
     () => familiesForClass(input.eventCategory),
     [input.eventCategory],
   );
-
-  const impliedClass = getEventClassFromFamily(input.eventFamily);
 
   const canShowSubdetails = useMemo(() => {
     const f = input.eventFamily;
@@ -281,7 +276,7 @@ export function ProjectionGapSimulator() {
                       What kind of situation is this?
                     </p>
                     <p className="text-sm leading-relaxed text-muted-foreground">
-                      This only filters which event types you can pick next — the simulator still infers mandatory vs voluntary from the event itself.
+                      This matches the Vendor Reference taxonomy ({mandatoryEventCount()} mandatory, {voluntaryEventCount()} voluntary). The next step only lists high-level families that fit the category you pick here.
                     </p>
                     <div className="grid min-w-0 grid-cols-1 gap-3 md:grid-cols-2">
                       <button
@@ -305,7 +300,7 @@ export function ProjectionGapSimulator() {
                       >
                         <span className="text-base font-semibold text-foreground">Mandatory</span>
                         <span className="mt-2 block text-pretty text-sm leading-relaxed text-muted-foreground">
-                          Dividends, splits, mergers, spin-offs, return of capital, delisting, and similar confirmed actions.
+                          {eventNamesSentence("mandatory")} — confirmed corporate actions without shareholder opt-in.
                         </span>
                       </button>
                       <button
@@ -329,7 +324,7 @@ export function ProjectionGapSimulator() {
                       >
                         <span className="text-base font-semibold text-foreground">Voluntary</span>
                         <span className="mt-2 block text-pretty text-sm leading-relaxed text-muted-foreground">
-                          Rights issues, tenders, buybacks — outcomes depend on shareholder participation.
+                          {eventNamesSentence("voluntary")} — treatment depends on participation, thresholds, or classification rules.
                         </span>
                       </button>
                     </div>
@@ -342,8 +337,11 @@ export function ProjectionGapSimulator() {
                       Which event is it?
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      Showing types that match <span className="font-medium text-foreground">{input.eventCategory === "mandatory" ? "mandatory" : "voluntary"}</span> flows.
-                      {impliedClass === "voluntary" ? " Class: voluntary." : " Class: mandatory."}
+                      Showing simulator families grouped under{" "}
+                      <span className="font-medium text-foreground">
+                        {input.eventCategory === "mandatory" ? "mandatory" : "voluntary"}
+                      </span>{" "}
+                      on the vendor reference. The selected family drives the hypotheses below.
                     </p>
                     {/* min-w-0: grid items default to min-width:auto and refuse to shrink — caused ~93px spill */}
                     <div className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2">
