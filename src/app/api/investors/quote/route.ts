@@ -2,10 +2,18 @@ import { NextResponse } from "next/server";
 
 import { buildInvestorPayload, normalizeTicker } from "@/lib/investors/yahoo-finance";
 
-export const dynamic = "force-dynamic";
+/** CDN + browser hint; origin still dedupes with in-process TTL below. */
+const SUCCESS_CACHE_CONTROL =
+  "public, s-maxage=300, stale-while-revalidate=600";
 
 const TTL_MS = 5 * 60 * 1000;
 const cache = new Map<string, { at: number; body: unknown }>();
+
+function jsonOk(body: unknown) {
+  return NextResponse.json(body, {
+    headers: { "Cache-Control": SUCCESS_CACHE_CONTROL },
+  });
+}
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -22,13 +30,13 @@ export async function GET(request: Request) {
   const now = Date.now();
   const hit = cache.get(key);
   if (hit && now - hit.at < TTL_MS) {
-    return NextResponse.json(hit.body);
+    return jsonOk(hit.body);
   }
 
   try {
     const body = await buildInvestorPayload(raw);
     cache.set(key, { at: now, body });
-    return NextResponse.json(body);
+    return jsonOk(body);
   } catch (e) {
     const msg = e instanceof Error ? e.message : "UNKNOWN";
     if (msg === "INVALID_TICKER") {

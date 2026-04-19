@@ -1,8 +1,8 @@
 # PRD: Investor Intelligence Browser
 
-> Status: **DRAFT** — Pending Alex approval  
+> Status: **APPROVED — Option C: Yahoo Finance JSON API**  
 > Created: 2026-04-19  
-> Created by: Cursor Agent  
+> Approved by: Alex (2026-04-19)  
 > GitHub Issue: [#3 — Investor Intelligence Browser — Dividend/Split/Event Lookup](https://github.com/zeimhahnu/knowledge-hub/issues/3)  
 > Source spec: `SPECS/inbox/feature-investor-intelligence-browser.md`  
 > Feature ID: `investor-intelligence-browser-v1`
@@ -83,7 +83,16 @@ The inbox sketch still proposes **`exec` of a local Python `yfinance` script** f
 | **C. Vercel-native data** (e.g. serverless-friendly HTTP client only; no Python subprocess) | One repo, fits current deploy | May not be `yfinance` as-is |
 | **D. Local-only demo** | Fast prototype via `npm run dev` + local API | Not on production |
 
-**Recommendation:** Prefer **A** or **B** for `yfinance`-equivalent data unless we adopt a JS-only market data client; document the chosen path in README and Issue #3 before coding.
+**Chosen (2026-04-19 by Alex): Option C — Yahoo Finance JSON API (no API key, free, JS-only, Vercel serverless-compatible)**
+
+> Yahoo Finance public JSON endpoint:
+> ```
+> https://query1.finance.yahoo.com/v8/finance/chart/{TICKER}?interval=1d&range=5y
+> ```
+> Returns: `chart.result[0].events.dividends`, `chart.result[0].events.splits`, `chart.result[0].meta.*`
+> No API key required. Called server-side from Next.js Route Handler — not blocked by CORS.
+
+**Recommendation:** ~~Prefer A or B~~ — Option C is confirmed working without key. Use Yahoo Finance JSON directly in the Route Handler. Remove Python/yfinance dependency entirely.
 
 ### Data layer (once runtime exists)
 
