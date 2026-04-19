@@ -67,5 +67,5 @@ List each component to be built/modified:
 2. `npx tsc --noEmit` — TypeScript passes
 3. `npm run lint` — ESLint passes
 4. Browser test at localhost:3000
-5. Git commit and push → GitHub Pages deploys
-6. Confirm live at https://zeimhahnu.github.io/knowledge-hub/
+5. Git commit and push → merge to `main` → **Vercel** production deploys
+6. Confirm live at https://corporate-action.vercel.app/ (see `SPECS/VERCEL-MIGRATION.md`)
