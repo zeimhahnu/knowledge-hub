@@ -131,4 +131,4 @@ Display count: `🔴 ×2  🟡 ×1`
 - [ ] Signal icons (🔴🟡⚪) appear in summary
 - [ ] No new explanatory paragraphs added — only tightened existing content
 - [ ] TypeScript compiles, ESLint passes
-- [ ] Git push → GitHub Pages deploys
+- [ ] Merge to `main` → Vercel production deploys (see `SPECS/HANDOFF-OPENCLAW-GOOP-VERCEL.md`)

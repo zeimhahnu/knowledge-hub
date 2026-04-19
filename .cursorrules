@@ -55,9 +55,9 @@ Lil Claw → reads PRD → Telegram → Alex: "Here's the PRD, approve?"
          ↓
 Alex → "approved" → Goop moves to SPECS/approved/
          ↓
-Cursor → implements → git push → GitHub Pages deploys
+Cursor → implements → merge to `main` → **Vercel** production deploys
          ↓
-Goop → monitors GitHub → Telegram → Alex: "Deployed! [URL]"
+Goop → monitors Vercel / GitHub → Telegram → Alex: "Deployed! [URL]"
 ```
 
 ---

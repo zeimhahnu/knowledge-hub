@@ -9,6 +9,8 @@
 
 **Production URL:** https://corporate-action.vercel.app/
 
+**OpenClaw / Goop quick start:** read **`SPECS/HANDOFF-OPENCLAW-GOOP-VERCEL.md`** first (one-page handoff + read order).
+
 ---
 
 ## Reference: what changed (GitHub Pages → Vercel)

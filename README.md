@@ -65,6 +65,8 @@ Pushed to `main` → **Vercel** builds and deploys the app (Next.js serverless, 
 
 GitHub Actions on `main` runs lint, typecheck, and `npm run build` (see `.github/workflows/deploy.yml`).
 
+**Agent handoff (Goop / OpenClaw):** `SPECS/HANDOFF-OPENCLAW-GOOP-VERCEL.md`
+
 ## Live Pages
 
 | Page | URL (on production host) |
