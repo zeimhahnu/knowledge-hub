@@ -29,7 +29,7 @@ This extends the knowledge hub from **index-vendor methodology** toward **single
 
 ### Layout & Structure
 
-1. **Route:** New page under the app, e.g. `/investors/` (exact path TBD with Goop; must respect `basePath: /knowledge-hub` for static assets and internal links).
+1. **Route:** New page under the app, e.g. `/investors/` (exact path TBD with Goop). Production is served from the **site root** on Vercel (no `basePath`; use normal `next/link` and `/` paths).
 2. **Top:** Search field (ticker) + submit; optional exchange suffix handling documented in tech notes.
 3. **Header strip:** Symbol, company name (if available), last price / day change (if available), sector / exchange chips — **one row**, truncates gracefully on mobile.
 4. **Body (card stack):**
@@ -70,22 +70,20 @@ This extends the knowledge hub from **index-vendor methodology** toward **single
 
 ## Technical Specification
 
-### Critical platform constraint (must resolve before build)
+### Hosting & data runtime (updated 2026-04-19)
 
-The app is configured for **`output: "export"`** (GitHub Pages). **Static export does not ship Next.js Route Handlers or server runtime.** The inbox sketch’s pattern:
+**Production:** **Vercel** — Next.js **serverless Route Handlers** are supported (no `output: "export"`). Smoke route: `GET /api/test/`. Details: `SPECS/VERCEL-MIGRATION.md`.
 
-`src/app/api/corporate-actions/[ticker]/route.ts` + **server `exec` of Python** — **will not deploy** on the current GitHub Pages model.
-
-**PRD decision (pick one in implementation — requires Alex/Goop sign-off):**
+The inbox sketch still proposes **`exec` of a local Python `yfinance` script** from a Route Handler. That pattern is **not** a good fit for Vercel’s default Node serverless runtime (no bundled Python, subprocess/child-process constraints, cold starts). **Pick one data path before build** (Alex/Goop sign-off):
 
 | Option | Pros | Cons |
 |--------|------|------|
-| **A. Separate lightweight backend** (Worker / small VPS / other host) exposing `GET /quote?ticker=` used by the static site | Real `yfinance`, caching, secrets isolated | Second deployable, CORS, auth/rate limits |
-| **B. Move hub hosting** to a platform that runs Next serverless functions | Single repo, API routes possible | Leaves current GH Pages-only workflow |
-| **C. Client-callable JSON provider** (official vendor / exchange / paid API) | Fits static site | Keys, cost, licensing, tos |
-| **D. Document as “local-only demo”** | Fast prototype via `npm run dev` + local API | Not on production GH Pages |
+| **A. Separate backend** (Cloudflare Worker, small VPS, etc.) with `GET /quote?ticker=` | Real `yfinance` or any stack, caching, secrets isolated | Second service, CORS, auth/rate limits |
+| **B. Next Route Handler + HTTP** to a hosted quotes API (vendor / exchange / paid) | Single Vercel deploy for the app | Keys, cost, licensing, ToS |
+| **C. Vercel-native data** (e.g. serverless-friendly HTTP client only; no Python subprocess) | One repo, fits current deploy | May not be `yfinance` as-is |
+| **D. Local-only demo** | Fast prototype via `npm run dev` + local API | Not on production |
 
-**Recommendation:** **Option A** or **B** for anything calling Python subprocesses; document chosen path in README and Issue #3 before coding.
+**Recommendation:** Prefer **A** or **B** for `yfinance`-equivalent data unless we adopt a JS-only market data client; document the chosen path in README and Issue #3 before coding.
 
 ### Data layer (once runtime exists)
 
@@ -130,13 +128,13 @@ type InvestorTickerResponse = {
 
 ## Implementation Plan
 
-1. **Architecture gate:** Confirm Option A/B/C/D with Alex/Goop; update Issue #3 + README deployment section with the chosen runtime for investor data.
+1. **Architecture gate:** Confirm Option A/B/C/D with Alex/Goop; update Issue #3 + README with the chosen **production** data path (Vercel hosts the app; data may still be a separate API).
 2. **Scaffold page** `/investors/` with empty states + disclaimer + navigation.
 3. **Implement data client** against the chosen API contract; strict TypeScript types + Zod parse if JSON from Python.
 4. **Build UI cards** per design spec; Framer Motion polish; responsive pass.
 5. **JargonTip** coverage for all bolded jargon in UI.
 6. **QA:** invalid ticker, illiquid names, missing calendar; `npm run lint`, `npx tsc --noEmit`.
-7. **Post-approval:** merge to `main`, verify live URL path with `basePath`.
+7. **Post-approval:** merge to `main`, verify on **Vercel** production URL (paths from site root, e.g. `/investors/`).
 
 ---
 
@@ -151,7 +149,7 @@ type InvestorTickerResponse = {
 - [ ] **Responsive** layouts at `sm` / `md` breakpoints.
 - [ ] **Accessible:** focus order, tooltips, form labels, live region or polite announcement for errors (exact pattern in implementation).
 - [ ] **CI:** `npm run lint` and `npx tsc --noEmit` pass.
-- [ ] **Documentation:** README + Issue #3 updated with **how production fetches data** given static export constraints.
+- [ ] **Documentation:** README + Issue #3 updated with **how production fetches data** on Vercel (Route Handlers vs external API).
 
 ---
 
@@ -161,7 +159,7 @@ type InvestorTickerResponse = {
 2. `npx tsc --noEmit` — passes.
 3. `npm run lint` — passes.
 4. Manual browser matrix: valid ticker, invalid ticker, ticker with no dividends, ticker with sparse calendar.
-5. After merge: confirm **production** behaviour matches chosen architecture (GH Pages static vs hosted API).
+5. After merge: confirm **production** on Vercel matches the chosen data architecture (Next API vs external backend).
 
 ---
 

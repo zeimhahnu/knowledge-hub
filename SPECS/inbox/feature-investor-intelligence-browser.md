@@ -6,6 +6,8 @@
 > Feature ID: `investor-intelligence-browser-v1`
 > GitHub Issue: TO BE CREATED
 
+> **Hosting (2026-04-19):** Production is **Vercel** (`https://corporate-action.vercel.app/`). Next.js **Route Handlers** (`src/app/api/...`) are supported. GitHub Actions on `main` runs CI only; merge to `main` triggers **Vercel** deploy. See `SPECS/VERCEL-MIGRATION.md`.
+
 ---
 
 ## Context
@@ -171,7 +173,7 @@ import 'tippy.js/dist/tippy.css'
 | 5 | Issue moved to "In Progress" |
 | 6 | Cursor implements → git push |
 | 7 | GitHub Actions CI runs lint + tsc |
-| 8 | On merge → GitHub Pages deploys |
+| 8 | On merge to `main` → **Vercel** production deploy |
 | 9 | Issue closed, PRD archived |
 
 ---

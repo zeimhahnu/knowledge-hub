@@ -60,8 +60,9 @@ knowledge-hub/
 
 ## Deployment
 
-Push to `main` → GitHub Pages auto-deploys to:
-**https://zeimhahnu.github.io/knowledge-hub/**
+Push to `main` → Vercel auto-deploys production:
+
+**https://corporate-action.vercel.app/**
 
 ## Commands
 

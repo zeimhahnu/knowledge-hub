@@ -1,50 +1,55 @@
-# NEXT STEPS after Vercel import
+# Vercel migration — status
 
-## Step: Remove static export config
+**Completed (2026-04-19):**
 
-**File:** `next.config.ts`
+- [x] Vercel project linked to this repo
+- [x] `next.config.ts`: removed `output: "export"` and `basePath` (see merged PR #4)
+- [x] Production deploy verified: `/api/test/` returns JSON (`serverless` path works)
+- [x] GitHub Actions: CI on `main` (lint + typecheck + build); GitHub Pages static upload removed
 
-**Current (GitHub Pages):**
+**Production URL:** https://corporate-action.vercel.app/
+
+---
+
+## Reference: what changed (GitHub Pages → Vercel)
+
+### Old (`next.config.ts` for GitHub Pages)
+
 ```ts
 const nextConfig: NextConfig = {
-  output: "export",      // ← REMOVE THIS
-  basePath: "/knowledge-hub",  // ← REMOVE THIS
+  output: "export",
+  basePath: "/knowledge-hub",
   trailingSlash: true,
   images: { unoptimized: true },
 }
 ```
 
-**New (Vercel):**
+### New (Vercel)
+
 ```ts
 const nextConfig: NextConfig = {
-  // No output: "export" — enables serverless functions
-  // No basePath — served from root (corporate-action.vercel.app)
-  
-  images: {
-    // Allow image optimization on Vercel
-    // unoptimized removed — Vercel handles this natively
-  },
+  // No output: "export" — enables Route Handlers / serverless functions
+  // No basePath — served from deployment root
+  trailingSlash: true,
 }
 ```
 
-**What to do:**
-1. Cursor commits this change
-2. git push → Vercel auto-deploys
-3. Verify serverless works with a simple test API route
+Next.js **image optimization** uses the default on Vercel (no `images.unoptimized` needed).
 
-**Test:** After deploy, check if `/api/test` route responds (will 404 if static export still on).
+**Smoke test:** `GET /api/test/` should return `{"ok":true,"source":"serverless"}`. If you still see static-export behavior, `output: "export"` is still set somewhere.
 
 ---
 
 ## Vercel MCP for Cursor
 
 Cursor can use Vercel MCP to:
+
 - Check deployment status
 - View logs
 - Manage environment variables
 - Trigger new deployments
 
-Cursor should `vercel dev` locally to test serverless functions before pushing.
+Use `vercel dev` locally to exercise Route Handlers before pushing.
 
 ---
 
