@@ -9,11 +9,23 @@ import type {
 const YAHUA =
   "Mozilla/5.0 (compatible; KnowledgeHub/1.0; +https://corporate-action.vercel.app)";
 
+const UPSTREAM_REVALIDATE_SEC = 300;
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
 async function fetchJson<T>(url: string): Promise<T> {
-  const res = await fetch(url, {
+  const opts = {
     headers: { "User-Agent": YAHUA, Accept: "application/json" },
-    next: { revalidate: 0 },
-  });
+    next: { revalidate: UPSTREAM_REVALIDATE_SEC },
+  } as const;
+
+  let res = await fetch(url, opts);
+  if (!res.ok && (res.status === 429 || res.status >= 500)) {
+    await sleep(400);
+    res = await fetch(url, opts);
+  }
   if (!res.ok) {
     throw new Error(`Upstream ${res.status}`);
   }

@@ -67,7 +67,9 @@ GitHub Actions on `main` runs lint, typecheck, and `npm run build` (see `.github
 
 **Agent handoff (Goop / OpenClaw):** `SPECS/HANDOFF-OPENCLAW-GOOP-VERCEL.md`
 
-**Investor snapshot (production):** The `/investors/` page calls the Next.js route handler `GET /api/investors/quote`, which fetches Yahoo Finance JSON server-side (chart `v8` with dividend/split events, plus `v10` quote summary for sector, dividend metrics, and calendar hints). No API key. Responses are cached in memory for five minutes per normalized ticker inside that handler (per serverless instance).
+### Investor snapshot data
+
+The `/investors/` page calls **`GET /api/investors/quote?ticker=SYMBOL`**, which fetches Yahoo Finance JSON server-side: chart **`v8/finance/chart`** (dividends, splits, meta price) and **`v10/finance/quoteSummary`** (sector, dividend rate/yield, calendar hints). Data is delayed; there is **no API key** and **no Python** on Vercel. Successful responses include **CDN `Cache-Control`** (`s-maxage=300`, stale-while-revalidate) and an **in-memory** cache of about five minutes per normalized ticker **per serverless instance**. See `SPECS/approved/prd-investor-snapshot-data-source.md` for the contract (`InvestorTickerResponse` in `src/lib/investors/types.ts`).
 
 ## Live Pages
 
