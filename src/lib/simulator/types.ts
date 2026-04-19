@@ -9,6 +9,8 @@ export type EventFamily =
   | "spinoff"
   | "rights"
   | "tender"
+  | "secondary_offering"
+  | "private_placement"
   | "return_of_capital"
   | "delisting"
   | "other";
@@ -36,6 +38,8 @@ export type SimulatorMetrics = {
   freeFloatChangePp: string;
   tenderAcceptancePct: string;
   rightsDiscountPct: string;
+  /** Rough % of market cap for secondary offerings / private placements — drives materiality heuristics. */
+  offeringSizePctOfMc: string;
 };
 
 export type SimulatorInput = {

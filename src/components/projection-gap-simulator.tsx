@@ -50,6 +50,7 @@ const defaultMetrics = (): SimulatorInput["metrics"] => ({
   freeFloatChangePp: "",
   tenderAcceptancePct: "",
   rightsDiscountPct: "",
+  offeringSizePctOfMc: "",
 });
 
 const defaultInput = (): SimulatorInput => ({
@@ -329,7 +330,7 @@ export function ProjectionGapSimulator() {
                       >
                         <span className="text-base font-semibold text-foreground">Voluntary</span>
                         <span className="mt-2 block text-pretty text-sm leading-relaxed text-muted-foreground">
-                          Rights issues, tenders, buybacks — outcomes depend on shareholder participation.
+                          Rights, tenders, secondary offerings, private placements — outcomes depend on participation or allocation.
                         </span>
                       </button>
                     </div>
@@ -601,6 +602,14 @@ export function ProjectionGapSimulator() {
                       <p className="text-sm font-medium text-foreground">Optional numbers</p>
                       <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
                         Rough percentages are fine. Leave blank if unknown — the simulator will ignore that signal.
+                        {(input.eventFamily === "secondary_offering" ||
+                          input.eventFamily === "private_placement") && (
+                          <>
+                            {" "}
+                            For secondary offerings and private placements, issue size as % of market cap sharpens
+                            materiality hints (~5% split).
+                          </>
+                        )}
                       </p>
                       <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
                         <label className="block space-y-1.5">
@@ -675,6 +684,27 @@ export function ProjectionGapSimulator() {
                             className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus-visible:border-primary/50 focus-visible:shadow-[0_0_0_3px_oklch(0.72_0.19_250/0.25)]"
                           />
                         </label>
+                        {(input.eventFamily === "secondary_offering" ||
+                          input.eventFamily === "private_placement") && (
+                          <label className="block space-y-1.5 md:col-span-2">
+                            <span className="text-xs font-medium text-muted-foreground">
+                              Issue size vs market cap (%)
+                            </span>
+                            <input
+                              type="text"
+                              inputMode="decimal"
+                              placeholder="e.g. 3 or 8"
+                              value={input.metrics.offeringSizePctOfMc}
+                              onChange={(e) =>
+                                setInput((p) => ({
+                                  ...p,
+                                  metrics: { ...p.metrics, offeringSizePctOfMc: e.target.value },
+                                }))
+                              }
+                              className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus-visible:border-primary/50 focus-visible:shadow-[0_0_0_3px_oklch(0.72_0.19_250/0.25)]"
+                            />
+                          </label>
+                        )}
                       </div>
                     </div>
                   </div>

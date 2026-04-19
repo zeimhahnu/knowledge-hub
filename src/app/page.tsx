@@ -105,7 +105,7 @@ const TREE_STEPS = [
     hint: "Mandatory = company triggers automatically. Voluntary = shareholder action required.",
     options: [
       { label: "Mandatory", sub: "Dividend, split, merger, spin-off, bonus, return of capital", color: "bg-green-500/10 border-green-500/30 text-green-400" },
-      { label: "Voluntary", sub: "Rights, tender offer, secondary offering, partial tender", color: "bg-orange-500/10 border-orange-500/30 text-orange-400" },
+      { label: "Voluntary", sub: "Rights, tender, secondary offering, private placement", color: "bg-orange-500/10 border-orange-500/30 text-orange-400" },
     ],
   },
   {
