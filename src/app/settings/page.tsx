@@ -332,8 +332,8 @@ export default function SettingsPage() {
   // operator has stored settings. The state flip IS the point of this effect;
   // react-hooks/set-state-in-effect has no alternative here (known limitation,
   // see MEMORY.md lessons on the React 19 cascading-renders rule).
-  // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard
   const [hydrated, setHydrated] = useState(false);
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard
   useEffect(() => setHydrated(true), []);
 
   return (
