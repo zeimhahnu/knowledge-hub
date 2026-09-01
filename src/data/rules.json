@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated": "2026-09-01",
+  "generated": "2026-09-02",
   "event_types": [
     "cash-dividend",
     "special-dividend",
@@ -24,10 +24,14 @@
       "event_type": "cash-dividend",
       "caev": "DVOP",
       "index_type": "*",
+      "conditions": {
+        "dividend_size_threshold_pct": 5,
+        "threshold_side": "below"
+      },
       "treatment": "No price adjustment on ex-date; the PR index is not adjusted (PAF = none). TR/NTR indexes reinvest the cash dividend on ex-date.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/index-vendor-methodology.md §1 (Cash Dividend)",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.4 (Cash Dividend)",
       "confidence": "stated"
     },
     {
@@ -35,10 +39,14 @@
       "event_type": "special-dividend",
       "caev": "DVOP",
       "index_type": "*",
+      "conditions": {
+        "dividend_size_threshold_pct": 5,
+        "threshold_side": "at_or_above"
+      },
       "treatment": "Classified special and PR-adjusted via PAF = (CumPx − Div) / CumPx only when the dividend is ≥5% of market price; below 5% it is treated as ordinary with no PR adjustment. TR/NTR indexes reinvest regardless of classification.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/index-vendor-methodology.md §2 (Special Cash Dividend)",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.4 (Special Cash Dividend)",
       "confidence": "stated"
     },
     {

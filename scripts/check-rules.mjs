@@ -61,6 +61,24 @@ for (const rule of rules) {
   }
 }
 
+// D3 (2026-09-02): an ORDINARY cash dividend is NEVER price-adjusted / PAF'd —
+// the Price Return index passes it through untouched; only TR/NTR variants
+// reinvest it. A PAF is a special-dividend mechanism. This specific error must
+// not come back silently.
+const ordinaryDividendRules = rules.filter((r) => r.event_type === "cash-dividend")
+for (const rule of ordinaryDividendRules) {
+  const t = (rule.treatment ?? "").toLowerCase()
+  const deniesAdjustment =
+    /no\s+price\s+adjustment|not\s+(price\s+|pr\s+)?adjust(ed|ment)?|paf\s*=\s*none/.test(t)
+  const assignsPaf = /paf\s*=\s*(?!none\b)\S+/.test(t)
+  assertRule(
+    deniesAdjustment && !assignsPaf,
+    `${rule.vendor}/${rule.event_type}: ordinary cash dividends must deny any price adjustment / PAF (SPECS/research/ca-event-treatments-2026-09-02.md §1)`,
+  )
+}
+
+const ordinaryChecked = ordinaryDividendRules.length
+
 const populated = canonicalIds.filter((id) => rules.some((r) => r.event_type === id))
 const withTreatment = rules.filter((r) => typeof r.treatment === "string" && r.treatment.trim().length > 0).length
 const withLead = rules.filter((r) => r.lead_days !== null).length
@@ -78,7 +96,8 @@ if (violations > 0) {
 
 console.log(
   `OK — rules.json valid: ${rules.length} MSCI rules across ${populated.length}/${canonicalIds.length} event types; ` +
-  `${withTreatment} with treatment; ${withLead} stated lead_days, ${withoutLead} null (lead time not documented)`,
+  `${withTreatment} with treatment; ${withLead} stated lead_days, ${withoutLead} null (lead time not documented); ` +
+  `ordinary-dividend no-PAF assertion: PASS (${ordinaryChecked} cash-dividend row(s) checked)`,
 )
 
 function assertRule(cond, msg) {

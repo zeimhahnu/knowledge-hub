@@ -89,6 +89,21 @@
           "confidence": {
             "enum": ["stated", "inferred", "absent", "user-set"],
             "description": "treatment provenance: 'stated' when the doc says it outright, 'inferred' when reasoned from surrounding text, 'absent' when the doc does not address the event, 'user-set' when an operator tuned the value in the coverage settings surface (§11c constraint 2: a user-typed lead time must never render identically to one the methodology states)."
+          },
+          "conditions": {
+            "type": ["object", "null"],
+            "description": "Rule-selection conditions the {vendor, event_type, index_type} tuple cannot carry. First real instance (2026-09-02): MSCI's ordinary-vs-special cash dividend split keys off dividend size as a percentage of market price. Null/absent when the tuple fully determines the rule.",
+            "additionalProperties": false,
+            "properties": {
+              "dividend_size_threshold_pct": {
+                "type": "number",
+                "description": "Quantitative ordinary/special cash-dividend boundary as a percentage of market price (MSCI: 5). Absent when the vendor states no numeric boundary (S&P DJI, FTSE Russell, STOXX qualitative; VettaFi, Solactive absent)."
+              },
+              "threshold_side": {
+                "enum": ["at_or_above", "below"],
+                "description": "Which side of dividend_size_threshold_pct this row applies to ('at_or_above' = special treatment, 'below' = ordinary)."
+              }
+            }
           }
         }
       }
