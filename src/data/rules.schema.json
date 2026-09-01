@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zeimhahnu.github.io/knowledge-hub/rules.schema.json",
+  "title": "Vendor Corporate-Action Treatment Rules",
+  "description": "Machine-readable vendor treatment rules for the corporate-action hub (§5b, §7a-i, §9). Keyed by {vendor, event_type, index_type} — a 3-D matrix. `event_type` is the app's canonical 13-event id (per src/lib/event-taxonomy.ts `CANONICAL_EVENTS`); the ISO 20022 CAEV code for the same event lives in `caev`. `index_type` is '*' when the vendor's treatment does not vary by weighting scheme. `lead_days` is the vendor's published per-event publication lead time before ex-date — the input to slice 1's coverage-window engine (7a-i). Where the source doc does not state a lead time, `lead_days` MUST be null (never a fabricated number), and `lead_days_confidence` reflects why.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "generated",
+    "event_types",
+    "index_types",
+    "vendors",
+    "rules"
+  ],
+  "properties": {
+    "schema_version": { "type": "integer", "minimum": 1 },
+    "generated": { "type": "string", "format": "date" },
+    "event_types": {
+      "type": "array",
+      "description": "The app's canonical event-type ids that rules cover.",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "index_types": {
+      "type": "array",
+      "description": "The index/fund-type dimension values in use ('*' for rules that do not vary by weighting scheme; see §5b taxonomy).",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    },
+    "vendors": {
+      "type": "array",
+      "description": "Vendor ids that rules cover (see src/lib/vendors.ts `VENDOR_IDS`).",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "vendor",
+          "event_type",
+          "index_type",
+          "treatment",
+          "lead_days",
+          "lead_days_confidence",
+          "source_ref",
+          "confidence"
+        ],
+        "properties": {
+          "vendor": {
+            "type": "string",
+            "description": "Index vendor id (msci, sp, ftse, stoxx, solactive, morningstar, vettafi)."
+          },
+          "event_type": {
+            "type": "string",
+            "description": "App canonical event-type id (one of CANONICAL_EVENTS, e.g. \"special-dividend\")."
+          },
+          "caev": {
+            "type": "string",
+            "description": "ISO 20022 CAEV code where one applies (DVOP, BONU, SPLT, SPIN, RHDI, OFFO, REDU, TEND, MRGR, DELI, BANK, CONS)."
+          },
+          "index_type": {
+            "type": "string",
+            "description": "Weighting-scheme dimension value, or '*' when the rule does not vary by index construction."
+          },
+          "treatment": {
+            "type": "string",
+            "description": "Prose statement of what the vendor does for this event. null only when the corpus has nothing (confidence 'absent').",
+            "minLength": 1
+          },
+          "lead_days": {
+            "type": ["integer", "null"],
+            "description": "Vendor's published publication lead time before ex-date in days, or null when the source does not state one (never invent a number)."
+          },
+          "lead_days_confidence": {
+            "enum": ["stated", "inferred", "absent"],
+            "description": "lead_days provenance: 'stated' when the doc gives it outright, 'inferred' when reasoned from surrounding text, 'absent' when the doc does not state a lead time."
+          },
+          "source_ref": {
+            "type": "string",
+            "description": "Doc + section/heading the rule came from (e.g. \"SOURCES/index-vendor-methodology.md §5 (Stock Split / Consolidation)\").",
+            "minLength": 1
+          },
+          "confidence": {
+            "enum": ["stated", "inferred", "absent"],
+            "description": "treatment provenance: 'stated' when the doc says it outright, 'inferred' when reasoned from surrounding text, 'absent' when the doc does not address the event."
+          }
+        }
+      }
+    }
+  }
+}

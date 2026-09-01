@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "generated": "2026-09-01",
+  "event_types": [
+    "cash-dividend",
+    "special-dividend",
+    "stock-dividend",
+    "bonus-issue",
+    "stock-split",
+    "spin-off",
+    "rights-issue",
+    "secondary-offering",
+    "private-placement",
+    "return-of-capital",
+    "merger",
+    "tender-offer",
+    "bankruptcy"
+  ],
+  "index_types": ["*"],
+  "vendors": ["msci"],
+  "rules": [
+    {
+      "vendor": "msci",
+      "event_type": "cash-dividend",
+      "caev": "DVOP",
+      "index_type": "*",
+      "treatment": "No price adjustment on ex-date; the PR index is not adjusted (PAF = none). TR/NTR indexes reinvest the cash dividend on ex-date.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/index-vendor-methodology.md §1 (Cash Dividend)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "special-dividend",
+      "caev": "DVOP",
+      "index_type": "*",
+      "treatment": "Classified special and PR-adjusted via PAF = (CumPx − Div) / CumPx only when the dividend is ≥5% of market price; below 5% it is treated as ordinary with no PR adjustment. TR/NTR indexes reinvest regardless of classification.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/index-vendor-methodology.md §2 (Special Cash Dividend)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "stock-dividend",
+      "caev": "BONU",
+      "index_type": "*",
+      "treatment": "Treated identically to a stock split: PAF padj = pt-1 × A / (A+B); no divisor change; PR index adjusted.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/index-vendor-methodology.md §3 (Stock Dividend)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "bonus-issue",
+      "caev": "BONU",
+      "index_type": "*",
+      "treatment": "No price adjustment; shares multiplied by the bonus ratio; market cap unchanged; no divisor adjustment.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/index-vendor-methodology.md §4 (Bonus Issue)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "stock-split",
+      "caev": "SPLT",
+      "index_type": "*",
+      "treatment": "PAF padj = pt-1 × A / (A+B); divisor unchanged; market cap unchanged.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/index-vendor-methodology.md §5 (Stock Split / Consolidation)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "spin-off",
+      "caev": "SPIN",
+      "index_type": "*",
+      "treatment": "Child added as a detached security at the when-issued price when available, else zero, held until a real price is available; parent's value deducted on ex-date.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/index-vendor-methodology.md §6 (Spin-off / Demerger)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "rights-issue",
+      "caev": "RHDI",
+      "index_type": "*",
+      "treatment": "Adjusts only in-the-money rights (subscription price below market) using the when-issued / theoretical price (TERP); out-of-the-money rights are ignored (PAF = 1). Shares increased as of close of ex-date; NOS/FIF/DIF changes threshold 5%/10%/25% by Standard/Small/Micro cap tier.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/index-vendor-methodology.md §7 (Rights Issue); msci-corporate-events-methodology-2026.pdf §3.6, §4.2",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "secondary-offering",
+      "caev": "OFFO",
+      "index_type": "*",
+      "treatment": "Applied (PAF + divisor) when the share-count change meets the size threshold — ≥5% of pre-event NOS for Standard, ≥10% Small Cap, ≥25% Micro Cap — with 2 full business days advance notice; changes <±1% on post-event NOS deferred to the next Index Review.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/index-vendor-methodology.md §8 (Secondary Offering); msci-corporate-events-methodology-2026.pdf §4.1, §4.2",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "private-placement",
+      "caev": "OFFO",
+      "index_type": "*",
+      "treatment": "New shares counted toward NOS; adjustment applied when the change meets the size threshold (≥5%/10%/25% by cap tier), with a simultaneous primary + private placement sized jointly; changes <±1% on post-event NOS deferred to the next Index Review.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/index-vendor-methodology.md §9 (Private Placement); msci-corporate-events-methodology-2026.pdf §4.2",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "return-of-capital",
+      "caev": "REDU",
+      "index_type": "*",
+      "treatment": "Treated as a special dividend: extraordinary (vs dividend policy/history) → PAF applied using the gross amount and reinvested in DTR indexes; regular → treated as a normal cash dividend, reinvested in DTR indexes regardless of size.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/index-vendor-methodology.md §10 (Return of Capital); msci-corporate-events-methodology-2026.pdf §3.3",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "treatment": "Target deleted when the deal is unconditional (no fixed % threshold), at last traded price; acquirer share-count change triggers adjustment at 5%/10%/25% by Standard/Small/Micro cap tier.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/index-vendor-methodology.md §11 (Mergers & Acquisitions); msci-corporate-events-methodology-2026.pdf §5.3",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "tender-offer",
+      "caev": "TEND",
+      "index_type": "*",
+      "treatment": "Deletion when the tender offer is formally completed (no % acceptance threshold and no advance notice — MSCI waits for completion rather than deleting at an acceptance level); removed at tender price or last traded price.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/index-vendor-methodology.md §12 (Tender Offers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "bankruptcy",
+      "caev": "DELI",
+      "index_type": "*",
+      "treatment": "Deleted as soon as possible on a bankruptcy / protection-from-creditors filing when a return to normal business is unlikely; removed at the last traded price, else an OTC / equivalent market price, else the lowest system price (0.00001), with 2 full business days notice.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/index-vendor-methodology.md §13 (Bankruptcy / Delisting); msci-corporate-events-methodology-2026.pdf §5.3",
+      "confidence": "stated"
+    }
+  ]
+}
