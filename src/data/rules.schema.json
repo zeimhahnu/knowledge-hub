@@ -87,8 +87,8 @@
             "minLength": 1
           },
           "confidence": {
-            "enum": ["stated", "inferred", "absent"],
-            "description": "treatment provenance: 'stated' when the doc says it outright, 'inferred' when reasoned from surrounding text, 'absent' when the doc does not address the event."
+            "enum": ["stated", "inferred", "absent", "user-set"],
+            "description": "treatment provenance: 'stated' when the doc says it outright, 'inferred' when reasoned from surrounding text, 'absent' when the doc does not address the event, 'user-set' when an operator tuned the value in the coverage settings surface (§11c constraint 2: a user-typed lead time must never render identically to one the methodology states)."
           }
         }
       }
