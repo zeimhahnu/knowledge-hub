@@ -17,7 +17,7 @@
     "bankruptcy"
   ],
   "index_types": ["*"],
-  "vendors": ["msci", "sp"],
+  "vendors": ["msci", "sp", "ftse"],
   "rules": [
     {
       "vendor": "msci",
@@ -311,6 +311,149 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Bankruptcies",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "cash-dividend",
+      "caev": "DVOP",
+      "index_type": "*",
+      "treatment": "Ordinary (regular) cash dividends are reinvested across the index on the ex date and impact only the total return; there is no price adjustment and no PAF, and the Price Return index is unchanged. Cash (and scrip) dividends with a cash option are treated the same as ordinary cash, except Spanish scrip dividends, which follow the scrip-issue treatment (§4.7). Where a dividend is retracted or corrected, a corrective negative adjustment is applied with T+1 notice; a dividend undetermined on the XD date uses the same-period prior-year amount, or zero if none was paid.",
+      "lead_days": 5,
+      "lead_days_confidence": "practitioner",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.3 (Unknown and optional ordinary dividends and corrections)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "special-dividend",
+      "caev": "DVOP",
+      "index_type": "*",
+      "treatment": "Classified by description, not by amount: a dividend is special if the distributing company describes it as such, in which case the stock price is adjusted to deduct the dividend amount before the open on the ex date and it is excluded from the total return calculation. A recurring special dividend paid on more than three consecutive non-extraordinary occasions is reclassified as ordinary on the fourth. Where the special dividend is ≥10% of the share price (cum price) with withholding-tax implications, a compensating negative XD adjustment is applied to net-of-tax indices only. No numerical special-vs-ordinary threshold is used for classification.",
+      "lead_days": 5,
+      "lead_days_confidence": "practitioner",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.4 (Special dividends – tax adjustments)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "stock-dividend",
+      "caev": "BONU",
+      "index_type": "*",
+      "treatment": "Treated as a scrip issue / stock distribution (§4.7): automatic distribution of shares (existing or newly issued) at no charge pro rata to holdings, with a price adjustment factor of shares held before ÷ after; no index divisor adjustment and no change in market capitalisation.",
+      "lead_days": 5,
+      "lead_days_confidence": "practitioner",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.7 (Scrip issues & stock distributions)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "bonus-issue",
+      "caev": "BONU",
+      "index_type": "*",
+      "treatment": "Treated as a scrip issue (capitalisation / bonus issue) (§4.7): shares distributed at no charge pro rata to existing holdings; the price adjustment factor (shares held before ÷ after) is applied on the ex date; no index divisor adjustment and no change in market capitalisation.",
+      "lead_days": 5,
+      "lead_days_confidence": "practitioner",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.7 (Scrip issues & stock distributions)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "stock-split",
+      "caev": "SPLT",
+      "index_type": "*",
+      "treatment": "No index divisor adjustment; the price adjustment factor is shares held before ÷ after (e.g. 0.2 for a 1-into-5 split); applied on the ex date with no change in company market capitalisation.",
+      "lead_days": 5,
+      "lead_days_confidence": "practitioner",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.1 (Splits (sub-division)/reverse splits (consolidation))",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "spin-off",
+      "caev": "SPIN",
+      "index_type": "*",
+      "treatment": "Parent is price-adjusted by way of a capital repayment; the spun-off entity is added to the same indices as the parent on the ex date at an estimated price using the hierarchy: when-issued price, primary-exchange estimate, company valuation, broker estimate, then the terms of the action. If the spin-off has not traded within 20 business days of the ex date and no firm trading date is announced, it is normally deleted at zero with T+2 notice. Withholding-tax obligations ≥10% of share price trigger a compensating negative XD adjustment to net-of-tax indices only.",
+      "lead_days": 5,
+      "lead_days_confidence": "practitioner",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.14 (Spin-offs (including demergers))",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "rights-issue",
+      "caev": "RHDI",
+      "index_type": "*",
+      "treatment": "Only in-the-money rights (subscription price below market) are recognised: a price adjustment factor (theoretical ex-rights price ÷ cum-rights price) and share increase are applied before the open on the ex date. Out-of-the-money rights get no adjustment. Terms greater than 10-for-1 are ‘highly dilutive’ and use temporary rights and subscription-cash (dummy) lines until the subscription period ends; where the subscription price is unknown on the ex date an estimated value is used, or no adjustment if it cannot be estimated.",
+      "lead_days": 5,
+      "lead_days_confidence": "practitioner",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.9 (Rights issues/entitlement offers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "secondary-offering",
+      "caev": "OFFO",
+      "index_type": "*",
+      "treatment": "Share and free-float updates from primary and secondary offerings are implemented intra-quarter with at least two days' notice when they meet the materiality threshold — a USD 1bn investable market-cap change, or a 5% index-shares change plus USD 250m — otherwise deferred to the next quarterly review (or the review following discovery if pricing settled more than five business days earlier).",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §5.2 (Intra-quarter updates); §2.1.5 (Timing of corporate actions and events)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "private-placement",
+      "caev": "OFFO",
+      "index_type": "*",
+      "treatment": "Share and free-float changes from private placements to restricted parties are deferred to the next quarterly review; they do not qualify for the intra-quarter primary/secondary-offering treatment and receive no intra-quarter price or share adjustment.",
+      "lead_days": 5,
+      "lead_days_confidence": "practitioner",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §5 (Changes to shares outstanding and free float), note 5",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "return-of-capital",
+      "caev": "REDU",
+      "index_type": "*",
+      "treatment": "Capital repayments are generally applied with a price adjustment (a capital-repayment PAF of (price − repayment) ÷ price) unless company policy reports regular dividends this way (common in Switzerland), in which case it is treated as an ordinary cash dividend.",
+      "lead_days": 5,
+      "lead_days_confidence": "practitioner",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.4 (Special dividends – tax adjustments)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "treatment": "Target is deleted at the last traded price and the acquirer's shares increased per the offer terms once the transaction is deemed final, with a minimum two days' notice; where trading in the target has halted, a synthetic price based on the offer terms is used. For mergers involving elections, FTSE Russell generally waits for the election results before implementing.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10.2 (Merger between index constituents for stock); §2.1.5 (minimum two-day notice for stock and cash mergers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "tender-offer",
+      "caev": "TEND",
+      "index_type": "*",
+      "treatment": "Target normally removed with a minimum T+2 notice when the bidder's holding reaches at least 90% (initial, extension or subsequent) with shares irrevocably accepted for payment, or remaining free float is under 5%, or a compulsory squeeze-out / delisting is confirmed; otherwise a free-float change greater than 3 percentage points is implemented with at least T+2 notice. Deleted at the last traded price, or at a price based on the offer terms if trading has halted.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.11 (Target company deletion); §4.12 (Target company free float change)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "bankruptcy",
+      "caev": "DELI",
+      "index_type": "*",
+      "treatment": "Deleted when FTSE Russell becomes aware of bankruptcy / protection-from-creditors filing, administration, receivership, insolvency or liquidation, with notice — bankruptcy is an ‘actionable’ event carrying a minimum two-day notice. Removed at the last traded price, or an OTC/ineligible-market price if available, else a nominal 0.0001; re-considered after 12 months as a new issue (Russell US and derived indices re-consider at the next reconstitution).",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.17 (Deletions); §2.1.5 (minimum two-day notice for bankruptcy)",
       "confidence": "stated"
     }
   ]
