@@ -63,6 +63,11 @@ for (const rule of rules) {
   if (rule.lead_days !== null && rule.lead_days_confidence === "absent") {
     fail(`${rule.event_type}: lead_days is an integer but lead_days_confidence is \`absent\``)
   }
+  // A `practitioner` lead time is Alex's domain knowledge, distinguishable from
+  // a vendor's published figure — the source_ref MUST say so.
+  if (rule.lead_days_confidence === "practitioner" && !rule.source_ref?.startsWith("practitioner:")) {
+    fail(`${rule.event_type}: lead_days_confidence is \`practitioner\` but source_ref does not start with \`practitioner:\``)
+  }
 }
 
 // D3 (2026-09-02): an ORDINARY cash dividend is NEVER price-adjusted / PAF'd —

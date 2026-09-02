@@ -78,8 +78,8 @@
             "description": "Vendor's published publication lead time before ex-date in days, or null when the source does not state one (never invent a number)."
           },
           "lead_days_confidence": {
-            "enum": ["stated", "inferred", "absent"],
-            "description": "lead_days provenance: 'stated' when the doc gives it outright, 'inferred' when reasoned from surrounding text, 'absent' when the doc does not state a lead time."
+            "enum": ["stated", "inferred", "absent", "practitioner"],
+            "description": "lead_days provenance: 'stated' when the doc gives it outright, 'inferred' when reasoned from surrounding text, 'absent' when the doc does not state a lead time, 'practitioner' when the lead time is domain knowledge supplied by a practitioner and is NOT stated in the vendor's document."
           },
           "source_ref": {
             "type": "string",
