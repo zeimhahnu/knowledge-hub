@@ -14,7 +14,6 @@ import {
   GlobeIcon,
   HelpCircleIcon,
   LightbulbIcon,
-  LineChartIcon,
   NetworkIcon,
 } from "lucide-react";
 
@@ -190,10 +189,6 @@ export default function Home() {
                   <Link href="/vendors/" className={heroActionClassName}>
                     <BookOpenIcon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
                     Vendor thresholds
-                  </Link>
-                  <Link href="/investors/" className={heroActionClassName}>
-                    <LineChartIcon className="h-5 w-5 shrink-0 text-primary" aria-hidden />
-                    Investor snapshot
                   </Link>
                   <button
                     type="button"
@@ -455,16 +450,6 @@ export default function Home() {
             <div className="mb-1 text-sm font-semibold">ISO Taxonomy</div>
             <p className="text-xs text-muted-foreground">
               ISO 20022 CAEV codes mapped to SWIFT MT564 and vendor terminology
-            </p>
-          </Link>
-          <Link
-            href="/investors/"
-            className="rounded-2xl border border-border bg-card p-5 transition-all hover:border-primary/50 hover:bg-muted/50"
-          >
-            <GlobeIcon className="mb-3 h-5 w-5 text-primary" />
-            <div className="mb-1 text-sm font-semibold">Investor snapshot</div>
-            <p className="text-xs text-muted-foreground">
-              Global dividends, splits, calendar, and fundamentals — search any Yahoo-covered symbol or company
             </p>
           </Link>
           <div className="rounded-2xl border border-border bg-card p-5">

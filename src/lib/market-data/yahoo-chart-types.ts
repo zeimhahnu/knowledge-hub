@@ -1,10 +1,10 @@
-/** DTO returned by `GET /api/investors/quote` (Yahoo Finance–derived, delayed). */
+/** Delayed Yahoo Finance chart data for corporate-action lookup infrastructure. */
 
-export type InvestorDividendRow = { date: string; amount: number };
+export type YahooChartDividendRow = { date: string; amount: number };
 
-export type InvestorSplitRow = { date: string; ratio: string };
+export type YahooChartSplitRow = { date: string; ratio: string };
 
-export type InvestorQuote = {
+export type YahooChartQuote = {
   name?: string;
   price?: number;
   changePct?: number;
@@ -37,7 +37,7 @@ export type InvestorQuote = {
   quoteType?: string;
 };
 
-export type InvestorCalendar = {
+export type YahooChartCalendar = {
   exDividendDate?: string;
   earningsDate?: string;
   /** Estimated earnings window end, if provided. */
@@ -45,7 +45,7 @@ export type InvestorCalendar = {
 };
 
 /** Shared row shape used by the search typeahead. */
-export type InvestorSearchResult = {
+export type YahooSymbolSearchResult = {
   symbol: string;
   name?: string;
   exchange?: string;
@@ -54,13 +54,13 @@ export type InvestorSearchResult = {
   country?: string;
 };
 
-export type InvestorTickerResponse = {
+export type YahooMarketDataResponse = {
   ticker: string;
   fetchedAt: string;
-  quote?: InvestorQuote;
-  dividends: InvestorDividendRow[];
-  splits: InvestorSplitRow[];
-  calendar?: InvestorCalendar;
+  quote?: YahooChartQuote;
+  dividends: YahooChartDividendRow[];
+  splits: YahooChartSplitRow[];
+  calendar?: YahooChartCalendar;
   /** `dividendYield` is a percentage for display (e.g. 2.5 means 2.5%), from Yahoo raw × 100. */
   metrics?: {
     dividendRate?: number;

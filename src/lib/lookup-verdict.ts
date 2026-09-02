@@ -123,8 +123,7 @@ export function presentAtVendor(ticker: string, eventType: string): (v: VendorId
  * Ticker → company name for the query header.
  *
  * ponytail: no ticker→name lookup is wired to this page yet; the header
- * omits the company line until one is (the /investors search endpoint is a
- * separate, server-only slice).
+ * omits the company line until one is (a separate, server-only search slice).
  */
 export function resolveCompanyName(ticker: string): string | null {
   void ticker;

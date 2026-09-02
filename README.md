@@ -67,9 +67,9 @@ GitHub Actions on `main` runs lint, typecheck, and `npm run build` (see `.github
 
 **Agent handoff (Goop / OpenClaw):** `SPECS/HANDOFF-OPENCLAW-GOOP-VERCEL.md`
 
-### Investor snapshot data
+### Market-data infrastructure
 
-The `/investors/` page calls **`GET /api/investors/quote?ticker=SYMBOL`**, which fetches Yahoo Finance JSON server-side: chart **`v8/finance/chart`** (dividends, splits, meta price) and **`v10/finance/quoteSummary`** (sector, dividend rate/yield, calendar hints). Data is delayed; there is **no API key** and **no Python** on Vercel. Successful responses include **CDN `Cache-Control`** (`s-maxage=300`, stale-while-revalidate) and an **in-memory** cache of about five minutes per normalized ticker **per serverless instance**. See `SPECS/approved/prd-investor-snapshot-data-source.md` for the contract (`InvestorTickerResponse` in `src/lib/investors/types.ts`).
+Yahoo Finance chart **`v8/finance/chart`** remains a server-side, keyless market-data client at `src/lib/market-data/yahoo-chart.ts`. It provides delayed dividend and split history for fund-operations lookup work; it is not a retail-investor presentation API.
 
 ## Live Pages
 
@@ -80,7 +80,6 @@ The `/investors/` page calls **`GET /api/investors/quote?ticker=SYMBOL`**, which
 | ISO CAEV Taxonomy | `/vendors/iso-taxonomy/` |
 | Event Extraction | `/vendors/event-extraction/` |
 | API health check | `/api/test/` |
-| Investor snapshot (by ticker) | `/investors/` |
 
 ## Event Types Covered
 

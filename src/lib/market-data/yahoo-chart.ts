@@ -1,11 +1,11 @@
 import type {
-  InvestorCalendar,
-  InvestorDividendRow,
-  InvestorQuote,
-  InvestorSearchResult,
-  InvestorSplitRow,
-  InvestorTickerResponse,
-} from "./types";
+  YahooChartCalendar,
+  YahooChartDividendRow,
+  YahooChartQuote,
+  YahooSymbolSearchResult,
+  YahooChartSplitRow,
+  YahooMarketDataResponse,
+} from "./yahoo-chart-types";
 
 const YAHUA =
   "Mozilla/5.0 (compatible; KnowledgeHub/1.0; +https://corporate-action.vercel.app)";
@@ -169,22 +169,48 @@ export function normalizeTicker(raw: string): string {
   const dotIdx = base.lastIndexOf(".");
   if (dotIdx === -1) return base;
   const suffix = base.slice(dotIdx + 1);
-  if (suffix.length === 1) {
+  // Yahoo uses dot suffixes for London (.L) and Tokyo (.T); only other
+  // single-letter suffixes are interpreted as US class shares.
+  if (suffix.length === 1 && suffix !== "L" && suffix !== "T") {
     return `${base.slice(0, dotIdx)}-${suffix}`;
   }
   return base;
 }
 
-export async function searchSymbols(
+export type YahooChartRequest = {
+  ticker: string;
+  interval?: "1d";
+  range?: "10y";
+  events?: "div|split";
+};
+
+/** Builds the proven Yahoo v8/chart request without performing network I/O. */
+export function makeYahooChartRequest({
+  ticker,
+  interval = "1d",
+  range = "10y",
+  events = "div|split",
+}: YahooChartRequest): { ticker: string; url: string } {
+  const symbol = normalizeTicker(ticker);
+  if (!symbol || !/^[A-Z0-9.\-=^]+$/.test(symbol)) {
+    throw new Error("INVALID_TICKER");
+  }
+  return {
+    ticker: symbol,
+    url: `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=${interval}&range=${range}&events=${encodeURIComponent(events)}`,
+  };
+}
+
+export async function searchYahooSymbols(
   query: string,
   limit = 8,
-): Promise<InvestorSearchResult[]> {
+): Promise<YahooSymbolSearchResult[]> {
   const q = query.trim();
   if (!q) return [];
   const url = `https://query2.finance.yahoo.com/v1/finance/search?q=${encodeURIComponent(q)}&quotesCount=${limit}&newsCount=0&listsCount=0&enableFuzzyQuery=true&enableNavLinks=false&enableEnhancedTrivialQuery=false`;
   try {
     const json = await fetchJson<SearchResultRaw>(url, SEARCH_REVALIDATE_SEC);
-    const out: InvestorSearchResult[] = [];
+    const out: YahooSymbolSearchResult[] = [];
     for (const q of json.quotes ?? []) {
       if (!q.symbol) continue;
       if (q.isYahooFinance === false) continue;
@@ -203,16 +229,11 @@ export async function searchSymbols(
   }
 }
 
-export async function buildInvestorPayload(
+export async function fetchYahooMarketData(
   ticker: string,
-): Promise<InvestorTickerResponse> {
+): Promise<YahooMarketDataResponse> {
   const warnings: string[] = [];
-  const sym = normalizeTicker(ticker);
-  if (!sym || !/^[A-Z0-9.\-=^]+$/.test(sym)) {
-    throw new Error("INVALID_TICKER");
-  }
-
-  const chartUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1d&range=10y&events=div%7Csplit`;
+  const { ticker: sym, url: chartUrl } = makeYahooChartRequest({ ticker });
   const summaryUrl = `https://query1.finance.yahoo.com/v10/finance/quoteSummary/${encodeURIComponent(sym)}?modules=summaryProfile,quoteType,price,summaryDetail,calendarEvents,defaultKeyStatistics`;
 
   const [chartJson, summaryJson] = await Promise.all([
@@ -248,7 +269,7 @@ export async function buildInvestorPayload(
     changePct = (changeAbs / prev) * 100;
   }
 
-  const quote: InvestorQuote = {
+  const quote: YahooChartQuote = {
     name: meta.longName ?? meta.shortName,
     price,
     changePct,
@@ -261,7 +282,7 @@ export async function buildInvestorPayload(
   };
 
   const divMap = result.events?.dividends ?? {};
-  const dividends: InvestorDividendRow[] = Object.entries(divMap)
+  const dividends: YahooChartDividendRow[] = Object.entries(divMap)
     .map(([ts, v]) => ({
       date: isoDay(Number(ts)) ?? isoDay(v.date),
       amount: v.amount ?? 0,
@@ -272,7 +293,7 @@ export async function buildInvestorPayload(
     .map((r) => ({ date: r.date!, amount: r.amount }));
 
   const splitMap = result.events?.splits ?? {};
-  const splits: InvestorSplitRow[] = Object.entries(splitMap)
+  const splits: YahooChartSplitRow[] = Object.entries(splitMap)
     .map(([ts, v]) => ({
       date: isoDay(Number(ts)) ?? isoDay(v.date),
       ratio: ratioFromSplit(v.numerator, v.denominator),
@@ -282,8 +303,8 @@ export async function buildInvestorPayload(
     .slice(0, 8)
     .map((r) => ({ date: r.date!, ratio: r.ratio }));
 
-  let calendar: InvestorCalendar | undefined;
-  let metrics: InvestorTickerResponse["metrics"];
+  let calendar: YahooChartCalendar | undefined;
+  let metrics: YahooMarketDataResponse["metrics"];
 
   const qr = summaryJson?.quoteSummary?.result?.[0];
   if (qr) {
