@@ -14,6 +14,7 @@
 import assert from "node:assert/strict"
 import fs from "node:fs"
 import { CANONICAL_EVENTS } from "../src/lib/event-taxonomy.ts"
+import { VENDOR_IDS } from "../src/lib/vendors.ts"
 
 const schema = JSON.parse(
   fs.readFileSync("src/data/rules.schema.json", "utf8"),
@@ -44,8 +45,11 @@ for (const rule of rules) {
   }
   if (!Object.prototype.hasOwnProperty.call(rule, "event_type")) continue
 
-  // D2: this file is deliberately MSCI-only until the schema survives contact with real text.
-  assertRule(rule.vendor === "msci", `${rule.event_type}: vendor must be \`msci\``)
+  // D2: vendor must be a known app vendor id (src/lib/vendors.ts VENDOR_IDS).
+  assertRule(
+    VENDOR_IDS.includes(rule.vendor),
+    `${rule.event_type}: vendor \`${rule.vendor}\` not in VENDOR_IDS`,
+  )
   assertRule(typeof rule.source_ref === "string" && rule.source_ref.trim().length > 0, `${rule.event_type}: source_ref must be non-empty`)
   assertRule(rule.lead_days === null || Number.isInteger(rule.lead_days), `${rule.event_type}: lead_days must be an integer or null`)
   assertRule(typeof rule.treatment === "string" && rule.treatment.trim().length > 0, `${rule.event_type}: treatment must be non-empty`)
@@ -79,15 +83,23 @@ for (const rule of ordinaryDividendRules) {
 
 const ordinaryChecked = ordinaryDividendRules.length
 
-const populated = canonicalIds.filter((id) => rules.some((r) => r.event_type === id))
-const withTreatment = rules.filter((r) => typeof r.treatment === "string" && r.treatment.trim().length > 0).length
-const withLead = rules.filter((r) => r.lead_days !== null).length
-const withoutLead = rules.filter((r) => r.lead_days === null).length
+// D3 (2026-09-02): per-vendor coverage — each vendor present must populate all 13
+// canonical event types. A vendor with no rows yet is a future task, not reported here.
+const vendorsPresent = [...new Set(rules.map((r) => r.vendor))]
+const perVendor = vendorsPresent.map((vendor) => {
+  const vendorRules = rules.filter((r) => r.vendor === vendor)
+  const populated = canonicalIds.filter((id) => vendorRules.some((r) => r.event_type === id))
+  const withLead = vendorRules.filter((r) => r.lead_days !== null).length
+  const withoutLead = vendorRules.filter((r) => r.lead_days === null).length
+  if (populated.length !== canonicalIds.length) {
+    fail(
+      `coverage ${vendor}: ${populated.length}/${canonicalIds.length} event types populated; missing: ${canonicalIds.filter((id) => !populated.includes(id)).join(", ")}`,
+    )
+  }
+  return `${vendor} ${populated.length}/${canonicalIds.length} (${withLead} stated lead, ${withoutLead} null)`
+})
 
-// D2: all 13 app-documented event types must be populated for MSCI.
-if (populated.length !== canonicalIds.length) {
-  fail(`coverage: ${populated.length}/${canonicalIds.length} event types populated; missing: ${canonicalIds.filter((id) => !populated.includes(id)).join(", ")}`)
-}
+const withTreatment = rules.filter((r) => typeof r.treatment === "string" && r.treatment.trim().length > 0).length
 
 if (violations > 0) {
   console.error(`\nFAIL — ${violations} violation(s) in src/data/rules.json`)
@@ -95,8 +107,9 @@ if (violations > 0) {
 }
 
 console.log(
-  `OK — rules.json valid: ${rules.length} MSCI rules across ${populated.length}/${canonicalIds.length} event types; ` +
-  `${withTreatment} with treatment; ${withLead} stated lead_days, ${withoutLead} null (lead time not documented); ` +
+  `OK — rules.json valid: ${rules.length} rules across ${vendorsPresent.length} vendor(s). ` +
+  perVendor.join(" | ") + ". " +
+  `${withTreatment} with treatment; ` +
   `ordinary-dividend no-PAF assertion: PASS (${ordinaryChecked} cash-dividend row(s) checked)`,
 )
 

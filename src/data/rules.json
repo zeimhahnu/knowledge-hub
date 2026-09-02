@@ -17,7 +17,7 @@
     "bankruptcy"
   ],
   "index_types": ["*"],
-  "vendors": ["msci"],
+  "vendors": ["msci", "sp"],
   "rules": [
     {
       "vendor": "msci",
@@ -168,6 +168,149 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/index-vendor-methodology.md §13 (Bankruptcy / Delisting); msci-corporate-events-methodology-2026.pdf §5.3",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "cash-dividend",
+      "caev": "DVOP",
+      "index_type": "*",
+      "treatment": "No price adjustment on ex-date; an ordinary dividend affects only Total Return (TR) and Net Total Return (NTR) indices, not the Price Return index (PAF = none). TR/NTR indices reinvest the dividend on ex-date.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Dividends (Ordinary Dividend)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "special-dividend",
+      "caev": "DVOP",
+      "index_type": "*",
+      "treatment": "Treated as a corporate action with price and divisor adjustment: the stock's price is adjusted (reduced) by the payment amount at the opening of the effective date. Classification is qualitative — outside the normal historical payment pattern (e.g. described as \"special\", \"extra\", \"irregular\", or \"return of capital\"); the third consecutive same-timing non-ordinary dividend is reclassified as ordinary (timing, not amount).",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Dividends (Special Dividends)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "stock-dividend",
+      "caev": "BONU",
+      "index_type": "*",
+      "treatment": "Treated identically to a stock split: shares increased and price decreased by the same adjustment factor (e.g. a 5% stock dividend is a 1.05-for-1 split). Market capitalization unchanged.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Stock Split and Consolidation (Stock Dividend)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "bonus-issue",
+      "caev": "BONU",
+      "index_type": "*",
+      "treatment": "Treated identically to a stock split / stock dividend: shares increased and price decreased by the same factor, with only the quoting convention differing. Bonus shares not entitled to a later dividend are applied on ex-date, with the later dividend adjusted down over the enlarged share count.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Stock Split and Consolidation (Bonus Issue)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "stock-split",
+      "caev": "SPLT",
+      "index_type": "*",
+      "treatment": "Shares increased (multiplied) and price decreased (divided) by the same adjustment factor; market capitalization unchanged; no divisor change.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Stock Split and Consolidation (Stock Split)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "spin-off",
+      "caev": "SPIN",
+      "index_type": "*",
+      "treatment": "Spin-off security added to the parent's indices at a zero price at the close of the day before the ex-date, with no divisor adjustment; the parent is not price-adjusted downward. If the spin-off does not trade for 20 consecutive trading days after the ex-date, it may be removed at zero.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Spin-Offs",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "rights-issue",
+      "caev": "RHDI",
+      "index_type": "*",
+      "treatment": "Only in-the-money rights (subscription price below the prior close) are recognized; the price adjustment (TERP) is applied at the opening of the ex-date and shares are increased at the full rights ratio. Out-of-the-money rights are ignored; under/oversubscribed adjustments are made at the next quarterly rebalancing.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Rights Offerings",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "secondary-offering",
+      "caev": "OFFO",
+      "index_type": "*",
+      "treatment": "Public offerings (including block sales and spot secondaries) receive accelerated implementation only when both thresholds are met: at least 5% of pre-event shares and at least US$150m (a US$1bn+ event is implemented even below 5%). Otherwise implemented at the next quarterly rebalancing.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Non-Mandatory Share and IWF Updates (Accelerated Implementation)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "private-placement",
+      "caev": "OFFO",
+      "index_type": "*",
+      "treatment": "Non-mandatory; certain private placements are reviewed quarterly and implemented at the quarterly rebalancing, not via accelerated implementation.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Non-Mandatory Share and IWF Updates (Quarterly Implementation)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "return-of-capital",
+      "caev": "REDU",
+      "index_type": "*",
+      "treatment": "Considered a special dividend (price adjusted down at the opening of the effective date), except when declared in lieu of an ordinary cash dividend and fitting the historical pattern in amount and frequency, in which case it is treated as an ordinary cash dividend.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Dividends (Return of Capital)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "treatment": "Target deleted on or around the expected delisting or last-trading date, with no minimum threshold for the acquirer's share/IWF change; deletion price is the closing price, or for cash consideration the lower of market close and deal price, for stock consideration a synthetically derived price from the deal ratio. Acquisitions of private/non-index companies are implemented at the next quarterly rebalancing.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Mergers & Acquisitions",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "tender-offer",
+      "caev": "TEND",
+      "index_type": "*",
+      "treatment": "Index changes implemented only after final results. A target may be removed early once conditions are met or when remaining free float falls below 15% (even if the offer is still open); the tendered-line replacement is considered once a minimum acceptance ratio of 75% is reached, with one to five business days' notice.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Tendered Shares",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "bankruptcy",
+      "caev": "DELI",
+      "index_type": "*",
+      "treatment": "Bankrupt securities are ineligible and removed from all branded indices simultaneously, with a minimum of one day's notice, at the primary-exchange closing price (zero if halted or delisted).",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Bankruptcies",
       "confidence": "stated"
     }
   ]
