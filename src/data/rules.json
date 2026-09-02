@@ -17,7 +17,7 @@
     "bankruptcy"
   ],
   "index_types": ["*"],
-  "vendors": ["msci", "sp", "ftse"],
+  "vendors": ["msci", "sp", "ftse", "stoxx"],
   "rules": [
     {
       "vendor": "msci",
@@ -454,6 +454,149 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.17 (Deletions); §2.1.5 (minimum two-day notice for bankruptcy)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "index_type": "*",
+      "event_type": "cash-dividend",
+      "caev": "DVOP",
+      "treatment": "Ordinary cash distributions within the regular dividend policy (or defined regular by the company) adjust Gross and Net Return indices, while Price indices are not affected: no price adjustment and no PAF for the Price Return index.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.1 (Cash Dividend)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "index_type": "*",
+      "event_type": "special-dividend",
+      "caev": "DVOP",
+      "treatment": "Cash distributions outside the regular dividend policy (or defined extraordinary by the company) adjust Gross Return, Net Return, and Price indices; Net Return and Price use padj = pt−1 − Div × (1−withholding tax). STOXX states no numeric special-dividend threshold: classification is qualitative, based on dividend policy or company characterization.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.2 (Special Cash Dividend)",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "stoxx",
+      "index_type": "*",
+      "event_type": "stock-dividend",
+      "caev": "BONU",
+      "treatment": "An ordinary stock dividend decreases the price by the pre-/post-distribution share ratio and increases shares by the reciprocal ratio for free-float market-cap indices; the divisor is unchanged. Treasury-stock and redeemable-share distributions instead follow regular or special cash-dividend treatment according to classification.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.5 (Stock Dividend)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "index_type": "*",
+      "event_type": "bonus-issue",
+      "caev": "BONU",
+      "treatment": "A pro-rata no-charge share distribution is treated as an ordinary stock dividend: price is decreased by the pre-/post-distribution share ratio, shares rise by the reciprocal ratio for free-float market-cap indices, and the divisor is unchanged.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.5.1 (Ordinary Stock Dividend)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "index_type": "*",
+      "event_type": "stock-split",
+      "caev": "SPLT",
+      "treatment": "For a split or reverse split, price is adjusted by A/B and free-float market-cap shares by B/A; the divisor is unchanged.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.3 (Split and Reverse Split); §8.2 (immediate share-change implementation)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "index_type": "*",
+      "event_type": "spin-off",
+      "caev": "SPIN",
+      "treatment": "The parent price is reduced by the value of spun-off shares. Each spin-off stock is temporarily added to affected indices at an estimated price where eligible-exchange listing, pricing, and reference data are available; a non-qualifying spin-off is deleted when it starts trading. Changes are announced immediately, implemented two trading days later, and effective the following trading day.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.8 (Spin-Off); §8.4 (Spin-Offs)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "index_type": "*",
+      "event_type": "rights-issue",
+      "caev": "RHDI",
+      "treatment": "Only in-the-money rights are adjusted: the theoretical ex-rights price is applied and shares increase. If the subscription price is unavailable or at/above the prior close, no adjustment is made. A rights issue with B/A ≥200% is highly dilutive and follows the stated underwriting/tradability scenarios.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.4 (Rights Offering); §8.1.4.1–§8.1.4.2",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "index_type": "*",
+      "event_type": "secondary-offering",
+      "caev": "OFFO",
+      "treatment": "A share-count change from a corporate action greater than ±10% from one trading day to the next is announced immediately, implemented two trading days later, and effective the following trading day; other applicable changes follow the quarterly underlying-data schedule. Free-float factor changes over ±5 percentage points use the same two-day process.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.2 (Free Float Factors and Share Adjustments)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "index_type": "*",
+      "event_type": "private-placement",
+      "caev": "OFFO",
+      "treatment": "A share-count change from a corporate action greater than ±10% from one trading day to the next is announced immediately, implemented two trading days later, and effective the following trading day; other applicable changes follow the quarterly underlying-data schedule. Free-float factor changes over ±5 percentage points use the same two-day process.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.2 (Free Float Factors and Share Adjustments)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "index_type": "*",
+      "event_type": "return-of-capital",
+      "caev": "REDU",
+      "treatment": "A return of capital with share consolidation is applied as a combination of a regular or special cash dividend and a reverse split. Regular classification uses the regular-dividend return-index treatment plus split treatment for Price indices; special classification applies special-dividend treatment to Price, Gross Return, and Net Return indices plus split treatment.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.6 (Return of Capital and Share Consolidation)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "index_type": "*",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "treatment": "A merger or takeover deletes the target once event conditions are fulfilled and at least 85% is acquired through the tender offer or remaining target free float is below 10%. Changes are announced immediately, implemented two trading days later, and effective the following trading day; use last traded price or an acquisition-terms artificial price if not trading.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3.2 (Target Company – Deletion)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "index_type": "*",
+      "event_type": "tender-offer",
+      "caev": "TEND",
+      "treatment": "Following publication of each tender-offer result (including an extension), STOXX makes an extraordinary target free-float adjustment if approvals and minimum acceptance are fulfilled and free float changes by at least 5 percentage points; deletion follows if all event conditions are fulfilled and at least 85% is acquired or remaining free float is below 10%. Changes are announced immediately, implemented two trading days later, and effective the following trading day.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3.1–§8.3.2 (Mergers and Takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "index_type": "*",
+      "event_type": "bankruptcy",
+      "caev": "DELI",
+      "treatment": "A company that files for bankruptcy is deleted during ongoing bankruptcy proceedings at its primary-market traded price, if available, otherwise at local-currency 0.0000001. Changes are announced immediately, implemented two trading days later, and effective the following trading day.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.6.3 (Bankruptcy)",
       "confidence": "stated"
     }
   ]

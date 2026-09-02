@@ -24,6 +24,9 @@ const ruleProps = ruleSchema.properties
 const REQUIRED_KEYS = ruleSchema.required
 const LEAD_CONFIDENCES = ruleProps.lead_days_confidence.enum
 const CONFIDENCES = ruleProps.confidence.enum
+// Rules currently published in rules.json; add the vendor here as each verified
+// 13-event block lands, while VENDOR_IDS remains the broader app-level registry.
+const RULE_VENDOR_ALLOWLIST = ["msci", "sp", "ftse", "stoxx"]
 
 const raw = JSON.parse(fs.readFileSync("src/data/rules.json", "utf8"))
 const rules = raw.rules
@@ -49,6 +52,10 @@ for (const rule of rules) {
   assertRule(
     VENDOR_IDS.includes(rule.vendor),
     `${rule.event_type}: vendor \`${rule.vendor}\` not in VENDOR_IDS`,
+  )
+  assertRule(
+    RULE_VENDOR_ALLOWLIST.includes(rule.vendor),
+    `${rule.event_type}: vendor \`${rule.vendor}\` not in the rules allowlist`,
   )
   assertRule(typeof rule.source_ref === "string" && rule.source_ref.trim().length > 0, `${rule.event_type}: source_ref must be non-empty`)
   assertRule(rule.lead_days === null || Number.isInteger(rule.lead_days), `${rule.event_type}: lead_days must be an integer or null`)
