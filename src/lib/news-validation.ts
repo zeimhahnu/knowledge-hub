@@ -61,6 +61,9 @@ export type ScoreInput = {
   exDate: Date;
   eventType: string;
   results: SearchResultItem[];
+  /** Issuer identity from the user's event; omitted only for legacy pure checks. */
+  ticker?: string;
+  companyName?: string;
   /** Announcements normally precede the ex-date; 90d covers special dividends / M&A. */
   windowBeforeDays?: number;
   /** A dated source published shortly AFTER the ex-date can still contradict it. */
@@ -85,6 +88,14 @@ const DEFAULT_WINDOW_BEFORE_DAYS = 90;
 const DEFAULT_WINDOW_AFTER_DAYS = 14;
 const MS_PER_DAY = 86_400_000;
 const MAX_SNIPPET_CHARS = 300;
+const CORPORATE_SUFFIXES = new Set([
+  "inc", "corp", "corporation", "plc", "ltd", "limited", "nv", "sa", "ag",
+  "holdings", "group", "company", "co",
+]);
+const NON_ISSUER_TITLE_WORDS = new Set([
+  "announces", "announced", "declares", "declared", "dividend", "dividends",
+  "earnings", "ex-dividend", "payment", "quarterly", "special", "stock",
+]);
 
 /** Whole UTC days since the Unix epoch, floored to the date's UTC day. */
 const utcDay = (d: Date): number => Math.floor(d.getTime() / MS_PER_DAY);
@@ -93,6 +104,48 @@ function parseDate(s: string | null | undefined): Date | null {
   if (!s) return null;
   const d = new Date(s);
   return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function escapeRegExp(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function distinctiveCompanyWords(companyName: string | undefined): string[] {
+  return (companyName ?? "")
+    .match(/[A-Za-z0-9]+/g)
+    ?.filter((word) => !CORPORATE_SUFFIXES.has(word.toLowerCase())) ?? [];
+}
+
+/**
+ * Keep a result only when it identifies the issuer: a standalone ticker wins;
+ * otherwise every suffix-stripped company-name word must appear together and
+ * cannot be immediately extended by another distinctive title-case word.
+ * This rejects "Apple Hospitality" for Apple Inc while allowing "Apple Inc.".
+ */
+export function issuerMatches(
+  result: Pick<SearchResultItem, "title" | "content" | "url">,
+  ticker: string,
+  companyName?: string,
+): boolean {
+  const text = `${result.title ?? ""} ${result.content ?? ""}`;
+  const normalizedTicker = ticker.trim();
+  if (normalizedTicker) {
+    const tickerPattern = new RegExp(`\\b${escapeRegExp(normalizedTicker)}\\b`, "i");
+    if (tickerPattern.test(text)) return true;
+  }
+
+  const words = distinctiveCompanyWords(companyName);
+  if (words.length === 0) return false;
+  const namePattern = words.map(escapeRegExp).join("\\s+");
+  const nameMatch = new RegExp(`\\b(${namePattern})\\b`, "i").exec(text);
+  if (!nameMatch) return false;
+
+  const tail = text.slice((nameMatch.index ?? 0) + nameMatch[0].length);
+  const nextWord = /^\s+([A-Za-z][A-Za-z-]*)/.exec(tail)?.[1];
+  return !nextWord ||
+    CORPORATE_SUFFIXES.has(nextWord.toLowerCase()) ||
+    NON_ISSUER_TITLE_WORDS.has(nextWord.toLowerCase()) ||
+    nextWord === nextWord.toLowerCase();
 }
 
 /**
@@ -248,9 +301,9 @@ function normalizeDomain(url: string): string {
  * PURE scorer — §8 steps 3–4. Takes injected search results and the
  * user-supplied ex-date; returns the dated, cited verdict.
  *
- * Pipeline per result: must have a REAL parsable publication date inside
- * [exDate - before, exDate + after]; must match the event terms; then it is
- * classified agreeing or contradicting (rules above).
+ * Pipeline per result: must match the issuer, have a REAL parsable publication
+ * date inside [exDate - before, exDate + after], and match event terms; then
+ * it is classified agreeing or contradicting (rules above).
  *
  * Confidence per §8: high = 2+ independent (distinct-domain) dated sources
  * agree; medium = 1 independent; otherwise unverified/low. A contradiction
@@ -267,12 +320,20 @@ export function scoreNewsValidation(input: ScoreInput): ScoreResult {
 
   const seen = new Set<string>(); // first occurrence of a URL wins
   const datedMatches: Array<{ source: NewsSource; contradicting: boolean }> = [];
+  let issuerMatchesCount = 0;
+  let issuerMismatches = 0;
 
   for (const r of input.results) {
     if (typeof r !== "object" || r === null) continue;
     if (typeof r.url !== "string" || !r.url) continue;
     if (seen.has(r.url)) continue;
     seen.add(r.url);
+
+    if (input.ticker && !issuerMatches(r, input.ticker, input.companyName)) {
+      issuerMismatches += 1;
+      continue; // wrong issuer → never participates in either verdict count
+    }
+    issuerMatchesCount += 1;
 
     const pub = parseDate(r.publishedDate);
     if (!pub || pub.getTime() < windowStart.getTime() || pub.getTime() > windowEnd.getTime()) {
@@ -320,6 +381,9 @@ export function scoreNewsValidation(input: ScoreInput): ScoreResult {
     terms,
     windowStart,
     windowEnd,
+    input.results.length,
+    issuerMatchesCount,
+    issuerMismatches,
     datedMatches.length,
     agreeing.length,
     contradicting.length,
@@ -340,13 +404,21 @@ function buildReasoning(
   terms: readonly string[],
   windowStart: Date,
   windowEnd: Date,
+  resultCount: number,
+  issuerMatchesCount: number,
+  issuerMismatches: number,
   total: number,
   agreeing: number,
   contradicting: number,
   domains: string[],
 ): string {
   const window = `${windowStart.toISOString().slice(0, 10)}..${windowEnd.toISOString().slice(0, 10)}`;
-  const base = `Search window ${window}; ${total} dated result(s) matched event terms (${terms.join(", ")}): ${agreeing} agreeing, ${contradicting} contradicting.`;
+  const base = [
+    `Search window ${window}; ${resultCount} result(s),`,
+    `${issuerMatchesCount} matched issuer (${issuerMismatches} dropped for issuer mismatch);`,
+    `${total} dated result(s) matched event terms (${terms.join(", ")}):`,
+    `${agreeing} agreeing, ${contradicting} contradicting.`,
+  ].join(" ");
   switch (verdict) {
     case "confirmed":
       return `${base} Verdict confirmed (${confidence}): ${domains.length} independent dated source(s) — ${domains.join(", ")} or fewer — corroborate the event.`;
@@ -462,6 +534,12 @@ export async function validateNews(
   }
 
   const results = normalizeTavilyResults(json);
-  const scored = scoreNewsValidation({ exDate, eventType: input.eventType, results });
+  const scored = scoreNewsValidation({
+    exDate,
+    eventType: input.eventType,
+    results,
+    ticker: input.ticker,
+    companyName: input.companyName,
+  });
   return { ...scored, validationRan: true };
 }
