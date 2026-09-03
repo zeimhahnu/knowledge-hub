@@ -1,0 +1,39 @@
+{
+  "$comment": [
+    "Single source of truth for upload screening. Read by BOTH the Vercel route",
+    "(src/lib/screen-methodology.ts) and the CLI ingest",
+    "(workspace scripts/screen_methodology.py). Two screeners that drift is the",
+    "exact bug class that cost this project a week: a component reading a source",
+    "of truth that moved out from under it. So the LOGIC may exist twice -- it is",
+    "thirty lines each side -- but the RULES, which are the part that changes,",
+    "live here only.",
+    "Validated 2026-09-03 against the whole corpus: all 8 vendor PDFs accept,",
+    "MSCI's guide claimed as 'solactive' rejects. Re-run that check after editing."
+  ],
+  "version": 1,
+  "limits": {
+    "minBytes": 10000,
+    "maxBytes": 25000000,
+    "minChars": 2000,
+    "minDomainHits": 6,
+    "dailyQuota": 5
+  },
+  "domainTerms": [
+    "corporate action", "ex-date", "ex date", "index", "dividend", "constituent",
+    "adjustment factor", "spin-off", "spinoff", "rights issue", "stock split",
+    "merger", "methodology", "review", "free float", "market capitalisation",
+    "market capitalization", "distribution", "shares outstanding", "delisting",
+    "bonus issue", "share consolidation", "tender offer", "weighting"
+  ],
+  "injectionPatterns": [
+    "ignore\\s+(all\\s+)?(previous|prior|above)\\s+instructions?",
+    "disregard\\s+(all\\s+)?(previous|prior|the\\s+above)",
+    "system\\s*prompt",
+    "you\\s+are\\s+(now\\s+)?an?\\s+\\w+\\s+(assistant|agent|model)",
+    "\\brm\\s+-rf\\b",
+    "curl\\s+https?://",
+    "\\bgit\\s+push\\s+--force\\b",
+    "<\\s*script\\b",
+    "BEGIN\\s+(RSA|OPENSSH|PRIVATE)\\s+KEY"
+  ]
+}
