@@ -221,8 +221,30 @@
       "vendor": "sp",
       "event_type": "cash-dividend",
       "caev": "DVOP",
-      "index_type": "*",
-      "treatment": "No price adjustment on ex-date; an ordinary dividend affects only Total Return (TR) and Net Total Return (NTR) indices, not the Price Return index (PAF = none). TR/NTR indices reinvest the dividend on ex-date.",
+      "index_type": "price-return",
+      "treatment": "An ordinary dividend has no effect on the Price Return index; no price adjustment is made on ex-date (PAF = none).",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Dividends (Ordinary Dividend)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "cash-dividend",
+      "caev": "DVOP",
+      "index_type": "total-return",
+      "treatment": "An ordinary dividend affects the Total Return (TR) index; the dividend is reinvested on ex-date.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Dividends (Ordinary Dividend)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "cash-dividend",
+      "caev": "DVOP",
+      "index_type": "net-total-return",
+      "treatment": "An ordinary dividend affects the Net Total Return (NTR) index; the dividend is reinvested on ex-date.",
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Dividends (Ordinary Dividend)",
@@ -288,10 +310,27 @@
       "event_type": "rights-issue",
       "caev": "RHDI",
       "index_type": "*",
-      "treatment": "Only in-the-money rights (subscription price below the prior close) are recognized; the price adjustment (TERP) is applied at the opening of the ex-date and shares are increased at the full rights ratio. Out-of-the-money rights are ignored; under/oversubscribed adjustments are made at the next quarterly rebalancing.",
+      "conditions": {
+        "rights_moneyness": "in-the-money"
+      },
+      "treatment": "For in-the-money rights (subscription price below the stock closing price on the day before the ex-date), applies a price adjustment using the theoretical ex-rights price (TERP) at the opening of the ex-date and increases shares at the full rights ratio. If undersubscribed or oversubscribed, the corresponding share adjustment is made at the next quarterly share rebalancing.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Rights Offerings",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Rights Offerings; §S&P DJI’s Calculation of Rights Offerings, Step 1–2",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "rights-issue",
+      "caev": "RHDI",
+      "index_type": "*",
+      "conditions": {
+        "rights_moneyness": "out-of-the-money"
+      },
+      "treatment": "For out-of-the-money rights (subscription price greater than or equal to the stock closing price on the day before the ex-date), takes no action to match the corporate action for index purposes; any subsequent shares are made at the quarterly rebalancing.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §S&P DJI’s Calculation of Rights Offerings, Step 1–2",
       "confidence": "stated"
     },
     {
