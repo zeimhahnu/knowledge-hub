@@ -17,7 +17,7 @@
     "bankruptcy"
   ],
   "index_types": ["*"],
-  "vendors": ["msci", "sp", "ftse", "stoxx"],
+  "vendors": ["msci", "sp", "ftse", "stoxx", "morningstar"],
   "rules": [
     {
       "vendor": "msci",
@@ -597,6 +597,153 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.6.3 (Bankruptcy)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "cash-dividend",
+      "caev": "DVOP",
+      "index_type": "*",
+      "treatment": "Ordinary cash dividends affect only Total Return and Net Return indexes; Morningstar makes no price or share adjustment to the Price Return index (PAF = none).",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mandatory Corporate Action Methodology — Ordinary Dividend (p. 6)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "special-dividend",
+      "caev": "DVOP",
+      "index_type": "*",
+      "conditions": {
+        "dividend_size_threshold_pct": 5,
+        "threshold_side": "at_or_above"
+      },
+      "treatment": "A non-ordinary cash distribution of at least 5% of the underlying security’s market price when announced in finalized status is treated as a special dividend: the price is reduced at the effective-date opening and PAF = adjusted price / prior close. Non-ordinary distributions below 5% are ordinary; M&A prepayments and spin-off cash payments are special regardless of size.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Special Dividend (pp. 12–13)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "stock-dividend",
+      "caev": "BONU",
+      "index_type": "*",
+      "treatment": "Treated as a stock split: index shares increase and price decreases by the stock-dividend ratio, leaving the security’s index market value unchanged. Index-ineligible distributed instruments are not recognized.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Stock Dividend (p. 14)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "bonus-issue",
+      "caev": "BONU",
+      "index_type": "*",
+      "treatment": "Treated the same as a stock dividend: shares increase and price decreases by the bonus ratio; bonus rights issues with only stock options receive the same treatment. If bonus shares are not entitled to a later dividend, that dividend is adjusted over the enlarged share count.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Bonus Issue (p. 15)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "stock-split",
+      "caev": "SPLT",
+      "index_type": "*",
+      "treatment": "Index shares increase and the price decreases by the stock-split ratio, leaving the security’s index market value unchanged; PAF = pre-event total shares outstanding / post-event total shares outstanding.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Stock Split (pp. 17–18)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "spin-off",
+      "caev": "SPIN",
+      "index_type": "*",
+      "treatment": "A newly created spin-off is added at zero price without divisor adjustment and removed with a divisor adjustment after at least two regular trading days. If it has not traded for 40 trading days after ex-date and has no listing information, it may be removed at zero with client notice (60 days for India); publicly listed distributions use a zero-price placeholder.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Spinoff (p. 22)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "rights-issue",
+      "caev": "RHDI",
+      "index_type": "*",
+      "treatment": "Only rights available to all shareholders and in the money are adjusted: Morningstar applies TERP/PAF and increases index shares. At- or out-of-the-money rights receive no adjustment; rights issuing index-ineligible instruments are not recognized.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Rights Offering (Issue) (pp. 19–20)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "secondary-offering",
+      "caev": "OFFO",
+      "index_type": "*",
+      "treatment": "Public/secondary offerings are nonmandatory. Material share and corresponding float changes are accelerated weekly when the offering exceeds both USD 150m and 5% of shares, or exceeds USD 1bn even below 5%; otherwise qualifying changes are implemented at quarterly rebalancing. A subscription offer to existing holders follows the rights-offering treatment.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Corporate Action Category (p. 5); §Subscription Offer (p. 22); §Nonmandatory Corporate Action Methodology (p. 37)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "private-placement",
+      "caev": "OFFO",
+      "index_type": "*",
+      "treatment": "Private placements are nonmandatory; material share and corresponding float changes follow the nonmandatory accelerated weekly policy when they meet its stated thresholds, with non-material qualifying changes implemented at quarterly rebalancing.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Corporate Action Category (p. 5); §Nonmandatory Corporate Action Methodology (p. 37)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "return-of-capital",
+      "caev": "REDU",
+      "index_type": "*",
+      "treatment": "Generally nonrecurring and treated as a special dividend under the special-dividend price-threshold treatment. It is treated as an ordinary cash dividend only when declared in lieu of an ordinary dividend and its amount and frequency fit the historical ordinary-dividend pattern.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Return of Capital (pp. 13–14)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "treatment": "The target is generally deleted from all indexes on or around delisting (or earlier once it can no longer be acquired). Acquirer share/free-float changes depend on cash versus stock terms; if the target is halted, removal uses the cash tender price or derived stock deal price.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mergers and Acquisitions (pp. 28–29)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "tender-offer",
+      "caev": "TEND",
+      "index_type": "*",
+      "treatment": "Morningstar monitors public tender-offer results; it may replace a tendered share class after 75% acceptance during a further acceptance period. It may drop the target with a two-day client notice when delisting/suspension is confirmed, 90% of shares are tendered or float is below 10%, or the offer is unconditional / headed to compulsory acquisition.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Tender Offer (p. 29)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "bankruptcy",
+      "caev": "DELI",
+      "index_type": "*",
+      "treatment": "Bankrupt or financially distressed securities are ineligible and removed with a minimum two days’ notice: at the usual/primary-exchange closing price if trading, otherwise zero; for U.S. securities, use OTC/pink-sheet price when available before zero.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Bankruptcy and Financial Distress (p. 35)",
       "confidence": "stated"
     }
   ]
