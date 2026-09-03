@@ -7,11 +7,11 @@ import {
   AlertTriangleIcon,
   CalendarDaysIcon,
   CheckCircle2Icon,
+  ChevronDownIcon,
   ClockIcon,
   HelpCircleIcon,
   NewspaperIcon,
   PlusIcon,
-  ScaleIcon,
   XIcon,
 } from "lucide-react";
 
@@ -248,61 +248,75 @@ function ScopeChips({
 }) {
   const unselected = VENDOR_IDS.filter((v) => !scope.includes(v));
   const [pending, setPending] = useState("");
+  // A control, not a section peer: collapsed by default once a scope is set.
+  const [open, setOpen] = useState(false);
+
+  const chips = (
+    <div className="flex flex-wrap items-center gap-2">
+      {scope.map((v) => (
+        <span
+          key={v}
+          className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/15 py-1 pl-3 pr-1 text-sm font-medium text-primary"
+        >
+          {VENDOR_LABELS[v]}
+          <button
+            type="button"
+            aria-label={`Remove ${VENDOR_LABELS[v]} from scope`}
+            onClick={() => onChange(scope.filter((x) => x !== v))}
+            className="grid h-6 w-6 place-items-center rounded-full text-primary outline-none transition-colors hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <XIcon className="h-3.5 w-3.5" aria-hidden />
+          </button>
+        </span>
+      ))}
+
+      {unselected.length > 0 && (
+        <div className="inline-flex items-center gap-1.5">
+          <PlusIcon className="h-4 w-4 text-muted-foreground" aria-hidden />
+          <label className="sr-only" htmlFor="add-scope-vendor">
+            Add a vendor to scope
+          </label>
+          <select
+            id="add-scope-vendor"
+            value={pending}
+            onChange={(e) => {
+              const v = e.target.value as VendorId;
+              if (v && !scope.includes(v)) onChange([...scope, v]);
+              setPending("");
+            }}
+            className="h-8 rounded-lg border border-border bg-background px-2 text-sm text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+          >
+            <option value="">add vendor…</option>
+            {unselected.map((v) => (
+              <option key={v} value={v}>
+                {VENDOR_LABELS[v]}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+    </div>
+  );
 
   return (
-    <SurfaceSection className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <h2 className="text-lg font-semibold tracking-tight">Vendor scope</h2>
-        <span className="text-xs text-muted-foreground">
-          Compare selected vendors. The sourced six are selected by default.
+    <div className="rounded-2xl border border-border/70 bg-card/40 px-4 py-2">
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-between gap-2 text-sm text-muted-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        <span className="font-medium text-foreground">Vendor scope</span>
+        <span className="flex items-center gap-1">
+          {scope.length} selected
+          <ChevronDownIcon
+            className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
+            aria-hidden
+          />
         </span>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-2">
-        {scope.map((v) => (
-          <span
-            key={v}
-            className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/15 py-1 pl-3 pr-1 text-sm font-medium text-primary"
-          >
-            {VENDOR_LABELS[v]}
-            <button
-              type="button"
-              aria-label={`Remove ${VENDOR_LABELS[v]} from scope`}
-              onClick={() => onChange(scope.filter((x) => x !== v))}
-              className="grid h-6 w-6 place-items-center rounded-full text-primary outline-none transition-colors hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              <XIcon className="h-3.5 w-3.5" aria-hidden />
-            </button>
-          </span>
-        ))}
-
-        {unselected.length > 0 && (
-          <div className="inline-flex items-center gap-1.5">
-            <PlusIcon className="h-4 w-4 text-muted-foreground" aria-hidden />
-            <label className="sr-only" htmlFor="add-scope-vendor">
-              Add a vendor to scope
-            </label>
-            <select
-              id="add-scope-vendor"
-              value={pending}
-              onChange={(e) => {
-                const v = e.target.value as VendorId;
-                if (v && !scope.includes(v)) onChange([...scope, v]);
-                setPending("");
-              }}
-              className="h-8 rounded-lg border border-border bg-background px-2 text-sm text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
-            >
-              <option value="">add vendor…</option>
-              {unselected.map((v) => (
-                <option key={v} value={v}>
-                  {VENDOR_LABELS[v]}
-                </option>
-              ))}
-            </select>
-          </div>
-        )}
-      </div>
-    </SurfaceSection>
+      </button>
+      {open && <div className="mt-3">{chips}</div>}
+    </div>
   );
 }
 
@@ -348,9 +362,6 @@ function DivergencePanel({
         <h2 className="text-lg font-semibold tracking-tight">
           Where vendors diverge
         </h2>
-        <span className="text-xs text-muted-foreground">
-          Selected vendors only
-        </span>
       </div>
       <p className="max-w-prose text-sm leading-relaxed text-foreground/90">
         {summary}
@@ -437,10 +448,6 @@ function VerdictPanel({
     <SurfaceSection className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
         <h2 className="text-lg font-semibold tracking-tight">Verdict</h2>
-        <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
-          <ScaleIcon className="h-3.5 w-3.5" aria-hidden />
-          in-scope, applicable vendors only
-        </span>
       </div>
 
       {!timingNoticeDismissed && totals.notAssessed > 0 && (

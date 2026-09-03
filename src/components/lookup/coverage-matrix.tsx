@@ -1,3 +1,6 @@
+import { useState } from "react";
+import { FileTextIcon } from "lucide-react";
+
 import { leadTimeProvenance } from "@/lib/lookup-verdict";
 import type { MatrixRow } from "@/lib/lookup-verdict";
 import type { VendorMarkState } from "@/lib/vendor-confirmation";
@@ -140,6 +143,60 @@ function relativeTime(iso: string): string {
   return `${days}d ago`;
 }
 
+/** Split a treatment into a short lead (first sentence) and the remainder.
+ * The lead is the scan summary; the rest lives behind the row expander. */
+function splitTreatment(text: string): { lead: string; rest: string } {
+  const trimmed = text.trim();
+  if (!trimmed) return { lead: "", rest: "" };
+  const match = /^(.*?[.!?])(?:\s+|$)/.exec(trimmed);
+  if (!match) return { lead: trimmed, rest: "" };
+  const lead = match[1]!.trim();
+  const rest = trimmed.slice(match[1]!.length).trim();
+  return { lead, rest };
+}
+
+/** Provenance, not prose: a muted secondary line, never read at rule weight. */
+function SourceRef({ source }: { source: string }) {
+  return (
+    <span className="mt-1.5 flex max-w-64 items-center gap-1 text-xs text-muted-foreground/80">
+      <FileTextIcon className="h-3 w-3 shrink-0" aria-hidden />
+      <span className="truncate" title={source}>
+        {source}
+      </span>
+    </span>
+  );
+}
+
+/** Progressive disclosure: lead sentence in the cell, full text behind an expander. */
+function ProgressiveTreatment({ text }: { text: string }) {
+  const [open, setOpen] = useState(false);
+  const { lead, rest } = splitTreatment(text);
+  if (!rest)
+    return (
+      <span className="block text-sm leading-relaxed text-foreground/90">
+        {lead}
+      </span>
+    );
+  return (
+    <span className="block">
+      <span className="text-sm leading-relaxed text-foreground/90">{lead}</span>
+      {open && (
+        <span className="mt-1.5 block text-sm leading-relaxed text-foreground/90">
+          {rest}
+        </span>
+      )}
+      <button
+        type="button"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+        className="mt-1 text-xs font-medium text-primary underline-offset-4 outline-none transition-colors hover:underline focus-visible:ring-2 focus-visible:ring-ring"
+      >
+        {open ? "Show less" : "Show full text"}
+      </button>
+    </span>
+  );
+}
+
 function TreatmentCell({ row }: { row: MatrixRow }) {
   if (!row.rulePresent)
     return (
@@ -153,21 +210,13 @@ function TreatmentCell({ row }: { row: MatrixRow }) {
       <span className="block text-sm text-muted-foreground">
         <span className="font-medium text-foreground">Silent</span> — this
         methodology does not state a treatment for this event.
-        {row.sourceRef && (
-          <span className="mt-1 block text-xs">{row.sourceRef}</span>
-        )}
+        {row.sourceRef && <SourceRef source={row.sourceRef} />}
       </span>
     );
   return (
     <span className="block">
-      <span className="text-sm leading-relaxed text-foreground/90">
-        {row.treatment}
-      </span>
-      {row.sourceRef && (
-        <span className="mt-1 block text-xs text-muted-foreground">
-          {row.sourceRef}
-        </span>
-      )}
+      <ProgressiveTreatment text={row.treatment!} />
+      {row.sourceRef && <SourceRef source={row.sourceRef} />}
     </span>
   );
 }
@@ -193,6 +242,14 @@ export function CoverageMatrix({
             Vendor coverage matrix with your checked vendor observations.
           </caption>
           <thead>
+            <colgroup>
+              <col className="w-24" />
+              <col className="w-36" />
+              <col className="w-28" />
+              <col className="w-28" />
+              <col className="w-40" />
+              <col />
+            </colgroup>
             <tr className="border-b border-border">
               {[
                 "Vendor",
@@ -233,7 +290,7 @@ export function CoverageMatrix({
                 <td className="py-3 pr-4">
                   <WindowCell row={row} />
                 </td>
-                <td className="py-3">
+                <td className="py-3 max-w-[28rem]">
                   <TreatmentCell row={row} />
                 </td>
               </tr>
