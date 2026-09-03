@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Offline issuer-relevance gate for the real 2026-09-03 AAPL search failure. */
+/** Offline issuer/evidence gate for the real 2026-09-03 AAPL search failure. */
 import assert from "node:assert/strict";
 import { issuerMatches, scoreNewsValidation } from "../src/lib/news-validation.ts";
 
@@ -18,14 +18,19 @@ const appleHospitality = dated(
   "https://example.com/apple-hospitality",
 );
 const appleDividend = dated(
-  "Apple Inc. (AAPL) declares $0.25 dividend",
+  "Apple Inc. (AAPL) Declares $0.25 Dividend, Ex-Date September 15",
   "Apple Inc. declared a quarterly cash dividend.",
   "https://example.com/apple-dividend",
 );
 const listicle = dated(
   "11 S&P 500 Dividend Stocks Going Ex-Dividend",
-  "A roundup of companies with dividends due this month.",
+  "This month AAPL, MSFT, and NVDA are among the companies going ex-dividend.",
   "https://example.com/dividend-listicle",
+);
+const appleCdr = dated(
+  "Apple CDR (CAD Hedged) To Go Ex-Dividend",
+  "AAPL exposure is available through this Canadian depositary receipt.",
+  "https://example.com/apple-cdr",
 );
 
 assert.equal(
@@ -40,19 +45,39 @@ assert.equal(
 );
 assert.equal(
   issuerMatches(listicle, issuer.ticker, issuer.companyName),
-  false,
-  "generic dividend listicle must not match Apple Inc",
+  true,
+  "a realistic listicle snippet mentioning AAPL survives issuer filtering",
 );
+
+const strongOnly = scoreNewsValidation({
+  exDate: new Date("2026-09-15T00:00:00Z"),
+  eventType: "cash-dividend",
+  results: [appleDividend],
+  ...issuer,
+});
+assert.equal(strongOnly.verdict, "confirmed", "Apple Inc. title is strong evidence");
+assert.doesNotMatch(strongOnly.sources[0].title, /^\[Weak evidence\]/);
+
+const weakOnly = scoreNewsValidation({
+  exDate: EX_DATE,
+  eventType: "cash-dividend",
+  results: [listicle, appleCdr],
+  ...issuer,
+});
+assert.equal(weakOnly.verdict, "unverified", "weak-only evidence cannot contradict");
+assert.equal(weakOnly.sources.length, 2, "weak sources remain visible to the reader");
+assert.match(weakOnly.sources[0].title, /^\[Weak evidence\]/, "listicle is weak");
+assert.match(weakOnly.sources[1].title, /^\[Weak evidence\]/, "CDR wrapper is weak");
+assert.match(weakOnly.reasoning, /0 strong, 2 weak/, "reasoning audits evidence strength");
 
 const rejectedOnly = scoreNewsValidation({
   exDate: EX_DATE,
   eventType: "cash-dividend",
-  results: [appleHospitality, listicle],
+  results: [appleHospitality],
   ...issuer,
 });
 assert.equal(rejectedOnly.verdict, "unverified", "no issuer evidence must be unverified");
-assert.notEqual(rejectedOnly.verdict, "contradicted", "wrong issuer can never contradict");
 assert.equal(rejectedOnly.sources.length, 0, "wrong-issuer sources must not be cited");
-assert.match(rejectedOnly.reasoning, /2 dropped for issuer mismatch/, "reasoning audits drops");
+assert.match(rejectedOnly.reasoning, /1 dropped for issuer mismatch/, "reasoning audits drops");
 
-console.log("OK — issuer relevance rejects unrelated AAPL dividend results");
+console.log("OK — issuer relevance and evidence strength protect AAPL validation");

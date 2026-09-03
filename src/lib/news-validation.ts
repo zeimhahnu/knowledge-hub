@@ -96,6 +96,14 @@ const NON_ISSUER_TITLE_WORDS = new Set([
   "announces", "announced", "declares", "declared", "dividend", "dividends",
   "earnings", "ex-dividend", "payment", "quarterly", "special", "stock",
 ]);
+// "Apple CDR (CAD Hedged)" is a wrapper for a different instrument, not Apple Inc.
+const DERIVATIVE_WRAPPER_RE = /\b(?:cdr|adr|gdr|etn|cfd|warrant|hedged)\b/i;
+// "11 S&P 500 Dividend Stocks..." is a multi-issuer roundup even if AAPL appears.
+const COUNTABLE_LIST_RE = /^\s*\d+\b[^.]*\b(?:stocks|companies)\b/i;
+// Several ticker tokens likewise indicate a roundup rather than issuer-specific evidence.
+const TICKER_TOKEN_RE = /\b[A-Z]{1,5}\b/g;
+
+type EvidenceStrength = "strong" | "weak";
 
 /** Whole UTC days since the Unix epoch, floored to the date's UTC day. */
 const utcDay = (d: Date): number => Math.floor(d.getTime() / MS_PER_DAY);
@@ -146,6 +154,28 @@ export function issuerMatches(
     CORPORATE_SUFFIXES.has(nextWord.toLowerCase()) ||
     NON_ISSUER_TITLE_WORDS.has(nextWord.toLowerCase()) ||
     nextWord === nextWord.toLowerCase();
+}
+
+/**
+ * Strong evidence needs issuer identity in the title, not just a snippet hit.
+ * Listicles such as "11 S&P 500 Dividend Stocks Going Ex-Dividend" can mention
+ * AAPL, while "Apple CDR (CAD Hedged)" is a different instrument. Both real
+ * 2026-09-03 false positives remain visible as weak sources but cannot decide.
+ */
+function evidenceStrength(
+  result: Pick<SearchResultItem, "title" | "content">,
+  ticker: string | undefined,
+  companyName: string | undefined,
+): EvidenceStrength {
+  if (!ticker) return "strong"; // Legacy pure checks have no issuer identity to classify.
+  const title = result.title ?? "";
+  const titleIssuerMatch = ticker
+    ? issuerMatches({ title, url: "" }, ticker, companyName)
+    : false;
+  const tickerTokens = new Set(`${title} ${result.content ?? ""}`.match(TICKER_TOKEN_RE) ?? []);
+  const isRoundup = tickerTokens.size > 1 || COUNTABLE_LIST_RE.test(title);
+  const isWrapper = DERIVATIVE_WRAPPER_RE.test(title);
+  return titleIssuerMatch && !isRoundup && !isWrapper ? "strong" : "weak";
 }
 
 /**
@@ -319,7 +349,11 @@ export function scoreNewsValidation(input: ScoreInput): ScoreResult {
   const windowEnd = new Date(input.exDate.getTime() + after * MS_PER_DAY);
 
   const seen = new Set<string>(); // first occurrence of a URL wins
-  const datedMatches: Array<{ source: NewsSource; contradicting: boolean }> = [];
+  const datedMatches: Array<{
+    source: NewsSource;
+    contradicting: boolean;
+    strength: EvidenceStrength;
+  }> = [];
   let issuerMatchesCount = 0;
   let issuerMismatches = 0;
 
@@ -343,20 +377,24 @@ export function scoreNewsValidation(input: ScoreInput): ScoreResult {
     const text = `${r.title ?? ""} ${r.content ?? ""}`.toLowerCase();
     if (!termsLower.some((t) => text.includes(t))) continue; // not about this event
 
+    const strength = evidenceStrength(r, input.ticker, input.companyName);
     const source: NewsSource = {
       url: r.url,
-      title: r.title ?? "",
+      title: strength === "weak" ? `[Weak evidence] ${r.title ?? ""}` : r.title ?? "",
       publishedAt: pub.toISOString().slice(0, 10),
       snippet: (r.content ?? "").slice(0, MAX_SNIPPET_CHARS),
     };
     datedMatches.push({
       source,
       contradicting: isContradiction(text, utcDay(pub), exDay, before),
+      strength,
     });
   }
 
-  const agreeing = datedMatches.filter((m) => !m.contradicting);
-  const contradicting = datedMatches.filter((m) => m.contradicting);
+  const strongMatches = datedMatches.filter((m) => m.strength === "strong");
+  const weakMatches = datedMatches.length - strongMatches.length;
+  const agreeing = strongMatches.filter((m) => !m.contradicting);
+  const contradicting = strongMatches.filter((m) => m.contradicting);
   const domains = new Set(agreeing.map((m) => normalizeDomain(m.source.url)));
 
   let verdict: NewsVerdict;
@@ -385,6 +423,8 @@ export function scoreNewsValidation(input: ScoreInput): ScoreResult {
     issuerMatchesCount,
     issuerMismatches,
     datedMatches.length,
+    strongMatches.length,
+    weakMatches,
     agreeing.length,
     contradicting.length,
     [...domains],
@@ -408,6 +448,8 @@ function buildReasoning(
   issuerMatchesCount: number,
   issuerMismatches: number,
   total: number,
+  strong: number,
+  weak: number,
   agreeing: number,
   contradicting: number,
   domains: string[],
@@ -417,7 +459,7 @@ function buildReasoning(
     `Search window ${window}; ${resultCount} result(s),`,
     `${issuerMatchesCount} matched issuer (${issuerMismatches} dropped for issuer mismatch);`,
     `${total} dated result(s) matched event terms (${terms.join(", ")}):`,
-    `${agreeing} agreeing, ${contradicting} contradicting.`,
+    `${strong} strong, ${weak} weak; ${agreeing} agreeing, ${contradicting} contradicting.`,
   ].join(" ");
   switch (verdict) {
     case "confirmed":
