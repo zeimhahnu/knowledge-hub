@@ -101,7 +101,7 @@ const APP_EVENT_IDS = [
   "bankruptcy",
 ] as const;
 
-interface StoredSettings {
+export interface SettingsDraft {
   schema: 1;
   /** Operator-typed per-vendor defaults. */
   vendorDefaults: Partial<Record<VendorId, number>>;
@@ -109,18 +109,18 @@ interface StoredSettings {
   overrides: Partial<Record<VendorId, Partial<Record<string, number>>>>;
 }
 
-const freshEmpty = (): StoredSettings => ({ schema: 1, vendorDefaults: {}, overrides: {} });
+export const freshSettingsDraft = (): SettingsDraft => ({ schema: 1, vendorDefaults: {}, overrides: {} });
 
 /** Read + sanitize. Corrupt JSON, wrong shape, or no store => virgin state. */
-function readSettings(storage?: SettingsStorage): StoredSettings {
+function readSettings(storage?: SettingsStorage): SettingsDraft {
   const store = resolveStorage(storage);
-  if (!store) return freshEmpty();
+  if (!store) return freshSettingsDraft();
   try {
     const raw = store.getItem(STORAGE_KEY);
-    if (!raw) return freshEmpty();
+    if (!raw) return freshSettingsDraft();
     return sanitize(JSON.parse(raw));
   } catch {
-    return freshEmpty();
+    return freshSettingsDraft();
   }
 }
 
@@ -164,20 +164,26 @@ function resolveStorage(storage?: SettingsStorage): SettingsStorage | null {
   return null;
 }
 
-function writeSettings(settings: StoredSettings, storage?: SettingsStorage): void {
+/** Write a complete draft and report the actual browser-storage outcome. */
+export function writeSettingsDraft(settings: SettingsDraft, storage?: SettingsStorage): boolean {
   const store = resolveStorage(storage);
-  if (!store) return; // no persistence available — settings just don't stick
+  if (!store) return false;
   try {
     store.setItem(STORAGE_KEY, JSON.stringify(settings));
+    return true;
   } catch {
-    // Storage full / blocked — same outcome, never surface an error.
+    return false;
   }
 }
 
-/** Rebuild a StoredSettings from untrusted parsed JSON: unknown vendors /
+function writeSettings(settings: SettingsDraft, storage?: SettingsStorage): void {
+  void writeSettingsDraft(settings, storage);
+}
+
+/** Rebuild a SettingsDraft from untrusted parsed JSON: unknown vendors /
  * events are dropped, non-finite or negative values are dropped. */
-function sanitize(raw: unknown): StoredSettings {
-  const out: StoredSettings = { schema: 1, vendorDefaults: {}, overrides: {} };
+function sanitize(raw: unknown): SettingsDraft {
+  const out: SettingsDraft = { schema: 1, vendorDefaults: {}, overrides: {} };
   if (typeof raw !== "object" || raw === null) return out;
   const src = raw as { vendorDefaults?: unknown; overrides?: unknown };
 
@@ -214,6 +220,71 @@ function statedLeadDays(vendor: VendorId, eventType: string): number | null {
     }
   }
   return DOCUMENTED_VENDOR_DEFAULTS[vendor] ?? null;
+}
+
+// ─── Draft/save API (settings page) ─────────────────────────────────────────
+
+/** Read the operator layer once after client hydration, ready for editing. */
+export function getSettingsDraft(storage?: SettingsStorage): SettingsDraft {
+  return readSettings(storage);
+}
+
+const sameRecord = (
+  a: Partial<Record<string, number>> | undefined,
+  b: Partial<Record<string, number>> | undefined,
+) => {
+  const aEntries = Object.entries(a ?? {});
+  const bEntries = Object.entries(b ?? {});
+  return aEntries.length === bEntries.length && aEntries.every(([key, value]) => b?.[key] === value);
+};
+
+/** Pure comparison: does the editable draft differ from the last stored value? */
+export function isSettingsDraftDirty(draft: SettingsDraft, stored: SettingsDraft): boolean {
+  return !sameRecord(draft.vendorDefaults, stored.vendorDefaults) ||
+    APP_VENDOR_IDS.some((vendor) => !sameRecord(draft.overrides[vendor], stored.overrides[vendor]));
+}
+
+export type SettingsSaveStatus = "idle" | "saved" | "failed";
+export interface SettingsSaveState {
+  stored: SettingsDraft;
+  draft: SettingsDraft;
+  status: SettingsSaveStatus;
+}
+export type SettingsSaveAction =
+  | { type: "save-success" }
+  | { type: "save-failure" }
+  | { type: "discard" }
+  | { type: "edit"; draft: SettingsDraft };
+
+/** Pure save reducer: effects write first; this records only the verified result. */
+export function reduceSettingsSave(state: SettingsSaveState, action: SettingsSaveAction): SettingsSaveState {
+  switch (action.type) {
+    case "save-success":
+      return { stored: state.draft, draft: state.draft, status: "saved" };
+    case "save-failure":
+      return { ...state, status: "failed" };
+    case "discard":
+      return { stored: state.stored, draft: state.stored, status: "idle" };
+    case "edit":
+      return { ...state, draft: action.draft, status: "idle" };
+  }
+}
+
+export function getVendorLeadDaysFromDraft(vendor: VendorId, draft: SettingsDraft): LeadTimeValue {
+  const userDefault = draft.vendorDefaults[vendor];
+  if (userDefault !== undefined) return { value: userDefault, source: "user-set" };
+  const documented = DOCUMENTED_VENDOR_DEFAULTS[vendor];
+  return documented !== undefined ? { value: documented, source: "stated" } : { value: null, source: "unset" };
+}
+
+export function getEventOverridesFromDraft(vendor: VendorId, draft: SettingsDraft): Array<{ eventType: string; days: number }> {
+  const per = draft.overrides[vendor];
+  if (!per) return [];
+  return APP_EVENT_IDS.flatMap((event) => per[event] !== undefined ? [{ eventType: event, days: per[event]! }] : []);
+}
+
+export function hasUserSettingsInDraft(vendor: VendorId, draft: SettingsDraft): boolean {
+  return draft.vendorDefaults[vendor] !== undefined || Object.keys(draft.overrides[vendor] ?? {}).length > 0;
 }
 
 // ─── Public API ────────────────────────────────────────────────────────────
