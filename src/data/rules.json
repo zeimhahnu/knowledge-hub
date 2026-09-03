@@ -364,19 +364,52 @@
       "vendor": "ftse",
       "event_type": "cash-dividend",
       "caev": "DVOP",
-      "index_type": "*",
-      "treatment": "Ordinary (regular) cash dividends are reinvested across the index on the ex date and impact only the total return; there is no price adjustment and no PAF, and the Price Return index is unchanged. Cash (and scrip) dividends with a cash option are treated the same as ordinary cash, except Spanish scrip dividends, which follow the scrip-issue treatment (§4.7). Where a dividend is retracted or corrected, a corrective negative adjustment is applied with T+1 notice; a dividend undetermined on the XD date uses the same-period prior-year amount, or zero if none was paid.",
+      "index_type": "price-return",
+      "treatment": "Ordinary cash dividends have no price adjustment or PAF; the Price Return index is unchanged. Cash (and scrip) dividends with a cash option are treated the same as ordinary cash, except Spanish scrip dividends, which follow the scrip-issue treatment (§4.7).",
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
-      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.3 (Unknown and optional ordinary dividends and corrections)",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends); §4.3 (Unknown and optional ordinary dividends and corrections); §4.8.1 (Cash dividends table)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "cash-dividend",
+      "caev": "DVOP",
+      "index_type": "total-return",
+      "treatment": "Ordinary cash dividends are reinvested across the index on the ex date and affect the Total Return index. Cash (and scrip) dividends with a cash option are treated the same as ordinary cash, except Spanish scrip dividends, which follow the scrip-issue treatment (§4.7). Where a dividend is retracted or corrected, a corrective negative adjustment is applied with T+1 notice; an undetermined dividend uses the same-period prior-year amount, or zero if none was paid.",
+      "lead_days": 5,
+      "lead_days_confidence": "practitioner",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends); §4.3 (Unknown and optional ordinary dividends and corrections); §4.8.1 (Cash dividends table)",
       "confidence": "stated"
     },
     {
       "vendor": "ftse",
       "event_type": "special-dividend",
       "caev": "DVOP",
-      "index_type": "*",
-      "treatment": "Classified by description, not by amount: a dividend is special if the distributing company describes it as such, in which case the stock price is adjusted to deduct the dividend amount before the open on the ex date and it is excluded from the total return calculation. A recurring special dividend paid on more than three consecutive non-extraordinary occasions is reclassified as ordinary on the fourth. Where the special dividend is ≥10% of the share price (cum price) with withholding-tax implications, a compensating negative XD adjustment is applied to net-of-tax indices only. No numerical special-vs-ordinary threshold is used for classification.",
+      "index_type": "price-return",
+      "treatment": "Special cash dividends are classified by the company description, not by amount, and the stock price is adjusted to deduct the dividend amount before the open on the ex date. A recurring special dividend paid on more than three consecutive non-extraordinary occasions is reclassified as ordinary on the fourth.",
+      "lead_days": 5,
+      "lead_days_confidence": "practitioner",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.4 (Special dividends – tax adjustments)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "special-dividend",
+      "caev": "DVOP",
+      "index_type": "total-return",
+      "treatment": "Special cash dividends are excluded from the Total Return index calculation. They are classified by the company description, not by amount; a recurring special dividend paid on more than three consecutive non-extraordinary occasions is reclassified as ordinary on the fourth.",
+      "lead_days": 5,
+      "lead_days_confidence": "practitioner",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.4 (Special dividends – tax adjustments)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "special-dividend",
+      "caev": "DVOP",
+      "index_type": "net-total-return",
+      "treatment": "Special cash dividends are excluded from the return calculation; where the distribution is at least 10% of cum price and has withholding-tax implications, FTSE Russell applies a compensating negative XD adjustment to net-of-tax indices only. Classification is by company description, not amount.",
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.4 (Special dividends – tax adjustments)",
@@ -431,10 +464,27 @@
       "event_type": "rights-issue",
       "caev": "RHDI",
       "index_type": "*",
-      "treatment": "Only in-the-money rights (subscription price below market) are recognised: a price adjustment factor (theoretical ex-rights price ÷ cum-rights price) and share increase are applied before the open on the ex date. Out-of-the-money rights get no adjustment. Terms greater than 10-for-1 are ‘highly dilutive’ and use temporary rights and subscription-cash (dummy) lines until the subscription period ends; where the subscription price is unknown on the ex date an estimated value is used, or no adjustment if it cannot be estimated.",
+      "conditions": {
+        "rights_moneyness": "in-the-money"
+      },
+      "treatment": "Only in-the-money rights (subscription price below market) are recognised: a price adjustment factor (theoretical ex-rights price ÷ cum-rights price) and share increase are applied before the open on the ex date. Terms greater than 10-for-1 are ‘highly dilutive’ and use temporary rights and subscription-cash lines until the subscription period ends; this separate dilution-ratio branch is not representable by the current conditions vocabulary. Where the subscription price is unknown on the ex date an estimated value is used, or no adjustment if it cannot be estimated.",
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
-      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.9 (Rights issues/entitlement offers)",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.9 (Rights issues/entitlement offers); §4.9.3 (Highly dilutive rights issues); §4.9.9 (Rights issue summary)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "rights-issue",
+      "caev": "RHDI",
+      "index_type": "*",
+      "conditions": {
+        "rights_moneyness": "out-of-the-money"
+      },
+      "treatment": "Rights with a subscription price equal to or above the market price are not adjusted or increased on the ex date; any additional shares are reviewed for inclusion at the next quarterly review.",
+      "lead_days": 5,
+      "lead_days_confidence": "practitioner",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.9 (Rights issues/entitlement offers); §4.9.9 (Rights issue summary)",
       "confidence": "stated"
     },
     {
@@ -463,11 +513,22 @@
       "vendor": "ftse",
       "event_type": "return-of-capital",
       "caev": "REDU",
-      "index_type": "*",
-      "treatment": "Capital repayments are generally applied with a price adjustment (a capital-repayment PAF of (price − repayment) ÷ price) unless company policy reports regular dividends this way (common in Switzerland), in which case it is treated as an ordinary cash dividend.",
+      "index_type": "price-return",
+      "treatment": "Capital repayments are generally applied with a price adjustment (capital-repayment PAF = (price − repayment) ÷ price), unless company policy reports regular dividends this way (common in Switzerland), in which case it is treated as an ordinary cash dividend.",
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
-      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.4 (Special dividends – tax adjustments)",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.8.1 (Capital repayment table)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "return-of-capital",
+      "caev": "REDU",
+      "index_type": "total-return",
+      "treatment": "Capital repayments are not included in the Total Return index calculation; they generally receive a capital-repayment price adjustment unless company policy reports regular dividends this way (common in Switzerland), in which case they are treated as ordinary cash dividends.",
+      "lead_days": 5,
+      "lead_days_confidence": "practitioner",
+      "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.8.1 (Capital repayment table)",
       "confidence": "stated"
     },
     {
