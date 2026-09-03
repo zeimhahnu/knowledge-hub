@@ -38,7 +38,7 @@ export function buildLookupUrl(ticker: string, eventType: string, exDate: string
     return null;
   }
 
-  return `/lookup/${encodeURIComponent(normalizedTicker)}?eventType=${encodeURIComponent(normalizedEventType)}&exDate=${encodeURIComponent(normalizedExDate)}`;
+  return `/lookup/${encodeURIComponent(normalizedTicker)}/?eventType=${encodeURIComponent(normalizedEventType)}&exDate=${encodeURIComponent(normalizedExDate)}`;
 }
 
 function validationMessage(ticker: string, eventType: string, exDate: string): string | null {
@@ -189,7 +189,7 @@ export default function Home() {
             </p>
           </Link>
           <Link
-            href="/upload"
+            href="/upload/"
             className="rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/50 hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             <h2 className="text-lg font-semibold">Screen a methodology</h2>

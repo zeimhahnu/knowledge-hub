@@ -1,18 +1,15 @@
-import Link from "next/link";
-
 import type { MatrixRow } from "@/lib/lookup-verdict";
 import { leadTimeProvenance } from "@/lib/lookup-verdict";
 import type { VendorId } from "@/lib/vendors";
 
 /**
  * Coverage matrix (§7a-i + §7a-ii) — one row per IN-SCOPE vendor, columns
- * Vendor / Coverage / Publication window / Treatment. Presentational only:
+ * Vendor / Data coverage / Timing / Publication window / Treatment. Presentational only:
  * rows come pre-computed from `computeLookupVerdict`; the five states render
  * distinctly with the design system's semantic tokens.
  *
  * The two rules that carry the whole point of the tool:
- *  - a not-assessed vendor (no lead time set) shows a "set it" affordance
- *    and NO verdict;
+ *  - a not-assessed vendor (no lead time set) shows no timing verdict;
  *  - a not-applicable vendor is visibly de-emphasised and is NEVER counted
  *    in the verdict totals (that exclusion happens in the verdict helper).
  */
@@ -27,15 +24,30 @@ const STATE_META: Record<MatrixRow["state"], { label: string; chip: string }> = 
     chip: "border-chart-4/40 bg-chart-4/10 text-chart-4",
   },
   missing: {
-    label: "Missing",
+    label: "Too late",
     chip: "border-destructive/40 bg-destructive/10 text-destructive",
   },
   "not-assessed": {
-    label: "Not assessed",
+    label: "Lead time not configured",
     chip: "border-chart-2/50 bg-chart-2/10 text-chart-2",
   },
   "not-applicable": {
     label: "Not applicable",
+    chip: "border-border bg-muted/30 text-muted-foreground",
+  },
+};
+
+const DATA_COVERAGE_META: Record<MatrixRow["dataCoverage"], { label: string; chip: string }> = {
+  "states-treatment": {
+    label: "States a treatment",
+    chip: "border-chart-3/40 bg-chart-3/10 text-chart-3",
+  },
+  silent: {
+    label: "Silent",
+    chip: "border-chart-4/40 bg-chart-4/10 text-chart-4",
+  },
+  "not-covered": {
+    label: "Not covered",
     chip: "border-border bg-muted/30 text-muted-foreground",
   },
 };
@@ -90,23 +102,21 @@ function WindowCell({ row }: { row: MatrixRow }) {
   );
 }
 
-function SetItAffordance({ vendor }: { vendor: VendorId }) {
+function DataCoverageCell({ row }: { row: MatrixRow }) {
+  const meta = DATA_COVERAGE_META[row.dataCoverage];
   return (
-    <Link
-      href="/settings/"
-      aria-label={`Set ${vendor === "sp" ? "S&P DJI" : vendor[0]!.toUpperCase() + vendor.slice(1)} lead time in Coverage settings`}
-      className="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-xs font-medium text-primary underline-offset-4 outline-none transition-colors hover:bg-primary/10 hover:underline focus-visible:ring-2 focus-visible:ring-ring"
+    <span
+      className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${meta.chip}`}
     >
-      set it
-    </Link>
+      {meta.label}
+    </span>
   );
 }
 
-function CoverageCell({ row }: { row: MatrixRow }) {
+function TimingCell({ row }: { row: MatrixRow }) {
   return (
     <span className="flex flex-wrap items-center gap-2">
       <StateBadge state={row.state} />
-      {row.state === "not-assessed" && <SetItAffordance vendor={row.vendor} />}
       {row.state === "not-applicable" && (
         <span className="text-xs text-muted-foreground/70">uninvolved</span>
       )}
@@ -157,8 +167,8 @@ export function CoverageMatrix({ rows }: { rows: MatrixRow[] }) {
       <div className="hidden overflow-x-auto md:block">
         <table className="w-full border-collapse text-left">
           <caption className="sr-only">
-            Vendor coverage matrix — one row per in-scope vendor: coverage
-            state, publication window with its source, and treatment rule.
+            Vendor coverage matrix — data coverage, timing, publication window,
+            and treatment rule for every in-scope vendor.
           </caption>
           <thead>
             <tr className="border-b border-border">
@@ -166,7 +176,10 @@ export function CoverageMatrix({ rows }: { rows: MatrixRow[] }) {
                 Vendor
               </th>
               <th scope="col" className="pb-3 pr-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                Coverage
+                Data coverage
+              </th>
+              <th scope="col" className="pb-3 pr-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Timing (lead time)
               </th>
               <th scope="col" className="pb-3 pr-4 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 Publication window
@@ -195,7 +208,10 @@ export function CoverageMatrix({ rows }: { rows: MatrixRow[] }) {
                   )}
                 </td>
                 <td className="py-3 pr-4">
-                  <CoverageCell row={row} />
+                  <DataCoverageCell row={row} />
+                </td>
+                <td className="py-3 pr-4">
+                  <TimingCell row={row} />
                 </td>
                 <td className="py-3 pr-4">
                   <WindowCell row={row} />
@@ -229,8 +245,8 @@ export function CoverageMatrix({ rows }: { rows: MatrixRow[] }) {
               )}
             </div>
             <div className="mt-2 flex flex-wrap items-center gap-2">
-              <StateBadge state={row.state} />
-              {row.state === "not-assessed" && <SetItAffordance vendor={row.vendor} />}
+              <DataCoverageCell row={row} />
+              <TimingCell row={row} />
             </div>
             <div className="mt-2 flex flex-wrap items-center gap-2">
               {row.applicable && row.leadDays !== null && (

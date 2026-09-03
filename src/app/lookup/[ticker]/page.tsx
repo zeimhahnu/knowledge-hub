@@ -1,7 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowLeftIcon } from "lucide-react";
-
 import { LookupView } from "@/components/lookup/lookup-view";
 import { canonicalEventById } from "@/lib/event-taxonomy";
 
@@ -50,13 +47,6 @@ function MissingParams({ title, body }: { title: string; body: string }) {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-4xl px-6 py-16">
-        <Link
-          href="/"
-          className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-        >
-          <ArrowLeftIcon className="h-4 w-4" aria-hidden />
-          Back to hub
-        </Link>
         <div className="rounded-[2rem] border border-border bg-card/60 p-8 shadow-sm">
           <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
           <p className="mt-2 max-w-prose text-sm leading-relaxed text-muted-foreground">

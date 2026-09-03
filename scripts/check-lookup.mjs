@@ -74,14 +74,14 @@ ok("event applicability: rules.json rows + documented no-coverage (VettaFi right
 
 // ─── Scope persistence ──────────────────────────────────────────────────────
 const scopeStore = makeFakeStorage();
-assert.equal(getScopeVendors(scopeStore).length, 7, "virgin scope defaults to every vendor");
+assert.equal(getScopeVendors(scopeStore).length, 6, "virgin scope defaults to sourced vendors");
 setScopeVendors(["msci", "ftse"], scopeStore);
 assert.deepEqual(getScopeVendors(scopeStore), ["msci", "ftse"]);
 setScopeVendors(["solactive", "bogus", "msci", "msci"], scopeStore);
 assert.deepEqual(getScopeVendors(scopeStore), ["solactive", "msci"], "unknown ids dropped, dupes deduped");
 scopeStore.setItem("ca-hub.vendor-scope.v1", "{corrupt json");
-assert.equal(getScopeVendors(scopeStore).length, 7, "corrupt scope store falls back to the default");
-ok("vendor scope: default = all, persisted subset, unknown ids dropped, corrupt store safe")
+assert.equal(getScopeVendors(scopeStore).length, 6, "corrupt scope store falls back to the default");
+ok("vendor scope: default = sourced vendors, persisted subset, unknown ids dropped, corrupt store safe")
 
 // ─── Rule 1: not-applicable excluded from ALL totals ────────────────────────
 // VettaFi does not cover rights issues. Scope msci + ftse + vettafi; ex-date
@@ -95,6 +95,9 @@ const mixed = computeLookupVerdict({
   scope: ["msci", "ftse", "vettafi"],
 });
 assert.deepEqual(mixed.totals, {
+  dataStatesTreatment: 2,
+  dataSilent: 0,
+  dataNotCovered: 1,
   applicable: 2,
   assessed: 1,
   covered: 0,
@@ -122,7 +125,7 @@ assert.equal(unaGraded.totals.missing, 0);
 assert.equal(unaGraded.totals.covered, 0);
 assert.equal(unaGraded.totals.assessed, 0);
 assert.equal(unaGraded.empty, true, "nothing graded → honest empty, never '0 missing'");
-assert.ok(verdictSummary(unaGraded.totals, unaGraded.empty).includes("No verdicts yet"));
+assert.ok(verdictSummary(unaGraded.totals).includes("Timing: 1 has no lead time configured"));
 assert.ok(!verdictSummary(unaGraded.totals, unaGraded.empty).includes("0 missing"));
 ok("not-assessed: excluded from covered/missing, reported separately, empty verdict")
 
@@ -138,10 +141,10 @@ assert.equal(allNa.totals.applicable, 0);
 assert.equal(allNa.totals.notApplicable, 1);
 assert.equal(allNa.totals.missing, 0);
 assert.equal(allNa.empty, true);
-const naSummary = verdictSummary(allNa.totals, allNa.empty);
-assert.ok(naSummary.includes("Nothing to grade"));
-assert.ok(!naSummary.includes("0"), "an all-not-applicable scope never renders a zero total");
-ok("all-not-applicable scope: empty verdict says 'Nothing to grade', not '0 missing'")
+const naSummary = verdictSummary(allNa.totals);
+assert.ok(naSummary.includes("0 of 1 vendors state a position"));
+assert.ok(!naSummary.includes("missing"), "an all-not-applicable scope never renders a timing gap");
+ok("all-not-applicable scope: data coverage remains separate from timing")
 
 // Empty scope entirely — same honest empty.
 const none = computeLookupVerdict({
@@ -153,8 +156,8 @@ const none = computeLookupVerdict({
 });
 assert.equal(none.totals.applicable, 0);
 assert.equal(none.empty, true);
-assert.ok(verdictSummary(none.totals, none.empty).includes("Nothing to grade"));
-ok("empty scope: 'Nothing to grade' — no vendors in scope at all")
+assert.ok(verdictSummary(none.totals).includes("0 of 0 vendors state a position"));
+ok("empty scope: data coverage summary remains explicit")
 
 // ─── Timing semantics through the REAL coverage engine ─────────────────────
 // FTSE's stated 5-day lead: 10 days out = not-yet-due; 2 days out = missing.
@@ -257,9 +260,9 @@ assert.equal(covered.totals.missing, 0);
 ok("feed-present injection grades 'covered' — the counting already supports it")
 
 // Verdict summary composes real numbers (non-empty).
-const summary = verdictSummary(mixed.totals, mixed.empty);
-assert.ok(summary.includes("1 of 2 in-scope vendors assessed"));
-assert.ok(summary.includes("1 missing"));
+const summary = verdictSummary(mixed.totals);
+assert.ok(summary.includes("2 of 3 vendors state a position"));
+assert.ok(summary.includes("1 has no lead time configured"));
 ok(`verdict summary composes totals: "${summary}"`)
 
 console.log(`\nOK — ${n} lookup-verdict assertions pass (§7a-ii)`);

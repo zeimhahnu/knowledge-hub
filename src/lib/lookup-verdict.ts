@@ -212,9 +212,24 @@ export function setScopeVendors(vendors: readonly VendorId[], storage?: Settings
 // ─── Verdict computation ────────────────────────────────────────────────────
 
 export type MatrixState = CoverageState | "not-assessed" | "not-applicable";
+export type DataCoverage = "states-treatment" | "silent" | "not-covered";
+
+/**
+ * Data coverage is a corpus fact, never a timing verdict. It deliberately
+ * reads only rules.json: settings and the current date cannot change it.
+ */
+export function dataCoverageFor(vendor: string, eventType: string): DataCoverage {
+  const rule = rules.rules.find((row) => row.vendor === vendor && row.event_type === eventType);
+  if (!rule) return "not-covered";
+  return rule.treatment !== null && rule.confidence !== "absent"
+    ? "states-treatment"
+    : "silent";
+}
 
 export interface MatrixRow {
   vendor: VendorId;
+  /** Corpus fact: treatment stated, methodology silent, or no sourced row. */
+  dataCoverage: DataCoverage;
   state: MatrixState;
   /** false ⇒ not-applicable: uninvolved, never counted, visibly de-emphasised. */
   applicable: boolean;
@@ -235,6 +250,10 @@ export interface MatrixRow {
 }
 
 export interface VerdictTotals {
+  /** Data coverage is independent of settings and timing. */
+  dataStatesTreatment: number;
+  dataSilent: number;
+  dataNotCovered: number;
   /** In-scope vendors that apply to this security + event type. */
   applicable: number;
   /** Applicable vendors with a drawn verdict (covered + missing + not-yet-due). */
@@ -286,10 +305,12 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
     const sourceRef = rule?.source_ref ?? null;
     const rulePresent = rule !== undefined;
     const treatmentStated = treatment !== null && rule?.confidence !== "absent";
+    const dataCoverage = dataCoverageFor(vendor, eventType);
 
     if (!applicable) {
       return {
         vendor,
+        dataCoverage,
         state: "not-applicable",
         applicable: false,
         assessed: false,
@@ -307,6 +328,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
       // §11c: no number, no source, no verdict. Never feed null to coverageState.
       return {
         vendor,
+        dataCoverage,
         state: "not-assessed",
         applicable: true,
         assessed: false,
@@ -327,6 +349,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
     });
     return {
       vendor,
+      dataCoverage,
       state,
       applicable: true,
       assessed: true,
@@ -340,6 +363,9 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
   });
 
   const totals: VerdictTotals = {
+    dataStatesTreatment: 0,
+    dataSilent: 0,
+    dataNotCovered: 0,
     applicable: 0,
     assessed: 0,
     covered: 0,
@@ -349,6 +375,10 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
     notApplicable: 0,
   };
   for (const row of rows) {
+    if (row.dataCoverage === "states-treatment") totals.dataStatesTreatment += 1;
+    else if (row.dataCoverage === "silent") totals.dataSilent += 1;
+    else totals.dataNotCovered += 1;
+
     if (!row.applicable) {
       totals.notApplicable += 1;
       continue; // uninvolved — never counted anywhere else
@@ -367,21 +397,20 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
   return { rows, totals, empty: totals.assessed === 0 };
 }
 
-/** One-sentence verdict for the panel. `empty` must render as an honest
- * "nothing to grade", never as a zero-filled summary. */
-export function verdictSummary(totals: VerdictTotals, empty: boolean): string {
-  if (empty) {
-    if (totals.applicable === 0) {
-      return "Nothing to grade — no vendor in scope covers this security or event type.";
-    }
-    return "No verdicts yet — no coverage period is set for an in-scope vendor. Set one in Coverage settings.";
-  }
-  const parts: string[] = [];
-  if (totals.covered > 0) parts.push(`${totals.covered} covered`);
-  if (totals.missing > 0) parts.push(`${totals.missing} missing`);
-  if (totals.notYetDue > 0) parts.push(`${totals.notYetDue} not-yet-due`);
-  const base = `${totals.assessed} of ${totals.applicable} in-scope vendors assessed`;
-  return parts.length > 0 ? `${base}: ${parts.join(" · ")}.` : `${base}.`;
+/** Data coverage leads; timing is explicitly reported as a separate fact. */
+export function verdictSummary(totals: VerdictTotals): string {
+  const scoped = totals.dataStatesTreatment + totals.dataSilent + totals.dataNotCovered;
+  const position = totals.dataStatesTreatment + totals.dataSilent;
+  const coverage =
+    `${position} of ${scoped} vendors state a position: ` +
+    `${totals.dataStatesTreatment} with a rule, ${totals.dataSilent} silent`;
+  const timing =
+    totals.notAssessed > 0
+      ? `${totals.notAssessed} ${totals.notAssessed === 1 ? "has" : "have"} no lead time configured`
+      : totals.assessed > 0
+        ? `${totals.assessed} timing verdict${totals.assessed === 1 ? "" : "s"} assessed`
+        : "timing is unassessed";
+  return `${coverage}. Timing: ${timing}.`;
 }
 
 /** Provenance copy for the publication-window cell (D3) — a user-typed

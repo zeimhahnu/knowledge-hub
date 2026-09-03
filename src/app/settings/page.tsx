@@ -1,10 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useReducer, useState } from "react";
-import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
-  ArrowLeftIcon,
   ChevronDownIcon,
   PlusIcon,
   RotateCcwIcon,
@@ -362,13 +360,6 @@ export default function SettingsPage() {
     <main className="min-h-screen bg-background text-foreground">
       <div className="border-b border-border bg-card/30">
         <div className="mx-auto max-w-4xl px-6 py-8">
-          <Link
-            href="/"
-            className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <ArrowLeftIcon className="h-4 w-4" aria-hidden />
-            Back to hub
-          </Link>
           <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-3 py-1 text-xs font-medium text-muted-foreground">
             <Settings2Icon className="h-3.5 w-3.5 text-primary" aria-hidden />
             Coverage settings

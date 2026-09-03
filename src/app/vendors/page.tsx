@@ -783,11 +783,11 @@ export default function VendorDashboard() {
 
             {/* Desktop nav */}
             <div className="hidden sm:flex flex-wrap items-center gap-3">
-              <Link href="/vendors/iso-taxonomy" className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent transition-colors">
+              <Link href="/vendors/iso-taxonomy/" className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent transition-colors">
                 <NetworkIcon className="h-3.5 w-3.5" />
                 ISO CAEV Taxonomy
               </Link>
-              <Link href="/vendors/event-extraction" className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent transition-colors">
+              <Link href="/vendors/event-extraction/" className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent transition-colors">
                 <FileTextIcon className="h-3.5 w-3.5" />
                 Event Parameters
               </Link>
@@ -806,10 +806,10 @@ export default function VendorDashboard() {
 
             {/* Mobile nav: icon-only compact */}
             <div className="flex sm:hidden items-center gap-2">
-              <Link href="/vendors/iso-taxonomy" className="rounded-lg border border-border bg-card p-2 hover:bg-accent transition-colors" aria-label="ISO CAEV Taxonomy">
+              <Link href="/vendors/iso-taxonomy/" className="rounded-lg border border-border bg-card p-2 hover:bg-accent transition-colors" aria-label="ISO CAEV Taxonomy">
                 <NetworkIcon className="h-4 w-4" />
               </Link>
-              <Link href="/vendors/event-extraction" className="rounded-lg border border-border bg-card p-2 hover:bg-accent transition-colors" aria-label="Event Parameters">
+              <Link href="/vendors/event-extraction/" className="rounded-lg border border-border bg-card p-2 hover:bg-accent transition-colors" aria-label="Event Parameters">
                 <FileTextIcon className="h-4 w-4" />
               </Link>
               <button

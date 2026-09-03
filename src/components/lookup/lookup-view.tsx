@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import {
   AlertTriangleIcon,
-  ArrowLeftIcon,
   CalendarDaysIcon,
   CheckCircle2Icon,
   ClockIcon,
@@ -13,7 +12,6 @@ import {
   NewspaperIcon,
   PlusIcon,
   ScaleIcon,
-  Settings2Icon,
   XIcon,
 } from "lucide-react";
 
@@ -355,17 +353,20 @@ function DivergencePanel({ result, leadTimes }: { result: DivergenceResult; lead
 // ─── Verdict panel ──────────────────────────────────────────────────────────
 
 const TOTAL_CHIPS: Array<{
-  key: "covered" | "missing" | "notYetDue" | "notAssessed";
+  key: "covered" | "missing" | "notYetDue";
   label: string;
   cls: string;
 }> = [
   { key: "covered", label: "covered", cls: "border-chart-3/40 bg-chart-3/10 text-chart-3" },
   { key: "missing", label: "missing", cls: "border-destructive/40 bg-destructive/10 text-destructive" },
   { key: "notYetDue", label: "not-yet-due", cls: "border-chart-4/40 bg-chart-4/10 text-chart-4" },
-  { key: "notAssessed", label: "not assessed", cls: "border-chart-2/50 bg-chart-2/10 text-chart-2" },
 ];
 
-function VerdictPanel({ verdict }: { verdict: LookupVerdict }) {
+function VerdictPanel({ verdict, timingNoticeDismissed, onDismissTimingNotice }: {
+  verdict: LookupVerdict;
+  timingNoticeDismissed: boolean;
+  onDismissTimingNotice: () => void;
+}) {
   const { totals } = verdict;
 
   return (
@@ -378,26 +379,46 @@ function VerdictPanel({ verdict }: { verdict: LookupVerdict }) {
         </span>
       </div>
 
-      {verdict.empty ? (
-        <div className="rounded-xl border border-dashed border-border bg-muted/30 px-4 py-4">
-          <p className="text-sm font-medium text-foreground">{verdictSummary(totals, true)}</p>
-          {totals.applicable > 0 && (
-            <Link
-              href="/settings"
-              className="mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-primary underline-offset-4 hover:underline"
-            >
-              <Settings2Icon className="h-4 w-4" aria-hidden />
+      {!timingNoticeDismissed && totals.notAssessed > 0 && (
+        <div className="flex flex-wrap items-start justify-between gap-3 rounded-xl border border-chart-2/50 bg-chart-2/10 px-4 py-3 text-sm text-foreground">
+          <p className="max-w-prose leading-relaxed">
+            {totals.notAssessed} lead time{totals.notAssessed === 1 ? " is" : "s are"} not
+            configured yet, so timing is unassessed for those vendors. Set them in{" "}
+            <Link href="/settings/" className="font-medium text-primary underline-offset-4 hover:underline">
               Coverage settings
             </Link>
-          )}
+            .
+          </p>
+          <button
+            type="button"
+            onClick={onDismissTimingNotice}
+            className="rounded-md px-2 py-1 text-xs font-medium text-muted-foreground outline-none transition-colors hover:bg-background/60 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            Dismiss
+          </button>
         </div>
-      ) : (
-        <p className="max-w-prose text-sm leading-relaxed text-foreground/90">
-          {verdictSummary(totals, false)}
-        </p>
       )}
 
+      <p className="max-w-prose text-sm leading-relaxed text-foreground/90">
+        {verdictSummary(totals)}
+      </p>
+
       <div className="flex flex-wrap gap-2">
+        {totals.dataStatesTreatment > 0 && (
+          <span className="inline-flex items-center rounded-full border border-chart-3/40 bg-chart-3/10 px-2.5 py-0.5 text-xs font-medium text-chart-3">
+            {totals.dataStatesTreatment} states a treatment
+          </span>
+        )}
+        {totals.dataSilent > 0 && (
+          <span className="inline-flex items-center rounded-full border border-chart-4/40 bg-chart-4/10 px-2.5 py-0.5 text-xs font-medium text-chart-4">
+            {totals.dataSilent} silent
+          </span>
+        )}
+        {totals.dataNotCovered > 0 && (
+          <span className="inline-flex items-center rounded-full border border-dashed border-border px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
+            {totals.dataNotCovered} not covered
+          </span>
+        )}
         {TOTAL_CHIPS.filter((c) => totals[c.key] > 0).map((c) => (
           <span
             key={c.key}
@@ -437,6 +458,7 @@ export function LookupView({
   // cascading-renders rule). Same pattern as the settings page.
   const [hydrated, setHydrated] = useState(false);
   const [scope, setScope] = useState<VendorId[]>([]);
+  const [timingNoticeDismissed, setTimingNoticeDismissed] = useState(false);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard
@@ -484,14 +506,6 @@ export function LookupView({
       {/* Query header — D1 (1) */}
       <div className="border-b border-border bg-card/30">
         <div className="mx-auto max-w-4xl px-6 py-8">
-          <Link
-            href="/"
-            className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
-          >
-            <ArrowLeftIcon className="h-4 w-4" aria-hidden />
-            Back to hub
-          </Link>
-
           <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
             <h1 className="text-3xl font-semibold tracking-tight">{ticker}</h1>
             {company && (
@@ -541,7 +555,11 @@ export function LookupView({
             className="space-y-4"
           >
             <ScopeChips scope={scope} onChange={updateScope} />
-            <VerdictPanel verdict={verdict} />
+            <VerdictPanel
+              verdict={verdict}
+              timingNoticeDismissed={timingNoticeDismissed}
+              onDismissTimingNotice={() => setTimingNoticeDismissed(true)}
+            />
             <DivergencePanel result={divergence} leadTimes={leadTimeDivergence} />
 
             <SurfaceSection className="space-y-4">
