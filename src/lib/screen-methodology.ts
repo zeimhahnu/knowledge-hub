@@ -7,9 +7,15 @@ export interface ScreeningVerdict {
 
 const { domainTerms, injectionPatterns, limits } = screeningRules;
 
+// DISTINCT terms, matching the Python screener's set semantics. Without the
+// dedupe a duplicated entry in screening-rules.json would count twice here and
+// once there, so the two screeners would quietly disagree about the same
+// document -- which is the drift the shared rules file exists to prevent.
+const DISTINCT_TERMS = [...new Set(domainTerms)];
+
 function domainHits(text: string): string[] {
   const normalized = text.toLowerCase();
-  return domainTerms.filter((term) => normalized.includes(term));
+  return DISTINCT_TERMS.filter((term) => normalized.includes(term));
 }
 
 function mentionsVendor(text: string, vendor: string): boolean {
