@@ -198,6 +198,15 @@ export default function Home() {
               Match corporate-action types to ISO 20022 CAEV classifications.
             </p>
           </Link>
+          <Link
+            href="/upload"
+            className="rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/50 hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <h2 className="text-lg font-semibold">Screen a methodology</h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Check a vendor methodology PDF before the ingestion service is configured.
+            </p>
+          </Link>
         </div>
       </section>
     </main>
