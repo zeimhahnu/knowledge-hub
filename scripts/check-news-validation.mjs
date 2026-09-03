@@ -72,6 +72,19 @@ const cases = [
     expect: { verdict: "contradicted", sources: 1 },
   },
   {
+    name: "historical prior-cycle issuer dividend is context, not contradiction",
+    input: {
+      exDate: EX,
+      eventType: "dividend",
+      ticker: "AAPL",
+      companyName: "Apple Inc.",
+      results: [
+        inWindow(-20, "Apple dividend declared; ex-dividend date August 10, 2026.", "https://reuters.com/a-prior-cycle"),
+      ],
+    },
+    expect: { verdict: "unverified", confidence: "low", sources: 1 },
+  },
+  {
     name: "2 same-domain dated sources count as 1 independent -> confirmed/medium",
     input: {
       exDate: EX,

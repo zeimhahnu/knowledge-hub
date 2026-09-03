@@ -295,28 +295,43 @@ function extractDates(text: string): Date[] {
   return out;
 }
 
-function isContradiction(
+const SAME_EVENT_DATE_LINKAGE_RE = /\b(?:instead(?:\s+of)?|rather\s+than|replac\w*|supersed\w*|reschedul\w*|postpon\w*|delay\w*|mov(?:e|ed|ing)|shift\w*|cancel\w*|withdraw\w*|suspend\w*)\b|\bnot\b.{0,50}\b(?:date|ex-?dividend|ex-?date|record)\b|\b(?:date|ex-?dividend|ex-?date|record)\b.{0,50}\bnot\b/i;
+
+type ContradictionClassification = {
+  contradicting: boolean;
+  /** False when the result is dated context for another event cycle. */
+  decisive: boolean;
+};
+
+function classifyContradiction(
   text: string,
   publishedDay: number,
   exDay: number,
   beforeDays: number,
-): boolean {
+): ContradictionClassification {
   // (a) explicit cancellation / delay language about the event.
-  if (CONTRADICTION_SIGNALS.some((s) => text.includes(s))) return true;
+  if (CONTRADICTION_SIGNALS.some((s) => text.includes(s))) {
+    return { contradicting: true, decisive: true };
+  }
 
-  // (b) a materially different ex-date / record date stated in the text.
+  // (b) A materially different date is only decisive when the text links it
+  // to this event. A historical issuer dividend otherwise remains context for
+  // a different cycle, not a contradiction of the supplied event.
   if (EX_CONTEXT_RE.test(text)) {
     for (const d of extractDates(text)) {
       const diff = Math.abs(utcDay(d) - exDay);
-      if (diff > 3 && diff <= beforeDays) return true;
+      if (diff > 3 && diff <= beforeDays) {
+        const linked = SAME_EVENT_DATE_LINKAGE_RE.test(text);
+        return { contradicting: linked, decisive: linked };
+      }
     }
   }
 
   // (c) published after the ex-date yet still announcing the event as upcoming.
   if (publishedDay - exDay > 3 && PROSPECTIVE_SIGNALS.some((s) => text.includes(s))) {
-    return true;
+    return { contradicting: true, decisive: true };
   }
-  return false;
+  return { contradicting: false, decisive: true };
 }
 
 function normalizeDomain(url: string): string {
@@ -352,6 +367,7 @@ export function scoreNewsValidation(input: ScoreInput): ScoreResult {
   const datedMatches: Array<{
     source: NewsSource;
     contradicting: boolean;
+    decisive: boolean;
     strength: EvidenceStrength;
   }> = [];
   let issuerMatchesCount = 0;
@@ -384,17 +400,18 @@ export function scoreNewsValidation(input: ScoreInput): ScoreResult {
       publishedAt: pub.toISOString().slice(0, 10),
       snippet: (r.content ?? "").slice(0, MAX_SNIPPET_CHARS),
     };
+    const classification = classifyContradiction(text, utcDay(pub), exDay, before);
     datedMatches.push({
       source,
-      contradicting: isContradiction(text, utcDay(pub), exDay, before),
+      ...classification,
       strength,
     });
   }
 
   const strongMatches = datedMatches.filter((m) => m.strength === "strong");
   const weakMatches = datedMatches.length - strongMatches.length;
-  const agreeing = strongMatches.filter((m) => !m.contradicting);
-  const contradicting = strongMatches.filter((m) => m.contradicting);
+  const agreeing = strongMatches.filter((m) => m.decisive && !m.contradicting);
+  const contradicting = strongMatches.filter((m) => m.decisive && m.contradicting);
   const domains = new Set(agreeing.map((m) => normalizeDomain(m.source.url)));
 
   let verdict: NewsVerdict;
