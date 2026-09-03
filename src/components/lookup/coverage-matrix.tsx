@@ -93,7 +93,7 @@ function WindowCell({ row }: { row: MatrixRow }) {
 function SetItAffordance({ vendor }: { vendor: VendorId }) {
   return (
     <Link
-      href="/settings"
+      href="/settings/"
       aria-label={`Set ${vendor === "sp" ? "S&P DJI" : vendor[0]!.toUpperCase() + vendor.slice(1)} lead time in Coverage settings`}
       className="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-xs font-medium text-primary underline-offset-4 outline-none transition-colors hover:bg-primary/10 hover:underline focus-visible:ring-2 focus-visible:ring-ring"
     >
@@ -115,13 +115,18 @@ function CoverageCell({ row }: { row: MatrixRow }) {
 }
 
 function TreatmentCell({ row }: { row: MatrixRow }) {
-  if (!row.applicable) {
-    return <span className="text-sm text-muted-foreground/60">—</span>;
-  }
-  if (row.treatment === null) {
+  if (!row.rulePresent) {
     return (
-      <span className="text-sm italic text-muted-foreground">
-        No rule extracted for this vendor + event yet.
+      <span className="text-sm text-muted-foreground">
+        <span className="font-medium text-foreground">Not covered</span> — no rule is present in the sourced dataset.
+      </span>
+    );
+  }
+  if (!row.treatmentStated) {
+    return (
+      <span className="block text-sm text-muted-foreground">
+        <span className="font-medium text-foreground">Silent</span> — this methodology does not state a treatment for this event.
+        {row.sourceRef && <span className="mt-1 block text-xs text-muted-foreground">{row.sourceRef}</span>}
       </span>
     );
   }

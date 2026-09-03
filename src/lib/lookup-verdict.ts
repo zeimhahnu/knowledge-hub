@@ -157,6 +157,12 @@ export function treatmentFor(vendor: VendorId, eventType: string): string | null
  * the default, never crash.
  */
 const SCOPE_STORAGE_KEY = "ca-hub.vendor-scope.v1";
+/** The comparison starts with the six vendors that have sourced rule rows.
+ * Other registered vendors remain selectable, where the UI accurately shows
+ * them as not covered rather than silently treating them as absent. */
+const DEFAULT_SCOPE = rules.vendors.filter((vendor): vendor is VendorId =>
+  (VENDOR_IDS as readonly string[]).includes(vendor),
+);
 
 function resolveStorage(storage?: SettingsStorage): SettingsStorage | null {
   if (storage) return storage;
@@ -172,21 +178,21 @@ function resolveStorage(storage?: SettingsStorage): SettingsStorage | null {
 
 export function getScopeVendors(storage?: SettingsStorage): VendorId[] {
   const store = resolveStorage(storage);
-  if (!store) return [...VENDOR_IDS];
+  if (!store) return [...DEFAULT_SCOPE];
   try {
     const raw = store.getItem(SCOPE_STORAGE_KEY);
-    if (!raw) return [...VENDOR_IDS];
+    if (!raw) return [...DEFAULT_SCOPE];
     const parsed = JSON.parse(raw) as { schema?: unknown; vendors?: unknown };
-    if (parsed.schema !== 1 || !Array.isArray(parsed.vendors)) return [...VENDOR_IDS];
+    if (parsed.schema !== 1 || !Array.isArray(parsed.vendors)) return [...DEFAULT_SCOPE];
     const seen = new Set<VendorId>();
     for (const v of parsed.vendors) {
       if (typeof v === "string" && (VENDOR_IDS as readonly string[]).includes(v)) {
         seen.add(v as VendorId);
       }
     }
-    return seen.size > 0 ? [...seen] : [...VENDOR_IDS];
+    return seen.size > 0 ? [...seen] : [...DEFAULT_SCOPE];
   } catch {
-    return [...VENDOR_IDS];
+    return [...DEFAULT_SCOPE];
   }
 }
 
@@ -222,6 +228,10 @@ export interface MatrixRow {
   treatment: string | null;
   /** rules.json source reference for the treatment, when one exists. */
   sourceRef: string | null;
+  /** A vendor is not covered when no rule row exists at all. */
+  rulePresent: boolean;
+  /** A null/absent rule is methodology silence, not a contrary treatment. */
+  treatmentStated: boolean;
 }
 
 export interface VerdictTotals {
@@ -271,10 +281,11 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
   const rows: MatrixRow[] = scope.map((vendor): MatrixRow => {
     const applicable =
       securityInVendorUniverse(ticker, vendor) && vendorAppliesToEvent(vendor, eventType);
-    const treatment = treatmentFor(vendor, eventType);
-    const sourceRef =
-      rules.rules.find((r) => r.vendor === vendor && r.event_type === eventType)
-        ?.source_ref ?? null;
+    const rule = rules.rules.find((r) => r.vendor === vendor && r.event_type === eventType);
+    const treatment = rule?.treatment ?? null;
+    const sourceRef = rule?.source_ref ?? null;
+    const rulePresent = rule !== undefined;
+    const treatmentStated = treatment !== null && rule?.confidence !== "absent";
 
     if (!applicable) {
       return {
@@ -286,6 +297,8 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         source: null,
         treatment,
         sourceRef,
+        rulePresent,
+        treatmentStated,
       };
     }
 
@@ -301,6 +314,8 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         source: lead.source,
         treatment,
         sourceRef,
+        rulePresent,
+        treatmentStated,
       };
     }
 
@@ -319,6 +334,8 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
       source: lead.source,
       treatment,
       sourceRef,
+      rulePresent,
+      treatmentStated,
     };
   });
 

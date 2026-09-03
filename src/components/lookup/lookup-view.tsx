@@ -19,6 +19,7 @@ import {
 
 import { CoverageMatrix } from "@/components/lookup/coverage-matrix";
 import { SurfaceSection } from "@/components/surface-section";
+import { computeDivergence, type DivergenceResult } from "@/lib/divergence";
 import { canonicalEventById } from "@/lib/event-taxonomy";
 import {
   computeLookupVerdict,
@@ -242,7 +243,7 @@ function ScopeChips({
       <div className="flex flex-wrap items-center gap-3">
         <h2 className="text-lg font-semibold tracking-tight">Vendor scope</h2>
         <span className="text-xs text-muted-foreground">
-          Only selected vendors are graded and counted (§7a-ii).
+          Compare selected vendors. The sourced six are selected by default.
         </span>
       </div>
 
@@ -289,6 +290,63 @@ function ScopeChips({
             </select>
           </div>
         )}
+      </div>
+    </SurfaceSection>
+  );
+}
+
+// ─── Divergence summary ────────────────────────────────────────────────────
+
+function vendorList(vendors: readonly VendorId[]): string {
+  return vendors.map((vendor) => VENDOR_LABELS[vendor]).join(", ");
+}
+
+function DivergencePanel({ result, leadTimes }: { result: DivergenceResult; leadTimes: DivergenceResult }) {
+  const speakers = result.agree.length + result.disagree.length;
+  const silent = result.silent.length;
+  const notCovered = result.notCovered.length;
+  const leadTimeDifference = leadTimes.divergenceField === "lead-time";
+  const leadTimeSilent = leadTimes.silent.length;
+
+  let summary: string;
+  if (speakers === 0) {
+    summary = "No selected vendor states a treatment for this event.";
+  } else if (result.divergenceField === null) {
+    summary = `No treatment disagreement — all ${speakers} selected vendor${speakers === 1 ? "" : "s"} that state a treatment agree.`;
+  } else {
+    const field = result.divergenceField === "lead-time" ? "lead time" : result.divergenceField;
+    summary = `Disagreement on ${field}: ${result.groups
+      .map((group) => `${vendorList(group.vendors)} (${group.value})`)
+      .join("; ")}.`;
+  }
+
+  return (
+    <SurfaceSection className="space-y-3">
+      <div className="flex flex-wrap items-center gap-3">
+        <h2 className="text-lg font-semibold tracking-tight">Where vendors diverge</h2>
+        <span className="text-xs text-muted-foreground">Selected vendors only</span>
+      </div>
+      <p className="max-w-prose text-sm leading-relaxed text-foreground/90">{summary}</p>
+      <div className="flex flex-wrap gap-2 text-xs">
+        {silent > 0 && (
+          <span className="rounded-full border border-border bg-muted/50 px-2.5 py-1 text-muted-foreground">
+            {silent} silent on treatment{silent > 0 ? `: ${vendorList(result.silent)}` : ""}
+          </span>
+        )}
+        {notCovered > 0 && (
+          <span className="rounded-full border border-dashed border-border px-2.5 py-1 text-muted-foreground">
+            {notCovered} not covered: {vendorList(result.notCovered)}
+          </span>
+        )}
+        {leadTimeDifference ? (
+          <span className="rounded-full border border-chart-4/40 bg-chart-4/10 px-2.5 py-1 text-chart-4">
+            Lead times also differ: {leadTimes.groups.map((group) => `${vendorList(group.vendors)} (${group.value})`).join("; ")}
+          </span>
+        ) : leadTimeSilent > 0 ? (
+          <span className="rounded-full border border-border bg-muted/50 px-2.5 py-1 text-muted-foreground">
+            No lead-time disagreement, but {leadTimeSilent} of {speakers + leadTimeSilent} do not state a lead time.
+          </span>
+        ) : null}
       </div>
     </SurfaceSection>
   );
@@ -407,6 +465,14 @@ export function LookupView({
   const eventName = canonicalEventById(eventType)?.name ?? eventType;
   const caev = useMemo(() => caevForEventType(eventType), [eventType]);
   const daysOutNum = exDateParsed ? daysOut(exDateParsed, today) : null;
+  const divergence = useMemo(
+    () => computeDivergence(scope, eventType),
+    [scope, eventType],
+  );
+  const leadTimeDivergence = useMemo(
+    () => computeDivergence(scope, eventType, "lead-time"),
+    [scope, eventType],
+  );
 
   const updateScope = (next: VendorId[]) => {
     setScope(next);
@@ -476,6 +542,7 @@ export function LookupView({
           >
             <ScopeChips scope={scope} onChange={updateScope} />
             <VerdictPanel verdict={verdict} />
+            <DivergencePanel result={divergence} leadTimes={leadTimeDivergence} />
 
             <SurfaceSection className="space-y-4">
               <h2 className="text-lg font-semibold tracking-tight">Coverage matrix</h2>
