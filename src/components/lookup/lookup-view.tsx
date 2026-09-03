@@ -358,7 +358,7 @@ function DivergencePanel({
       {lateAbsentVendors.length > 0 && (
         <p className="max-w-prose text-sm leading-relaxed text-destructive">
           Operational gap: {vendorList(lateAbsentVendors)}{" "}
-          {lateAbsentVendors.length === 1 ? "is" : "are"}
+          {lateAbsentVendors.length === 1 ? "is" : "are"}{" "}
           past {lateAbsentVendors.length === 1 ? "its" : "their"} publication
           window with nothing found.
         </p>
