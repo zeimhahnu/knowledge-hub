@@ -54,13 +54,6 @@ async function getJson(url) {
   return { status: res.status, ok: res.ok, text, json };
 }
 
-function calendarLine(label, tsSec) {
-  const day = isoDay(tsSec);
-  const when = futureLabel(tsSec);
-  if (day === null) return `${label.padEnd(16)} none       ->  ${when}`;
-  return `${label.padEnd(16)} ${day}  ->  ${when} (relative to ${RUN_DATE})`;
-}
-
 function latestEvent(events) {
   // Events object is keyed by unix-seconds; each entry also carries .date.
   const keys = Object.keys(events ?? {});

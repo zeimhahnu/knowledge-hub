@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRightIcon, CalendarIcon, SearchIcon } from "lucide-react";
 
+import { SymbolTypeahead } from "@/components/home/symbol-typeahead";
 import { CANONICAL_EVENTS } from "@/lib/event-taxonomy";
 
 const TICKER_RE = /^[A-Za-z0-9.\-^=]{1,15}$/;
@@ -106,18 +107,7 @@ export default function Home() {
                 <label htmlFor="ticker" className="mb-2 block text-sm font-semibold">
                   Ticker symbol
                 </label>
-                <input
-                  id="ticker"
-                  name="ticker"
-                  value={ticker}
-                  onChange={(event) => setTicker(event.target.value.toUpperCase())}
-                  placeholder="e.g. AAPL"
-                  autoCapitalize="characters"
-                  autoComplete="off"
-                  maxLength={15}
-                  className="min-h-12 w-full rounded-xl border border-border bg-background px-4 text-base font-medium uppercase outline-none transition-colors placeholder:normal-case placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring"
-                  aria-describedby="ticker-help"
-                />
+                <SymbolTypeahead value={ticker} onChange={setTicker} />
                 <p id="ticker-help" className="mt-2 text-xs text-muted-foreground">
                   Use the listed security&apos;s ticker, not its fund or index symbol.
                 </p>

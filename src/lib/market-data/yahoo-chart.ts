@@ -7,7 +7,7 @@ import type {
   YahooMarketDataResponse,
 } from "./yahoo-chart-types";
 
-const YAHUA =
+export const YAHOO_USER_AGENT =
   "Mozilla/5.0 (compatible; KnowledgeHub/1.0; +https://corporate-action.vercel.app)";
 
 const UPSTREAM_REVALIDATE_SEC = 300;
@@ -19,7 +19,7 @@ function sleep(ms: number): Promise<void> {
 
 async function fetchJson<T>(url: string, revalidate: number): Promise<T> {
   const opts = {
-    headers: { "User-Agent": YAHUA, Accept: "application/json" },
+    headers: { "User-Agent": YAHOO_USER_AGENT, Accept: "application/json" },
     next: { revalidate },
   } as const;
 
