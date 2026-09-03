@@ -3,41 +3,54 @@
     "id": "paf",
     "term": "PAF",
     "short": "A factor that adjusts an index price for a corporate action while preserving the event's intended value.",
-    "long": "PAF means Price Adjustment Factor. It scales the price used by a price index so an eligible corporate action does not create a false index move. For a cash distribution, the cited MSCI treatment uses PAF = (CumPx − Div) / CumPx: CumPx is the security price before it trades ex-distribution, and Div is the distribution amount. A PAF of none means no price adjustment is applied.",
-    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.4 (Special Cash Dividend)",
-    "aliases": ["price adjustment factor", "PAF = none"]
+    "long": "PAF means Price Adjustment Factor. It scales the price used by a price index so an eligible corporate action does not create a false index move. For a cash distribution, the cited MSCI treatment uses PAF = (CumPx \u2212 Div) / CumPx: CumPx is the security price before it trades ex-distribution, and Div is the distribution amount. A PAF of none means no price adjustment is applied.",
+    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf \u00a73.4 (Special Cash Dividend)",
+    "aliases": [
+      "price adjustment factor",
+      "PAF = none"
+    ]
   },
   {
     "id": "terp",
     "term": "TERP",
     "short": "The theoretical ex-rights price: the blended price implied by the old shares and discounted new rights shares.",
     "long": "TERP means Theoretical Ex-Rights Price. It estimates the per-share price after a rights issue by combining the value of the existing shares with the subscription price and the new-share ratio. Index providers use it when eligible, usually in the price adjustment factor for in-the-money rights; the exact formula can vary with the rights terms and vendor methodology.",
-    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.6.1.1–§3.6.1.2, Appendix I (Rights Issue PAF formulas)",
-    "aliases": ["theoretical ex-rights price", "theoretical ex-right price"]
+    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf \u00a73.6.1.1\u2013\u00a73.6.1.2, Appendix I (Rights Issue PAF formulas)",
+    "aliases": [
+      "theoretical ex-rights price",
+      "theoretical ex-right price"
+    ]
   },
   {
     "id": "nos",
     "term": "NOS",
     "short": "Number of shares outstanding; vendors use it as the share-count base for some materiality tests.",
     "long": "NOS means Number of Shares Outstanding. In the treatment text it is the pre-event or post-event share-count base used to measure whether an issuance or other share change is large enough for an index adjustment.",
-    "sourceRef": "SOURCES/msci-corporate-events-methodology-2026.pdf §4.1, §4.2",
-    "aliases": ["number of shares outstanding", "shares outstanding"]
+    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf \u00a74.1, \u00a74.2",
+    "aliases": [
+      "number of shares outstanding",
+      "shares outstanding"
+    ]
   },
   {
     "id": "fif",
     "term": "FIF",
-    "short": "A factor representing the proportion of a company's shares available to foreign investors.",
-    "long": "FIF means Foreign Inclusion Factor. It represents the portion of a company's shares that an index can include for foreign-investor access, after relevant ownership restrictions. In the cited rights-issue treatment, FIF changes are assessed alongside NOS and DIF changes; the dataset does not specify a separate FIF calculation here.",
-    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.6.3.1–§3.6.3.2",
-    "aliases": ["Foreign Inclusion Factor"]
+    "short": "Free Investable Factor: the proportion of a company's shares that are available for public trading and can be included in the index.",
+    "long": "FIF means Free Investable Factor. Per MSCI's own terminology list, it represents shares available for public trading, not a foreign-ownership-specific measure. In the cited rights-issue treatment, FIF changes are assessed alongside NOS and DIF changes; the dataset does not specify a separate FIF calculation here.",
+    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf \u00a73.6.3.1\u2013\u00a73.6.3.2",
+    "aliases": [
+      "Free Investable Factor"
+    ]
   },
   {
     "id": "dif",
     "term": "DIF",
-    "short": "A factor representing the domestic-investor inclusion adjustment used in the cited MSCI share-change treatment.",
-    "long": "DIF is the Domestic Inclusion Factor in the cited MSCI rights-issue treatment. It is listed with NOS and FIF as a share or investability measure whose change can be tested against cap-tier thresholds. The supplied treatment text does not define a separate DIF formula, so this guide does not infer one.",
-    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.6.3.1–§3.6.3.2",
-    "aliases": ["Domestic Inclusion Factor"]
+    "short": "Derived IF: a factor mathematically derived from FIF, used alongside it in share-change tests.",
+    "long": "DIF means Derived IF -- per MSCI's own terminology list, a factor derived from FIF, not a domestic-investor-specific measure. It is listed with NOS and FIF as a share or investability measure whose change can be tested against cap-tier thresholds. The supplied treatment text does not define a separate DIF formula, so this guide does not infer one.",
+    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf \u00a73.6.3.1\u2013\u00a73.6.3.2",
+    "aliases": [
+      "Derived IF"
+    ]
   },
   {
     "id": "price-return-index",
@@ -45,7 +58,10 @@
     "short": "An index that tracks constituent price changes without reinvesting dividends or other cash distributions.",
     "long": "A Price Return Index measures the price movement of its constituents. Ordinary dividends are not reinvested into it; the market's ex-date price change is therefore treated according to the vendor's price-index rules. It is commonly abbreviated PR.",
     "sourceRef": null,
-    "aliases": ["Price Return", "PR"]
+    "aliases": [
+      "Price Return",
+      "PR"
+    ]
   },
   {
     "id": "total-return-index",
@@ -53,7 +69,11 @@
     "short": "An index that tracks price changes plus the reinvestment of gross dividends or distributions.",
     "long": "A Total Return Index measures constituent price movement plus gross cash dividends reinvested on the applicable ex-date. It is commonly abbreviated TR. The reinvestment assumption makes it different from a Price Return Index even when both use the same constituents.",
     "sourceRef": null,
-    "aliases": ["Total Return", "TR", "Gross Daily Total Return"]
+    "aliases": [
+      "Total Return",
+      "TR",
+      "Gross Daily Total Return"
+    ]
   },
   {
     "id": "net-total-return-index",
@@ -61,14 +81,20 @@
     "short": "An index that tracks price changes plus dividends reinvested after the assumed withholding tax.",
     "long": "A Net Total Return Index measures constituent price movement plus dividends reinvested net of the assumed withholding tax. It is commonly abbreviated NTR or, in some treatment text, NR. This gives a more investor-realistic dividend return than a gross Total Return Index.",
     "sourceRef": null,
-    "aliases": ["Net Total Return", "Net Return", "NTR", "NR", "Net Daily Total Return"]
+    "aliases": [
+      "Net Total Return",
+      "Net Return",
+      "NTR",
+      "NR",
+      "Net Daily Total Return"
+    ]
   },
   {
     "id": "in-the-money",
     "term": "in-the-money",
     "short": "For a rights issue, the subscription price is below the relevant market price, giving the right positive value.",
     "long": "For a rights issue, in-the-money means the subscription price is below the relevant market price. The right has positive economic value, so methodologies commonly calculate a theoretical ex-rights price and apply a price adjustment, subject to the vendor's stated rules.",
-    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.6.1.1–§3.6.1.2",
+    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf \u00a73.6.1.1\u2013\u00a73.6.1.2",
     "aliases": []
   },
   {
@@ -76,15 +102,21 @@
     "term": "out-of-the-money",
     "short": "For a rights issue, the subscription price is at or above the relevant market price, so the right has no positive value.",
     "long": "For a rights issue, out-of-the-money means the subscription price is greater than or equal to the relevant market price. The right has zero or negative value; the cited treatments generally apply no price adjustment, though later share handling can still follow the vendor's rules.",
-    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.6.1.1–§3.6.1.2",
-    "aliases": ["at- or out-of-the-money", "at or out-of-the-money"]
+    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf \u00a73.6.1.1\u2013\u00a73.6.1.2",
+    "aliases": [
+      "at- or out-of-the-money",
+      "at or out-of-the-money"
+    ]
   },
   {
     "id": "dividend-size-threshold",
     "term": "dividend-size threshold",
     "short": "A rule that compares a dividend with market price, often 5%, to decide whether the distribution is special and price-adjusted.",
     "long": "The dividend-size threshold mechanic compares the dividend amount with the security's market price. In the cited MSCI rule, a dividend at or above 5% of market price is classified as special and receives a Price Return adjustment; below 5% it is treated as ordinary with no Price Return adjustment. Total Return and Net Total Return reinvestment is separate from this Price Return classification.",
-    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.4 (Special Cash Dividend)",
-    "aliases": ["dividend size threshold", "special-dividend price-threshold treatment"]
+    "sourceRef": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf \u00a73.4 (Special Cash Dividend)",
+    "aliases": [
+      "dividend size threshold",
+      "special-dividend price-threshold treatment"
+    ]
   }
 ]
