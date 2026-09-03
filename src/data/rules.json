@@ -16,22 +16,52 @@
     "tender-offer",
     "bankruptcy"
   ],
-  "index_types": ["*"],
+  "index_types": ["*", "price-return", "total-return", "net-total-return"],
   "vendors": ["msci", "sp", "ftse", "stoxx", "morningstar", "solactive"],
   "rules": [
     {
       "vendor": "msci",
       "event_type": "cash-dividend",
       "caev": "DVOP",
-      "index_type": "*",
+      "index_type": "price-return",
       "conditions": {
         "dividend_size_threshold_pct": 5,
         "threshold_side": "below"
       },
-      "treatment": "No price adjustment on ex-date; the PR index is not adjusted (PAF = none). TR/NTR indexes reinvest the cash dividend on ex-date.",
+      "treatment": "No price adjustment on ex-date; the Price Return index is not adjusted (PAF = none).",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.4 (Cash Dividend)",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.4 (Special Cash Dividends)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "cash-dividend",
+      "caev": "DVOP",
+      "index_type": "total-return",
+      "conditions": {
+        "dividend_size_threshold_pct": 5,
+        "threshold_side": "below"
+      },
+      "treatment": "Reinvests the cash dividend on ex-date in the Gross Daily Total Return index.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.4 (Special Cash Dividends)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "cash-dividend",
+      "caev": "DVOP",
+      "index_type": "net-total-return",
+      "conditions": {
+        "dividend_size_threshold_pct": 5,
+        "threshold_side": "below"
+      },
+      "treatment": "Reinvests the cash dividend on ex-date in the Net Daily Total Return index.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.4 (Special Cash Dividends)",
       "confidence": "stated"
     },
     {
@@ -98,10 +128,27 @@
       "event_type": "rights-issue",
       "caev": "RHDI",
       "index_type": "*",
-      "treatment": "Adjusts only in-the-money rights (subscription price below market) using the when-issued / theoretical price (TERP); out-of-the-money rights are ignored (PAF = 1). Shares increased as of close of ex-date; NOS/FIF/DIF changes threshold 5%/10%/25% by Standard/Small/Micro cap tier.",
+      "conditions": {
+        "rights_moneyness": "in-the-money"
+      },
+      "treatment": "For in-the-money rights (subscription price below market), applies a PAF using the theoretical ex-rights price (TERP). Shares are increased as of the close of ex-date; NOS/FIF/DIF changes use 5%/10%/25% thresholds for Standard/Small/Micro cap tiers.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/index-vendor-methodology.md §7 (Rights Issue); msci-corporate-events-methodology-2026.pdf §3.6, §4.2",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.6.1.1–§3.6.1.2, §3.6.3.1–§3.6.3.2, Appendix I (Rights Issue PAF formulas)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "rights-issue",
+      "caev": "RHDI",
+      "index_type": "*",
+      "conditions": {
+        "rights_moneyness": "out-of-the-money"
+      },
+      "treatment": "For out-of-the-money rights (subscription price greater than or equal to market price on ex-date), reflects the rights issue by applying a PAF of 1; no price adjustment is made.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.6.1.2 (Rights for new underlying shares, premium to market price)",
       "confidence": "stated"
     },
     {

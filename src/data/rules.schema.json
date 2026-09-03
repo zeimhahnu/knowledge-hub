@@ -4,6 +4,12 @@
   "title": "Vendor Corporate-Action Treatment Rules",
   "description": "Machine-readable vendor treatment rules for the corporate-action hub (§5b, §7a-i, §9). Keyed by {vendor, event_type, index_type} — a 3-D matrix. `event_type` is the app's canonical 13-event id (per src/lib/event-taxonomy.ts `CANONICAL_EVENTS`); the ISO 20022 CAEV code for the same event lives in `caev`. `index_type` is '*' when the vendor's treatment does not vary by weighting scheme. `lead_days` is the vendor's published per-event publication lead time before ex-date — the input to slice 1's coverage-window engine (7a-i). Where the source doc does not state a lead time, `lead_days` MUST be null (never a fabricated number), and `lead_days_confidence` reflects why.",
   "type": "object",
+  "$defs": {
+    "index_type": {
+      "enum": ["*", "price-return", "total-return", "net-total-return"],
+      "description": "Index return-variant discriminator. '*' means the treatment does not vary by return variant."
+    }
+  },
   "additionalProperties": false,
   "required": [
     "schema_version",
@@ -26,7 +32,7 @@
     "index_types": {
       "type": "array",
       "description": "The index/fund-type dimension values in use ('*' for rules that do not vary by weighting scheme; see §5b taxonomy).",
-      "items": { "type": "string" },
+      "items": { "$ref": "#/$defs/index_type" },
       "uniqueItems": true
     },
     "vendors": {
@@ -65,8 +71,8 @@
             "description": "ISO 20022 CAEV code where one applies (DVOP, BONU, SPLT, SPIN, RHDI, OFFO, REDU, TEND, MRGR, DELI, BANK, CONS)."
           },
           "index_type": {
-            "type": "string",
-            "description": "Weighting-scheme dimension value, or '*' when the rule does not vary by index construction."
+            "$ref": "#/$defs/index_type",
+            "description": "Index return-variant discriminator; '*' when the treatment does not vary by return variant."
           },
           "treatment": {
             "type": "string",
@@ -102,6 +108,10 @@
               "threshold_side": {
                 "enum": ["at_or_above", "below"],
                 "description": "Which side of dividend_size_threshold_pct this row applies to ('at_or_above' = special treatment, 'below' = ordinary)."
+              },
+              "rights_moneyness": {
+                "enum": ["in-the-money", "out-of-the-money"],
+                "description": "Whether the rights subscription price is below market price (in-the-money) or at/above it (out-of-the-money)."
               }
             }
           }

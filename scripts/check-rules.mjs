@@ -24,6 +24,8 @@ const ruleProps = ruleSchema.properties
 const REQUIRED_KEYS = ruleSchema.required
 const LEAD_CONFIDENCES = ruleProps.lead_days_confidence.enum
 const CONFIDENCES = ruleProps.confidence.enum
+const INDEX_TYPES = schema.$defs.index_type.enum
+const CONDITION_PROPERTIES = ruleProps.conditions.properties
 // Rules currently published in rules.json; add the vendor here as each verified
 // 13-event block lands, while VENDOR_IDS remains the broader app-level registry.
 const RULE_VENDOR_ALLOWLIST = ["msci", "sp", "ftse", "stoxx", "morningstar", "solactive"]
@@ -60,8 +62,22 @@ for (const rule of rules) {
   assertRule(typeof rule.source_ref === "string" && rule.source_ref.trim().length > 0, `${rule.event_type}: source_ref must be non-empty`)
   assertRule(rule.lead_days === null || Number.isInteger(rule.lead_days), `${rule.event_type}: lead_days must be an integer or null`)
   assertRule(typeof rule.treatment === "string" && rule.treatment.trim().length > 0, `${rule.event_type}: treatment must be non-empty`)
+  assertRule(INDEX_TYPES.includes(rule.index_type), `${rule.event_type}: index_type \`${rule.index_type}\` must be one of ${INDEX_TYPES.join("|")}`)
   assertRule(LEAD_CONFIDENCES.includes(rule.lead_days_confidence), `${rule.event_type}: lead_days_confidence must be one of ${LEAD_CONFIDENCES.join("|")}`)
   assertRule(CONFIDENCES.includes(rule.confidence), `${rule.event_type}: confidence must be one of ${CONFIDENCES.join("|")}`)
+  if (rule.conditions !== undefined && rule.conditions !== null) {
+    assertRule(typeof rule.conditions === "object" && !Array.isArray(rule.conditions), `${rule.event_type}: conditions must be an object or null`)
+    for (const [key, value] of Object.entries(rule.conditions)) {
+      const conditionSchema = CONDITION_PROPERTIES[key]
+      assertRule(conditionSchema !== undefined, `${rule.event_type}: conditions key \`${key}\` is not in the controlled vocabulary`)
+      if (conditionSchema?.enum) {
+        assertRule(conditionSchema.enum.includes(value), `${rule.event_type}: conditions.${key} must be one of ${conditionSchema.enum.join("|")}`)
+      }
+      if (conditionSchema?.type === "number") {
+        assertRule(typeof value === "number" && Number.isFinite(value), `${rule.event_type}: conditions.${key} must be a finite number`)
+      }
+    }
+  }
   // A null lead_days can never be labelled `stated` — an unstated lead time is not stated.
   if (rule.lead_days === null && rule.lead_days_confidence === "stated") {
     fail(`${rule.event_type}: lead_days is null but marked \`stated\``)
@@ -87,13 +103,55 @@ for (const rule of ordinaryDividendRules) {
   const deniesAdjustment =
     /no\s+price\s+adjustment|not\s+(price\s+|pr\s+)?adjust(ed|ment)?|paf\s*=\s*none/.test(t)
   const assignsPaf = /paf\s*=\s*(?!none\b)\S+/.test(t)
-  assertRule(
-    deniesAdjustment && !assignsPaf,
-    `${rule.vendor}/${rule.event_type}: ordinary cash dividends must deny any price adjustment / PAF (SPECS/research/ca-event-treatments-2026-09-02.md §1)`,
-  )
+  if (rule.index_type === "price-return" || rule.index_type === "*") {
+    assertRule(
+      deniesAdjustment && !assignsPaf,
+      `${rule.vendor}/${rule.event_type}/${rule.index_type}: ordinary cash dividends must deny any price adjustment / PAF (SPECS/research/ca-event-treatments-2026-09-02.md §1)`,
+    )
+  } else {
+    assertRule(
+      /reinvest/.test(t) && !assignsPaf,
+      `${rule.vendor}/${rule.event_type}/${rule.index_type}: return variants must reinvest ordinary cash dividends without assigning a PAF`,
+    )
+  }
 }
 
 const ordinaryChecked = ordinaryDividendRules.length
+
+// A row is a treatment branch. Identical discriminators would make selection
+// ambiguous and silently defeat the row-based conditional-treatment model.
+const discriminators = new Map()
+for (const rule of rules) {
+  const discriminator = [
+    rule.vendor,
+    rule.event_type,
+    rule.index_type,
+    JSON.stringify(rule.conditions ?? null),
+  ].join("|")
+  const existing = discriminators.get(discriminator)
+  if (existing) {
+    fail(`duplicate rule discriminator ${discriminator} (rules ${existing + 1} and ${rules.indexOf(rule) + 1})`)
+  } else {
+    discriminators.set(discriminator, rules.indexOf(rule))
+  }
+}
+
+// A moneyness question is only answerable when both branches are present.
+const moneynessPairs = new Map()
+for (const rule of rules) {
+  if (rule.conditions?.rights_moneyness) {
+    const pair = `${rule.vendor}/${rule.event_type}`
+    const values = moneynessPairs.get(pair) ?? new Set()
+    values.add(rule.conditions.rights_moneyness)
+    moneynessPairs.set(pair, values)
+  }
+}
+for (const [pair, values] of moneynessPairs) {
+  assertRule(
+    values.has("in-the-money") && values.has("out-of-the-money"),
+    `${pair}: rights_moneyness branches must include both in-the-money and out-of-the-money`,
+  )
+}
 
 // D3 (2026-09-02): per-vendor coverage — each vendor present must populate all 13
 // canonical event types. A vendor with no rows yet is a future task, not reported here.
@@ -122,7 +180,9 @@ console.log(
   `OK — rules.json valid: ${rules.length} rules across ${vendorsPresent.length} vendor(s). ` +
   perVendor.join(" | ") + ". " +
   `${withTreatment} with treatment; ` +
-  `ordinary-dividend no-PAF assertion: PASS (${ordinaryChecked} cash-dividend row(s) checked)`,
+  `ordinary-dividend no-PAF assertion: PASS (${ordinaryChecked} cash-dividend row(s) checked); ` +
+  `unique discriminators: PASS (${discriminators.size}); ` +
+  `rights_moneyness completeness: PASS (${moneynessPairs.size} conditional pair(s) checked)`,
 )
 
 function assertRule(cond, msg) {
