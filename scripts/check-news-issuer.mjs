@@ -69,6 +69,11 @@ assert.equal(weakOnly.sources.length, 2, "weak sources remain visible to the rea
 assert.match(weakOnly.sources[0].title, /^\[Weak evidence\]/, "listicle is weak");
 assert.match(weakOnly.sources[1].title, /^\[Weak evidence\]/, "CDR wrapper is weak");
 assert.match(weakOnly.reasoning, /0 strong, 2 weak/, "reasoning audits evidence strength");
+assert.match(
+  weakOnly.reasoning,
+  /none was strong enough to confirm or contradict this issuer's event/,
+  "weak-only reasoning explains why the verdict is withheld",
+);
 
 const rejectedOnly = scoreNewsValidation({
   exDate: EX_DATE,

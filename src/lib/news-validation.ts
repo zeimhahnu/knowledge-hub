@@ -467,6 +467,9 @@ function buildReasoning(
     case "contradicted":
       return `${base} Verdict contradicted: dated source(s) cancel/delay the event, state a conflicting ex-date, or announce it as upcoming after the claimed ex-date.`;
     default:
+      if (strong === 0 && weak > 0) {
+        return `${base} Verdict unverified: search found dated result(s), but none was strong enough to confirm or contradict this issuer's event.`;
+      }
       return `${base} Verdict unverified: no dated source inside the window corroborates or contradicts the event as claimed.`;
   }
 }
