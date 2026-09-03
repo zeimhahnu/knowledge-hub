@@ -38,6 +38,10 @@ import {
   type SettingsStorage,
 } from "./coverage-settings.ts";
 import { VENDOR_IDS, type VendorId } from "./vendors.ts";
+import {
+  getVendorConfirmation,
+  type VendorConfirmation,
+} from "./vendor-confirmation.ts";
 
 const MS_PER_DAY = 86_400_000;
 
@@ -76,7 +80,10 @@ const DOCUMENTED_NO_COVERAGE: Partial<Record<VendorId, readonly string[]>> = {
  * first for every vendor that has rows); this function's signature does not
  * change.
  */
-export function vendorAppliesToEvent(vendor: VendorId, eventType: string): boolean {
+export function vendorAppliesToEvent(
+  vendor: VendorId,
+  eventType: string,
+): boolean {
   if (
     rules.rules.some(
       (r) =>
@@ -99,7 +106,10 @@ export function vendorAppliesToEvent(vendor: VendorId, eventType: string): boole
  * wire it — false here marks the vendor not-applicable and keeps it out of
  * every total.
  */
-export function securityInVendorUniverse(ticker: string, vendor: VendorId): boolean {
+export function securityInVendorUniverse(
+  ticker: string,
+  vendor: VendorId,
+): boolean {
   void ticker;
   void vendor;
   return true;
@@ -108,15 +118,19 @@ export function securityInVendorUniverse(ticker: string, vendor: VendorId): bool
 /**
  * Is the event already present in the vendor's feed?
  *
- * ponytail: no vendor-feed detection exists yet (spec §7a — the user
- * supplies the event; Tier-1 detection is a later slice), so no vendor can
- * be `covered` today. The injection point stays so the matrix logic already
- * counts it correctly the day a feed lands.
+ * User observations are local-only evidence, not vendor-feed detection.
+ * The injection point keeps later automated detection compatible with this
+ * same verdict path.
  */
-export function presentAtVendor(ticker: string, eventType: string): (v: VendorId) => boolean {
-  void ticker;
-  void eventType;
-  return () => false;
+export function presentAtVendor(
+  ticker: string,
+  eventType: string,
+  exDate: string,
+  storage?: SettingsStorage,
+): (v: VendorId) => boolean {
+  return (vendor) =>
+    getVendorConfirmation(ticker, eventType, exDate, vendor, storage)?.state ===
+    "confirmed";
 }
 
 /**
@@ -133,12 +147,17 @@ export function resolveCompanyName(ticker: string): string | null {
 /** ISO 20022 CAEV code for an event type, from the first rule row that has
  * one (the code is a property of the event, not the vendor). */
 export function caevForEventType(eventType: string): string | null {
-  return rules.rules.find((r) => r.event_type === eventType && r.caev)?.caev ?? null;
+  return (
+    rules.rules.find((r) => r.event_type === eventType && r.caev)?.caev ?? null
+  );
 }
 
 /** Treatment prose for (vendor, event) from rules.json — null when no rule
  * has been extracted for that pair yet. */
-export function treatmentFor(vendor: VendorId, eventType: string): string | null {
+export function treatmentFor(
+  vendor: VendorId,
+  eventType: string,
+): string | null {
   return (
     rules.rules.find((r) => r.vendor === vendor && r.event_type === eventType)
       ?.treatment ?? null
@@ -183,10 +202,14 @@ export function getScopeVendors(storage?: SettingsStorage): VendorId[] {
     const raw = store.getItem(SCOPE_STORAGE_KEY);
     if (!raw) return [...DEFAULT_SCOPE];
     const parsed = JSON.parse(raw) as { schema?: unknown; vendors?: unknown };
-    if (parsed.schema !== 1 || !Array.isArray(parsed.vendors)) return [...DEFAULT_SCOPE];
+    if (parsed.schema !== 1 || !Array.isArray(parsed.vendors))
+      return [...DEFAULT_SCOPE];
     const seen = new Set<VendorId>();
     for (const v of parsed.vendors) {
-      if (typeof v === "string" && (VENDOR_IDS as readonly string[]).includes(v)) {
+      if (
+        typeof v === "string" &&
+        (VENDOR_IDS as readonly string[]).includes(v)
+      ) {
         seen.add(v as VendorId);
       }
     }
@@ -196,7 +219,10 @@ export function getScopeVendors(storage?: SettingsStorage): VendorId[] {
   }
 }
 
-export function setScopeVendors(vendors: readonly VendorId[], storage?: SettingsStorage): void {
+export function setScopeVendors(
+  vendors: readonly VendorId[],
+  storage?: SettingsStorage,
+): void {
   const store = resolveStorage(storage);
   if (!store) return; // no persistence — the session scope still works
   try {
@@ -211,15 +237,21 @@ export function setScopeVendors(vendors: readonly VendorId[], storage?: Settings
 
 // ─── Verdict computation ────────────────────────────────────────────────────
 
-export type MatrixState = CoverageState | "not-assessed" | "not-applicable";
+export type MatrixState =
+  CoverageState | "not-checked" | "not-assessed" | "not-applicable";
 export type DataCoverage = "states-treatment" | "silent" | "not-covered";
 
 /**
  * Data coverage is a corpus fact, never a timing verdict. It deliberately
  * reads only rules.json: settings and the current date cannot change it.
  */
-export function dataCoverageFor(vendor: string, eventType: string): DataCoverage {
-  const rule = rules.rules.find((row) => row.vendor === vendor && row.event_type === eventType);
+export function dataCoverageFor(
+  vendor: string,
+  eventType: string,
+): DataCoverage {
+  const rule = rules.rules.find(
+    (row) => row.vendor === vendor && row.event_type === eventType,
+  );
   if (!rule) return "not-covered";
   return rule.treatment !== null && rule.confidence !== "absent"
     ? "states-treatment"
@@ -233,8 +265,10 @@ export interface MatrixRow {
   state: MatrixState;
   /** false ⇒ not-applicable: uninvolved, never counted, visibly de-emphasised. */
   applicable: boolean;
-  /** true ⇒ a timing verdict was actually drawn (lead time was set). */
+  /** true ⇒ a coverage verdict was drawn from a user-confirmed observation. */
   assessed: boolean;
+  /** User observation; null means nobody has checked this vendor yet. */
+  confirmation: VendorConfirmation | null;
   /** Resolved publication lead time — null when not assessed / not applicable. */
   leadDays: number | null;
   /** Where the lead time came from (§11c source, drives D3 provenance). */
@@ -261,7 +295,9 @@ export interface VerdictTotals {
   covered: number;
   missing: number;
   notYetDue: number;
-  /** Applicable but ungraded — no lead time set; reported separately. */
+  /** Applicable vendors where nobody has checked the vendor yet. */
+  unchecked: number;
+  /** Applicable but checked absent without a lead time to grade it. */
   notAssessed: number;
   /** In-scope but uninvolved — excluded from every other total. */
   notApplicable: number;
@@ -281,8 +317,9 @@ export interface LookupVerdictInput {
   exDate: Date;
   today: Date;
   scope: readonly VendorId[];
-  /** Testable injection point — defaults to the no-detection stub. */
+  /** Testable injection point — defaults to the user-confirmation store. */
   isPresentAtVendor?: (vendor: VendorId) => boolean;
+  getConfirmation?: (vendor: VendorId) => VendorConfirmation | null;
   storage?: SettingsStorage;
 }
 
@@ -295,12 +332,22 @@ export interface LookupVerdictInput {
  */
 export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
   const { ticker, eventType, exDate, today, scope, storage } = input;
-  const present = input.isPresentAtVendor ?? presentAtVendor(ticker, eventType);
+  const exDateKey = exDate.toISOString().slice(0, 10);
+  const present =
+    input.isPresentAtVendor ??
+    presentAtVendor(ticker, eventType, exDateKey, storage);
+  const confirmationFor =
+    input.getConfirmation ??
+    ((vendor) =>
+      getVendorConfirmation(ticker, eventType, exDateKey, vendor, storage));
 
   const rows: MatrixRow[] = scope.map((vendor): MatrixRow => {
     const applicable =
-      securityInVendorUniverse(ticker, vendor) && vendorAppliesToEvent(vendor, eventType);
-    const rule = rules.rules.find((r) => r.vendor === vendor && r.event_type === eventType);
+      securityInVendorUniverse(ticker, vendor) &&
+      vendorAppliesToEvent(vendor, eventType);
+    const rule = rules.rules.find(
+      (r) => r.vendor === vendor && r.event_type === eventType,
+    );
     const treatment = rule?.treatment ?? null;
     const sourceRef = rule?.source_ref ?? null;
     const rulePresent = rule !== undefined;
@@ -314,6 +361,25 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         state: "not-applicable",
         applicable: false,
         assessed: false,
+        confirmation: null,
+        leadDays: null,
+        source: null,
+        treatment,
+        sourceRef,
+        rulePresent,
+        treatmentStated,
+      };
+    }
+
+    const confirmation = confirmationFor(vendor);
+    if (confirmation === null) {
+      return {
+        vendor,
+        dataCoverage,
+        state: "not-checked",
+        applicable: true,
+        assessed: false,
+        confirmation: null,
         leadDays: null,
         source: null,
         treatment,
@@ -325,6 +391,27 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
 
     const lead = getLeadDays(vendor, eventType, storage);
     if (lead.source === "unset" || lead.value === null) {
+      if (confirmation.state === "confirmed") {
+        return {
+          vendor,
+          dataCoverage,
+          state: coverageState({
+            exDate,
+            today,
+            leadDays: 0,
+            presentAtVendor: present(vendor),
+          }),
+          applicable: true,
+          assessed: true,
+          confirmation,
+          leadDays: null,
+          source: null,
+          treatment,
+          sourceRef,
+          rulePresent,
+          treatmentStated,
+        };
+      }
       // §11c: no number, no source, no verdict. Never feed null to coverageState.
       return {
         vendor,
@@ -332,6 +419,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         state: "not-assessed",
         applicable: true,
         assessed: false,
+        confirmation,
         leadDays: null,
         source: lead.source,
         treatment,
@@ -353,6 +441,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
       state,
       applicable: true,
       assessed: true,
+      confirmation,
       leadDays: lead.value,
       source: lead.source,
       treatment,
@@ -371,11 +460,13 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
     covered: 0,
     missing: 0,
     notYetDue: 0,
+    unchecked: 0,
     notAssessed: 0,
     notApplicable: 0,
   };
   for (const row of rows) {
-    if (row.dataCoverage === "states-treatment") totals.dataStatesTreatment += 1;
+    if (row.dataCoverage === "states-treatment")
+      totals.dataStatesTreatment += 1;
     else if (row.dataCoverage === "silent") totals.dataSilent += 1;
     else totals.dataNotCovered += 1;
 
@@ -384,6 +475,10 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
       continue; // uninvolved — never counted anywhere else
     }
     totals.applicable += 1;
+    if (row.state === "not-checked") {
+      totals.unchecked += 1;
+      continue;
+    }
     if (!row.assessed) {
       totals.notAssessed += 1;
       continue; // ungraded — reported separately, never as a timing state
@@ -399,18 +494,17 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
 
 /** Data coverage leads; timing is explicitly reported as a separate fact. */
 export function verdictSummary(totals: VerdictTotals): string {
-  const scoped = totals.dataStatesTreatment + totals.dataSilent + totals.dataNotCovered;
+  const scoped =
+    totals.dataStatesTreatment + totals.dataSilent + totals.dataNotCovered;
   const position = totals.dataStatesTreatment + totals.dataSilent;
   const coverage =
     `${position} of ${scoped} vendors state a position: ` +
     `${totals.dataStatesTreatment} with a rule, ${totals.dataSilent} silent`;
+  if (totals.applicable === 0) return `${coverage}.`;
   const timing =
-    totals.notAssessed > 0
-      ? `${totals.notAssessed} ${totals.notAssessed === 1 ? "has" : "have"} no lead time configured`
-      : totals.assessed > 0
-        ? `${totals.assessed} timing verdict${totals.assessed === 1 ? "" : "s"} assessed`
-        : "timing is unassessed";
-  return `${coverage}. Timing: ${timing}.`;
+    `Confirmed at ${totals.covered}, missing at ${totals.missing} (past publication window), ` +
+    `not checked at ${totals.unchecked}.`;
+  return `${coverage}. ${timing}`;
 }
 
 /** Provenance copy for the publication-window cell (D3) — a user-typed

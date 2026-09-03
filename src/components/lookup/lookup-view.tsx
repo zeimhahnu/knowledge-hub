@@ -16,6 +16,11 @@ import {
 } from "lucide-react";
 
 import { CoverageMatrix } from "@/components/lookup/coverage-matrix";
+import {
+  getVendorConfirmation,
+  setVendorConfirmation,
+  type VendorMarkState,
+} from "@/lib/vendor-confirmation";
 import { SurfaceSection } from "@/components/surface-section";
 import { computeDivergence, type DivergenceResult } from "@/lib/divergence";
 import { canonicalEventById } from "@/lib/event-taxonomy";
@@ -124,7 +129,8 @@ function NewsPanel({
         if (controller.signal.aborted) return;
         setNews({
           status: "error",
-          message: err instanceof Error ? err.message : "The news request failed.",
+          message:
+            err instanceof Error ? err.message : "The news request failed.",
         });
       }
     })();
@@ -135,7 +141,9 @@ function NewsPanel({
   return (
     <SurfaceSection className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
-        <h2 className="text-lg font-semibold tracking-tight">News cross-validation</h2>
+        <h2 className="text-lg font-semibold tracking-tight">
+          News cross-validation
+        </h2>
         <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
           <NewspaperIcon className="h-3.5 w-3.5" aria-hidden />
           §8 — dated, cited sources only
@@ -145,7 +153,10 @@ function NewsPanel({
       {news.status === "loading" && (
         <div aria-hidden className="space-y-3">
           {[0, 1].map((i) => (
-            <div key={i} className="h-24 motion-safe:animate-pulse rounded-2xl border border-border bg-muted/40" />
+            <div
+              key={i}
+              className="h-24 motion-safe:animate-pulse rounded-2xl border border-border bg-muted/40"
+            />
           ))}
         </div>
       )}
@@ -202,7 +213,9 @@ function NewsPanel({
                         rel="noopener noreferrer"
                         className="block rounded-xl border border-border bg-card/60 p-3 text-sm outline-none transition-colors hover:border-primary/40 focus-visible:ring-2 focus-visible:ring-ring"
                       >
-                        <span className="block font-medium text-foreground">{s.title}</span>
+                        <span className="block font-medium text-foreground">
+                          {s.title}
+                        </span>
                         <span className="mt-0.5 block text-xs text-muted-foreground">
                           {domainOf(s.url)} · {s.publishedAt}
                         </span>
@@ -299,7 +312,15 @@ function vendorList(vendors: readonly VendorId[]): string {
   return vendors.map((vendor) => VENDOR_LABELS[vendor]).join(", ");
 }
 
-function DivergencePanel({ result, leadTimes }: { result: DivergenceResult; leadTimes: DivergenceResult }) {
+function DivergencePanel({
+  result,
+  leadTimes,
+  lateAbsentVendors,
+}: {
+  result: DivergenceResult;
+  leadTimes: DivergenceResult;
+  lateAbsentVendors: VendorId[];
+}) {
   const speakers = result.agree.length + result.disagree.length;
   const silent = result.silent.length;
   const notCovered = result.notCovered.length;
@@ -312,7 +333,10 @@ function DivergencePanel({ result, leadTimes }: { result: DivergenceResult; lead
   } else if (result.divergenceField === null) {
     summary = `No treatment disagreement — all ${speakers} selected vendor${speakers === 1 ? "" : "s"} that state a treatment agree.`;
   } else {
-    const field = result.divergenceField === "lead-time" ? "lead time" : result.divergenceField;
+    const field =
+      result.divergenceField === "lead-time"
+        ? "lead time"
+        : result.divergenceField;
     summary = `Disagreement on ${field}: ${result.groups
       .map((group) => `${vendorList(group.vendors)} (${group.value})`)
       .join("; ")}.`;
@@ -321,14 +345,29 @@ function DivergencePanel({ result, leadTimes }: { result: DivergenceResult; lead
   return (
     <SurfaceSection className="space-y-3">
       <div className="flex flex-wrap items-center gap-3">
-        <h2 className="text-lg font-semibold tracking-tight">Where vendors diverge</h2>
-        <span className="text-xs text-muted-foreground">Selected vendors only</span>
+        <h2 className="text-lg font-semibold tracking-tight">
+          Where vendors diverge
+        </h2>
+        <span className="text-xs text-muted-foreground">
+          Selected vendors only
+        </span>
       </div>
-      <p className="max-w-prose text-sm leading-relaxed text-foreground/90">{summary}</p>
+      <p className="max-w-prose text-sm leading-relaxed text-foreground/90">
+        {summary}
+      </p>
+      {lateAbsentVendors.length > 0 && (
+        <p className="max-w-prose text-sm leading-relaxed text-destructive">
+          Operational gap: {vendorList(lateAbsentVendors)}{" "}
+          {lateAbsentVendors.length === 1 ? "is" : "are"}
+          past {lateAbsentVendors.length === 1 ? "its" : "their"} publication
+          window with nothing found.
+        </p>
+      )}
       <div className="flex flex-wrap gap-2 text-xs">
         {silent > 0 && (
           <span className="rounded-full border border-border bg-muted/50 px-2.5 py-1 text-muted-foreground">
-            {silent} silent on treatment{silent > 0 ? `: ${vendorList(result.silent)}` : ""}
+            {silent} silent on treatment
+            {silent > 0 ? `: ${vendorList(result.silent)}` : ""}
           </span>
         )}
         {notCovered > 0 && (
@@ -338,11 +377,15 @@ function DivergencePanel({ result, leadTimes }: { result: DivergenceResult; lead
         )}
         {leadTimeDifference ? (
           <span className="rounded-full border border-chart-4/40 bg-chart-4/10 px-2.5 py-1 text-chart-4">
-            Lead times also differ: {leadTimes.groups.map((group) => `${vendorList(group.vendors)} (${group.value})`).join("; ")}
+            Lead times also differ:{" "}
+            {leadTimes.groups
+              .map((group) => `${vendorList(group.vendors)} (${group.value})`)
+              .join("; ")}
           </span>
         ) : leadTimeSilent > 0 ? (
           <span className="rounded-full border border-border bg-muted/50 px-2.5 py-1 text-muted-foreground">
-            No lead-time disagreement, but {leadTimeSilent} of {speakers + leadTimeSilent} do not state a lead time.
+            No lead-time disagreement, but {leadTimeSilent} of{" "}
+            {speakers + leadTimeSilent} do not state a lead time.
           </span>
         ) : null}
       </div>
@@ -353,16 +396,37 @@ function DivergencePanel({ result, leadTimes }: { result: DivergenceResult; lead
 // ─── Verdict panel ──────────────────────────────────────────────────────────
 
 const TOTAL_CHIPS: Array<{
-  key: "covered" | "missing" | "notYetDue";
+  key: "covered" | "missing" | "notYetDue" | "unchecked";
   label: string;
   cls: string;
 }> = [
-  { key: "covered", label: "covered", cls: "border-chart-3/40 bg-chart-3/10 text-chart-3" },
-  { key: "missing", label: "missing", cls: "border-destructive/40 bg-destructive/10 text-destructive" },
-  { key: "notYetDue", label: "not-yet-due", cls: "border-chart-4/40 bg-chart-4/10 text-chart-4" },
+  {
+    key: "covered",
+    label: "covered",
+    cls: "border-chart-3/40 bg-chart-3/10 text-chart-3",
+  },
+  {
+    key: "missing",
+    label: "missing",
+    cls: "border-destructive/40 bg-destructive/10 text-destructive",
+  },
+  {
+    key: "notYetDue",
+    label: "not-yet-due",
+    cls: "border-chart-4/40 bg-chart-4/10 text-chart-4",
+  },
+  {
+    key: "unchecked",
+    label: "not checked",
+    cls: "border-border bg-muted/30 text-muted-foreground",
+  },
 ];
 
-function VerdictPanel({ verdict, timingNoticeDismissed, onDismissTimingNotice }: {
+function VerdictPanel({
+  verdict,
+  timingNoticeDismissed,
+  onDismissTimingNotice,
+}: {
   verdict: LookupVerdict;
   timingNoticeDismissed: boolean;
   onDismissTimingNotice: () => void;
@@ -382,9 +446,13 @@ function VerdictPanel({ verdict, timingNoticeDismissed, onDismissTimingNotice }:
       {!timingNoticeDismissed && totals.notAssessed > 0 && (
         <div className="flex flex-wrap items-start justify-between gap-3 rounded-xl border border-chart-2/50 bg-chart-2/10 px-4 py-3 text-sm text-foreground">
           <p className="max-w-prose leading-relaxed">
-            {totals.notAssessed} lead time{totals.notAssessed === 1 ? " is" : "s are"} not
-            configured yet, so timing is unassessed for those vendors. Set them in{" "}
-            <Link href="/settings/" className="font-medium text-primary underline-offset-4 hover:underline">
+            {totals.notAssessed} lead time
+            {totals.notAssessed === 1 ? " is" : "s are"} not configured yet, so
+            timing is unassessed for those vendors. Set them in{" "}
+            <Link
+              href="/settings/"
+              className="font-medium text-primary underline-offset-4 hover:underline"
+            >
               Coverage settings
             </Link>
             .
@@ -459,6 +527,7 @@ export function LookupView({
   const [hydrated, setHydrated] = useState(false);
   const [scope, setScope] = useState<VendorId[]>([]);
   const [timingNoticeDismissed, setTimingNoticeDismissed] = useState(false);
+  const [confirmationRevision, setConfirmationRevision] = useState(0);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard
@@ -470,6 +539,8 @@ export function LookupView({
   const today = useMemo(() => new Date(), []);
 
   const verdict = useMemo<LookupVerdict | null>(() => {
+    // Re-read localStorage after an observation changes without exposing storage to SSR.
+    void confirmationRevision;
     if (!hydrated || !exDateParsed) return null;
     return computeLookupVerdict({
       ticker,
@@ -477,8 +548,19 @@ export function LookupView({
       exDate: exDateParsed,
       today,
       scope,
+      getConfirmation: (vendor) =>
+        getVendorConfirmation(ticker, eventType, exDate, vendor),
     });
-  }, [hydrated, exDateParsed, ticker, eventType, today, scope]);
+  }, [
+    hydrated,
+    exDateParsed,
+    ticker,
+    eventType,
+    exDate,
+    today,
+    scope,
+    confirmationRevision,
+  ]);
 
   const company = useMemo(
     () => companyParam ?? resolveCompanyName(ticker),
@@ -501,6 +583,19 @@ export function LookupView({
     setScopeVendors(next);
   };
 
+  const updateConfirmation = (vendor: VendorId, state: VendorMarkState) => {
+    setVendorConfirmation(ticker, eventType, exDate, vendor, state);
+    setConfirmationRevision((revision) => revision + 1);
+  };
+
+  const lateAbsentVendors =
+    verdict?.rows
+      .filter(
+        (row) =>
+          row.state === "missing" && row.confirmation?.state === "absent",
+      )
+      .map((row) => row.vendor) ?? [];
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       {/* Query header — D1 (1) */}
@@ -509,7 +604,9 @@ export function LookupView({
           <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
             <h1 className="text-3xl font-semibold tracking-tight">{ticker}</h1>
             {company && (
-              <span className="pb-1 text-sm text-muted-foreground">{company}</span>
+              <span className="pb-1 text-sm text-muted-foreground">
+                {company}
+              </span>
             )}
           </div>
 
@@ -560,14 +657,28 @@ export function LookupView({
               timingNoticeDismissed={timingNoticeDismissed}
               onDismissTimingNotice={() => setTimingNoticeDismissed(true)}
             />
-            <DivergencePanel result={divergence} leadTimes={leadTimeDivergence} />
+            <DivergencePanel
+              result={divergence}
+              leadTimes={leadTimeDivergence}
+              lateAbsentVendors={lateAbsentVendors}
+            />
 
             <SurfaceSection className="space-y-4">
-              <h2 className="text-lg font-semibold tracking-tight">Coverage matrix</h2>
-              <CoverageMatrix rows={verdict.rows} />
+              <h2 className="text-lg font-semibold tracking-tight">
+                Coverage matrix
+              </h2>
+              <CoverageMatrix
+                rows={verdict.rows}
+                onMarkChange={updateConfirmation}
+              />
             </SurfaceSection>
 
-            <NewsPanel ticker={ticker} eventType={eventType} exDate={exDate} company={company} />
+            <NewsPanel
+              ticker={ticker}
+              eventType={eventType}
+              exDate={exDate}
+              company={company}
+            />
           </motion.div>
         )}
       </div>
