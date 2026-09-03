@@ -49,11 +49,15 @@ export async function GET(request: Request) {
       headers: { "Cache-Control": CACHE_CONTROL },
     });
   } catch {
+    // NO CDN caching on the failure path. CACHE_CONTROL is s-maxage=600, so
+    // caching this would turn a momentary Yahoo blip into ten minutes of
+    // "suggestions unavailable" for every visitor, long after the upstream
+    // recovered. Successes are worth caching; an outage is not.
     return NextResponse.json({
       suggestions: [],
       warning: "Ticker suggestions are temporarily unavailable. You can still enter a symbol directly.",
     }, {
-      headers: { "Cache-Control": CACHE_CONTROL },
+      headers: { "Cache-Control": "no-store" },
     });
   } finally {
     clearTimeout(timeout);
