@@ -10,6 +10,7 @@ const links = [
     matches: (path: string) => path === "/" || path.startsWith("/lookup"),
   },
   { href: "/vendors/", label: "Vendors", matches: (path: string) => path.startsWith("/vendors") },
+  { href: "/guide/", label: "Guide", matches: (path: string) => path.startsWith("/guide") },
   {
     href: "/settings/",
     label: "Coverage settings",

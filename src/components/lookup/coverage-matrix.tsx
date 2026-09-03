@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FileTextIcon } from "lucide-react";
 
+import { GlossaryLinkedText } from "@/components/glossary-linked-text";
 import { leadTimeProvenance } from "@/lib/lookup-verdict";
 import type { MatrixRow, TreatmentVariant } from "@/lib/lookup-verdict";
 import type { VendorMarkState } from "@/lib/vendor-confirmation";
@@ -179,12 +180,9 @@ function ProgressiveTreatment({ text }: { text: string }) {
     );
   return (
     <span className="block">
-      <span className="text-sm leading-relaxed text-foreground/90">{lead}</span>
-      {open && (
-        <span className="mt-1.5 block text-sm leading-relaxed text-foreground/90">
-          {rest}
-        </span>
-      )}
+      <span className="text-sm leading-relaxed text-foreground/90">
+        <GlossaryLinkedText text={open ? text : lead} />
+      </span>
       <button
         type="button"
         aria-expanded={open}
@@ -222,6 +220,7 @@ function TreatmentBlock({ variant }: { variant: TreatmentVariant }) {
 }
 
 function TreatmentCell({ row }: { row: MatrixRow }) {
+  // The treatment body comes from each selected variant; row.treatment! is its legacy scalar view.
   if (!row.rulePresent)
     return (
       <span className="text-sm text-muted-foreground">
