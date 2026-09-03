@@ -29,9 +29,11 @@ import {
   caevForEventType,
   daysOut,
   getScopeVendors,
+  lookupDimensions,
   resolveCompanyName,
   setScopeVendors,
   verdictSummary,
+  type LookupFilters,
   type LookupVerdict,
 } from "@/lib/lookup-verdict";
 import type { NewsValidationResult } from "@/lib/news-validation";
@@ -512,6 +514,81 @@ function VerdictPanel({
   );
 }
 
+const QUALIFIER_KEY = "ca-hub.lookup-qualifiers.v1";
+
+function qualifierLabel(key: string): string {
+  return key.replaceAll("_", " ").replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function QualifierControls({
+  ticker,
+  eventType,
+  exDate,
+  filters,
+  onChange,
+}: {
+  ticker: string;
+  eventType: string;
+  exDate: string;
+  filters: LookupFilters;
+  onChange: (filters: LookupFilters) => void;
+}) {
+  const dimensions = useMemo(() => lookupDimensions(eventType), [eventType]);
+  const hasVariants = dimensions.indexTypes.length > 0;
+  const conditionKeys = Object.keys(dimensions.conditions);
+  if (!hasVariants && conditionKeys.length === 0) return null;
+  const save = (next: LookupFilters) => {
+    onChange(next);
+    try {
+      localStorage.setItem(`${QUALIFIER_KEY}:${ticker}:${eventType}:${exDate}`, JSON.stringify(next));
+    } catch { /* A blocked local store must not break lookup. */ }
+  };
+  return (
+    <SurfaceSection className="space-y-3">
+      <div>
+        <h2 className="text-lg font-semibold tracking-tight">Narrow this lookup</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Optional answers filter the matrix. Unanswered controls show every branch.
+        </p>
+      </div>
+      <div className="flex flex-wrap gap-4">
+        {hasVariants && (
+          <label className="grid gap-1.5 text-sm">
+            <span className="font-medium">Return variant</span>
+            <select
+              value={filters.indexType ?? ""}
+              onChange={(event) => save({ ...filters, indexType: event.target.value || undefined })}
+              className="h-9 rounded-lg border border-border bg-background px-2 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+            >
+              <option value="">All variants</option>
+              {dimensions.indexTypes.map((value) => <option key={value} value={value}>{value}</option>)}
+            </select>
+          </label>
+        )}
+        {conditionKeys.map((key) => (
+          <label key={key} className="grid gap-1.5 text-sm">
+            <span className="font-medium">
+              {key === "rights_moneyness" ? "Do you know if this rights issue is in-the-money?" : qualifierLabel(key)}
+            </span>
+            <select
+              value={filters.conditions?.[key] ?? ""}
+              onChange={(event) => save({ ...filters, conditions: { ...filters.conditions, [key]: event.target.value || undefined } })}
+              className="h-9 rounded-lg border border-border bg-background px-2 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+            >
+              <option value="">I don&apos;t know</option>
+              {dimensions.conditions[key]!.map((value) => (
+                <option key={value} value={value}>
+                  {key === "rights_moneyness" ? `Yes, ${value}` : value}
+                </option>
+              ))}
+            </select>
+          </label>
+        ))}
+      </div>
+    </SurfaceSection>
+  );
+}
+
 // ─── Page body (client half of /lookup/[ticker]) ────────────────────────────
 
 export function LookupView({
@@ -535,12 +612,19 @@ export function LookupView({
   const [scope, setScope] = useState<VendorId[]>([]);
   const [timingNoticeDismissed, setTimingNoticeDismissed] = useState(false);
   const [confirmationRevision, setConfirmationRevision] = useState(0);
+  const [filters, setFilters] = useState<LookupFilters>({});
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard
     setHydrated(true);
     setScope(getScopeVendors());
-  }, []);
+    try {
+      const raw = localStorage.getItem(`${QUALIFIER_KEY}:${ticker}:${eventType}:${exDate}`);
+      if (raw) setFilters(JSON.parse(raw) as LookupFilters);
+    } catch {
+      // Corrupt or unavailable preference: start unanswered.
+    }
+  }, [ticker, eventType, exDate]);
 
   const exDateParsed = useMemo(() => parseExDate(exDate), [exDate]);
   const today = useMemo(() => new Date(), []);
@@ -555,6 +639,7 @@ export function LookupView({
       exDate: exDateParsed,
       today,
       scope,
+      filters,
       getConfirmation: (vendor) =>
         getVendorConfirmation(ticker, eventType, exDate, vendor),
     });
@@ -566,6 +651,7 @@ export function LookupView({
     exDate,
     today,
     scope,
+    filters,
     confirmationRevision,
   ]);
 
@@ -659,6 +745,13 @@ export function LookupView({
             className="space-y-4"
           >
             <ScopeChips scope={scope} onChange={updateScope} />
+            <QualifierControls
+              ticker={ticker}
+              eventType={eventType}
+              exDate={exDate}
+              filters={filters}
+              onChange={setFilters}
+            />
             <VerdictPanel
               verdict={verdict}
               timingNoticeDismissed={timingNoticeDismissed}

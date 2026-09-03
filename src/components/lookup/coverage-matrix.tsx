@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FileTextIcon } from "lucide-react";
 
 import { leadTimeProvenance } from "@/lib/lookup-verdict";
-import type { MatrixRow } from "@/lib/lookup-verdict";
+import type { MatrixRow, TreatmentVariant } from "@/lib/lookup-verdict";
 import type { VendorMarkState } from "@/lib/vendor-confirmation";
 import type { VendorId } from "@/lib/vendors";
 
@@ -197,6 +197,30 @@ function ProgressiveTreatment({ text }: { text: string }) {
   );
 }
 
+function discriminatorLabel(variant: TreatmentVariant): string {
+  const parts = variant.indexType !== "*" ? [variant.indexType] : [];
+  for (const [key, value] of Object.entries(variant.conditions ?? {})) {
+    parts.push(`${key.replaceAll("_", " ")}: ${String(value)}`);
+  }
+  return parts.join(" · ");
+}
+
+function TreatmentBlock({ variant }: { variant: TreatmentVariant }) {
+  if (variant.treatment === null)
+    return <span className="text-sm text-muted-foreground">Silent</span>;
+  return (
+    <div className="space-y-1.5">
+      {discriminatorLabel(variant) && (
+        <span className="inline-flex rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary">
+          {discriminatorLabel(variant)}
+        </span>
+      )}
+      <ProgressiveTreatment text={variant.treatment} />
+      {variant.sourceRef && <SourceRef source={variant.sourceRef} />}
+    </div>
+  );
+}
+
 function TreatmentCell({ row }: { row: MatrixRow }) {
   if (!row.rulePresent)
     return (
@@ -214,10 +238,14 @@ function TreatmentCell({ row }: { row: MatrixRow }) {
       </span>
     );
   return (
-    <span className="block">
-      <ProgressiveTreatment text={row.treatment!} />
-      {row.sourceRef && <SourceRef source={row.sourceRef} />}
-    </span>
+    <div className="space-y-3">
+      {row.treatments.map((variant, index) => (
+        <TreatmentBlock
+          key={`${variant.indexType}-${index}-${discriminatorLabel(variant)}`}
+          variant={variant}
+        />
+      ))}
+    </div>
   );
 }
 

@@ -152,16 +152,90 @@ export function caevForEventType(eventType: string): string | null {
   );
 }
 
-/** Treatment prose for (vendor, event) from rules.json — null when no rule
- * has been extracted for that pair yet. */
+export interface TreatmentVariant {
+  indexType: string;
+  conditions: Record<string, string | number | boolean> | null;
+  treatment: string | null;
+  sourceRef: string | null;
+}
+
+type RuleLike = (typeof rules.rules)[number];
+
+const ruleVariants = (vendor: VendorId, eventType: string): RuleLike[] =>
+  rules.rules.filter((r) => r.vendor === vendor && r.event_type === eventType);
+
+/** Return every matching treatment row; never silently pick a discriminator. */
 export function treatmentFor(
   vendor: VendorId,
   eventType: string,
-): string | null {
-  return (
-    rules.rules.find((r) => r.vendor === vendor && r.event_type === eventType)
-      ?.treatment ?? null
-  );
+): TreatmentVariant[] {
+  return ruleVariants(vendor, eventType).map((rule) => ({
+    indexType: rule.index_type,
+    conditions: rule.conditions as unknown as TreatmentVariant["conditions"],
+    treatment: rule.treatment,
+    sourceRef: rule.source_ref,
+  }));
+}
+
+export interface LookupDimensions {
+  indexTypes: string[];
+  conditions: Record<string, string[]>;
+}
+
+/** Discover the discriminators in use for an event type, directly from rules. */
+export function lookupDimensions(eventType: string): LookupDimensions {
+  const indexTypes = new Set<string>();
+  const conditions = new Map<string, Set<string>>();
+  for (const rule of rules.rules) {
+    if (rule.event_type !== eventType) continue;
+    if (rule.index_type !== "*") indexTypes.add(rule.index_type);
+    const values = rule.conditions as Record<string, unknown> | null;
+    if (!values) continue;
+    for (const [key, value] of Object.entries(values)) {
+      if (value === null || value === undefined) continue;
+      const options = conditions.get(key) ?? new Set<string>();
+      options.add(String(value));
+      conditions.set(key, options);
+    }
+  }
+  return {
+    indexTypes: [...indexTypes],
+    conditions: Object.fromEntries(
+      [...conditions].map(([key, values]) => [key, [...values]]),
+    ),
+  };
+}
+
+export interface LookupFilters {
+  indexType?: string;
+  conditions?: Record<string, string | undefined>;
+}
+
+function rowMatchesFilters(rule: RuleLike, filters?: LookupFilters): boolean {
+  if (!filters?.indexType && !filters?.conditions) return true;
+  if (filters.indexType && rule.index_type !== "*" && rule.index_type !== filters.indexType)
+    return false;
+  const rowConditions = rule.conditions as Record<string, unknown> | null;
+  for (const [key, selected] of Object.entries(filters.conditions ?? {})) {
+    if (!selected) continue;
+    if (rowConditions && String(rowConditions[key]) !== selected) return false;
+  }
+  return true;
+}
+
+export function filteredTreatmentFor(
+  vendor: VendorId,
+  eventType: string,
+  filters?: LookupFilters,
+): TreatmentVariant[] {
+  return ruleVariants(vendor, eventType)
+    .filter((rule) => rowMatchesFilters(rule, filters))
+    .map((rule) => ({
+      indexType: rule.index_type,
+      conditions: rule.conditions as unknown as TreatmentVariant["conditions"],
+      treatment: rule.treatment,
+      sourceRef: rule.source_ref,
+    }));
 }
 
 // ─── Vendor scope (§7a-ii) ──────────────────────────────────────────────────
@@ -281,6 +355,8 @@ export interface MatrixRow {
   rulePresent: boolean;
   /** A null/absent rule is methodology silence, not a contrary treatment. */
   treatmentStated: boolean;
+  /** All selected rule variants, retained so the matrix cannot hide rows. */
+  treatments: TreatmentVariant[];
 }
 
 export interface VerdictTotals {
@@ -321,6 +397,7 @@ export interface LookupVerdictInput {
   isPresentAtVendor?: (vendor: VendorId) => boolean;
   getConfirmation?: (vendor: VendorId) => VendorConfirmation | null;
   storage?: SettingsStorage;
+  filters?: LookupFilters;
 }
 
 /**
@@ -345,13 +422,23 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
     const applicable =
       securityInVendorUniverse(ticker, vendor) &&
       vendorAppliesToEvent(vendor, eventType);
-    const rule = rules.rules.find(
-      (r) => r.vendor === vendor && r.event_type === eventType,
+    const allRules = ruleVariants(vendor, eventType);
+    const selectedRules = allRules.filter((rule) =>
+      rowMatchesFilters(rule, input.filters),
     );
+    const treatments = selectedRules.map((rule) => ({
+      indexType: rule.index_type,
+      conditions: rule.conditions as unknown as TreatmentVariant["conditions"],
+      treatment: rule.treatment,
+      sourceRef: rule.source_ref,
+    }));
+    const rule = selectedRules[0];
     const treatment = rule?.treatment ?? null;
     const sourceRef = rule?.source_ref ?? null;
-    const rulePresent = rule !== undefined;
-    const treatmentStated = treatment !== null && rule?.confidence !== "absent";
+    const rulePresent = allRules.length > 0;
+    const treatmentStated = selectedRules.some(
+      (row) => row.treatment !== null && row.confidence !== "absent",
+    );
     const dataCoverage = dataCoverageFor(vendor, eventType);
 
     if (!applicable) {
@@ -368,6 +455,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         sourceRef,
         rulePresent,
         treatmentStated,
+        treatments,
       };
     }
 
@@ -386,6 +474,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         sourceRef,
         rulePresent,
         treatmentStated,
+        treatments,
       };
     }
 
@@ -410,6 +499,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
           sourceRef,
           rulePresent,
           treatmentStated,
+          treatments,
         };
       }
       // §11c: no number, no source, no verdict. Never feed null to coverageState.
@@ -426,6 +516,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         sourceRef,
         rulePresent,
         treatmentStated,
+        treatments,
       };
     }
 
@@ -448,6 +539,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
       sourceRef,
       rulePresent,
       treatmentStated,
+      treatments,
     };
   });
 
