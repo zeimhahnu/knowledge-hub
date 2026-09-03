@@ -17,7 +17,7 @@
     "bankruptcy"
   ],
   "index_types": ["*"],
-  "vendors": ["msci", "sp", "ftse", "stoxx", "morningstar"],
+  "vendors": ["msci", "sp", "ftse", "stoxx", "morningstar", "solactive"],
   "rules": [
     {
       "vendor": "msci",
@@ -744,6 +744,149 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Bankruptcy and Financial Distress (p. 35)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "cash-dividend",
+      "caev": "DVOP",
+      "index_type": "*",
+      "treatment": "For the GPR Global 100 Index, dividends or other distributions are reinvested across the entire basket through a divisor at the opening of the effective date (ex-date); the guideline states no price adjustment or PAF for an ordinary cash dividend.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.1 (p. 9); §4.3 (p. 9)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "special-dividend",
+      "caev": "DVOP",
+      "index_type": "*",
+      "treatment": "Not addressed in the single-product GPR Global 100 Index Guideline; no treatment is published for this event.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11; event not addressed)",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "stock-dividend",
+      "caev": "BONU",
+      "index_type": "*",
+      "treatment": "For the GPR Global 100 Index, stock distributions (including a dividend paid in additional shares) are a relevant corporate action; the index is adjusted from cum-day to ex-day in accordance with the referenced Equity Index Methodology.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (p. 10)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "bonus-issue",
+      "caev": "BONU",
+      "index_type": "*",
+      "treatment": "Not addressed in the single-product GPR Global 100 Index Guideline; no treatment is published for this event.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11; event not addressed)",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "stock-split",
+      "caev": "SPLT",
+      "index_type": "*",
+      "treatment": "For the GPR Global 100 Index, share splits are a relevant corporate action; the index is adjusted from cum-day to ex-day in accordance with the referenced Equity Index Methodology.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (p. 10)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "spin-off",
+      "caev": "SPIN",
+      "index_type": "*",
+      "treatment": "For the GPR Global 100 Index, spin-offs are a relevant corporate action; the index is adjusted from cum-day to ex-day in accordance with the referenced Equity Index Methodology.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (p. 10)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "rights-issue",
+      "caev": "RHDI",
+      "index_type": "*",
+      "treatment": "Not addressed in the single-product GPR Global 100 Index Guideline; no treatment is published for this event.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11; event not addressed)",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "secondary-offering",
+      "caev": "OFFO",
+      "index_type": "*",
+      "treatment": "Not addressed in the single-product GPR Global 100 Index Guideline; no treatment is published for this event.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11; event not addressed)",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "private-placement",
+      "caev": "OFFO",
+      "index_type": "*",
+      "treatment": "Not addressed in the single-product GPR Global 100 Index Guideline; no treatment is published for this event.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11; event not addressed)",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "return-of-capital",
+      "caev": "REDU",
+      "index_type": "*",
+      "treatment": "Not addressed in the single-product GPR Global 100 Index Guideline; no treatment is published for this event.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11; event not addressed)",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "treatment": "For a stock-for-stock merger or acquisition where both acquirer and target are in the GPR Global 100 Index, Solactive removes the target, increases the acquirer’s total shares according to the stock terms, and sets the weighting cap factor so the post-event index market cap equals the two pre-event index market caps combined.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "tender-offer",
+      "caev": "TEND",
+      "index_type": "*",
+      "treatment": "Not addressed in the single-product GPR Global 100 Index Guideline; no treatment is published for this event.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11; event not addressed)",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "bankruptcy",
+      "caev": "DELI",
+      "index_type": "*",
+      "treatment": "For the GPR Global 100 Index, delistings and insolvency are relevant corporate actions; the index is adjusted from cum-day to ex-day in accordance with the referenced Equity Index Methodology. The guideline does not specify a separate removal or pricing rule.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (p. 10)",
       "confidence": "stated"
     }
   ]

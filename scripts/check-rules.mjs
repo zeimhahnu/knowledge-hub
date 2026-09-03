@@ -26,7 +26,7 @@ const LEAD_CONFIDENCES = ruleProps.lead_days_confidence.enum
 const CONFIDENCES = ruleProps.confidence.enum
 // Rules currently published in rules.json; add the vendor here as each verified
 // 13-event block lands, while VENDOR_IDS remains the broader app-level registry.
-const RULE_VENDOR_ALLOWLIST = ["msci", "sp", "ftse", "stoxx", "morningstar"]
+const RULE_VENDOR_ALLOWLIST = ["msci", "sp", "ftse", "stoxx", "morningstar", "solactive"]
 
 const raw = JSON.parse(fs.readFileSync("src/data/rules.json", "utf8"))
 const rules = raw.rules
