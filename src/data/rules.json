@@ -750,8 +750,30 @@
       "vendor": "morningstar",
       "event_type": "cash-dividend",
       "caev": "DVOP",
-      "index_type": "*",
-      "treatment": "Ordinary cash dividends affect only Total Return and Net Return indexes; Morningstar makes no price or share adjustment to the Price Return index (PAF = none).",
+      "index_type": "price-return",
+      "treatment": "No price adjustment for ordinary cash dividends; the Price Return (PR) index is not adjusted (PAF = none).",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mandatory Corporate Action Methodology — Ordinary Dividend (p. 6)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "cash-dividend",
+      "caev": "DVOP",
+      "index_type": "total-return",
+      "treatment": "Reinvests gross ordinary dividends in the Total Return (TR) index; gross dividends are used in calculating TR index levels.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mandatory Corporate Action Methodology — Ordinary Dividend (p. 6)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "cash-dividend",
+      "caev": "DVOP",
+      "index_type": "net-total-return",
+      "treatment": "Reinvests net ordinary dividends in the Net Return (NR) index; net dividends are used in calculating NR index levels after tax.",
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mandatory Corporate Action Methodology — Ordinary Dividend (p. 6)",
@@ -821,7 +843,24 @@
       "event_type": "rights-issue",
       "caev": "RHDI",
       "index_type": "*",
-      "treatment": "Only rights available to all shareholders and in the money are adjusted: Morningstar applies TERP/PAF and increases index shares. At- or out-of-the-money rights receive no adjustment; rights issuing index-ineligible instruments are not recognized.",
+      "conditions": {
+        "rights_moneyness": "in-the-money"
+      },
+      "treatment": "For in-the-money rights (positive value of right), applies the theoretical ex-right price (TERP) and Price Adjustment Factor (PAF), and increases index shares.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Rights Offering (Issue) (pp. 19–20)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "rights-issue",
+      "caev": "RHDI",
+      "index_type": "*",
+      "conditions": {
+        "rights_moneyness": "out-of-the-money"
+      },
+      "treatment": "For at- or out-of-the-money rights (zero or negative value of right), makes no corporate-action adjustment; rights issuing index-ineligible instruments are not recognized.",
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Rights Offering (Issue) (pp. 19–20)",
