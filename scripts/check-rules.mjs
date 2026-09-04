@@ -61,7 +61,8 @@ for (const rule of rules) {
   )
   assertRule(typeof rule.source_ref === "string" && rule.source_ref.trim().length > 0, `${rule.event_type}: source_ref must be non-empty`)
   assertRule(rule.lead_days === null || Number.isInteger(rule.lead_days), `${rule.event_type}: lead_days must be an integer or null`)
-  assertRule(typeof rule.treatment === "string" && rule.treatment.trim().length > 0, `${rule.event_type}: treatment must be non-empty`)
+  checkTreatment(rule, fail)
+  checkLeadDays(rule, fail)
   assertRule(INDEX_TYPES.includes(rule.index_type), `${rule.event_type}: index_type \`${rule.index_type}\` must be one of ${INDEX_TYPES.join("|")}`)
   assertRule(LEAD_CONFIDENCES.includes(rule.lead_days_confidence), `${rule.event_type}: lead_days_confidence must be one of ${LEAD_CONFIDENCES.join("|")}`)
   assertRule(CONFIDENCES.includes(rule.confidence), `${rule.event_type}: confidence must be one of ${CONFIDENCES.join("|")}`)
@@ -91,6 +92,20 @@ for (const rule of rules) {
   if (rule.lead_days_confidence === "practitioner" && !rule.source_ref?.startsWith("practitioner:")) {
     fail(`${rule.event_type}: lead_days_confidence is \`practitioner\` but source_ref does not start with \`practitioner:\``)
   }
+}
+
+// Deterministic boundary coverage for methodology silence and publication horizons.
+const semanticCases = [
+  { name: "absent confidence permits null treatment", rule: { event_type: "test", treatment: null, confidence: "absent", lead_days: null }, valid: true },
+  { name: "stated confidence rejects null treatment", rule: { event_type: "test", treatment: null, confidence: "stated", lead_days: null }, valid: false },
+  { name: "negative lead_days is rejected", rule: { event_type: "test", treatment: "Treatment", confidence: "stated", lead_days: -1 }, valid: false },
+]
+for (const testCase of semanticCases) {
+  let caseViolations = 0
+  const caseFail = () => { caseViolations++ }
+  checkTreatment(testCase.rule, caseFail)
+  checkLeadDays(testCase.rule, caseFail)
+  assert.equal(caseViolations === 0, testCase.valid, `${testCase.name} boundary check failed`)
 }
 
 // D3 (2026-09-02): an ORDINARY cash dividend is NEVER price-adjusted / PAF'd —
@@ -187,4 +202,18 @@ console.log(
 
 function assertRule(cond, msg) {
   if (!cond) fail(msg)
+}
+
+function checkTreatment(rule, report) {
+  if (rule.treatment === null) {
+    if (rule.confidence !== "absent") report(`${rule.event_type}: null treatment requires confidence to be absent`)
+  } else if (typeof rule.treatment !== "string" || rule.treatment.trim().length === 0) {
+    report(`${rule.event_type}: treatment must be non-empty when confidence is not absent`)
+  }
+}
+
+function checkLeadDays(rule, report) {
+  if (rule.lead_days !== null && rule.lead_days < 0) {
+    report(`${rule.event_type}: lead_days must be non-negative`)
+  }
 }

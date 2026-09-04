@@ -75,12 +75,12 @@
             "description": "Index return-variant discriminator; '*' when the treatment does not vary by return variant."
           },
           "treatment": {
-            "type": "string",
-            "description": "Prose statement of what the vendor does for this event. null only when the corpus has nothing (confidence 'absent').",
-            "minLength": 1
+            "type": ["string", "null"],
+            "description": "Prose statement of what the vendor does for this event. null only when the corpus has nothing (confidence 'absent')."
           },
           "lead_days": {
             "type": ["integer", "null"],
+            "minimum": 0,
             "description": "Vendor's published publication lead time before ex-date in days, or null when the source does not state one (never invent a number)."
           },
           "lead_days_confidence": {
