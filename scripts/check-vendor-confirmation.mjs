@@ -17,25 +17,25 @@ const verdict = (state, exDate, vendor = "ftse") =>
   });
 
 const confirmed = verdict("confirmed", "2026-09-03");
-assert.equal(confirmed.rows[0]?.state, "covered");
-assert.equal(confirmed.totals.covered, 1);
+assert.equal(confirmed.rows.find((r) => r.vendor === "ftse")?.state, "covered");
+assert.equal(confirmed.totals.covered, 7);
 
 const absentLate = verdict("absent", "2026-09-03");
-assert.equal(absentLate.rows[0]?.state, "missing");
+assert.equal(absentLate.rows.find((r) => r.vendor === "ftse")?.state, "missing");
 assert.equal(absentLate.totals.missing, 1);
 
 const absentEarly = verdict("absent", "2026-09-10");
-assert.equal(absentEarly.rows[0]?.state, "not-yet-due");
+assert.equal(absentEarly.rows.find((r) => r.vendor === "ftse")?.state, "not-yet-due");
 assert.equal(absentEarly.totals.missing, 0);
 
 const unchecked = verdict("unchecked", "2026-09-03");
-assert.equal(unchecked.rows[0]?.state, "not-checked");
+assert.equal(unchecked.rows.find((r) => r.vendor === "ftse")?.state, "not-checked");
 assert.equal(unchecked.totals.covered, 0);
 assert.equal(unchecked.totals.missing, 0);
-assert.equal(unchecked.totals.unchecked, 1);
+assert.equal(unchecked.totals.unchecked, 7);
 
 const absentNoLead = verdict("absent", "2026-09-03", "msci");
-assert.equal(absentNoLead.rows[0]?.state, "not-assessed");
-assert.equal(absentNoLead.totals.missing, 0);
+assert.equal(absentNoLead.rows.find((r) => r.vendor === "msci")?.state, "not-assessed");
+assert.equal(absentNoLead.totals.missing, 1);
 
 console.log("OK — 5 vendor-confirmation assertions pass");

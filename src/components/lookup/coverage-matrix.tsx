@@ -5,7 +5,7 @@ import { GlossaryLinkedText } from "@/components/glossary-linked-text";
 import { leadTimeProvenance } from "@/lib/lookup-verdict";
 import type { MatrixRow, TreatmentVariant } from "@/lib/lookup-verdict";
 import type { VendorMarkState } from "@/lib/vendor-confirmation";
-import type { VendorId } from "@/lib/vendors";
+import { vendorLabel, type VendorId } from "@/lib/vendors";
 
 const STATE_META: Record<MatrixRow["state"], { label: string; chip: string }> =
   {
@@ -26,7 +26,7 @@ const STATE_META: Record<MatrixRow["state"], { label: string; chip: string }> =
       chip: "border-border bg-muted/30 text-muted-foreground",
     },
     "not-assessed": {
-      label: "Lead time not configured",
+      label: "Publication horizon not configured",
       chip: "border-chart-2/50 bg-chart-2/10 text-chart-2",
     },
     "not-applicable": {
@@ -34,27 +34,6 @@ const STATE_META: Record<MatrixRow["state"], { label: string; chip: string }> =
       chip: "border-border bg-muted/30 text-muted-foreground",
     },
   };
-
-const DATA_COVERAGE_META: Record<
-  MatrixRow["dataCoverage"],
-  { label: string; chip: string }
-> = {
-  "states-treatment": {
-    label: "States a treatment",
-    chip: "border-chart-3/40 bg-chart-3/10 text-chart-3",
-  },
-  silent: {
-    label: "Silent",
-    chip: "border-chart-4/40 bg-chart-4/10 text-chart-4",
-  },
-  "not-covered": {
-    label: "Not covered",
-    chip: "border-border bg-muted/30 text-muted-foreground",
-  },
-};
-
-const vendorDisplayName = (vendor: VendorId): string =>
-  vendor === "sp" ? "S&P DJI" : vendor[0]!.toUpperCase() + vendor.slice(1);
 
 function StateBadge({ state }: { state: MatrixRow["state"] }) {
   const meta = STATE_META[state];
@@ -67,20 +46,8 @@ function StateBadge({ state }: { state: MatrixRow["state"] }) {
   );
 }
 
-function DataCoverageCell({ row }: { row: MatrixRow }) {
-  const meta = DATA_COVERAGE_META[row.dataCoverage];
-  return (
-    <span
-      className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-medium ${meta.chip}`}
-    >
-      {meta.label}
-    </span>
-  );
-}
-
-function WindowCell({ row }: { row: MatrixRow }) {
-  if (!row.applicable)
-    return <span className="text-muted-foreground/60">—</span>;
+function HorizonCell({ row }: { row: MatrixRow }) {
+  if (row.state !== "missing") return null;
   if (row.leadDays === null)
     return <span className="text-muted-foreground/60">—</span>;
   const { label, tone } = leadTimeProvenance(row.source ?? "unset", row.vendor);
@@ -90,7 +57,7 @@ function WindowCell({ row }: { row: MatrixRow }) {
       : "border-border bg-muted/60 text-muted-foreground";
   return (
     <span className="flex flex-wrap items-center gap-2">
-      <span className="text-sm font-medium tabular-nums">{row.leadDays}d</span>
+      <span className="text-sm font-medium tabular-nums">{row.leadDays} days</span>
       <span
         className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-medium ${cls}`}
       >
@@ -112,7 +79,7 @@ function CheckControl({
   return (
     <div className="space-y-1">
       <label className="sr-only" htmlFor={`vendor-check-${row.vendor}`}>
-        Your check for {vendorDisplayName(row.vendor)}
+        Your observation for {vendorLabel(row.vendor)}
       </label>
       <select
         id={`vendor-check-${row.vendor}`}
@@ -258,7 +225,7 @@ export function CoverageMatrix({
   if (rows.length === 0)
     return (
       <p className="text-sm text-muted-foreground">
-        No vendors in scope. Add one in the scope row above to grade it.
+        No vendor observations match this group yet.
       </p>
     );
   return (
@@ -272,8 +239,6 @@ export function CoverageMatrix({
             <colgroup>
               <col className="w-24" />
               <col className="w-36" />
-              <col className="w-28" />
-              <col className="w-28" />
               <col className="w-40" />
               <col />
             </colgroup>
@@ -281,9 +246,7 @@ export function CoverageMatrix({
               {[
                 "Vendor",
                 "Your check",
-                "Data coverage",
-                "Timing",
-                "Publication window",
+                "Publication horizon",
                 "Treatment",
               ].map((heading) => (
                 <th
@@ -303,19 +266,13 @@ export function CoverageMatrix({
                 className={`border-b border-border/70 align-top last:border-0 ${row.applicable ? "" : "opacity-50"}`}
               >
                 <td className="py-3 pr-4 text-sm font-semibold tracking-tight">
-                  {vendorDisplayName(row.vendor)}
+                  {vendorLabel(row.vendor)}
                 </td>
                 <td className="py-3 pr-4">
                   <CheckControl row={row} onMarkChange={onMarkChange} />
                 </td>
                 <td className="py-3 pr-4">
-                  <DataCoverageCell row={row} />
-                </td>
-                <td className="py-3 pr-4">
-                  <StateBadge state={row.state} />
-                </td>
-                <td className="py-3 pr-4">
-                  <WindowCell row={row} />
+                  <HorizonCell row={row} />
                 </td>
                 <td className="py-3 max-w-[28rem]">
                   <TreatmentCell row={row} />
@@ -333,7 +290,7 @@ export function CoverageMatrix({
           >
             <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="text-sm font-semibold tracking-tight">
-                {vendorDisplayName(row.vendor)}
+                {vendorLabel(row.vendor)}
               </span>
               <StateBadge state={row.state} />
             </div>
@@ -341,8 +298,7 @@ export function CoverageMatrix({
               <CheckControl row={row} onMarkChange={onMarkChange} />
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
-              <DataCoverageCell row={row} />
-              <WindowCell row={row} />
+              {row.state === "missing" && <HorizonCell row={row} />}
             </div>
             <div className="mt-3 border-t border-border/70 pt-2">
               <TreatmentCell row={row} />

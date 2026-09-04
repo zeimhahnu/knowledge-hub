@@ -103,7 +103,7 @@ function VendorCard({
         <h2 className="text-lg font-semibold tracking-tight">{label}</h2>
         <div className="flex min-w-40 flex-1 items-center gap-2 sm:max-w-xs">
           <label className="sr-only" htmlFor={`lead-${vendor}`}>
-            {label} publication lead time in days
+            {label} publication publication horizon in days
           </label>
           <input
             id={`lead-${vendor}`}
@@ -152,8 +152,8 @@ function VendorCard({
       </div>
       {vendorValue.source === "unset" && (
         <p className="text-xs leading-relaxed text-muted-foreground">
-          Not set — the not-yet-due/missing verdict stays disabled for {label} until a lead time is
-          entered here. No number, no source, no verdict.
+          Not set — timing remains unassessed for {label} until a publication horizon is entered here.
+          No number, no source, no timing verdict.
         </p>
       )}
       <div className="border-t border-border pt-3">
@@ -205,7 +205,7 @@ function VendorCard({
                           {eventName(override.eventType)}
                         </span>
                         <label className="sr-only" htmlFor={`lead-${vendor}-${override.eventType}`}>
-                          {label} {eventName(override.eventType)} lead time in days
+                          {label} {eventName(override.eventType)} publication horizon in days
                         </label>
                         <input
                           id={`lead-${vendor}-${override.eventType}`}
@@ -289,7 +289,7 @@ function AddOverrideForm({
         ))}
       </select>
       <label className="sr-only" htmlFor={`add-days-${vendor}`}>
-        Lead time in days for a new override
+        Publication horizon in days for a new override
       </label>
       <input
         id={`add-days-${vendor}`}
@@ -364,16 +364,16 @@ export default function SettingsPage() {
             <Settings2Icon className="h-3.5 w-3.5 text-primary" aria-hidden />
             Coverage settings
           </div>
-          <h1 className="mb-3 text-3xl font-semibold tracking-tight">Vendor coverage periods</h1>
+          <h1 className="mb-3 text-3xl font-semibold tracking-tight">Vendor publication horizons</h1>
           <p className="max-w-prose text-sm leading-relaxed text-muted-foreground">
-            The lead time is how many days before the ex-date a vendor should already carry a
-            pending corporate action. Before that window, silence is expected (<em>not-yet-due</em>
-            ); inside it, silence is a real gap (<em>missing</em>). Set each vendor&apos;s default
-            here — per-event-type overrides are the exception and stay collapsed.
+            The publication horizon is how many days before the ex-date a vendor is expected to publish or hold
+            a forward projection for a pending corporate action. Before that horizon, silence is
+            expected (<em>not-yet-due</em>); inside it, silence is an operational gap (<em>missing</em>).
+            Set each vendor&apos;s horizon here — per-event-type overrides stay collapsed.
           </p>
           <p className="mt-3 max-w-prose text-xs leading-relaxed text-muted-foreground">
             FTSE Russell is seeded at 5 days from its published proforma tracker; MSCI and the
-            remaining vendors start <em>not set</em> until you calibrate them — a lead time without
+            remaining vendors start <em>not set</em> until you calibrate them — a publication horizon without
             a source is never applied. Settings are stored in this browser only (localStorage), no
             backend.
           </p>
@@ -439,7 +439,7 @@ export default function SettingsPage() {
         <footer className="mt-8 border-t border-border pt-6 text-xs leading-relaxed text-muted-foreground">
           <p className="max-w-prose">
             Seeded values come from vendor methodology documents and confirmed product knowledge
-            (spec §11c). Where a vendor&apos;s docs state no lead time, the coverage engine&apos;s
+            (spec §11c). Where a vendor&apos;s docs state no publication horizon, the coverage engine&apos;s
             not-yet-due/missing verdict is disabled for it rather than guessing — one vendor&apos;s
             horizon is never applied to another.
           </p>

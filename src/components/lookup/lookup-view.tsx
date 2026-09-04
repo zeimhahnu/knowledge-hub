@@ -7,12 +7,9 @@ import {
   AlertTriangleIcon,
   CalendarDaysIcon,
   CheckCircle2Icon,
-  ChevronDownIcon,
   ClockIcon,
   HelpCircleIcon,
   NewspaperIcon,
-  PlusIcon,
-  XIcon,
 } from "lucide-react";
 
 import { CoverageMatrix } from "@/components/lookup/coverage-matrix";
@@ -28,16 +25,15 @@ import {
   computeLookupVerdict,
   caevForEventType,
   daysOut,
-  getScopeVendors,
   lookupDimensions,
+  deriveVendorGroups,
   resolveCompanyName,
-  setScopeVendors,
   verdictSummary,
   type LookupFilters,
   type LookupVerdict,
 } from "@/lib/lookup-verdict";
 import type { NewsValidationResult } from "@/lib/news-validation";
-import { VENDOR_IDS, VENDOR_LABELS, type VendorId } from "@/lib/vendors";
+import { VENDOR_LABELS, type VendorId } from "@/lib/vendors";
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -239,89 +235,6 @@ function NewsPanel({
   );
 }
 
-// ─── Vendor scope row ───────────────────────────────────────────────────────
-
-function ScopeChips({
-  scope,
-  onChange,
-}: {
-  scope: VendorId[];
-  onChange: (next: VendorId[]) => void;
-}) {
-  const unselected = VENDOR_IDS.filter((v) => !scope.includes(v));
-  const [pending, setPending] = useState("");
-  // A control, not a section peer: collapsed by default once a scope is set.
-  const [open, setOpen] = useState(false);
-
-  const chips = (
-    <div className="flex flex-wrap items-center gap-2">
-      {scope.map((v) => (
-        <span
-          key={v}
-          className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/15 py-1 pl-3 pr-1 text-sm font-medium text-primary"
-        >
-          {VENDOR_LABELS[v]}
-          <button
-            type="button"
-            aria-label={`Remove ${VENDOR_LABELS[v]} from scope`}
-            onClick={() => onChange(scope.filter((x) => x !== v))}
-            className="grid h-6 w-6 place-items-center rounded-full text-primary outline-none transition-colors hover:bg-primary/20 focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            <XIcon className="h-3.5 w-3.5" aria-hidden />
-          </button>
-        </span>
-      ))}
-
-      {unselected.length > 0 && (
-        <div className="inline-flex items-center gap-1.5">
-          <PlusIcon className="h-4 w-4 text-muted-foreground" aria-hidden />
-          <label className="sr-only" htmlFor="add-scope-vendor">
-            Add a vendor to scope
-          </label>
-          <select
-            id="add-scope-vendor"
-            value={pending}
-            onChange={(e) => {
-              const v = e.target.value as VendorId;
-              if (v && !scope.includes(v)) onChange([...scope, v]);
-              setPending("");
-            }}
-            className="h-8 rounded-lg border border-border bg-background px-2 text-sm text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
-          >
-            <option value="">add vendor…</option>
-            {unselected.map((v) => (
-              <option key={v} value={v}>
-                {VENDOR_LABELS[v]}
-              </option>
-            ))}
-          </select>
-        </div>
-      )}
-    </div>
-  );
-
-  return (
-    <div className="rounded-2xl border border-border/70 bg-card/40 px-4 py-2">
-      <button
-        type="button"
-        aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center justify-between gap-2 text-sm text-muted-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring"
-      >
-        <span className="font-medium text-foreground">Vendor scope</span>
-        <span className="flex items-center gap-1">
-          {scope.length} selected
-          <ChevronDownIcon
-            className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
-            aria-hidden
-          />
-        </span>
-      </button>
-      {open && <div className="mt-3">{chips}</div>}
-    </div>
-  );
-}
-
 // ─── Divergence summary ────────────────────────────────────────────────────
 
 function vendorList(vendors: readonly VendorId[]): string {
@@ -330,24 +243,20 @@ function vendorList(vendors: readonly VendorId[]): string {
 
 function DivergencePanel({
   result,
-  leadTimes,
   lateAbsentVendors,
 }: {
   result: DivergenceResult;
-  leadTimes: DivergenceResult;
   lateAbsentVendors: VendorId[];
 }) {
   const speakers = result.agree.length + result.disagree.length;
   const silent = result.silent.length;
   const notCovered = result.notCovered.length;
-  const leadTimeDifference = leadTimes.divergenceField === "lead-time";
-  const leadTimeSilent = leadTimes.silent.length;
 
   let summary: string;
   if (speakers === 0) {
-    summary = "No selected vendor states a treatment for this event.";
+    summary = "No comparable vendor states a treatment for this event.";
   } else if (result.divergenceField === null) {
-    summary = `No treatment disagreement — all ${speakers} selected vendor${speakers === 1 ? "" : "s"} that state a treatment agree.`;
+    summary = `No treatment disagreement — all ${speakers} comparable vendor${speakers === 1 ? "" : "s"} that state a treatment agree.`;
   } else {
     const field =
       result.divergenceField === "lead-time"
@@ -376,32 +285,12 @@ function DivergencePanel({
           window with nothing found.
         </p>
       )}
-      <div className="flex flex-wrap gap-2 text-xs">
-        {silent > 0 && (
-          <span className="rounded-full border border-border bg-muted/50 px-2.5 py-1 text-muted-foreground">
-            {silent} silent on treatment
-            {silent > 0 ? `: ${vendorList(result.silent)}` : ""}
-          </span>
-        )}
-        {notCovered > 0 && (
-          <span className="rounded-full border border-dashed border-border px-2.5 py-1 text-muted-foreground">
-            {notCovered} not covered: {vendorList(result.notCovered)}
-          </span>
-        )}
-        {leadTimeDifference ? (
-          <span className="rounded-full border border-chart-4/40 bg-chart-4/10 px-2.5 py-1 text-chart-4">
-            Lead times also differ:{" "}
-            {leadTimes.groups
-              .map((group) => `${vendorList(group.vendors)} (${group.value})`)
-              .join("; ")}
-          </span>
-        ) : leadTimeSilent > 0 ? (
-          <span className="rounded-full border border-border bg-muted/50 px-2.5 py-1 text-muted-foreground">
-            No lead-time disagreement, but {leadTimeSilent} of{" "}
-            {speakers + leadTimeSilent} do not state a lead time.
-          </span>
-        ) : null}
-      </div>
+      {(silent > 0 || notCovered > 0) && (
+        <p className="text-xs text-muted-foreground">
+          {silent > 0 ? `${vendorList(result.silent)} do not state a treatment.` : ""}
+          {notCovered > 0 ? ` ${vendorList(result.notCovered)} have no extracted methodology rule.` : ""}
+        </p>
+      )}
     </SurfaceSection>
   );
 }
@@ -455,7 +344,7 @@ function VerdictPanel({
       {!timingNoticeDismissed && totals.notAssessed > 0 && (
         <div className="flex flex-wrap items-start justify-between gap-3 rounded-xl border border-chart-2/50 bg-chart-2/10 px-4 py-3 text-sm text-foreground">
           <p className="max-w-prose leading-relaxed">
-            {totals.notAssessed} lead time
+            {totals.notAssessed} publication horizon
             {totals.notAssessed === 1 ? " is" : "s are"} not configured yet, so
             timing is unassessed for those vendors. Set them in{" "}
             <Link
@@ -603,13 +492,12 @@ export function LookupView({
   company: string | null;
 }) {
   const reduceMotion = useReducedMotion();
-  // Hydration guard: scope and lead times live in localStorage, so the
+  // Hydration guard: observations, qualifiers, and horizons live in localStorage, so the
   // client's first render must not disagree with server HTML. The state flip
   // IS the point of this effect; react-hooks/set-state-in-effect has no
   // alternative here (known limitation, see MEMORY.md lessons on the React 19
   // cascading-renders rule). Same pattern as the settings page.
   const [hydrated, setHydrated] = useState(false);
-  const [scope, setScope] = useState<VendorId[]>([]);
   const [timingNoticeDismissed, setTimingNoticeDismissed] = useState(false);
   const [confirmationRevision, setConfirmationRevision] = useState(0);
   const [filters, setFilters] = useState<LookupFilters>({});
@@ -617,7 +505,6 @@ export function LookupView({
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard
     setHydrated(true);
-    setScope(getScopeVendors());
     try {
       const raw = localStorage.getItem(`${QUALIFIER_KEY}:${ticker}:${eventType}:${exDate}`);
       if (raw) setFilters(JSON.parse(raw) as LookupFilters);
@@ -638,7 +525,6 @@ export function LookupView({
       eventType,
       exDate: exDateParsed,
       today,
-      scope,
       filters,
       getConfirmation: (vendor) =>
         getVendorConfirmation(ticker, eventType, exDate, vendor),
@@ -650,7 +536,6 @@ export function LookupView({
     eventType,
     exDate,
     today,
-    scope,
     filters,
     confirmationRevision,
   ]);
@@ -662,19 +547,15 @@ export function LookupView({
   const eventName = canonicalEventById(eventType)?.name ?? eventType;
   const caev = useMemo(() => caevForEventType(eventType), [eventType]);
   const daysOutNum = exDateParsed ? daysOut(exDateParsed, today) : null;
+  const groups = verdict ? deriveVendorGroups(verdict) : null;
+  const comparableVendors = useMemo(
+    () => groups ? [...groups.supplied, ...groups.expectedAbsent].map((row) => row.vendor) : [],
+    [groups],
+  );
   const divergence = useMemo(
-    () => computeDivergence(scope, eventType),
-    [scope, eventType],
+    () => computeDivergence(comparableVendors, eventType),
+    [comparableVendors, eventType],
   );
-  const leadTimeDivergence = useMemo(
-    () => computeDivergence(scope, eventType, "lead-time"),
-    [scope, eventType],
-  );
-
-  const updateScope = (next: VendorId[]) => {
-    setScope(next);
-    setScopeVendors(next);
-  };
 
   const updateConfirmation = (vendor: VendorId, state: VendorMarkState) => {
     setVendorConfirmation(ticker, eventType, exDate, vendor, state);
@@ -744,7 +625,6 @@ export function LookupView({
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="space-y-4"
           >
-            <ScopeChips scope={scope} onChange={updateScope} />
             <QualifierControls
               ticker={ticker}
               eventType={eventType}
@@ -757,9 +637,22 @@ export function LookupView({
               timingNoticeDismissed={timingNoticeDismissed}
               onDismissTimingNotice={() => setTimingNoticeDismissed(true)}
             />
+            {groups && (groups.notYetDue.length > 0 || groups.timingUnassessed.length > 0) && (
+              <SurfaceSection padding="tight" className="space-y-1">
+                {groups.notYetDue.length > 0 && (
+                  <p className="text-sm text-muted-foreground">
+                    {groups.notYetDue.length} vendor{groups.notYetDue.length === 1 ? " is" : "s are"} not yet due — the event is outside its forward publication horizon.
+                  </p>
+                )}
+                {groups.timingUnassessed.length > 0 && (
+                  <p className="text-sm text-muted-foreground">
+                    Timing unassessed for {groups.timingUnassessed.map((row) => VENDOR_LABELS[row.vendor]).join(", ")} — no documented or local publication horizon.
+                  </p>
+                )}
+              </SurfaceSection>
+            )}
             <DivergencePanel
               result={divergence}
-              leadTimes={leadTimeDivergence}
               lateAbsentVendors={lateAbsentVendors}
             />
 
@@ -767,10 +660,18 @@ export function LookupView({
               <h2 className="text-lg font-semibold tracking-tight">
                 Coverage matrix
               </h2>
-              <CoverageMatrix
-                rows={verdict.rows}
-                onMarkChange={updateConfirmation}
-              />
+              <div className="grid gap-4 lg:grid-cols-2">
+                <section aria-labelledby="supplied-heading">
+                  <h3 id="supplied-heading" className="mb-2 text-sm font-semibold">Supplied data</h3>
+                  <p className="mb-3 text-xs text-muted-foreground">Observed in vendor data.</p>
+                  <CoverageMatrix rows={groups?.supplied ?? []} onMarkChange={updateConfirmation} />
+                </section>
+                <section aria-labelledby="expected-heading">
+                  <h3 id="expected-heading" className="mb-2 text-sm font-semibold">Expected but absent</h3>
+                  <p className="mb-3 text-xs text-muted-foreground">Expected within its publication horizon, but not observed.</p>
+                  <CoverageMatrix rows={groups?.expectedAbsent ?? []} onMarkChange={updateConfirmation} />
+                </section>
+              </div>
             </SurfaceSection>
 
             <NewsPanel
