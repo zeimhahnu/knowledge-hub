@@ -225,7 +225,8 @@ export function CoverageMatrix({
   if (rows.length === 0)
     return (
       <p className="text-sm text-muted-foreground">
-        No vendor observations match this group yet.
+        No vendor observations match this group for the selected vendor
+        scope. Adjust the vendor scope above to include more vendors.
       </p>
     );
   return (

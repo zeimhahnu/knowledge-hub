@@ -242,16 +242,14 @@ export function filteredTreatmentFor(
 
 /**
  * The operator's usual set of vendors to reconcile, persisted locally
- * (`ca-hub.vendor-scope.v1`). Defaults to EVERY vendor — the spec's "usual
- * set held as a default in Settings" does not exist as a settings surface
- * yet (P0-5 built lead-time settings only), so until the operator narrows
- * the set here, the whole roster is in scope. Same guarded-storage contract
- * as coverage-settings.ts: private windows / cleared storage fall back to
- * the default, never crash.
+ * (`ca-hub.vendor-scope.v1`). Defaults to EVERY registered vendor — until
+ * the operator narrows the set via the lookup page's vendor-scope control,
+ * the whole roster is in scope. Same guarded-storage contract as
+ * coverage-settings.ts: private windows / cleared storage fall back to the
+ * default, never crash.
  */
-/** All registered vendors are observed; display groups are derived, never selected. */
 const DEFAULT_SCOPE = [...VENDOR_IDS];
-const LEGACY_SCOPE_STORAGE_KEY = "ca-hub.vendor-scope.v1";
+const SCOPE_STORAGE_KEY = "ca-hub.vendor-scope.v1";
 
 function resolveStorage(storage?: SettingsStorage): SettingsStorage | null {
   if (storage) return storage;
@@ -265,19 +263,49 @@ function resolveStorage(storage?: SettingsStorage): SettingsStorage | null {
   return null;
 }
 
-/**
- * Legacy migration guard. Scope never affects lookup anymore: old selections
- * are ignored and removed where storage permits, so they cannot hide vendors.
- */
+/** Read the persisted vendor scope; an unset, corrupt, or unavailable store
+ * falls back to the full default roster. An explicit empty selection is a
+ * transient in-session state (see LookupView), never written as "0 vendors
+ * forever" — the persisted value can only be the default or a real subset. */
 export function getScopeVendors(storage?: SettingsStorage): VendorId[] {
   const store = resolveStorage(storage);
-  try { store?.removeItem(LEGACY_SCOPE_STORAGE_KEY); } catch { /* blocked storage */ }
-  return [...DEFAULT_SCOPE];
+  if (!store) return [...DEFAULT_SCOPE];
+  try {
+    const raw = store.getItem(SCOPE_STORAGE_KEY);
+    if (!raw) return [...DEFAULT_SCOPE];
+    const parsed = JSON.parse(raw) as { schema?: unknown; vendors?: unknown };
+    if (parsed.schema !== 1 || !Array.isArray(parsed.vendors))
+      return [...DEFAULT_SCOPE];
+    const seen = new Set<VendorId>();
+    for (const v of parsed.vendors) {
+      if (
+        typeof v === "string" &&
+        (VENDOR_IDS as readonly string[]).includes(v)
+      ) {
+        seen.add(v as VendorId);
+      }
+    }
+    return seen.size > 0 ? [...seen] : [...DEFAULT_SCOPE];
+  } catch {
+    return [...DEFAULT_SCOPE];
+  }
 }
 
-/** @deprecated Scope is no longer persisted; retain a safe no-op for old callers. */
-export function setScopeVendors(_vendors: readonly VendorId[], storage?: SettingsStorage): void {
-  try { resolveStorage(storage)?.removeItem(LEGACY_SCOPE_STORAGE_KEY); } catch { /* blocked storage */ }
+/** Persist the operator's chosen vendor scope for next visit. */
+export function setScopeVendors(
+  vendors: readonly VendorId[],
+  storage?: SettingsStorage,
+): void {
+  const store = resolveStorage(storage);
+  if (!store) return; // no persistence — the session scope still works
+  try {
+    store.setItem(
+      SCOPE_STORAGE_KEY,
+      JSON.stringify({ schema: 1, vendors: [...new Set(vendors)] }),
+    );
+  } catch {
+    // Storage full / blocked — same outcome, never surface an error.
+  }
 }
 
 // ─── Verdict computation ────────────────────────────────────────────────────
@@ -363,7 +391,9 @@ export interface LookupVerdictInput {
   eventType: string;
   exDate: Date;
   today: Date;
-  /** Deprecated compatibility input; lookup display always uses every registered vendor. */
+  /** In-scope vendor ids. Excluded vendors are not shown, not scored, not
+   * counted in any total — they are absent rows, not a "not-applicable"
+   * verdict. Defaults to every registered vendor when omitted. */
   scope?: readonly VendorId[];
   /** Testable injection point — defaults to the user-confirmation store. */
   isPresentAtVendor?: (vendor: VendorId) => boolean;
@@ -381,7 +411,7 @@ export interface LookupVerdictInput {
  */
 export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
   const { ticker, eventType, exDate, today, storage } = input;
-  const scope = DEFAULT_SCOPE;
+  const scope = input.scope ?? DEFAULT_SCOPE;
   const exDateKey = exDate.toISOString().slice(0, 10);
   const present =
     input.isPresentAtVendor ??
