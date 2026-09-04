@@ -2,6 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 
 import { SurfaceSection } from "@/components/surface-section";
+import { RouteShell } from "@/components/route-shell";
 
 export default async function EventExtractionPage() {
   const filePath = path.join(
@@ -13,26 +14,8 @@ export default async function EventExtractionPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 py-3">
-          <div className="flex items-center justify-between">
-            <a
-              href="/vendors/"
-              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ArrowLeftIcon className="h-4 w-4" />
-              <span className="hidden sm:inline">Index Vendor Intelligence</span>
-              <span className="sm:hidden">Back</span>
-            </a>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <FileTextIcon className="h-3.5 w-3.5 text-primary" />
-              <span>Event Parameters</span>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
+      <main>
+        <RouteShell className="py-8">
         <SurfaceSection padding="tight">
         <div
           className="prose prose-invert max-w-none"
@@ -43,36 +26,9 @@ export default async function EventExtractionPage() {
           dangerouslySetInnerHTML={{ __html: renderMarkdown(content) }}
         />
         </SurfaceSection>
+        </RouteShell>
       </main>
     </div>
-  );
-}
-
-function ArrowLeftIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-    </svg>
-  );
-}
-
-function FileTextIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      viewBox="0 0 24 24"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-    </svg>
   );
 }
 

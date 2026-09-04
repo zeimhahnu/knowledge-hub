@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import glossary from "@/data/glossary.json";
+import { RouteShell } from "@/components/route-shell";
 
 export const metadata: Metadata = {
   title: "Glossary | Index Vendor Intelligence",
@@ -20,7 +21,7 @@ export default function GuidePage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-4xl px-4 py-10 sm:px-6 md:py-14">
+      <RouteShell className="py-10 md:py-14">
         <header className="max-w-2xl">
           <p className="text-sm font-medium text-primary">Reading guide</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
@@ -74,7 +75,7 @@ export default function GuidePage() {
         <p className="mt-10 text-sm text-muted-foreground">
           Need the underlying vendor rule? Return to the <Link className="text-primary underline underline-offset-2" href="/">lookup</Link> and open the cited source reference.
         </p>
-      </div>
+      </RouteShell>
     </main>
   );
 }

@@ -11,6 +11,7 @@ import {
 import Link from "next/link";
 
 import { SurfaceSection } from "@/components/surface-section";
+import { RouteShell } from "@/components/route-shell";
 
 type EventRow = {
   masterCategory: string;
@@ -302,7 +303,7 @@ export default function IsoTaxonomyPage() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl space-y-8 px-4 py-8 sm:px-6">
+      <RouteShell wide className="space-y-8 py-8">
         <SurfaceSection padding="tight" className="space-y-8">
         {/* Hero */}
         <div className="rounded-2xl border border-border bg-gradient-to-br from-card to-background p-6 sm:p-8">
@@ -507,7 +508,7 @@ export default function IsoTaxonomyPage() {
           </div>
         </div>
         </SurfaceSection>
-      </main>
+      </RouteShell>
     </div>
   );
 }

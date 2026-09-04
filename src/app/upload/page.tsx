@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { AlertTriangleIcon, CheckCircle2Icon, UploadIcon } from "lucide-react";
+import { RouteShell } from "@/components/route-shell";
 
 type Verdict =
   | { accepted: true; vendor: string; chars: number; note: string }
@@ -69,7 +70,7 @@ export default function UploadPage() {
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.03] [background-image:linear-gradient(var(--foreground)_1px,transparent_1px),linear-gradient(90deg,var(--foreground)_1px,transparent_1px)] [background-size:64px_64px]"
         />
-        <div className="relative mx-auto max-w-4xl px-4 py-12 sm:px-6 md:py-16">
+        <RouteShell className="relative py-12 md:py-16">
           <div className="mx-auto max-w-2xl text-center">
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-4 py-2 text-sm text-muted-foreground">
               <UploadIcon className="h-4 w-4 text-primary" aria-hidden />
@@ -153,7 +154,7 @@ export default function UploadPage() {
             Screening does not store, publish, or queue your document. A passed screen only confirms that the file is eligible for the next, not-yet-configured ingest step.
           </p>
           <p className="mt-6 text-center text-sm"><Link className="font-medium text-primary underline-offset-4 hover:underline" href="/">Back to corporate-action validation</Link></p>
-        </div>
+        </RouteShell>
       </section>
     </main>
   );

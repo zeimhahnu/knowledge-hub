@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { surfaceOuterClass } from "@/components/surface-section";
+import { RouteShell } from "@/components/route-shell";
 import { AnimatePresence, motion } from "framer-motion";
 import Tippy from "@tippyjs/react";
 import {
@@ -899,7 +900,7 @@ export default function VendorDashboard() {
       </AnimatePresence>
 
           {/* ─── Page Content ─── */}
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 py-6">
+          <RouteShell wide className="py-6">
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
 
               {/* Left Sidebar: desktop only */}
@@ -1144,7 +1145,7 @@ export default function VendorDashboard() {
             </div>
           </main>
         </div>
-      </div>
+      </RouteShell>
     </div>
   );
 }

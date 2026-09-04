@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { SurfaceSection } from "@/components/surface-section";
+import { RouteShell } from "@/components/route-shell";
 import { Button } from "@/components/ui/button";
 import { CANONICAL_EVENTS } from "@/lib/event-taxonomy";
 import { VENDOR_IDS, VENDOR_LABELS, type VendorId } from "@/lib/vendors";
@@ -359,7 +360,7 @@ export default function SettingsPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="border-b border-border bg-card/30">
-        <div className="mx-auto max-w-4xl px-6 py-8">
+        <RouteShell className="py-8">
           <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-3 py-1 text-xs font-medium text-muted-foreground">
             <Settings2Icon className="h-3.5 w-3.5 text-primary" aria-hidden />
             Coverage settings
@@ -377,9 +378,9 @@ export default function SettingsPage() {
             a source is never applied. Settings are stored in this browser only (localStorage), no
             backend.
           </p>
-        </div>
+        </RouteShell>
       </div>
-      <div className="mx-auto max-w-4xl px-6 py-10">
+      <RouteShell className="py-10">
         <div
           className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-card p-3"
           aria-live="polite"
@@ -444,7 +445,7 @@ export default function SettingsPage() {
             horizon is never applied to another.
           </p>
         </footer>
-      </div>
+      </RouteShell>
     </main>
   );
 }
