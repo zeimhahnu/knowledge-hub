@@ -31,5 +31,8 @@ jobs:
       - name: Typecheck
         run: npx tsc --noEmit
 
+      - name: News route contract
+        run: node --experimental-transform-types scripts/check-news-route.mjs
+
       - name: Build
         run: npm run build

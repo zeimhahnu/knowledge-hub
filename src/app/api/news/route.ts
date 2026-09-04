@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from "next/server.js";
 
-import { validateNews } from "@/lib/news-validation";
+import { validateNews } from "../../../lib/news-validation.ts";
 
 /**
  * GET /api/news?ticker=&eventType=&exDate=&companyName=
