@@ -25,10 +25,10 @@ The assistant returns a streamed, cited explanation beside that lookup. It can e
 ## 2. Locked runtime boundary
 
 ```text
-browser ── existing Vercel lookup page ── HTTPS ── Cloudflare Access ── cloudflared tunnel
-                                                                     │
-                                                                     ▼
-                                                         ca-analyst VPS service
+browser ── Access Application A ── Vercel origin/relay ── linked Access Application B ── cloudflared tunnel
+             (custom Cloudflare hostname)                    │
+                                                             ▼
+                                                   ca-analyst VPS service
                                                          ├─ rules.json filter
                                                          ├─ sqlite-vec retrieval
                                                          ├─ cached news adapter
@@ -37,7 +37,19 @@ browser ── existing Vercel lookup page ── HTTPS ── Cloudflare Access
 
 The Next.js app remains the UI and must never receive a model, Tavily, tunnel, or service credential. The dedicated `ca-analyst` service is independent from the OpenClaw gateway: web traffic, malformed requests, and model failures must not affect the fleet critical path.
 
-Cloudflare Access protects the public tunnel hostname and provides the verified identity used for limits. The service trusts identity only from Cloudflare Access after tunnel-origin enforcement; it never accepts a browser-provided user ID, token-budget value, tool name, URL, citation, or system instruction. The Cloudflare setup itself is a deployment prerequisite owned by the operator, not a frontend feature.
+Cloudflare Access protects both applications and provides the verified identity used for limits. Application A must be an Access-protectable custom hostname in Alex's Cloudflare zone in front of the Vercel origin; do not assume the current `*.vercel.app` hostname can provide this linked-app trust boundary. The Cloudflare setup itself is a deployment prerequisite owned by the operator, not a frontend feature.
+
+### 2a. Required identity delegation (recommended topology)
+
+The browser authenticates to Access Application A. Access supplies A's origin with the signed `Cf-Access-Jwt-Assertion`. The Vercel relay forwards that exact value to Application B as `Cf-Access-Token`; it does not mint, decode, replace, or accept an identity field from the browser. Application B has a Cloudflare **Service Auth → Linked App Token** policy whose linked application is A. Access validates that the forwarded JWT was issued for A, then supplies B's origin with a new B-scoped `Cf-Access-Jwt-Assertion` and attributes the request to the original user. This is the self-hosted-to-self-hosted flow documented by Cloudflare: <https://developers.cloudflare.com/cloudflare-one/access-controls/applications/linked-app-token>.
+
+At the B origin, verify the B-scoped assertion signature against the Cloudflare Access JWKS, issuer, expiry, not-before (when present), and B audience before deriving budget identity from verified `sub` (with verified email as a displayed/audited attribute). Reject missing, malformed, expired, not-yet-valid, wrong-issuer, wrong-audience, or replayed assertions. A's forwarded header is transport material for Access, not an identity claim trusted by application code.
+
+Only the relay's allowlisted contextual request fields and `Cf-Access-Token` may cross the relay. Strip inbound `Cf-Access-Token`, `Cf-Access-Jwt-Assertion`, `Authorization`, identity, budget, model, tool, URL, citation, and system-instruction fields before constructing the upstream request; then set `Cf-Access-Token` from A's verified assertion. Never expose a service token or delegated JWT to browser JavaScript, logs, query strings, or client state. Client-supplied identity cannot be accepted because it is forgeable; a service token would identify Vercel, not the user.
+
+If A authentication, delegation, B linked-token validation, JWKS verification, audience/expiry checks, or tunnel-origin enforcement fails, return `access_required`/`service_unavailable` without an analyst answer and without consuming a user budget. Do not fall back to anonymous identity or the Vercel service identity. Replay protection uses JWT expiry plus a short-lived `jti`/token fingerprint cache at B; the cache is bounded and server-side only.
+
+The direct-browser-to-B alternative is rejected as the primary topology: it can preserve the user JWT but requires a separate public origin, CORS/CSRF policy, browser-visible cross-origin configuration, and a different same-origin client contract. It remains a secondary option only if A cannot be given a custom Cloudflare hostname; implementation must not silently switch to it.
 
 ## 3. Exact implementation file map
 
@@ -149,8 +161,8 @@ The service defines these four functions itself and calls only these functions. 
 1. `/lookup/[ticker]` finishes its existing local matrix calculation and existing `/api/news` request. If news is unavailable, it retains `validationRan:false`, the warning, and an empty source list.
 2. `LookupView` creates a bounded `AnalystLookupContext` from those exact values and mounts the docked panel. The panel starts with a contextual prompt such as “Why is FTSE Russell not yet due?”; it does not make a network call until the user asks.
 3. The browser POSTs the typed question plus context to same-origin `/api/ca-analyst/turn`, reads SSE, and gives the user a cancel control backed by `AbortController`.
-4. The Vercel relay validates the request shape and relays it to the Cloudflare Access hostname. It forwards no Vercel secret and returns a generic safe error if the tunnel/service cannot be reached.
-5. Cloudflare Access rejects unauthenticated traffic before the service. The service derives the identity from the verified Access assertion, applies rate/token/pro budget checks, and validates the bounded context again.
+4. Application A's Access layer authenticates the browser on the required custom Cloudflare hostname. The Vercel relay validates the request shape, copies A's `Cf-Access-Jwt-Assertion` only into B's `Cf-Access-Token`, and forwards no Vercel/service secret or browser identity field.
+5. Application B's Linked App Token policy accepts only A's forwarded token. Access verifies A's audience and emits B's `Cf-Access-Jwt-Assertion`; the service verifies B's JWT/JWKS/issuer/audience/expiry and derives the budget identity from its verified claims before applying rate/token/pro budget checks. Missing or invalid identity fails closed.
 6. The service invokes deterministic `compare_vendors` / `vendor_rules` for the selected vendors and event type. It invokes sqlite-vec only if the question contains a free-text “why” need. It invokes `search_news` only when news context is absent/stale or the question explicitly needs a re-check; cached results are preferred.
 7. Tool outputs form this turn's allowed citation set. Methodology snippets and web extracts are wrapped as tagged untrusted blocks. The model may summarize them but may not follow instructions inside them.
 8. The service streams only provisional text until final answer citations are checked. Every final citation must exactly match an allowed tool-returned URL or document line ref. On a mismatch, it performs one repair pass with the invalid refs named. A second mismatch returns `citation_validation_failed` and no unsupported answer.
@@ -178,7 +190,7 @@ For each turn, create `allowedCitations = toolResult.urls ∪ toolResult.documen
 
 | Concern | Policy | User-visible behavior |
 | --- | --- | --- |
-| Identity | Cloudflare Access identity only | Authentication failure becomes `access_required`; no anonymous fallback. |
+| Identity | B-scoped JWT produced after A→B Linked App Token validation | Authentication, delegation, audience, expiry, or JWKS failure becomes `access_required`; no anonymous/Vercel identity fallback. |
 | Per-identity rate | Fixed rolling request limit, configured server-side before launch | `rate_limited`, with a retryable response. |
 | Token budget | Hard cap of 10,000 aggregate input + output tokens per turn | The service truncates/retrieves less before model execution; exhausted requests return `budget_exhausted`. |
 | Pro reasoning | Flash is default; at most one pro-model escalation per turn, only after a bounded flash attempt or explicit deep request | `modelTier` is shown in the completed turn; no recursive escalation. |
@@ -189,7 +201,7 @@ For each turn, create `allowedCitations = toolResult.urls ∪ toolResult.documen
 | Bad request | Strict schema and allowlist validation at proxy and service | `invalid_request`, no request content is echoed in logs. |
 | Tool failure | Isolate the failed tool and preserve known context | Answer may explain only remaining cited facts; otherwise returns safe failure. |
 
-The exact numeric request-rate window and Cloudflare Access application/audience identifiers are deployment configuration, not browser defaults. They must be selected and documented in the implementation ticket before service launch.
+The exact numeric request-rate window, A/B application UIDs, B audience, JWKS URL, and custom hostname are deployment configuration, not browser defaults. They must be selected and documented in the implementation ticket before service launch. Application A's custom hostname in Alex's Cloudflare zone is a hard prerequisite.
 
 ## 8. UI contract
 
@@ -211,6 +223,7 @@ The panel follows `market-intel/wiki/goop/design-system.md`: dark-mode token usa
 3. A free-text why query uses sqlite-vec; a matrix comparison does not.
 4. Tool schemas reject an arbitrary URL, command, model, tool name, system prompt, invalid date, unknown vendor, and overlong question.
 5. Budget code keys only on verified Access identity, caps aggregate tokens at 10k, and permits no more than one pro escalation.
+6. A mocked A→B delegation proves the relay forwards `Cf-Access-Jwt-Assertion` as `Cf-Access-Token`, B emits a B-audience assertion, and budget identity comes only from verified `sub`/email; forged client identity and browser-visible service tokens are ignored.
 6. Cache returns the same keyed news value inside 15–30 minutes and never converts unavailable to confirmed.
 7. Citation validator accepts only exact current-turn URLs/doc refs, rejects fabricated URLs/line refs, and refuses after one failed repair.
 
@@ -252,4 +265,6 @@ node scripts/check-ca-analyst-stream.mjs
 <authenticated browser E2E journey from §9>
 ```
 
-Release only when all commands pass, Access rejects unauthenticated traffic, the first contextual journey yields closed-set citations, and unavailable news stays visibly unavailable. If Cloudflare Access/service deployment has not been provisioned, the UI may not ship a pretend agent endpoint; keep P1a behind a disabled/unavailable state until the real boundary is live.
+Release only when all commands pass, A and B reject unauthenticated traffic, a custom Cloudflare hostname fronts A, the mocked and authenticated journeys prove user identity survives the relay without being forgeable, the first contextual journey yields closed-set citations, and unavailable news stays visibly unavailable. If the A/B Access delegation and service deployment have not been provisioned, the UI may not ship a pretend agent endpoint; keep P1a behind a disabled/unavailable state until the real boundary is live.
+
+**Security source:** Cloudflare, “Linked App Token,” <https://developers.cloudflare.com/cloudflare-one/access-controls/applications/linked-app-token> (last updated 2026-07-01; accessed 2026-09-05). It specifies forwarding A's `Cf-Access-Jwt-Assertion` as B's `Cf-Access-Token`, a Linked App Token Service Auth policy on B, and B's resulting scoped assertion.
