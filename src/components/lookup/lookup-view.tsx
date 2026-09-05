@@ -36,8 +36,7 @@ import {
 } from "@/lib/lookup-verdict";
 import type { NewsValidationResult } from "@/lib/news-validation";
 import { VENDOR_IDS, VENDOR_LABELS, type VendorId } from "@/lib/vendors";
-import { franklinSnapshot, resolveFundRules, type FundResolution } from "@/lib/fund-master";
-import catalogData from "@/data/fund-master/franklin-us-etf-catalog-2026-09-05.json" with { type: "json" };
+import { activeFranklinCatalog, franklinCatalog, franklinSnapshot, resolveFundRules, type FranklinCatalogRecord, type FundResolution } from "@/lib/fund-master";
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -555,25 +554,24 @@ function QualifierControls({
   );
 }
 
-type CatalogRecord = (typeof catalogData.records)[number];
-
-function FundContextControl({ selectedTicker, onChange, resolution, catalogRecords }: { selectedTicker: string; onChange: (ticker: string) => void; resolution: FundResolution; catalogRecords: readonly CatalogRecord[] }) {
-  const cataloged = selectedTicker !== "" && catalogRecords.some((record) => record.ticker === selectedTicker);
+function FundContextControl({ selectedTicker, onChange, resolution, catalogRecords }: { selectedTicker: string; onChange: (ticker: string) => void; resolution: FundResolution; catalogRecords: readonly FranklinCatalogRecord[] }) {
   return (
     <SurfaceSection className="space-y-3">
       <div>
         <h2 className="text-lg font-semibold tracking-tight">Optional fund context</h2>
-        <p className="mt-1 text-sm text-muted-foreground">Select a reviewed Franklin ETF to resolve its index construction. Leave unset for the unchanged P0 lookup.</p>
+        <p className="mt-1 text-sm text-muted-foreground">Search the committed Franklin ETF catalog. Only reviewed metadata enables the 3-D lookup; leave unset for the unchanged P0 lookup.</p>
       </div>
       <label className="grid max-w-sm gap-1.5 text-sm">
         <span className="font-medium">Franklin ETF</span>
-        <select value={selectedTicker} onChange={(event) => onChange(event.target.value)} className="h-10 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
-          <option value="">No fund selected</option>
-          {catalogRecords.map((fund) => <option key={fund.ticker} value={fund.ticker}>{fund.ticker} — {fund.name.replaceAll("-", " ")}</option>)}
-        </select>
+        <input list="franklin-etf-catalog" value={selectedTicker} onChange={(event) => onChange(event.target.value.toUpperCase())} placeholder="Search by ticker or fund name" aria-describedby="franklin-etf-help" className="h-10 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50" />
+        <datalist id="franklin-etf-catalog">
+          {catalogRecords.map((fund) => <option key={fund.ticker} value={fund.ticker} label={fund.name.replaceAll("-", " ")} />)}
+        </datalist>
+        <span id="franklin-etf-help" className="text-xs text-muted-foreground">{catalogRecords.length} active cataloged ETFs · metadata is reviewed separately</span>
       </label>
       {resolution.mode === "fund-resolved" && <div className="rounded-xl border border-chart-3/40 bg-chart-3/10 px-4 py-3 text-sm"><p className="font-medium">{resolution.fund.ticker} → {resolution.fund.underlying_index} → {resolution.fund.index_provider}</p><p className="mt-1 text-muted-foreground">Index type: {resolution.indexType}. The selected event uses the reviewed 3-D rule when one exists.</p><p className="mt-1 text-xs text-muted-foreground">Sources: {resolution.fund.source_urls.join(" · ")}</p></div>}
-      {resolution.mode === "fund-unresolved" && <p role="status" className="rounded-xl border border-chart-4/40 bg-chart-4/10 px-4 py-3 text-sm text-chart-4">{cataloged ? `${selectedTicker} is cataloged, but its metadata is not reviewed for 3-D treatment. The existing P0 2-D result is retained.` : resolution.warnings[0]}</p>}
+      {resolution.mode === "cataloged-unreviewed" && <p role="status" className="rounded-xl border border-chart-4/40 bg-chart-4/10 px-4 py-3 text-sm text-chart-4"><span className="font-medium">Cataloged, metadata unreviewed:</span> {resolution.warnings[0]} No provider, weighting, index type, or 3-D rule is inferred.</p>}
+      {resolution.mode === "fund-unresolved" && <p role="status" className="rounded-xl border border-chart-4/40 bg-chart-4/10 px-4 py-3 text-sm text-chart-4">{resolution.warnings[0]}</p>}
     </SurfaceSection>
   );
 }
@@ -739,7 +737,7 @@ export function LookupView({
             className="space-y-4"
           >
             <VendorScopeControl scope={scope} onChange={updateScope} />
-            <FundContextControl selectedTicker={fundTicker} onChange={setFundTicker} resolution={fundResolution} catalogRecords={catalogData.records} />
+            <FundContextControl selectedTicker={fundTicker} onChange={setFundTicker} resolution={fundResolution} catalogRecords={activeFranklinCatalog(franklinCatalog)} />
             <QualifierControls
               ticker={ticker}
               eventType={eventType}
