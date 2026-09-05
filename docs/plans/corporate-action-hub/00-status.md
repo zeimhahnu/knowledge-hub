@@ -41,3 +41,52 @@ npm run start -- --hostname 127.0.0.1 --port 3100    PASS (local production jour
 ## Sole next slice
 
 **P1a only — CA Analyst contextual assistant.** Do not start it until a program-design document specifies: affected files; frontend/API/VPS call flow; request/response and read-only tool schemas; RAG corpus and citation contract; Cloudflare Access and other security boundaries; unit/integration/e2e tests; and the release check. P1a remains 2-D (`vendor × event_type`) and excludes the fund master.
+
+---
+
+## Blocker resolved — 2026-09-05
+
+**"Visual browser acceptance remains unverified because Chromium failed to start"
+is closed.** The runner was not broken in the way it reported.
+
+**Root cause.** Playwright's own Chromium was present on the VPS all along
+(`~/.cache/ms-playwright/chromium-1217`). The managed browser was resolving
+`/usr/bin/chromium-browser` instead — a 2020 Snap wrapper stub — so the failure
+read as "needs an unavailable Snap install" when the real problem was a missing
+set of shared libraries (`libcups.so.2` first) for the bundled binary. Installing
+those deps makes the bundled Chromium launch and render; no Snap is involved.
+
+**Acceptance actually run.** `scripts/check-responsive.mjs` (new) executes the
+audit matrix — 8 routes x 5 widths (320/375/768/1024/1440):
+
+| Target | Result |
+| --- | --- |
+| Local production build, `INGEST_BASIC_AUTH` supplied | **48/48 pass** |
+| https://corporate-action.vercel.app from the VPS runner | **42 pass, 5 fail — all `/upload` HTTP 401** |
+
+No document-level horizontal scrolling at any width on any route; minimum outer
+gutter at 320px is 16px. The five production failures are the intended Basic-auth
+gate from `src/middleware.ts`, not a layout defect: the check needs
+`INGEST_BASIC_AUTH` to measure `/upload` rather than its 401 challenge, and that
+credential lives in the Vercel dashboard. **Production `/upload` is verified only
+once someone re-runs the gate with it.**
+
+**Not covered by this gate,** and still owed from the audit's acceptance list:
+keyboard focus visibility, heading order, and reduced-motion behaviour. The gate
+asserts layout, not a11y semantics.
+
+**Three checks were repaired in the same pass** — each had been passing or
+failing for the wrong reason:
+
+- `check-fund-master.mjs` asserted provenance against
+  `agents/goop/memory/audit/...-raw.json`, a file in the parent workspace that
+  was never tracked in git. It therefore passed only inside one agent's working
+  tree. It now asserts against the snapshot's own committed `acquisition` block.
+- `check-qualifier.mjs` read `result.rows[0]` as "the scoped vendor", but the
+  verdict returns all seven vendors, so every FTSE assertion was silently
+  checking MSCI. It selects rows by vendor now.
+- `check-homepage.mjs` expected URLs without the trailing slash that
+  `next.config.ts`'s `trailingSlash: true` requires.
+
+Full gate at hub `8ee8955`: `tsc --noEmit` clean, `lint` clean, **23/23 check
+scripts pass.**
