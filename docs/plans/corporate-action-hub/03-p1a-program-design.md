@@ -39,6 +39,13 @@ The Next.js app remains the UI and must never receive a model, Tavily, tunnel, o
 
 Cloudflare Access protects both applications and provides the verified identity used for limits. Application A must be an Access-protectable custom hostname in Alex's Cloudflare zone in front of the Vercel origin; do not assume the current `*.vercel.app` hostname can provide this linked-app trust boundary. The Cloudflare setup itself is a deployment prerequisite owned by the operator, not a frontend feature.
 
+### Operator prerequisites before implementation
+
+1. Attach `hub.vpszeimhahnu.uk` to the Vercel project as a **DNS-only** Cloudflare record first, so Vercel can issue its certificate. Switch it to proxied only after verification. Do not block `/.well-known/acme-challenge/*` or `/.well-known/vercel/*` at the Cloudflare edge.
+2. Close the `corporate-action.vercel.app` origin bypass. Access on `hub.vpszeimhahnu.uk` alone does not protect that direct production URL. In Next middleware at origin A, verify the signed `Cf-Access-Jwt-Assertion` against the Access JWKS and require the expected issuer, A audience, and expiry (plus `nbf` when present); reject a missing or invalid assertion with 403. Header presence is not authentication—a direct origin caller can forge it. Reuse the same verification discipline specified for origin B.
+3. Do **not** substitute Vercel Deployment Protection: Standard Protection exempts production domains, while All Deployments is Pro-only and would double-auth users already passing through Access.
+4. Only after A is reachable and origin-verified, create Access Application A, Access Application B, and B's Service Auth → Linked App Token policy. Note that Vercel bot protection can degrade behind the Cloudflare proxy; treat that as a known operating cost.
+
 ### 2.1 Required identity delegation (recommended topology)
 
 The browser authenticates to Access Application A. Access supplies A's origin with the signed `Cf-Access-Jwt-Assertion`. The Vercel relay forwards that exact value to Application B as `Cf-Access-Token`; it does not mint, decode, replace, or accept an identity field from the browser. Application B has a Cloudflare **Service Auth → Linked App Token** policy whose linked application is A. Access validates that the forwarded JWT was issued for A, then supplies B's origin with a new B-scoped `Cf-Access-Jwt-Assertion` and attributes the request to the original user. This is the self-hosted-to-self-hosted flow documented by Cloudflare: <https://developers.cloudflare.com/cloudflare-one/access-controls/applications/linked-app-token>.
