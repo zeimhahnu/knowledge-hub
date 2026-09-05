@@ -3,6 +3,7 @@ import { extractText, getDocumentProxy } from "unpdf";
 
 import screeningRules from "@/data/screening-rules.json" with { type: "json" };
 import { judge } from "@/lib/screen-methodology";
+import { contentLengthStatus } from "@/middleware";
 
 export const runtime = "nodejs";
 
@@ -20,6 +21,15 @@ function rejected(reasons: string[], status = 422) {
  * not stored or queued until the authenticated ingest step is configured.
  */
 export async function POST(request: Request) {
+  // ponytail: dailyQuota in screening-rules.json is unenforced — single shared key today makes
+  // that a config note, not a gap. Wire @vercel/kv (or Upstash) if a second caller/key is issued
+  // and quota needs to be per-caller.
+  const contentLengthStatusCode = contentLengthStatus(request.headers.get("content-length"), maxBytes);
+  if (contentLengthStatusCode) {
+    const declaredLength = Number(request.headers.get("content-length"));
+    return rejected([`declared ${declaredLength} bytes — over the ${maxBytes} limit`], contentLengthStatusCode);
+  }
+
   let formData: FormData;
   try {
     formData = await request.formData();
