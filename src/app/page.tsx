@@ -39,7 +39,7 @@ export function buildLookupUrl(ticker: string, eventType: string, exDate: string
     return null;
   }
 
-  return `/lookup/${encodeURIComponent(normalizedTicker)}/?eventType=${encodeURIComponent(normalizedEventType)}&exDate=${encodeURIComponent(normalizedExDate)}`;
+  return `/lookup/${encodeURIComponent(normalizedTicker)}?eventType=${encodeURIComponent(normalizedEventType)}&exDate=${encodeURIComponent(normalizedExDate)}`;
 }
 
 function validationMessage(ticker: string, eventType: string, exDate: string): string | null {
