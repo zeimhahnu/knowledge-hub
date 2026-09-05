@@ -1,0 +1,1310 @@
+{
+  "schema_version": "1.0",
+  "snapshot_id": "franklin-us-etf-catalog-2026-09-05",
+  "source_url": "https://www.franklintempleton.com/binaries/content/assets/global/sitemaps/google/en-us_product.xml",
+  "retrieved_at": "2026-09-05",
+  "source_as_of": null,
+  "scope": "Returned sitemap URLs matching /investments/options/exchange-traded-funds/products/; not asserted to be a complete ETF universe.",
+  "records": [
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26727/SINGLCLASS/franklin-international-aggregate-bond-etf/FLIA",
+      "ticker": "FLIA",
+      "name": "franklin-international-aggregate-bond-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48365/SINGLCLASS/franklin-municipal-high-yield-etf/FTMH",
+      "ticker": "FTMH",
+      "name": "franklin-municipal-high-yield-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26347/SINGLCLASS/franklin-ftse-eurozone-etf/FLEU",
+      "ticker": "FLEU",
+      "name": "franklin-ftse-eurozone-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48362/SINGLCLASS/franklin-short-term-municipal-income-etf/FTMS",
+      "ticker": "FTMS",
+      "name": "franklin-short-term-municipal-income-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26356/SINGLCLASS/franklin-ftse-russia-etf/FLRU",
+      "ticker": "FLRU",
+      "name": "franklin-ftse-russia-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48306/SINGLCLASS/franklin-california-municipal-income-etf/FTCA",
+      "ticker": "FTCA",
+      "name": "franklin-california-municipal-income-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25771/SINGLCLASS/franklin-u-s-small-cap-multifactor-index-etf/FLQS",
+      "ticker": "FLQS",
+      "name": "franklin-u-s-small-cap-multifactor-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47550/SINGLCLASS/templeton-international-insights-etf/TINS",
+      "ticker": "TINS",
+      "name": "templeton-international-insights-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/41786/SINGLCLASS/franklin-crypto-index-etf/EZPZ",
+      "ticker": "EZPZ",
+      "name": "franklin-crypto-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/28388/SINGLCLASS/franklin-systematic-style-premia-etf/FLSP",
+      "ticker": "FLSP",
+      "name": "franklin-systematic-style-premia-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21559/SINGLCLASS/franklin-income-equity-focus-etf/INCE",
+      "ticker": "INCE",
+      "name": "franklin-income-equity-focus-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91629/SINGLCLASS/franklin-clearbridge-enhanced-income-etf/YLDE",
+      "ticker": "YLDE",
+      "name": "franklin-clearbridge-enhanced-income-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27393/SINGLCLASS/franklin-ftse-latin-america-etf/FLLA",
+      "ticker": "FLLA",
+      "name": "franklin-ftse-latin-america-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26353/SINGLCLASS/franklin-ftse-south-korea-etf/FLKR",
+      "ticker": "FLKR",
+      "name": "franklin-ftse-south-korea-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91662/SINGLCLASS/royce-quant-small-cap-quality-value-etf/SQLV",
+      "ticker": "SQLV",
+      "name": "royce-quant-small-cap-quality-value-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26728/SINGLCLASS/franklin-senior-loan-etf/FLBL",
+      "ticker": "FLBL",
+      "name": "franklin-senior-loan-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39433/SINGLCLASS/putnam-focused-large-cap-growth-etf/PGRO",
+      "ticker": "PGRO",
+      "name": "putnam-focused-large-cap-growth-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21558/SINGLCLASS/franklin-investment-grade-corporate-etf/FLCO",
+      "ticker": "FLCO",
+      "name": "franklin-investment-grade-corporate-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25773/SINGLCLASS/franklin-u-s-large-cap-multifactor-index-etf/FLQL",
+      "ticker": "FLQL",
+      "name": "franklin-u-s-large-cap-multifactor-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48762/SINGLCLASS/templeton-emerging-markets-debt-etf/TEMD",
+      "ticker": "TEMD",
+      "name": "templeton-emerging-markets-debt-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26364/SINGLCLASS/franklin-ftse-canada-etf/FLCA",
+      "ticker": "FLCA",
+      "name": "franklin-ftse-canada-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/28565/SINGLCLASS/franklin-u-s-core-bond-etf/FLCB",
+      "ticker": "FLCB",
+      "name": "franklin-u-s-core-bond-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29097/SINGLCLASS/franklin-genomic-advancements-etf/HELX",
+      "ticker": "HELX",
+      "name": "franklin-genomic-advancements-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42074/SINGLCLASS/franklin-us-dividend-booster-index-etf/XUDV",
+      "ticker": "XUDV",
+      "name": "franklin-us-dividend-booster-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/30780/SINGLCLASS/franklin-exponential-data-etf/XDAT",
+      "ticker": "XDAT",
+      "name": "franklin-exponential-data-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48364/SINGLCLASS/franklin-new-jersey-municipal-income-etf/FTNJ",
+      "ticker": "FTNJ",
+      "name": "franklin-new-jersey-municipal-income-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48361/SINGLCLASS/franklin-new-york-municipal-income-etf/FTNY",
+      "ticker": "FTNY",
+      "name": "franklin-new-york-municipal-income-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27392/SINGLCLASS/franklin-ftse-saudi-arabia-etf/FLSA",
+      "ticker": "FLSA",
+      "name": "franklin-ftse-saudi-arabia-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39639/SINGLCLASS/franklin-bitcoin-etf/EZBC",
+      "ticker": "EZBC",
+      "name": "franklin-bitcoin-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29614/SINGLCLASS/franklin-u-s-treasury-bond-etf/FLGV",
+      "ticker": "FLGV",
+      "name": "franklin-u-s-treasury-bond-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26350/SINGLCLASS/franklin-ftse-united-kingdom-etf/FLGB",
+      "ticker": "FLGB",
+      "name": "franklin-ftse-united-kingdom-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP",
+      "ticker": "FLJP",
+      "name": "franklin-ftse-japan-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26363/SINGLCLASS/franklin-ftse-brazil-etf/FLBR",
+      "ticker": "FLBR",
+      "name": "franklin-ftse-brazil-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39500/SINGLCLASS/putnam-bdc-income-etf/PBDC",
+      "ticker": "PBDC",
+      "name": "putnam-bdc-income-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26362/SINGLCLASS/franklin-ftse-china-etf/FLCH",
+      "ticker": "FLCH",
+      "name": "franklin-ftse-china-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91415/SINGLCLASS/franklin-u-s-low-volatility-high-dividend-index-etf/LVHD",
+      "ticker": "LVHD",
+      "name": "franklin-u-s-low-volatility-high-dividend-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21412/SINGLCLASS/franklin-international-core-dividend-tilt-index-etf/DIVI",
+      "ticker": "DIVI",
+      "name": "franklin-international-core-dividend-tilt-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21415/SINGLCLASS/franklin-u-s-core-dividend-tilt-index-etf/UDIV",
+      "ticker": "UDIV",
+      "name": "franklin-u-s-core-dividend-tilt-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91481/SINGLCLASS/franklin-international-low-volatility-high-dividend-index-etf/LVHI",
+      "ticker": "LVHI",
+      "name": "franklin-international-low-volatility-high-dividend-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91630/SINGLCLASS/clearbridge-large-cap-growth-select-etf/LRGE",
+      "ticker": "LRGE",
+      "name": "clearbridge-large-cap-growth-select-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/50418/SINGLCLASS/franklin-bsp-clo-etf/YCLO",
+      "ticker": "YCLO",
+      "name": "franklin-bsp-clo-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29430/SINGLCLASS/franklin-ultra-short-bond-etf/FLUD",
+      "ticker": "FLUD",
+      "name": "franklin-ultra-short-bond-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26360/SINGLCLASS/franklin-ftse-germany-etf/FLGR",
+      "ticker": "FLGR",
+      "name": "franklin-ftse-germany-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26365/SINGLCLASS/franklin-ftse-australia-etf/FLAU",
+      "ticker": "FLAU",
+      "name": "franklin-ftse-australia-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/46894/SINGLCLASS/franklin-multisector-income-etf/MULT",
+      "ticker": "MULT",
+      "name": "franklin-multisector-income-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26355/SINGLCLASS/franklin-ftse-japan-hedged-etf/FLJH",
+      "ticker": "FLJH",
+      "name": "franklin-ftse-japan-hedged-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26354/SINGLCLASS/franklin-ftse-mexico-etf/FLMX",
+      "ticker": "FLMX",
+      "name": "franklin-ftse-mexico-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26348/SINGLCLASS/franklin-ftse-india-etf/FLIN",
+      "ticker": "FLIN",
+      "name": "franklin-ftse-india-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48373/SINGLCLASS/franklin-minnesota-municipal-income-etf/FTMN",
+      "ticker": "FTMN",
+      "name": "franklin-minnesota-municipal-income-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29096/SINGLCLASS/franklin-disruptive-commerce-etf/BUYZ",
+      "ticker": "BUYZ",
+      "name": "franklin-disruptive-commerce-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47318/SINGLCLASS/franklin-xrp-etf/XRPZ",
+      "ticker": "XRPZ",
+      "name": "franklin-xrp-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21413/SINGLCLASS/franklin-emerging-market-core-dividend-tilt-index-etf/DIEM",
+      "ticker": "DIEM",
+      "name": "franklin-emerging-market-core-dividend-tilt-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/33319/SINGLCLASS/brandywine-global-dynamic-us-large-cap-value-etf/DVAL",
+      "ticker": "DVAL",
+      "name": "brandywine-global-dynamic-us-large-cap-value-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26352/SINGLCLASS/franklin-ftse-switzerland-etf/FLSW",
+      "ticker": "FLSW",
+      "name": "franklin-ftse-switzerland-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25772/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FLQM",
+      "ticker": "FLQM",
+      "name": "franklin-u-s-mid-cap-multifactor-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39499/SINGLCLASS/putnam-emerging-markets-ex-china-etf/PEMX",
+      "ticker": "PEMX",
+      "name": "putnam-emerging-markets-ex-china-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26175/SINGLCLASS/franklin-dynamic-municipal-bond-etf/FLMI",
+      "ticker": "FLMI",
+      "name": "franklin-dynamic-municipal-bond-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48375/SINGLCLASS/franklin-pennsylvania-municipal-income-etf/FTPA",
+      "ticker": "FTPA",
+      "name": "franklin-pennsylvania-municipal-income-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39434/SINGLCLASS/putnam-focused-large-cap-value-etf/PVAL",
+      "ticker": "PVAL",
+      "name": "putnam-focused-large-cap-value-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/31714/SINGLCLASS/franklin-responsibly-sourced-gold-etf/FGDL",
+      "ticker": "FGDL",
+      "name": "franklin-responsibly-sourced-gold-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/40521/SINGLCLASS/franklin-ethereum-etf/EZET",
+      "ticker": "EZET",
+      "name": "franklin-ethereum-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/36370/SINGLCLASS/franklin-focused-dynamic-growth-etf/FFOG",
+      "ticker": "FFOG",
+      "name": "franklin-focused-dynamic-growth-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26346/SINGLCLASS/franklin-ftse-asia-ex-japan-etf/FLAX",
+      "ticker": "FLAX",
+      "name": "franklin-ftse-asia-ex-japan-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26351/SINGLCLASS/franklin-ftse-taiwan-etf/FLTW",
+      "ticker": "FLTW",
+      "name": "franklin-ftse-taiwan-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48374/SINGLCLASS/franklin-ohio-municipal-income-etf/FTOH",
+      "ticker": "FTOH",
+      "name": "franklin-ohio-municipal-income-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/50069/SINGLCLASS/franklin-small-cap-enhanced-etf/FSML",
+      "ticker": "FSML",
+      "name": "franklin-small-cap-enhanced-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26349/SINGLCLASS/franklin-ftse-europe-etf/FLEE",
+      "ticker": "FLEE",
+      "name": "franklin-ftse-europe-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42138/SINGLCLASS/franklin-international-dividend-booster-index-etf/XIDV",
+      "ticker": "XIDV",
+      "name": "franklin-international-dividend-booster-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29098/SINGLCLASS/franklin-intelligent-machines-etf/IQM",
+      "ticker": "IQM",
+      "name": "franklin-intelligent-machines-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47315/SINGLCLASS/franklin-solana-etf/SOEZ",
+      "ticker": "SOEZ",
+      "name": "franklin-solana-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47537/SINGLCLASS/franklin-dividend-growth-etf/FRIZ",
+      "ticker": "FRIZ",
+      "name": "franklin-dividend-growth-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/36353/SINGLCLASS/western-asset-bond-etf/WABF",
+      "ticker": "WABF",
+      "name": "western-asset-bond-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/36262/SINGLCLASS/franklin-income-focus-etf/INCM",
+      "ticker": "INCM",
+      "name": "franklin-income-focus-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48363/SINGLCLASS/franklin-municipal-income-etf/FTMU",
+      "ticker": "FTMU",
+      "name": "franklin-municipal-income-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47497/SINGLCLASS/putnam-international-stock-etf/PGRI",
+      "ticker": "PGRI",
+      "name": "putnam-international-stock-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/36405/SINGLCLASS/brandywine-global-u-s-fixed-income-etf/USFI",
+      "ticker": "USFI",
+      "name": "brandywine-global-u-s-fixed-income-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26176/SINGLCLASS/franklin-municipal-green-bond-etf/FLMB",
+      "ticker": "FLMB",
+      "name": "franklin-municipal-green-bond-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/18000/SINGLCLASS/franklin-short-duration-u-s-government-etf/FTSD",
+      "ticker": "FTSD",
+      "name": "franklin-short-duration-u-s-government-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26729/SINGLCLASS/franklin-high-yield-corporate-etf/FLHY",
+      "ticker": "FLHY",
+      "name": "franklin-high-yield-corporate-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21414/SINGLCLASS/franklin-u-s-equity-index-etf/USPX",
+      "ticker": "USPX",
+      "name": "franklin-u-s-equity-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48338/SINGLCLASS/franklin-massachusetts-municipal-income-etf/FTMA",
+      "ticker": "FTMA",
+      "name": "franklin-massachusetts-municipal-income-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    }
+  ],
+  "excluded_closed_products": [
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38917/C/putnam-pennsylvania-tax-exempt-income-fund/PPNCX",
+      "ticker": "PPNCX",
+      "name": "putnam-pennsylvania-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38917/R6/putnam-pennsylvania-tax-exempt-income-fund/PPTRX",
+      "ticker": "PPTRX",
+      "name": "putnam-pennsylvania-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38917/Y/putnam-pennsylvania-tax-exempt-income-fund/PPTYX",
+      "ticker": "PPTYX",
+      "name": "putnam-pennsylvania-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38917/A/putnam-pennsylvania-tax-exempt-income-fund/PTEPX",
+      "ticker": "PTEPX",
+      "name": "putnam-pennsylvania-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38915/C/putnam-tax-free-high-yield-fund/PTCCX",
+      "ticker": "PTCCX",
+      "name": "putnam-tax-free-high-yield-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38915/Y/putnam-tax-free-high-yield-fund/PTFYX",
+      "ticker": "PTFYX",
+      "name": "putnam-tax-free-high-yield-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38915/A/putnam-tax-free-high-yield-fund/PTHAX",
+      "ticker": "PTHAX",
+      "name": "putnam-tax-free-high-yield-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38915/R6/putnam-tax-free-high-yield-fund/PTFRX",
+      "ticker": "PTFRX",
+      "name": "putnam-tax-free-high-yield-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38911/R6/putnam-california-tax-exempt-income-fund/PCLGX",
+      "ticker": "PCLGX",
+      "name": "putnam-california-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38911/A/putnam-california-tax-exempt-income-fund/PCTEX",
+      "ticker": "PCTEX",
+      "name": "putnam-california-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38911/Y/putnam-california-tax-exempt-income-fund/PCIYX",
+      "ticker": "PCIYX",
+      "name": "putnam-california-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38911/C/putnam-california-tax-exempt-income-fund/PCTCX",
+      "ticker": "PCTCX",
+      "name": "putnam-california-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39212/C/putnam-intermediate-term-municipal-income-fund/PIMFX",
+      "ticker": "PIMFX",
+      "name": "putnam-intermediate-term-municipal-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39212/A/putnam-intermediate-term-municipal-income-fund/PIMEX",
+      "ticker": "PIMEX",
+      "name": "putnam-intermediate-term-municipal-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39212/Y/putnam-intermediate-term-municipal-income-fund/PIMYX",
+      "ticker": "PIMYX",
+      "name": "putnam-intermediate-term-municipal-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39212/R6/putnam-intermediate-term-municipal-income-fund/PIMRX",
+      "ticker": "PIMRX",
+      "name": "putnam-intermediate-term-municipal-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39050/R6/putnam-ohio-tax-exempt-income-fund/POHRX",
+      "ticker": "POHRX",
+      "name": "putnam-ohio-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39050/Y/putnam-ohio-tax-exempt-income-fund/POTYX",
+      "ticker": "POTYX",
+      "name": "putnam-ohio-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39050/C/putnam-ohio-tax-exempt-income-fund/POOCX",
+      "ticker": "POOCX",
+      "name": "putnam-ohio-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39050/A/putnam-ohio-tax-exempt-income-fund/PXOHX",
+      "ticker": "PXOHX",
+      "name": "putnam-ohio-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39211/C/putnam-short-term-municipal-income-fund/PSMTX",
+      "ticker": "PSMTX",
+      "name": "putnam-short-term-municipal-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39211/Y/putnam-short-term-municipal-income-fund/PSMYX",
+      "ticker": "PSMYX",
+      "name": "putnam-short-term-municipal-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39211/A/putnam-short-term-municipal-income-fund/PSMEX",
+      "ticker": "PSMEX",
+      "name": "putnam-short-term-municipal-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39211/R6/putnam-short-term-municipal-income-fund/PYSTX",
+      "ticker": "PYSTX",
+      "name": "putnam-short-term-municipal-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/243/P/tif-international-equity-series/TFEQX",
+      "ticker": "TFEQX",
+      "name": "tif-international-equity-series",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/243/S/tif-international-equity-series/TFESX",
+      "ticker": "TFESX",
+      "name": "tif-international-equity-series",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/12052/R6/templeton-international-bond-fund/FIBQX",
+      "ticker": "FIBQX",
+      "name": "templeton-international-bond-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/12052/A/templeton-international-bond-fund/TBOAX",
+      "ticker": "TBOAX",
+      "name": "templeton-international-bond-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/12052/R/templeton-international-bond-fund/-",
+      "ticker": "-",
+      "name": "templeton-international-bond-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/12052/Z/templeton-international-bond-fund/FIBZX",
+      "ticker": "FIBZX",
+      "name": "templeton-international-bond-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/12052/C/templeton-international-bond-fund/FCNBX",
+      "ticker": "FCNBX",
+      "name": "templeton-international-bond-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39048/R6/putnam-massachusetts-tax-exempt-income-fund/PMATX",
+      "ticker": "PMATX",
+      "name": "putnam-massachusetts-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39048/A/putnam-massachusetts-tax-exempt-income-fund/PXMAX",
+      "ticker": "PXMAX",
+      "name": "putnam-massachusetts-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39048/C/putnam-massachusetts-tax-exempt-income-fund/PMMCX",
+      "ticker": "PMMCX",
+      "name": "putnam-massachusetts-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39048/Y/putnam-massachusetts-tax-exempt-income-fund/PMAYX",
+      "ticker": "PMAYX",
+      "name": "putnam-massachusetts-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38905/A/putnam-tax-exempt-income-fund/PTAEX",
+      "ticker": "PTAEX",
+      "name": "putnam-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38905/C/putnam-tax-exempt-income-fund/PTECX",
+      "ticker": "PTECX",
+      "name": "putnam-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38905/Y/putnam-tax-exempt-income-fund/PTEYX",
+      "ticker": "PTEYX",
+      "name": "putnam-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38905/R6/putnam-tax-exempt-income-fund/PEXTX",
+      "ticker": "PEXTX",
+      "name": "putnam-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39016/R3/putnam-sustainable-retirement-2025-fund/PADHX",
+      "ticker": "PADHX",
+      "name": "putnam-sustainable-retirement-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39016/A/putnam-sustainable-retirement-2025-fund/PRROX",
+      "ticker": "PRROX",
+      "name": "putnam-sustainable-retirement-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39016/R6/putnam-sustainable-retirement-2025-fund/PRMFX",
+      "ticker": "PRMFX",
+      "name": "putnam-sustainable-retirement-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39016/R/putnam-sustainable-retirement-2025-fund/-",
+      "ticker": "-",
+      "name": "putnam-sustainable-retirement-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39016/R4/putnam-sustainable-retirement-2025-fund/PADJX",
+      "ticker": "PADJX",
+      "name": "putnam-sustainable-retirement-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39016/C/putnam-sustainable-retirement-2025-fund/-",
+      "ticker": "-",
+      "name": "putnam-sustainable-retirement-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39016/R5/putnam-sustainable-retirement-2025-fund/PADKX",
+      "ticker": "PADKX",
+      "name": "putnam-sustainable-retirement-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39016/Y/putnam-sustainable-retirement-2025-fund/PRRPX",
+      "ticker": "PRRPX",
+      "name": "putnam-sustainable-retirement-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38912/C/putnam-new-york-tax-exempt-income-fund/PNNCX",
+      "ticker": "PNNCX",
+      "name": "putnam-new-york-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38912/A/putnam-new-york-tax-exempt-income-fund/PTEIX",
+      "ticker": "PTEIX",
+      "name": "putnam-new-york-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38912/Y/putnam-new-york-tax-exempt-income-fund/PNYYX",
+      "ticker": "PNYYX",
+      "name": "putnam-new-york-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38912/R6/putnam-new-york-tax-exempt-income-fund/PNYRX",
+      "ticker": "PNYRX",
+      "name": "putnam-new-york-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38909/A/putnam-new-jersey-tax-exempt-income-fund/PTNJX",
+      "ticker": "PTNJX",
+      "name": "putnam-new-jersey-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38909/Y/putnam-new-jersey-tax-exempt-income-fund/PNJYX",
+      "ticker": "PNJYX",
+      "name": "putnam-new-jersey-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38909/R6/putnam-new-jersey-tax-exempt-income-fund/PNJRX",
+      "ticker": "PNJRX",
+      "name": "putnam-new-jersey-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/38909/C/putnam-new-jersey-tax-exempt-income-fund/PNJCX",
+      "ticker": "PNJCX",
+      "name": "putnam-new-jersey-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/4157/R6/franklin-strategic-mortgage-portfolio/FSMQX",
+      "ticker": "FSMQX",
+      "name": "franklin-strategic-mortgage-portfolio",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/4157/Z/franklin-strategic-mortgage-portfolio/FSMZX",
+      "ticker": "FSMZX",
+      "name": "franklin-strategic-mortgage-portfolio",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/4157/A/franklin-strategic-mortgage-portfolio/FSMFX",
+      "ticker": "FSMFX",
+      "name": "franklin-strategic-mortgage-portfolio",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/4157/C/franklin-strategic-mortgage-portfolio/FSMHX",
+      "ticker": "FSMHX",
+      "name": "franklin-strategic-mortgage-portfolio",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/4157/A1/franklin-strategic-mortgage-portfolio/FSMIX",
+      "ticker": "FSMIX",
+      "name": "franklin-strategic-mortgage-portfolio",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/91103/C/brandywine-global-alternative-credit-fund/LMAQX",
+      "ticker": "LMAQX",
+      "name": "brandywine-global-alternative-credit-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/91103/IS/brandywine-global-alternative-credit-fund/LMAMX",
+      "ticker": "LMAMX",
+      "name": "brandywine-global-alternative-credit-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/91103/AA2/brandywine-global-alternative-credit-fund/LMAPX",
+      "ticker": "LMAPX",
+      "name": "brandywine-global-alternative-credit-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/91103/I/brandywine-global-alternative-credit-fund/LMANX",
+      "ticker": "LMANX",
+      "name": "brandywine-global-alternative-credit-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/91103/FI/brandywine-global-alternative-credit-fund/LMAOX",
+      "ticker": "LMAOX",
+      "name": "brandywine-global-alternative-credit-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39049/Y/putnam-minnesota-tax-exempt-income-fund/PMNYX",
+      "ticker": "PMNYX",
+      "name": "putnam-minnesota-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39049/A/putnam-minnesota-tax-exempt-income-fund/PXMNX",
+      "ticker": "PXMNX",
+      "name": "putnam-minnesota-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39049/C/putnam-minnesota-tax-exempt-income-fund/PMOCX",
+      "ticker": "PMOCX",
+      "name": "putnam-minnesota-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39049/R6/putnam-minnesota-tax-exempt-income-fund/PMVTX",
+      "ticker": "PMVTX",
+      "name": "putnam-minnesota-tax-exempt-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39353/R5/putnam-retirement-advantage-2025-fund/PAFNX",
+      "ticker": "PAFNX",
+      "name": "putnam-retirement-advantage-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39353/Y/putnam-retirement-advantage-2025-fund/PLZYX",
+      "ticker": "PLZYX",
+      "name": "putnam-retirement-advantage-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39353/R6/putnam-retirement-advantage-2025-fund/PBATX",
+      "ticker": "PBATX",
+      "name": "putnam-retirement-advantage-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39353/C/putnam-retirement-advantage-2025-fund/PRTJX",
+      "ticker": "PRTJX",
+      "name": "putnam-retirement-advantage-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39353/R4/putnam-retirement-advantage-2025-fund/PAFKX",
+      "ticker": "PAFKX",
+      "name": "putnam-retirement-advantage-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39353/A/putnam-retirement-advantage-2025-fund/PBDLX",
+      "ticker": "PBDLX",
+      "name": "putnam-retirement-advantage-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39353/R/putnam-retirement-advantage-2025-fund/PRTWX",
+      "ticker": "PRTWX",
+      "name": "putnam-retirement-advantage-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39353/R3/putnam-retirement-advantage-2025-fund/PAFLX",
+      "ticker": "PAFLX",
+      "name": "putnam-retirement-advantage-2025-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/33320/SINGLCLASS/franklin-sustainable-international-equity-etf/MCSE",
+      "ticker": "MCSE",
+      "name": "franklin-sustainable-international-equity-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39498/SINGLCLASS/putnam-bio-revolution-etf/SYNB",
+      "ticker": "SYNB",
+      "name": "putnam-bio-revolution-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39495/SINGLCLASS/putnam-esg-high-yield-etf/PHYD",
+      "ticker": "PHYD",
+      "name": "putnam-esg-high-yield-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/35640/SINGLCLASS/clearbridge-sustainable-infrastructure-etf/INFR",
+      "ticker": "INFR",
+      "name": "clearbridge-sustainable-infrastructure-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39496/SINGLCLASS/putnam-esg-core-bond-etf/PCRB",
+      "ticker": "PCRB",
+      "name": "putnam-esg-core-bond-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39435/SINGLCLASS/putnam-sustainable-leaders-etf/PLDR",
+      "ticker": "PLDR",
+      "name": "putnam-sustainable-leaders-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/91970/SINGLCLASS/western-asset-short-duration-income-etf/WINC",
+      "ticker": "WINC",
+      "name": "western-asset-short-duration-income-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/26359/SINGLCLASS/franklin-ftse-hong-kong-etf/FLHK",
+      "ticker": "FLHK",
+      "name": "franklin-ftse-hong-kong-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39436/SINGLCLASS/putnam-sustainable-future-etf/PFUT",
+      "ticker": "PFUT",
+      "name": "putnam-sustainable-future-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39497/SINGLCLASS/putnam-esg-ultra-short-etf/PULT",
+      "ticker": "PULT",
+      "name": "putnam-esg-ultra-short-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/91903/SINGLCLASS/western-asset-total-return-etf/WBND",
+      "ticker": "WBND",
+      "name": "western-asset-total-return-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39494/SINGLCLASS/putnam-pan-agora-esg-international-equity-etf/PPIE",
+      "ticker": "PPIE",
+      "name": "putnam-pan-agora-esg-international-equity-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/39493/SINGLCLASS/putnam-pan-agora-esg-emerging-markets-equity-etf/PPEM",
+      "ticker": "PPEM",
+      "name": "putnam-pan-agora-esg-emerging-markets-equity-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/33833/C/martin-currie-international-sustainable-equity-529-portfolio/MABGX",
+      "ticker": "MABGX",
+      "name": "martin-currie-international-sustainable-equity-529-portfolio",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/33833/Z1/martin-currie-international-sustainable-equity-529-portfolio/MABHX",
+      "ticker": "MABHX",
+      "name": "martin-currie-international-sustainable-equity-529-portfolio",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/33833/A/martin-currie-international-sustainable-equity-529-portfolio/MABEX",
+      "ticker": "MABEX",
+      "name": "martin-currie-international-sustainable-equity-529-portfolio",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/33821/C/franklin-target-2025-529-portfolio/",
+      "ticker": "franklin-target-2025-529-portfolio",
+      "name": "C",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/33821/Z1/franklin-target-2025-529-portfolio/",
+      "ticker": "franklin-target-2025-529-portfolio",
+      "name": "Z1",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/33821/A/franklin-target-2025-529-portfolio/",
+      "ticker": "franklin-target-2025-529-portfolio",
+      "name": "A",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/33821/Z/franklin-target-2025-529-portfolio/",
+      "ticker": "franklin-target-2025-529-portfolio",
+      "name": "Z",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/COOS1810/NA/o-shaughnessy-reit/",
+      "ticker": "o-shaughnessy-reit",
+      "name": "NA",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/COOS1691/NA/o-shaughnessy-small-cap-growth/",
+      "ticker": "o-shaughnessy-small-cap-growth",
+      "name": "NA",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/COGBESGBTX/NA/franklin-templeton-global-balanced-esg-sma/",
+      "ticker": "franklin-templeton-global-balanced-esg-sma",
+      "name": "NA",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/17071/1/franklin-vol-smart-allocation-vip-fund/",
+      "ticker": "franklin-vol-smart-allocation-vip-fund",
+      "name": "1",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/17071/2/franklin-vol-smart-allocation-vip-fund/",
+      "ticker": "franklin-vol-smart-allocation-vip-fund",
+      "name": "2",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    },
+    {
+      "url": "https://www.franklintempleton.com/investments/closed/17071/5/franklin-vol-smart-allocation-vip-fund/",
+      "ticker": "franklin-vol-smart-allocation-vip-fund",
+      "name": "5",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-05"
+    }
+  ],
+  "counts": {
+    "returned_loc_urls": 1714,
+    "etf_rows": 81,
+    "closed_rows": 103
+  },
+  "limitations": [
+    "Only URL-derived ticker/name are recorded. ISIN, index, provider, index type, weighting, cadence, inception date, and active/closed status are not inferred.",
+    "Closed entries are segregated and not included in records.",
+    "The sitemap is an official enumerator response, but this artifact makes no completeness claim beyond the returned rows."
+  ]
+}
