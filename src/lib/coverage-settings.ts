@@ -216,7 +216,7 @@ function sanitize(raw: unknown): SettingsDraft {
 function statedLeadDays(vendor: VendorId, eventType: string): number | null {
   for (const rule of rules.rules) {
     if (rule.vendor === vendor && rule.event_type === eventType && rule.lead_days !== null) {
-      return rule.lead_days;
+      return rule.lead_days ?? null;
     }
   }
   return DOCUMENTED_VENDOR_DEFAULTS[vendor] ?? null;

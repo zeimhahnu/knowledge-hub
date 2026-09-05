@@ -6,7 +6,7 @@
   "type": "object",
   "$defs": {
     "index_type": {
-      "enum": ["*", "price-return", "total-return", "net-total-return"],
+      "enum": ["*", "price-return", "total-return", "net-total-return", "market-cap-weighted"],
       "description": "Index return-variant discriminator. '*' means the treatment does not vary by return variant."
     }
   },
@@ -96,6 +96,10 @@
             "enum": ["stated", "inferred", "absent", "user-set"],
             "description": "treatment provenance: 'stated' when the doc says it outright, 'inferred' when reasoned from surrounding text, 'absent' when the doc does not address the event, 'user-set' when an operator tuned the value in the coverage settings surface (§11c constraint 2: a user-typed lead time must never render identically to one the methodology states)."
           },
+          "coverage": {"enum": ["complete", "partial", "product-specific", "not-applicable"]},
+          "provenance": {"enum": ["measured", "inferred", "stated", "no-rule"]},
+          "source_refs": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+          "source_urls": {"type": "array", "items": {"type": "string", "pattern": "^https://"}, "minItems": 1, "uniqueItems": true},
           "conditions": {
             "type": ["object", "null"],
             "description": "Rule-selection conditions the {vendor, event_type, index_type} tuple cannot carry. First real instance (2026-09-02): MSCI's ordinary-vs-special cash dividend split keys off dividend size as a percentage of market price. Null/absent when the tuple fully determines the rule.",

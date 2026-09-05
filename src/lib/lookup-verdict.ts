@@ -38,6 +38,7 @@ import {
   type SettingsStorage,
 } from "./coverage-settings.ts";
 import { VENDOR_IDS, type VendorId } from "./vendors.ts";
+import { franklinSnapshot, resolveFundRules, type VendorRule } from "./fund-master.ts";
 import {
   getVendorConfirmation,
   type VendorConfirmation,
@@ -170,10 +171,10 @@ export function treatmentFor(
   eventType: string,
 ): TreatmentVariant[] {
   return ruleVariants(vendor, eventType).map((rule) => ({
-    indexType: rule.index_type,
+    indexType: rule.index_type ?? "*",
     conditions: rule.conditions as unknown as TreatmentVariant["conditions"],
     treatment: rule.treatment,
-    sourceRef: rule.source_ref,
+    sourceRef: rule.source_ref ?? null,
   }));
 }
 
@@ -231,10 +232,10 @@ export function filteredTreatmentFor(
   return ruleVariants(vendor, eventType)
     .filter((rule) => rowMatchesFilters(rule, filters))
     .map((rule) => ({
-      indexType: rule.index_type,
+      indexType: rule.index_type ?? "*",
       conditions: rule.conditions as unknown as TreatmentVariant["conditions"],
       treatment: rule.treatment,
-      sourceRef: rule.source_ref,
+      sourceRef: rule.source_ref ?? null,
     }));
 }
 
@@ -400,6 +401,8 @@ export interface LookupVerdictInput {
   getConfirmation?: (vendor: VendorId) => VendorConfirmation | null;
   storage?: SettingsStorage;
   filters?: LookupFilters;
+  /** Optional reviewed Franklin ETF; omitted preserves the P0 path. */
+  fundTicker?: string;
 }
 
 /**
@@ -420,20 +423,28 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
     input.getConfirmation ??
     ((vendor) =>
       getVendorConfirmation(ticker, eventType, exDateKey, vendor, storage));
+  const fundRules = resolveFundRules(
+    input.fundTicker,
+    franklinSnapshot,
+    rules.rules as unknown as VendorRule[],
+  );
+  const scopedRules: RuleLike[] = fundRules.resolution.mode === "fund-resolved"
+    ? (fundRules.rows as unknown as RuleLike[])
+    : rules.rules;
 
   const rows: MatrixRow[] = scope.map((vendor): MatrixRow => {
     const applicable =
       securityInVendorUniverse(ticker, vendor) &&
       vendorAppliesToEvent(vendor, eventType);
-    const allRules = ruleVariants(vendor, eventType);
+    const allRules = scopedRules.filter((rule) => rule.vendor === vendor && rule.event_type === eventType);
     const selectedRules = allRules.filter((rule) =>
       rowMatchesFilters(rule, input.filters),
     );
     const treatments = selectedRules.map((rule) => ({
-      indexType: rule.index_type,
+      indexType: rule.index_type ?? "*",
       conditions: rule.conditions as unknown as TreatmentVariant["conditions"],
       treatment: rule.treatment,
-      sourceRef: rule.source_ref,
+      sourceRef: rule.source_ref ?? null,
     }));
     const rule = selectedRules[0];
     const treatment = rule?.treatment ?? null;

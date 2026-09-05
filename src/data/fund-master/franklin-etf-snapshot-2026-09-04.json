@@ -1,0 +1,27 @@
+{
+  "schema_version":"1.0",
+  "snapshot_id":"franklin-etf-2026-09-04",
+  "provider":"Franklin Templeton",
+  "acquired_at":"2026-09-05T02:00:00Z",
+  "source_as_of":"2026-09-04",
+  "records":[{
+    "ticker":"FLJP",
+    "name":"Franklin FTSE Japan ETF",
+    "isin":null,
+    "underlying_index":"FTSE Japan Capped Index",
+    "index_provider":"FTSE Russell",
+    "index_type":"market-cap-weighted",
+    "universe":"Japanese large- and mid-capitalization stocks",
+    "weighting":"Market capitalization weighted and capped",
+    "reconstitution_frequency":"Quarterly",
+    "inception_date":null,
+    "source_urls":["https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP","https://www.lseg.com/en/ftse-russell/indices/capped"],
+    "source_as_of":null,
+    "confidence":"medium",
+    "field_confidence":{"ticker":"stated","name":"stated","isin":"absent","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"absent"},
+    "missing_fields":["isin","inception_date"],
+    "coverage_quality":"complete",
+    "notes":["The reviewed acquisition evidence did not expose ISIN or inception date reliably; those fields remain explicitly missing."]
+  }],
+  "acquisition":{"requested_sources":["https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP","https://www.lseg.com/en/ftse-russell/indices/capped"],"successful_sources":["https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP","https://www.lseg.com/en/ftse-russell/indices/capped"],"failed_sources":[],"excluded_sources":[{"name":"VettaFi","reason":"Explicitly out of P1b scope."},{"name":"Solactive","reason":"No product-specific evidence required for the one-record slice."}],"record_count":1,"count_note":"One reviewed Franklin ETF record is intentionally shipped for the P1b vertical slice; this is not a claim about the total Franklin ETF universe."}
+}

@@ -16,7 +16,7 @@
     "tender-offer",
     "bankruptcy"
   ],
-  "index_types": ["*", "price-return", "total-return", "net-total-return"],
+  "index_types": ["*", "price-return", "total-return", "net-total-return", "market-cap-weighted"],
   "vendors": ["msci", "sp", "ftse", "stoxx", "morningstar", "solactive"],
   "rules": [
     {
@@ -1073,6 +1073,21 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (p. 10)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "stock-split",
+      "caev": "SPLT",
+      "index_type": "market-cap-weighted",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "treatment": "No index divisor adjustment; the price adjustment factor is shares held before ÷ after, applied on the ex-date with no change in company market capitalisation.",
+      "coverage": "product-specific",
+      "provenance": "stated",
+      "source_refs": ["SOURCES/ftse-russell-corporate-actions-guide.pdf §4.1 (Splits)", "Franklin XDAT benchmark Russell 3000 review"],
+      "source_urls": ["https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP", "https://www.lseg.com/en/ftse-russell/indices/capped"],
+      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.1 (Splits)",
       "confidence": "stated"
     }
   ]

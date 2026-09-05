@@ -1,0 +1,11 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object",
+  "required":["schema_version","snapshot_id","provider","acquired_at","source_as_of","records","acquisition"],
+  "properties":{
+    "schema_version":{"const":"1.0"},"snapshot_id":{"type":"string","pattern":"^franklin-etf-\\d{4}-\\d{2}-\\d{2}$"},"provider":{"const":"Franklin Templeton"},"acquired_at":{"type":"string","format":"date-time"},"source_as_of":{"type":"string","format":"date"},
+    "records":{"type":"array","items":{"$ref":"#/$defs/record"}},
+    "acquisition":{"type":"object","required":["requested_sources","successful_sources","failed_sources","excluded_sources","record_count","count_note"],"properties":{"requested_sources":{"type":"array","items":{"type":"string","format":"uri"}},"successful_sources":{"type":"array","items":{"type":"string","format":"uri"}},"failed_sources":{"type":"array"},"excluded_sources":{"type":"array"},"record_count":{"type":"integer","minimum":0},"count_note":{"type":"string","minLength":1}},"additionalProperties":false}
+  },
+  "$defs":{"record":{"type":"object","required":["ticker","name","isin","underlying_index","index_provider","index_type","universe","weighting","reconstitution_frequency","inception_date","source_urls","source_as_of","confidence","field_confidence","missing_fields","coverage_quality"],"properties":{"ticker":{"type":"string","pattern":"^[A-Z0-9.\\-^=]{1,15}$"},"name":{"type":"string","minLength":1},"isin":{"type":["string","null"]},"underlying_index":{"type":["string","null"]},"index_provider":{"type":["string","null"]},"index_type":{"type":["string","null"]},"universe":{"type":["string","null"]},"weighting":{"type":["string","null"]},"reconstitution_frequency":{"type":["string","null"]},"inception_date":{"type":["string","null"],"format":"date"},"source_urls":{"type":"array","items":{"type":"string","pattern":"^https://"},"uniqueItems":true},"source_as_of":{"type":["string","null"]},"confidence":{"enum":["high","medium","low","absent"]},"field_confidence":{"type":"object"},"missing_fields":{"type":"array","items":{"type":"string"},"uniqueItems":true},"coverage_quality":{"enum":["complete","partial","product-specific"]},"notes":{"type":"array","items":{"type":"string"}}},"additionalProperties":false}}
+}

@@ -36,6 +36,7 @@ import {
 } from "@/lib/lookup-verdict";
 import type { NewsValidationResult } from "@/lib/news-validation";
 import { VENDOR_IDS, VENDOR_LABELS, type VendorId } from "@/lib/vendors";
+import { franklinSnapshot, resolveFundRules, type FundResolution } from "@/lib/fund-master";
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -553,6 +554,26 @@ function QualifierControls({
   );
 }
 
+function FundContextControl({ selectedTicker, onChange, resolution }: { selectedTicker: string; onChange: (ticker: string) => void; resolution: FundResolution }) {
+  return (
+    <SurfaceSection className="space-y-3">
+      <div>
+        <h2 className="text-lg font-semibold tracking-tight">Optional fund context</h2>
+        <p className="mt-1 text-sm text-muted-foreground">Select a reviewed Franklin ETF to resolve its index construction. Leave unset for the unchanged P0 lookup.</p>
+      </div>
+      <label className="grid max-w-sm gap-1.5 text-sm">
+        <span className="font-medium">Franklin ETF</span>
+        <select value={selectedTicker} onChange={(event) => onChange(event.target.value)} className="h-10 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50">
+          <option value="">No fund selected</option>
+          {franklinSnapshot.records.map((fund) => <option key={fund.ticker} value={fund.ticker}>{fund.ticker} — {fund.name}</option>)}
+        </select>
+      </label>
+      {resolution.mode === "fund-resolved" && <div className="rounded-xl border border-chart-3/40 bg-chart-3/10 px-4 py-3 text-sm"><p className="font-medium">{resolution.fund.ticker} → {resolution.fund.underlying_index} → {resolution.fund.index_provider}</p><p className="mt-1 text-muted-foreground">Index type: {resolution.indexType}. The selected event uses the reviewed 3-D rule when one exists.</p><p className="mt-1 text-xs text-muted-foreground">Sources: {resolution.fund.source_urls.join(" · ")}</p></div>}
+      {resolution.mode === "fund-unresolved" && <p role="status" className="rounded-xl border border-chart-4/40 bg-chart-4/10 px-4 py-3 text-sm text-chart-4">{resolution.warnings[0]}</p>}
+    </SurfaceSection>
+  );
+}
+
 // ─── Page body (client half of /lookup/[ticker]) ────────────────────────────
 
 export function LookupView({
@@ -577,6 +598,7 @@ export function LookupView({
   const [timingNoticeDismissed, setTimingNoticeDismissed] = useState(false);
   const [confirmationRevision, setConfirmationRevision] = useState(0);
   const [filters, setFilters] = useState<LookupFilters>({});
+  const [fundTicker, setFundTicker] = useState("");
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard
@@ -604,6 +626,7 @@ export function LookupView({
       today,
       scope,
       filters,
+      fundTicker: fundTicker || undefined,
       getConfirmation: (vendor) =>
         getVendorConfirmation(ticker, eventType, exDate, vendor),
     });
@@ -616,6 +639,7 @@ export function LookupView({
     today,
     scope,
     filters,
+    fundTicker,
     confirmationRevision,
   ]);
 
@@ -624,6 +648,7 @@ export function LookupView({
     [companyParam, ticker],
   );
   const eventName = canonicalEventById(eventType)?.name ?? eventType;
+  const fundResolution = useMemo(() => resolveFundRules(fundTicker || undefined, franklinSnapshot, []).resolution, [fundTicker]);
   const caev = useMemo(() => caevForEventType(eventType), [eventType]);
   const daysOutNum = exDateParsed ? daysOut(exDateParsed, today) : null;
   const groups = verdict ? deriveVendorGroups(verdict) : null;
@@ -710,6 +735,7 @@ export function LookupView({
             className="space-y-4"
           >
             <VendorScopeControl scope={scope} onChange={updateScope} />
+            <FundContextControl selectedTicker={fundTicker} onChange={setFundTicker} resolution={fundResolution} />
             <QualifierControls
               ticker={ticker}
               eventType={eventType}
