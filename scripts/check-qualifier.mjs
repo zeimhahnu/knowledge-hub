@@ -8,7 +8,12 @@ const base = (eventType, filters) => computeLookupVerdict({
   ticker: "AAPL", eventType, exDate, today, scope: ["msci"], filters,
   getConfirmation: () => null,
 });
-const texts = (result) => result.rows[0].treatments.map((row) => row.treatment);
+const rowFor = (result, vendor) => {
+  const row = result.rows.find((r) => r.vendor === vendor);
+  assert.ok(row, `no ${vendor} row in verdict`);
+  return row;
+};
+const texts = (result, vendor = "msci") => rowFor(result, vendor).treatments.map((row) => row.treatment);
 
 assert.equal(rules.rules.filter((r) => r.vendor === "msci" && r.event_type === "cash-dividend").length, 3);
 assert.equal(treatmentFor("msci", "cash-dividend").length, 3);
@@ -22,5 +27,10 @@ const ftse = (filters) => computeLookupVerdict({
   ticker: "AAPL", eventType: "cash-dividend", exDate, today, scope: ["ftse"], filters,
   getConfirmation: () => null,
 });
-assert.deepEqual(texts(ftse()), texts(ftse({ indexType: "total-return" })));
+// FTSE is branched by index type too (9f3412e), but its corpus yields only
+// price-return and total-return -- no net variant was documented for it.
+assert.equal(texts(ftse(), "ftse").length, 2);
+assert.equal(texts(ftse({ indexType: "total-return" }), "ftse").length, 1);
+assert.match(texts(ftse({ indexType: "total-return" }), "ftse")[0], /Total Return index/);
+assert.match(texts(ftse({ indexType: "price-return" }), "ftse")[0], /no price adjustment or PAF/);
 console.log("OK");

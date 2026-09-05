@@ -16,11 +16,11 @@ const buildLookupUrl = new Function(`${executable}; return buildLookupUrl;`)();
 
 assert.equal(
   buildLookupUrl("brk.b", "cash-dividend", "2026-09-30"),
-  "/lookup/BRK.B?eventType=cash-dividend&exDate=2026-09-30",
+  "/lookup/BRK.B/?eventType=cash-dividend&exDate=2026-09-30",
 );
 assert.equal(
   buildLookupUrl("^gspc", "stock-split", "2026-10-01"),
-  "/lookup/%5EGSPC?eventType=stock-split&exDate=2026-10-01",
+  "/lookup/%5EGSPC/?eventType=stock-split&exDate=2026-10-01",
 );
 assert.equal(buildLookupUrl("", "cash-dividend", "2026-09-30"), null);
 assert.equal(buildLookupUrl("AAPL", "", "2026-09-30"), null);
