@@ -39,13 +39,13 @@ The Next.js app remains the UI and must never receive a model, Tavily, tunnel, o
 
 Cloudflare Access protects both applications and provides the verified identity used for limits. Application A must be an Access-protectable custom hostname in Alex's Cloudflare zone in front of the Vercel origin; do not assume the current `*.vercel.app` hostname can provide this linked-app trust boundary. The Cloudflare setup itself is a deployment prerequisite owned by the operator, not a frontend feature.
 
-### 2a. Required identity delegation (recommended topology)
+### 2.1 Required identity delegation (recommended topology)
 
 The browser authenticates to Access Application A. Access supplies A's origin with the signed `Cf-Access-Jwt-Assertion`. The Vercel relay forwards that exact value to Application B as `Cf-Access-Token`; it does not mint, decode, replace, or accept an identity field from the browser. Application B has a Cloudflare **Service Auth → Linked App Token** policy whose linked application is A. Access validates that the forwarded JWT was issued for A, then supplies B's origin with a new B-scoped `Cf-Access-Jwt-Assertion` and attributes the request to the original user. This is the self-hosted-to-self-hosted flow documented by Cloudflare: <https://developers.cloudflare.com/cloudflare-one/access-controls/applications/linked-app-token>.
 
 At the B origin, verify the B-scoped assertion signature against the Cloudflare Access JWKS, issuer, expiry, not-before (when present), and B audience before deriving budget identity from verified `sub` (with verified email as a displayed/audited attribute). Reject missing, malformed, expired, not-yet-valid, wrong-issuer, wrong-audience, or replayed assertions. A's forwarded header is transport material for Access, not an identity claim trusted by application code.
 
-Only the relay's allowlisted contextual request fields and `Cf-Access-Token` may cross the relay. Strip inbound `Cf-Access-Token`, `Cf-Access-Jwt-Assertion`, `Authorization`, identity, budget, model, tool, URL, citation, and system-instruction fields before constructing the upstream request; then set `Cf-Access-Token` from A's verified assertion. Never expose a service token or delegated JWT to browser JavaScript, logs, query strings, or client state. Client-supplied identity cannot be accepted because it is forgeable; a service token would identify Vercel, not the user.
+Only the relay's allowlisted contextual request fields and its server-set `Cf-Access-Token` may cross the relay. The browser-to-relay request may contain only the documented JSON body and ordinary navigation headers; the relay must strip inbound `Cf-Access-Token`, `Cf-Access-Jwt-Assertion`, `Authorization`, identity, budget, model, tool, URL, citation, and system-instruction fields before constructing the upstream request. It then sets `Cf-Access-Token` from the A assertion received at the Access-protected origin. B's origin must accept identity only from the B-scoped `Cf-Access-Jwt-Assertion` emitted by Access, not from the forwarded A token or any body/header value. Never expose a service token or delegated JWT to browser JavaScript, logs, query strings, or client state. Client-supplied identity cannot be accepted because it is forgeable; a service token would identify Vercel, not the user.
 
 If A authentication, delegation, B linked-token validation, JWKS verification, audience/expiry checks, or tunnel-origin enforcement fails, return `access_required`/`service_unavailable` without an analyst answer and without consuming a user budget. Do not fall back to anonymous identity or the Vercel service identity. Replay protection uses JWT expiry plus a short-lived `jti`/token fingerprint cache at B; the cache is bounded and server-side only.
 
@@ -224,8 +224,8 @@ The panel follows `market-intel/wiki/goop/design-system.md`: dark-mode token usa
 4. Tool schemas reject an arbitrary URL, command, model, tool name, system prompt, invalid date, unknown vendor, and overlong question.
 5. Budget code keys only on verified Access identity, caps aggregate tokens at 10k, and permits no more than one pro escalation.
 6. A mocked A→B delegation proves the relay forwards `Cf-Access-Jwt-Assertion` as `Cf-Access-Token`, B emits a B-audience assertion, and budget identity comes only from verified `sub`/email; forged client identity and browser-visible service tokens are ignored.
-6. Cache returns the same keyed news value inside 15–30 minutes and never converts unavailable to confirmed.
-7. Citation validator accepts only exact current-turn URLs/doc refs, rejects fabricated URLs/line refs, and refuses after one failed repair.
+7. Cache returns the same keyed news value inside 15–30 minutes and never converts unavailable to confirmed.
+8. Citation validator accepts only exact current-turn URLs/doc refs, rejects fabricated URLs/line refs, and refuses after one failed repair.
 
 ### Integration
 
@@ -235,6 +235,8 @@ The panel follows `market-intel/wiki/goop/design-system.md`: dark-mode token usa
 4. Mock two model attempts with a fabricated citation; assert one repair attempt then `citation_validation_failed`, with no final answer.
 5. Mock model timeout and user cancellation; assert upstream abort and no completed-turn state.
 6. Assert the public Next route never serializes a secret and the browser bundle contains no service/model/Tavily credential.
+7. Assert the relay removes client-supplied `Cf-Access-Token`, `Cf-Access-Jwt-Assertion`, `Authorization`, identity, budget, model, tool, URL, citation, and system-instruction fields, while forwarding only A's received assertion as B's `Cf-Access-Token`.
+8. Assert B accepts only A through its Linked App Token policy and the service rejects wrong-audience, expired/not-yet-valid, bad issuer/signature, missing, or replayed assertions before tools/model; budget keys come only from B-verified `sub`/email.
 
 ### End-to-end release journey
 
