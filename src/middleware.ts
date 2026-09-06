@@ -1,8 +1,9 @@
 import { timingSafeEqual } from "node:crypto";
 import type { NextRequest } from "next/server";
+import { verifyAccessJwt } from "./lib/ca-analyst/auth";
 
 export const config = {
-  matcher: ["/upload", "/api/ingest"],
+  matcher: ["/upload", "/api/ingest", "/api/ca-analyst/:path*"],
   runtime: "nodejs",
 };
 
@@ -27,6 +28,17 @@ export function contentLengthStatus(value: string | null, limit: number): 413 | 
 
 export async function middleware(request: NextRequest) {
   const { NextResponse } = await import("next/server");
+  if (request.nextUrl.pathname.startsWith("/api/ca-analyst/")) {
+    try {
+      await verifyAccessJwt(request.headers.get("cf-access-jwt-assertion"), { consumeReplay: false });
+      return NextResponse.next();
+    } catch {
+      return new NextResponse(JSON.stringify({ type: "error", code: "access_required", message: "Access identity required", retryable: false }), {
+        status: 403,
+        headers: { "content-type": "application/json", "cache-control": "no-store" },
+      });
+    }
+  }
   if (!isAuthorized(request.headers.get("authorization"), process.env.INGEST_BASIC_AUTH)) {
     return new NextResponse("Authentication required", {
       status: 401,
