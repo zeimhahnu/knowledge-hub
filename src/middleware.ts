@@ -1,9 +1,10 @@
 import { timingSafeEqual } from "node:crypto";
 import type { NextRequest } from "next/server";
 import { verifyAccessJwt } from "./lib/ca-analyst/auth";
+import { originAccessMode, originBoundaryDecision } from "./lib/ca-analyst/origin-boundary";
 
 export const config = {
-  matcher: ["/upload", "/api/ingest", "/api/ca-analyst/:path*"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
   runtime: "nodejs",
 };
 
@@ -39,6 +40,30 @@ export async function middleware(request: NextRequest) {
       });
     }
   }
+  const mode = originAccessMode();
+  if (mode === "invalid") {
+    return new NextResponse("Origin access boundary is misconfigured", {
+      status: 403,
+      headers: { "cache-control": "no-store" },
+    });
+  }
+  const boundaryDecision = originBoundaryDecision(request.nextUrl.pathname, mode);
+  if (boundaryDecision === "allow-certificate") return NextResponse.next();
+  if (boundaryDecision === "deny") {
+    return new NextResponse("Origin access boundary is not active", {
+      status: 403,
+      headers: { "cache-control": "no-store" },
+    });
+  }
+  try {
+    await verifyAccessJwt(request.headers.get("cf-access-jwt-assertion"), { consumeReplay: false });
+  } catch {
+    return new NextResponse("Access identity required", {
+      status: 403,
+      headers: { "cache-control": "no-store" },
+    });
+  }
+  if (request.nextUrl.pathname !== "/upload" && !request.nextUrl.pathname.startsWith("/api/ingest")) return NextResponse.next();
   if (!isAuthorized(request.headers.get("authorization"), process.env.INGEST_BASIC_AUTH)) {
     return new NextResponse("Authentication required", {
       status: 401,

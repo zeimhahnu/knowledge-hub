@@ -47,6 +47,7 @@ export async function verifyAccessJwt(
     throw new Error("access_required");
   }
   if (header.alg !== "RS256" || !header.kid || typeof claims.sub !== "string" || !claims.sub ||
+      typeof claims.iss !== "string" || typeof claims.aud !== "string" && !Array.isArray(claims.aud) ||
       claims.iss !== issuer || !audienceMatches(claims.aud, audience) ||
       !Number.isFinite(claims.exp) || claims.exp <= (config.now ?? Date.now() / 1000) ||
       (claims.nbf !== undefined && (!Number.isFinite(claims.nbf) || claims.nbf > (config.now ?? Date.now() / 1000)))) {
@@ -55,7 +56,7 @@ export async function verifyAccessJwt(
   const response = await fetch(jwksUrl, { headers: { accept: "application/json" }, cache: "no-store" });
   if (!response.ok) throw new Error("access_required");
   const jwks = (await response.json()) as Jwks;
-  const jwk = jwks.keys?.find((key) => key.kid === header.kid && key.kty === "RSA");
+  const jwk = jwks.keys?.find((key) => key.kid === header.kid && key.kty === "RSA" && (!key.alg || key.alg === "RS256"));
   if (!jwk) throw new Error("access_required");
   let valid = false;
   try {
