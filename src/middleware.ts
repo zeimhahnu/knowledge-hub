@@ -1,6 +1,6 @@
 import { timingSafeEqual } from "node:crypto";
 import type { NextRequest } from "next/server";
-import { verifyAccessJwt } from "./lib/ca-analyst/auth";
+import { accessJwtFromHeaders, verifyAccessJwt } from "./lib/ca-analyst/auth";
 import { originAccessMode, originBoundaryDecision } from "./lib/ca-analyst/origin-boundary";
 
 export const config = {
@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
   const { NextResponse } = await import("next/server");
   if (request.nextUrl.pathname.startsWith("/api/ca-analyst/")) {
     try {
-      await verifyAccessJwt(request.headers.get("cf-access-jwt-assertion"), { consumeReplay: false });
+      await verifyAccessJwt(accessJwtFromHeaders(request.headers), { consumeReplay: false });
       return NextResponse.next();
     } catch {
       return new NextResponse(JSON.stringify({ type: "error", code: "access_required", message: "Access identity required", retryable: false }), {
@@ -56,7 +56,7 @@ export async function middleware(request: NextRequest) {
     });
   }
   try {
-    await verifyAccessJwt(request.headers.get("cf-access-jwt-assertion"), { consumeReplay: false });
+    await verifyAccessJwt(accessJwtFromHeaders(request.headers), { consumeReplay: false });
   } catch {
     return new NextResponse("Access identity required", {
       status: 403,

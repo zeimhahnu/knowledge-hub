@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
 import { generateKeyPairSync, createSign } from "node:crypto";
-import { verifyAccessJwt } from "../src/lib/ca-analyst/auth.ts";
+import { accessJwtFromHeaders, verifyAccessJwt } from "../src/lib/ca-analyst/auth.ts";
 import { originAccessMode, originBoundaryDecision } from "../src/lib/ca-analyst/origin-boundary.ts";
 
 const { privateKey, publicKey } = generateKeyPairSync("rsa", { modulusLength: 2048 });
@@ -63,9 +63,37 @@ assert.equal(await verifyStatus(token({ aud: "wrong-app" })), 403, "wrong audien
 assert.equal(await verifyStatus(token({ iss: "https://wrong.example" })), 403, "wrong issuer must be rejected");
 assert.equal(await verifyStatus(token({ exp: now - 1 })), 403, "expired assertion must be rejected");
 assert.equal(await verifyStatus(token({ nbf: now + 301 })), 403, "future nbf assertion must be rejected");
-assert.equal(await verifyStatus(token()), 200, "verified assertion must permit a Hub route");
+const validAssertion = token({ jti: "valid-assertion" });
+const cookieAssertion = token({ jti: "cookie-assertion" });
+assert.equal(await verifyStatus(validAssertion), 200, "verified assertion must permit a Hub route");
 
-const routeSource = await (await import("node:fs/promises")).readFile(new URL("../src/app/api/ca-analyst/turn/route.ts", import.meta.url), "utf8");
+const accessCookie = `other=value; CF_Authorization=${cookieAssertion}; trailing=value`;
+assert.equal(
+  accessJwtFromHeaders(new Headers({ "cf-access-jwt-assertion": validAssertion, cookie: accessCookie })),
+  validAssertion,
+  "the assertion header must take precedence over the Access cookie",
+);
+assert.equal(
+  accessJwtFromHeaders(new Headers({ cookie: accessCookie })),
+  cookieAssertion,
+  "the exact CF_Authorization cookie must be used when the assertion header is absent",
+);
+assert.equal(
+  accessJwtFromHeaders(new Headers({ "cf-access-jwt-assertion": "invalid", cookie: accessCookie })),
+  "invalid",
+  "an invalid assertion header must not fall back to a cookie",
+);
+assert.equal(accessJwtFromHeaders(new Headers({ cookie: "CF_Authorization_extra=invalid" })), null, "only the exact Access cookie name is accepted");
+assert.equal(accessJwtFromHeaders(new Headers()), null, "a request without an Access token must fail closed");
+assert.equal(await verifyStatus(accessJwtFromHeaders(new Headers({ cookie: accessCookie }))), 200, "the cookie fallback remains subject to strict JWT verification");
+assert.equal(await verifyStatus(accessJwtFromHeaders(new Headers({ "cf-access-jwt-assertion": "invalid", cookie: accessCookie }))), 403, "header precedence must not weaken token verification");
+assert.equal(await verifyStatus(accessJwtFromHeaders(new Headers())), 403, "missing token must still be denied");
+
+const fs = await import("node:fs/promises");
+const middlewareSource = await fs.readFile(new URL("../src/middleware.ts", import.meta.url), "utf8");
+const routeSource = await fs.readFile(new URL("../src/app/api/ca-analyst/turn/route.ts", import.meta.url), "utf8");
+assert.match(middlewareSource, /accessJwtFromHeaders\(request\.headers\)/, "page and API middleware must use the shared Access-token selector");
+assert.match(routeSource, /accessJwtFromHeaders\(request\.headers\)/, "the analyst route must use the shared Access-token selector");
 assert.match(routeSource, /cf-access-token/);
 assert.doesNotMatch(routeSource, /request\.(identity|budget|systemPrompt|model|tool|url|citation|newsUrl)/);
 

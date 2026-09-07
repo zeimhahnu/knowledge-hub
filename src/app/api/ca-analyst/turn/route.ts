@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { verifyAccessJwt } from "../../../../lib/ca-analyst/auth";
+import { accessJwtFromHeaders, verifyAccessJwt } from "../../../../lib/ca-analyst/auth";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -56,7 +56,7 @@ function error(code: "invalid_request" | "access_required" | "service_unavailabl
 export async function POST(request: Request) {
   let assertion: string | null;
   try {
-    assertion = request.headers.get("cf-access-jwt-assertion");
+    assertion = accessJwtFromHeaders(request.headers);
     await verifyAccessJwt(assertion);
   } catch {
     return error("access_required");

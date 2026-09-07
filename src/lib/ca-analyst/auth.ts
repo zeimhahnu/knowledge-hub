@@ -15,6 +15,24 @@ type Jwks = { keys?: Jwk[] };
 
 const replayCache = new Map<string, number>();
 const MAX_REPLAY_ENTRIES = 10_000;
+const ACCESS_COOKIE = "CF_Authorization=";
+
+/**
+ * Select Cloudflare Access's signed application token without trusting any
+ * client-supplied identity fields. The origin assertion header is canonical;
+ * the signed Access cookie is the fallback used when an upstream omits it.
+ */
+export function accessJwtFromHeaders(headers: Headers): string | null {
+  const assertion = headers.get("cf-access-jwt-assertion");
+  if (assertion !== null) return assertion;
+  const cookieHeader = headers.get("cookie");
+  if (!cookieHeader) return null;
+  for (const cookie of cookieHeader.split(";")) {
+    const candidate = cookie.trimStart();
+    if (candidate.startsWith(ACCESS_COOKIE)) return candidate.slice(ACCESS_COOKIE.length);
+  }
+  return null;
+}
 
 function decodePart(value: string): unknown {
   return JSON.parse(Buffer.from(value, "base64url").toString("utf8"));
