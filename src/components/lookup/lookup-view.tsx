@@ -835,19 +835,59 @@ export function LookupView({
                   <h2 className="text-lg font-semibold tracking-tight">
                     Coverage matrix
                   </h2>
+                  {/* Vendors nobody has judged yet. This is the ENTRY point: a freshly
+                      selected vendor starts unchecked, so without this section there was
+                      nowhere to record an observation and the two groups below - both of
+                      which are defined BY a mark - could never fill. */}
+                  {(groups?.unchecked.length ?? 0) > 0 && (
+                    <section aria-labelledby="unchecked-heading">
+                      <h3 id="unchecked-heading" className="mb-2 text-sm font-semibold">Awaiting your check</h3>
+                      <p className="mb-3 text-xs text-muted-foreground">
+                        Mark each vendor as confirmed present or checked absent. Nothing below is graded until you do.
+                      </p>
+                      <CoverageMatrix rows={groups?.unchecked ?? []} onMarkChange={updateConfirmation} />
+                    </section>
+                  )}
+
                   <div className="grid gap-4 lg:grid-cols-2">
                     <section aria-labelledby="supplied-heading">
                       <h3 id="supplied-heading" className="mb-2 text-sm font-semibold">Supplied data</h3>
-                      <p className="mb-3 text-xs text-muted-foreground">Observed in vendor data.</p>
+                      <p className="mb-3 text-xs text-muted-foreground">You marked these as provided.</p>
                       <CoverageMatrix rows={groups?.supplied ?? []} onMarkChange={updateConfirmation} />
                     </section>
                     <section aria-labelledby="expected-heading">
                       <h3 id="expected-heading" className="mb-2 text-sm font-semibold">Expected but absent</h3>
-                      <p className="mb-3 text-xs text-muted-foreground">Expected within its publication horizon, but not observed.</p>
+                      <p className="mb-3 text-xs text-muted-foreground">You marked these absent, and their publication horizon has passed.</p>
                       <CoverageMatrix rows={groups?.expectedAbsent ?? []} onMarkChange={updateConfirmation} />
                       <VendorEntailmentPanel results={entailment} />
                     </section>
                   </div>
+
+                  {/* Not-yet-due vendors stay markable: you may check early, and the
+                      entailment engine still refuses to call them wrong. */}
+                  {(groups?.notYetDue.length ?? 0) > 0 && (
+                    <section aria-labelledby="notyetdue-heading">
+                      <h3 id="notyetdue-heading" className="mb-2 text-sm font-semibold">Not yet due</h3>
+                      <p className="mb-3 text-xs text-muted-foreground">Inside their publication lead time - silence here is early, not wrong.</p>
+                      <CoverageMatrix rows={groups?.notYetDue ?? []} onMarkChange={updateConfirmation} />
+                    </section>
+                  )}
+
+                  {(groups?.timingUnassessed.length ?? 0) > 0 && (
+                    <section aria-labelledby="unassessed-heading">
+                      <h3 id="unassessed-heading" className="mb-2 text-sm font-semibold">Timing not assessed</h3>
+                      <p className="mb-3 text-xs text-muted-foreground">No lead time is set, so silence here is ungraded rather than fine.</p>
+                      <CoverageMatrix rows={groups?.timingUnassessed ?? []} onMarkChange={updateConfirmation} />
+                    </section>
+                  )}
+
+                  {(groups?.notApplicable.length ?? 0) > 0 && (
+                    <section aria-labelledby="na-heading">
+                      <h3 id="na-heading" className="mb-2 text-sm font-semibold">Not applicable</h3>
+                      <p className="mb-3 text-xs text-muted-foreground">Out of scope for this event - uninvolved, never counted in any total.</p>
+                      <CoverageMatrix rows={groups?.notApplicable ?? []} onMarkChange={updateConfirmation} />
+                    </section>
+                  )}
                 </SurfaceSection>
               </>
             )}
