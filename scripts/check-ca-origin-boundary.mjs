@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import assert from "node:assert/strict";
 import { generateKeyPairSync, createSign } from "node:crypto";
-import { accessJwtFromHeaders, verifyAccessJwt } from "../src/lib/ca-analyst/auth.ts";
+import { accessFailureCode, accessJwtFromHeaders, verifyAccessJwt } from "../src/lib/ca-analyst/auth.ts";
 import { originAccessMode, originBoundaryDecision } from "../src/lib/ca-analyst/origin-boundary.ts";
 
 const { privateKey, publicKey } = generateKeyPairSync("rsa", { modulusLength: 2048 });
@@ -93,6 +93,8 @@ assert.equal(accessJwtFromHeaders(new Headers()), null, "a request without an Ac
 assert.equal(await verifyStatus(accessJwtFromHeaders(new Headers({ cookie: accessCookie }))), 200, "the cookie fallback remains subject to strict JWT verification");
 assert.equal(await verifyStatus(accessJwtFromHeaders(new Headers({ "cf-access-jwt-assertion": "invalid", cookie: accessCookie }))), 403, "header precedence must not weaken token verification");
 assert.equal(await verifyStatus(accessJwtFromHeaders(new Headers())), 403, "missing token must still be denied");
+assert.equal(accessFailureCode(new Error("CA01")), "CA01", "known diagnostics remain bounded");
+assert.equal(accessFailureCode(new Error("unexpected detail")), "CA00", "unknown errors must not leak details");
 
 const fs = await import("node:fs/promises");
 const middlewareSource = await fs.readFile(new URL("../src/middleware.ts", import.meta.url), "utf8");

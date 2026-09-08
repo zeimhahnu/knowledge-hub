@@ -1,6 +1,6 @@
 import { timingSafeEqual } from "node:crypto";
 import type { NextRequest } from "next/server";
-import { accessJwtFromHeaders, verifyAccessJwt } from "./lib/ca-analyst/auth";
+import { accessFailureCode, accessJwtFromHeaders, verifyAccessJwt } from "./lib/ca-analyst/auth";
 import { originAccessMode, originBoundaryDecision } from "./lib/ca-analyst/origin-boundary";
 
 export const config = {
@@ -33,10 +33,10 @@ export async function middleware(request: NextRequest) {
     try {
       await verifyAccessJwt(accessJwtFromHeaders(request.headers), { consumeReplay: false });
       return NextResponse.next();
-    } catch {
+    } catch (error) {
       return new NextResponse(JSON.stringify({ type: "error", code: "access_required", message: "Access identity required", retryable: false }), {
         status: 403,
-        headers: { "content-type": "application/json", "cache-control": "no-store" },
+        headers: { "content-type": "application/json", "cache-control": "no-store", "x-ca-access-error": accessFailureCode(error) },
       });
     }
   }
@@ -57,8 +57,8 @@ export async function middleware(request: NextRequest) {
   }
   try {
     await verifyAccessJwt(accessJwtFromHeaders(request.headers), { consumeReplay: false });
-  } catch {
-    return new NextResponse("Access identity required", {
+  } catch (error) {
+    return new NextResponse(`Access identity required (${accessFailureCode(error)})`, {
       status: 403,
       headers: { "cache-control": "no-store" },
     });

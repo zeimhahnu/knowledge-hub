@@ -13,6 +13,17 @@ export type AccessClaims = {
 type Jwk = JsonWebKey & { kid?: string; alg?: string; kty?: string };
 type Jwks = { keys?: Jwk[] };
 
+export type AccessFailureCode = "CA01" | "CA02" | "CA03" | "CA04" | "CA05" | "CA06" | "CA07";
+
+function accessFailure(code: AccessFailureCode): never {
+  throw new Error(code);
+}
+
+export function accessFailureCode(error: unknown): AccessFailureCode | "CA00" {
+  const code = error instanceof Error ? error.message : "";
+  return /^CA0[1-7]$/.test(code) ? code as AccessFailureCode : "CA00";
+}
+
 const replayCache = new Map<string, number>();
 const MAX_REPLAY_ENTRIES = 10_000;
 const ACCESS_COOKIE = "CF_Authorization=";
@@ -53,29 +64,36 @@ export async function verifyAccessJwt(
   const jwksUrl = config.jwksUrl ?? process.env.CA_ACCESS_JWKS_URL;
   const issuer = config.issuer ?? process.env.CA_ACCESS_ISSUER;
   const audience = config.audience ?? process.env.CA_ACCESS_AUDIENCE;
-  if (!token || !jwksUrl || !issuer || !audience) throw new Error("access_required");
+  if (!jwksUrl || !issuer || !audience) accessFailure("CA01");
+  if (!token) accessFailure("CA02");
   const pieces = token.split(".");
-  if (pieces.length !== 3) throw new Error("access_required");
+  if (pieces.length !== 3) accessFailure("CA03");
   let header: { alg?: string; kid?: string };
   let claims: AccessClaims;
   try {
     header = decodePart(pieces[0]) as typeof header;
     claims = decodePart(pieces[1]) as AccessClaims;
   } catch {
-    throw new Error("access_required");
+    accessFailure("CA03");
   }
   if (header.alg !== "RS256" || !header.kid || typeof claims.sub !== "string" || !claims.sub ||
       typeof claims.iss !== "string" || typeof claims.aud !== "string" && !Array.isArray(claims.aud) ||
       claims.iss !== issuer || !audienceMatches(claims.aud, audience) ||
       !Number.isFinite(claims.exp) || claims.exp <= (config.now ?? Date.now() / 1000) ||
       (claims.nbf !== undefined && (!Number.isFinite(claims.nbf) || claims.nbf > (config.now ?? Date.now() / 1000)))) {
-    throw new Error("access_required");
+    accessFailure("CA04");
   }
-  const response = await fetch(jwksUrl, { headers: { accept: "application/json" }, cache: "no-store" });
-  if (!response.ok) throw new Error("access_required");
-  const jwks = (await response.json()) as Jwks;
+  let response: Response;
+  let jwks: Jwks;
+  try {
+    response = await fetch(jwksUrl, { headers: { accept: "application/json" }, cache: "no-store" });
+    if (!response.ok) accessFailure("CA05");
+    jwks = (await response.json()) as Jwks;
+  } catch {
+    accessFailure("CA05");
+  }
   const jwk = jwks.keys?.find((key) => key.kid === header.kid && key.kty === "RSA" && (!key.alg || key.alg === "RS256"));
-  if (!jwk) throw new Error("access_required");
+  if (!jwk) accessFailure("CA06");
   let valid = false;
   try {
     const verifier = createVerify("RSA-SHA256");
@@ -85,12 +103,12 @@ export async function verifyAccessJwt(
   } catch {
     valid = false;
   }
-  if (!valid) throw new Error("access_required");
+  if (!valid) accessFailure("CA07");
   if (config.consumeReplay !== false) {
     const fingerprint = claims.jti ? `jti:${claims.jti}` : `fp:${createHash("sha256").update(token).digest("hex")}`;
     const now = config.now ?? Date.now() / 1000;
     for (const [key, expiry] of replayCache) if (expiry <= now) replayCache.delete(key);
-    if (replayCache.has(fingerprint)) throw new Error("access_required");
+    if (replayCache.has(fingerprint)) accessFailure("CA07");
     if (replayCache.size >= MAX_REPLAY_ENTRIES) {
       const oldest = replayCache.keys().next().value;
       if (oldest) replayCache.delete(oldest);
