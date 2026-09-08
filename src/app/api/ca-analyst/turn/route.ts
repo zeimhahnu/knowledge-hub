@@ -9,6 +9,7 @@ const STATES = new Set(["covered", "not-yet-due", "missing", "not-assessed", "no
 const PROVENANCE = new Set(["measured", "news-confirmed", "inferred", "no-rule"]);
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const MAX_BODY = 120_000;
+const ACCESS_JWKS_FALLBACK_URL = "https://hub.vpszeimhahnu.uk/cdn-cgi/access/certs";
 const ownKeys = (value: Record<string, unknown>, keys: string[]) => Object.keys(value).every((key) => keys.includes(key));
 const boundedString = (value: unknown, max: number) => typeof value === "string" && value.trim().length > 0 && value.length <= max;
 
@@ -57,7 +58,7 @@ export async function POST(request: Request) {
   let assertion: string | null;
   try {
     assertion = accessJwtFromHeaders(request.headers);
-    await verifyAccessJwt(assertion);
+    await verifyAccessJwt(assertion, { jwksFallbackUrl: ACCESS_JWKS_FALLBACK_URL });
   } catch {
     return error("access_required");
   }

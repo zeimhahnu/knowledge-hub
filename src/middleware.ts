@@ -3,6 +3,8 @@ import type { NextRequest } from "next/server";
 import { accessFailureCode, accessJwtFromHeaders, verifyAccessJwt } from "./lib/ca-analyst/auth";
 import { originAccessMode, originBoundaryDecision } from "./lib/ca-analyst/origin-boundary";
 
+const ACCESS_JWKS_FALLBACK_URL = "https://hub.vpszeimhahnu.uk/cdn-cgi/access/certs";
+
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
   runtime: "nodejs",
@@ -31,7 +33,7 @@ export async function middleware(request: NextRequest) {
   const { NextResponse } = await import("next/server");
   if (request.nextUrl.pathname.startsWith("/api/ca-analyst/")) {
     try {
-      await verifyAccessJwt(accessJwtFromHeaders(request.headers), { consumeReplay: false });
+      await verifyAccessJwt(accessJwtFromHeaders(request.headers), { consumeReplay: false, jwksFallbackUrl: ACCESS_JWKS_FALLBACK_URL });
       return NextResponse.next();
     } catch (error) {
       return new NextResponse(JSON.stringify({ type: "error", code: "access_required", message: "Access identity required", retryable: false }), {
@@ -56,7 +58,7 @@ export async function middleware(request: NextRequest) {
     });
   }
   try {
-    await verifyAccessJwt(accessJwtFromHeaders(request.headers), { consumeReplay: false });
+    await verifyAccessJwt(accessJwtFromHeaders(request.headers), { consumeReplay: false, jwksFallbackUrl: ACCESS_JWKS_FALLBACK_URL });
   } catch (error) {
     return new NextResponse(`Access identity required (${accessFailureCode(error)})`, {
       status: 403,

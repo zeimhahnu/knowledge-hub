@@ -96,6 +96,26 @@ assert.equal(await verifyStatus(accessJwtFromHeaders(new Headers())), 403, "miss
 assert.equal(accessFailureCode(new Error("CA01")), "CA01", "known diagnostics remain bounded");
 assert.equal(accessFailureCode(new Error("unexpected detail")), "CA00", "unknown errors must not leak details");
 
+const normalFetch = globalThis.fetch;
+const fallbackUrl = "https://hub.example/cdn-cgi/access/certs";
+const fetchedUrls = [];
+globalThis.fetch = async (url) => {
+  fetchedUrls.push(url);
+  if (url === jwksUrl) throw new Error("primary unavailable");
+  assert.equal(url, fallbackUrl);
+  return new Response(JSON.stringify({ keys: [{ ...jwk, kid: "test-key", alg: "RS256", kty: "RSA" }] }), { status: 200 });
+};
+await verifyAccessJwt(validAssertion, {
+  jwksUrl,
+  jwksFallbackUrl: fallbackUrl,
+  issuer: "https://tenant.cloudflareaccess.com",
+  audience: "app-a",
+  now,
+  consumeReplay: false,
+});
+assert.deepEqual(fetchedUrls, [jwksUrl, fallbackUrl], "JWKS verification must retry only the configured official fallback");
+globalThis.fetch = normalFetch;
+
 const fs = await import("node:fs/promises");
 const middlewareSource = await fs.readFile(new URL("../src/middleware.ts", import.meta.url), "utf8");
 const routeSource = await fs.readFile(new URL("../src/app/api/ca-analyst/turn/route.ts", import.meta.url), "utf8");

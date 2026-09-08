@@ -59,7 +59,7 @@ export function clearAccessReplayCache() {
 
 export async function verifyAccessJwt(
   token: string | null | undefined,
-  config: { jwksUrl?: string; issuer?: string; audience?: string; now?: number; consumeReplay?: boolean } = {},
+  config: { jwksUrl?: string; jwksFallbackUrl?: string; issuer?: string; audience?: string; now?: number; consumeReplay?: boolean } = {},
 ): Promise<AccessClaims> {
   const jwksUrl = config.jwksUrl ?? process.env.CA_ACCESS_JWKS_URL;
   const issuer = config.issuer ?? process.env.CA_ACCESS_ISSUER;
@@ -83,15 +83,18 @@ export async function verifyAccessJwt(
       (claims.nbf !== undefined && (!Number.isFinite(claims.nbf) || claims.nbf > (config.now ?? Date.now() / 1000)))) {
     accessFailure("CA04");
   }
-  let response: Response;
-  let jwks: Jwks;
-  try {
-    response = await fetch(jwksUrl, { headers: { accept: "application/json" }, cache: "no-store" });
-    if (!response.ok) accessFailure("CA05");
-    jwks = (await response.json()) as Jwks;
-  } catch {
-    accessFailure("CA05");
+  let jwks: Jwks | undefined;
+  for (const url of [...new Set([jwksUrl, config.jwksFallbackUrl].filter((value): value is string => Boolean(value)))]) {
+    try {
+      const response = await fetch(url, { headers: { accept: "application/json" }, cache: "no-store" });
+      if (!response.ok) continue;
+      jwks = (await response.json()) as Jwks;
+      break;
+    } catch {
+      // Try the same official Access keys through the protected app hostname.
+    }
   }
+  if (!jwks) accessFailure("CA05");
   const jwk = jwks.keys?.find((key) => key.kid === header.kid && key.kty === "RSA" && (!key.alg || key.alg === "RS256"));
   if (!jwk) accessFailure("CA06");
   let valid = false;
