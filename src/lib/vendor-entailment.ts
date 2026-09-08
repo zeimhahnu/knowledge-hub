@@ -27,6 +27,7 @@
  * relative imports, no alias, no DOM at import time.
  */
 
+import curatedRules from "../data/rules.json" with { type: "json" };
 import type { VendorId } from "./vendors.ts";
 import type { IndexType } from "./fund-master.ts";
 
@@ -209,4 +210,11 @@ export function entailmentSummary(results: readonly VendorEntailment[]): string 
   }
   if (results.some((r) => r.verdict === "consistent")) return "Every absence is explained by the curated methodology rules.";
   return "Not enough confirmed observations to judge any absence.";
+}
+
+/** Entailment against the bundled curated rules (mirrors divergence.ts). */
+export function computeCuratedEntailment(
+  input: Omit<EntailmentInput, "rules">,
+): VendorEntailment[] {
+  return computeEntailment({ ...input, rules: curatedRules.rules as EntailmentRule[] });
 }

@@ -12,7 +12,9 @@ import {
   NewspaperIcon,
 } from "lucide-react";
 
-import { CaAnalystPanel } from "@/components/lookup/ca-analyst-panel";
+import { CaAnalystDock } from "@/components/lookup/ca-analyst-dock";
+import { VendorEntailmentPanel } from "@/components/lookup/vendor-entailment-panel";
+import { computeCuratedEntailment } from "@/lib/vendor-entailment";
 import { CoverageMatrix } from "@/components/lookup/coverage-matrix";
 import { buildAnalystLookupContext } from "@/lib/ca-analyst/context";
 import {
@@ -663,6 +665,20 @@ export function LookupView({
   const caev = useMemo(() => caevForEventType(eventType), [eventType]);
   const daysOutNum = exDateParsed ? daysOut(exDateParsed, today) : null;
   const groups = verdict ? deriveVendorGroups(verdict) : null;
+  const entailment = useMemo(
+    () =>
+      groups
+        ? computeCuratedEntailment({
+            eventType,
+            absent: groups.expectedAbsent.map((row) => row.vendor),
+            confirmed: groups.supplied.map((row) => row.vendor),
+            notYetDue: groups.notYetDue.map((row) => row.vendor),
+            indexType:
+              fundResolution.mode === "fund-resolved" ? fundResolution.indexType : null,
+          })
+        : [],
+    [groups, eventType, fundResolution],
+  );
   const comparableVendors = useMemo(
     () => groups ? [...groups.supplied, ...groups.expectedAbsent].map((row) => row.vendor) : [],
     [groups],
@@ -829,6 +845,7 @@ export function LookupView({
                       <h3 id="expected-heading" className="mb-2 text-sm font-semibold">Expected but absent</h3>
                       <p className="mb-3 text-xs text-muted-foreground">Expected within its publication horizon, but not observed.</p>
                       <CoverageMatrix rows={groups?.expectedAbsent ?? []} onMarkChange={updateConfirmation} />
+                      <VendorEntailmentPanel results={entailment} />
                     </section>
                   </div>
                 </SurfaceSection>
@@ -842,7 +859,7 @@ export function LookupView({
               company={company}
               onResult={caAnalystEnabled ? handleNewsResult : undefined}
             />
-            {analystContext && <CaAnalystPanel context={analystContext} />}
+            {analystContext && <CaAnalystDock context={analystContext} />}
           </motion.div>
         )}
       </div>
