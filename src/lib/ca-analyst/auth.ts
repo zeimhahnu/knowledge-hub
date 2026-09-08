@@ -107,8 +107,14 @@ export async function verifyAccessJwt(
     valid = false;
   }
   if (!valid) accessFailure("CA07");
-  if (config.consumeReplay !== false) {
-    const fingerprint = claims.jti ? `jti:${claims.jti}` : `fp:${createHash("sha256").update(token).digest("hex")}`;
+  // Replay detection needs a PER-REQUEST nonce. Cloudflare Access assertions carry no jti,
+  // so the fingerprint fallback is stable for the whole session: consuming it rejected the
+  // SECOND request of every session with CA07, which reads to the user as a login failure.
+  // (middleware.ts already passes consumeReplay:false; this route did not, so the route
+  // consumed the token the middleware had just accepted.) Enforce only with a real jti.
+  const nonce = typeof claims.jti === "string" && claims.jti ? claims.jti : null;
+  if (config.consumeReplay !== false && nonce) {
+    const fingerprint = `jti:${nonce}`;
     const now = config.now ?? Date.now() / 1000;
     for (const [key, expiry] of replayCache) if (expiry <= now) replayCache.delete(key);
     if (replayCache.has(fingerprint)) accessFailure("CA07");
