@@ -3,6 +3,7 @@
 import { KeyboardEvent, useEffect, useId, useRef, useState } from "react";
 
 import type { SymbolSuggestion } from "@/lib/symbol-search";
+import { shouldSuppressSearch } from "./symbol-typeahead-state";
 
 type SymbolTypeaheadProps = {
   value: string;
@@ -18,10 +19,12 @@ export function SymbolTypeahead({ value, onChange }: SymbolTypeaheadProps) {
   const [activeIndex, setActiveIndex] = useState(-1);
   const [isOpen, setIsOpen] = useState(false);
   const [warning, setWarning] = useState<string | null>(null);
+  const [resolvedCompanyName, setResolvedCompanyName] = useState<string | null>(null);
+  const lastSelectedSymbolRef = useRef<string | null>(null);
 
   useEffect(() => {
     const query = value.trim();
-    if (!query) return;
+    if (!query || shouldSuppressSearch(query, lastSelectedSymbolRef.current)) return;
 
     const controller = new AbortController();
     const timer = setTimeout(async () => {
@@ -51,6 +54,8 @@ export function SymbolTypeahead({ value, onChange }: SymbolTypeaheadProps) {
   }, [value]);
 
   function handleChange(nextValue: string) {
+    lastSelectedSymbolRef.current = null;
+    setResolvedCompanyName(null);
     onChange(nextValue);
     setSuggestions([]);
     setWarning(null);
@@ -59,7 +64,10 @@ export function SymbolTypeahead({ value, onChange }: SymbolTypeaheadProps) {
   }
 
   function selectSuggestion(suggestion: SymbolSuggestion) {
-    onChange(suggestion.symbol.toUpperCase());
+    const symbol = suggestion.symbol.toUpperCase();
+    lastSelectedSymbolRef.current = symbol;
+    setResolvedCompanyName(suggestion.name);
+    onChange(symbol);
     setSuggestions([]);
     setWarning(null);
     setActiveIndex(-1);
@@ -102,14 +110,23 @@ export function SymbolTypeahead({ value, onChange }: SymbolTypeaheadProps) {
         autoCapitalize="characters"
         autoComplete="off"
         maxLength={40}
-        className="min-h-12 w-full rounded-xl border border-border bg-background px-4 text-base font-medium uppercase outline-none transition-colors placeholder:normal-case placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring"
+        className="min-h-12 w-full rounded-xl border border-border bg-background px-4 pr-52 text-base font-medium uppercase outline-none transition-colors placeholder:normal-case placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring"
         role="combobox"
         aria-autocomplete="list"
         aria-controls={listboxId}
         aria-expanded={isOpen}
         aria-activedescendant={activeDescendant}
-        aria-describedby="ticker-help"
+        aria-describedby={resolvedCompanyName ? "ticker-help ticker-resolved" : "ticker-help"}
       />
+      {resolvedCompanyName && (
+        <span
+          id="ticker-resolved"
+          aria-live="polite"
+          className="pointer-events-none absolute inset-y-0 right-0 flex max-w-1/2 items-center bg-background pl-2 pr-4 text-sm font-normal normal-case text-muted-foreground"
+        >
+          <span className="truncate">— {resolvedCompanyName}</span>
+        </span>
+      )}
       {isOpen && (suggestions.length > 0 || warning) && (
         <div className="absolute z-10 mt-2 w-full overflow-hidden rounded-xl border border-border bg-card shadow-lg">
           {suggestions.length > 0 && (
