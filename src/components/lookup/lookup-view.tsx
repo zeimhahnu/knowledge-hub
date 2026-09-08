@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import {
@@ -12,7 +12,9 @@ import {
   NewspaperIcon,
 } from "lucide-react";
 
+import { CaAnalystPanel } from "@/components/lookup/ca-analyst-panel";
 import { CoverageMatrix } from "@/components/lookup/coverage-matrix";
+import { buildAnalystLookupContext } from "@/lib/ca-analyst/context";
 import {
   getVendorConfirmation,
   setVendorConfirmation,
@@ -102,11 +104,13 @@ function NewsPanel({
   eventType,
   exDate,
   company,
+  onResult,
 }: {
   ticker: string;
   eventType: string;
   exDate: string;
   company: string | null;
+  onResult?: (result: NewsValidationResult) => void;
 }) {
   const [news, setNews] = useState<NewsState>({ status: "loading" });
 
@@ -126,6 +130,7 @@ function NewsPanel({
         });
         const body = (await res.json()) as NewsValidationResult;
         setNews({ status: "done", result: body });
+        onResult?.(body);
       } catch (err) {
         if (controller.signal.aborted) return;
         setNews({
@@ -137,7 +142,7 @@ function NewsPanel({
     })();
 
     return () => controller.abort();
-  }, [ticker, eventType, exDate, company]);
+  }, [ticker, eventType, exDate, company, onResult]);
 
   return (
     <SurfaceSection className="space-y-4">
@@ -583,11 +588,14 @@ export function LookupView({
   eventType,
   exDate,
   company: companyParam,
+  caAnalystEnabled = false,
 }: {
   ticker: string;
   eventType: string;
   exDate: string;
   company: string | null;
+  /** Server-computed private feature gate; false preserves the P0 lookup. */
+  caAnalystEnabled?: boolean;
 }) {
   const reduceMotion = useReducedMotion();
   // Hydration guard: observations, qualifiers, and horizons live in localStorage, so the
@@ -601,6 +609,7 @@ export function LookupView({
   const [confirmationRevision, setConfirmationRevision] = useState(0);
   const [filters, setFilters] = useState<LookupFilters>({});
   const [fundTicker, setFundTicker] = useState("");
+  const [newsResult, setNewsResult] = useState<NewsValidationResult | null>(null);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard
@@ -661,6 +670,26 @@ export function LookupView({
   const divergence = useMemo(
     () => computeDivergence(comparableVendors, eventType),
     [comparableVendors, eventType],
+  );
+  const analystContext = useMemo(
+    () =>
+      caAnalystEnabled && verdict && newsResult && scope.length > 0
+        ? buildAnalystLookupContext({
+            ticker,
+            eventType,
+            exDate,
+            selectedVendors: scope,
+            verdict,
+            news: newsResult,
+          })
+        : null,
+    [caAnalystEnabled, verdict, newsResult, scope, ticker, eventType, exDate],
+  );
+  const handleNewsResult = useCallback(
+    (result: NewsValidationResult) => {
+      if (caAnalystEnabled) setNewsResult(result);
+    },
+    [caAnalystEnabled],
   );
 
   const updateConfirmation = (vendor: VendorId, state: VendorMarkState) => {
@@ -811,7 +840,9 @@ export function LookupView({
               eventType={eventType}
               exDate={exDate}
               company={company}
+              onResult={caAnalystEnabled ? handleNewsResult : undefined}
             />
+            {analystContext && <CaAnalystPanel context={analystContext} />}
           </motion.div>
         )}
       </div>

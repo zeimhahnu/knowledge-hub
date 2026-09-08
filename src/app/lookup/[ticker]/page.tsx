@@ -95,5 +95,7 @@ export default async function Page({ params, searchParams }: LookupPageProps) {
     );
   }
 
-  return <LookupView ticker={ticker} eventType={eventType} exDate={exDate} company={company} />;
+  // Private server-side gate: this stays false until the Access A→B E2E is proven.
+  const caAnalystEnabled = process.env.CA_ANALYST_UI_ENABLED === "true";
+  return <LookupView ticker={ticker} eventType={eventType} exDate={exDate} company={company} caAnalystEnabled={caAnalystEnabled} />;
 }

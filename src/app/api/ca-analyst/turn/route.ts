@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { accessJwtFromHeaders, verifyAccessJwt } from "../../../../lib/ca-analyst/auth";
+import { VENDOR_IDS } from "../../../../lib/vendors";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const VENDORS = new Set(["ftse-russell", "msci", "sp-dji", "nasdaq", "stoxx", "solactive", "bloomberg"]);
+const VENDORS = new Set<string>(VENDOR_IDS);
 const STATES = new Set(["covered", "not-yet-due", "missing", "not-assessed", "not-applicable"]);
 const PROVENANCE = new Set(["measured", "news-confirmed", "inferred", "no-rule"]);
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
@@ -37,6 +38,10 @@ function validRequest(value: unknown): value is Record<string, unknown> {
       typeof r.state !== "string" || !STATES.has(r.state) || typeof r.provenance !== "string" || !PROVENANCE.has(r.provenance) ||
       !Array.isArray(r.ruleRefs) || r.ruleRefs.length > 8 || r.ruleRefs.some((ref) => !boundedString(ref, 100));
   })) return false;
+  const selectedVendors = l.selectedVendors as string[];
+  const rows = l.matrixRows as Array<Record<string, unknown>>;
+  if (new Set(selectedVendors).size !== selectedVendors.length || new Set(rows.map((row) => row.vendor)).size !== rows.length ||
+      rows.some((row) => !selectedVendors.includes(row.vendor as string))) return false;
   const news = l.news;
   if (!news || typeof news !== "object" || Array.isArray(news)) return false;
   const n = news as Record<string, unknown>;
