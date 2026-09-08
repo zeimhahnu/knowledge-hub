@@ -13,10 +13,8 @@ import {
 } from "lucide-react";
 
 import { CaAnalystDock } from "@/components/lookup/ca-analyst-dock";
-import { VendorEntailmentPanel } from "@/components/lookup/vendor-entailment-panel";
 import { computeCuratedEntailment } from "@/lib/vendor-entailment";
-import { CoverageMatrix } from "@/components/lookup/coverage-matrix";
-import { CoverageTimeline } from "@/components/lookup/coverage-timeline";
+import { VendorInvestigationList } from "@/components/lookup/vendor-investigation-list";
 import { buildAnalystLookupContext } from "@/lib/ca-analyst/context";
 import {
   getVendorConfirmation,
@@ -422,7 +420,7 @@ function VerdictPanel({
   return (
     <SurfaceSection className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
-        <h2 className="text-lg font-semibold tracking-tight">Verdict</h2>
+        <h2 className="text-lg font-semibold tracking-tight">Finding so far</h2>
       </div>
 
       {!timingNoticeDismissed && totals.notAssessed > 0 && (
@@ -452,6 +450,11 @@ function VerdictPanel({
       <p className="max-w-prose text-sm leading-relaxed text-foreground/90">
         {verdictSummary(totals)}
       </p>
+      {totals.unchecked > 0 && (
+        <p className="max-w-prose border-l-2 border-chart-4 pl-3 text-sm leading-relaxed text-chart-4">
+          This is not a final verdict: {totals.unchecked} vendor{totals.unchecked === 1 ? " remains" : "s remain"} unchecked.
+        </p>
+      )}
 
       <div className="flex flex-wrap gap-2">
         {totals.dataStatesTreatment > 0 && (
@@ -726,45 +729,69 @@ export function LookupView({
           row.state === "missing" && row.confirmation?.state === "absent",
       )
       .map((row) => row.vendor) ?? [];
+  const checkableVendorCount = verdict?.rows.filter((row) => row.applicable).length ?? 0;
+  const checkedVendorCount = verdict?.rows.filter((row) => row.applicable && row.confirmation !== null).length ?? 0;
 
   return (
     <main className="min-h-screen bg-background text-foreground">
       {/* Query header — D1 (1) */}
-      <div className="border-b border-border bg-card/30">
-        <div className="mx-auto max-w-4xl px-6 py-8">
+      <div className="border-b border-white/10 bg-[linear-gradient(115deg,#050505_0%,#171717_52%,#2b2b2b_100%)] text-white">
+        <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
+          <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[#959494]">Corporate-action lookup · step 2 of 6</p>
           <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
-            <h1 className="text-3xl font-semibold tracking-tight">{ticker}</h1>
+            <h1 className="text-4xl font-medium tracking-[-0.05em]">{ticker}</h1>
             {company && (
-              <span className="pb-1 text-sm text-muted-foreground">
+              <span className="pb-1 text-sm text-white/65">
                 {company}
               </span>
             )}
           </div>
 
           <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-3 py-1 text-xs font-medium text-foreground">
+            <span className="inline-flex items-center rounded-[4px] border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white">
               {eventName}
             </span>
             {caev && (
-              <span className="inline-flex items-center rounded-full border border-border bg-muted/40 px-3 py-1 font-mono text-xs font-medium text-muted-foreground">
+              <span className="inline-flex items-center rounded-[4px] border border-white/20 bg-white/10 px-3 py-1 font-mono text-xs font-medium text-white/65">
                 {caev}
               </span>
             )}
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/40 px-3 py-1 text-xs font-medium text-muted-foreground">
+            <span className="inline-flex items-center gap-1.5 rounded-[4px] border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white/65">
               <CalendarDaysIcon className="h-3.5 w-3.5" aria-hidden />
               ex-date {exDate}
             </span>
             {daysOutNum !== null && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/40 px-3 py-1 text-xs font-medium text-muted-foreground">
+              <span className="inline-flex items-center gap-1.5 rounded-[4px] border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white/65">
                 <ClockIcon className="h-3.5 w-3.5" aria-hidden />
                 {daysOutLabel(daysOutNum)}
               </span>
             )}
           </div>
+          <div className="mt-8 grid gap-5 border-t border-white/15 pt-5 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-end sm:gap-8">
+            <div>
+              <p className="font-mono text-[0.65rem] uppercase tracking-[0.16em] text-white/55">Investigation progress</p>
+              <p className="mt-1 text-xl font-medium tracking-[-0.03em]">
+                {verdict ? `${checkedVendorCount} of ${checkableVendorCount} checked` : "Preparing your checks"}
+              </p>
+            </div>
+            <div className="min-w-0">
+              <div className="h-1 rounded-[4px] bg-white/15" aria-hidden>
+                <div
+                  className="h-1 rounded-[4px] bg-white transition-[width] duration-300"
+                  style={{ width: verdict && checkableVendorCount > 0 ? `${(checkedVendorCount / checkableVendorCount) * 100}%` : "0%" }}
+                />
+              </div>
+              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/65">
+                {verdict && verdict.totals.unchecked > 0
+                  ? "Finding so far — this picture is incomplete until every in-scope vendor is checked."
+                  : "All in-scope vendors have an observation; review the rows before sharing the finding."}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="mx-auto max-w-4xl space-y-4 px-6 py-10">
+      <div className="mx-auto max-w-6xl space-y-4 px-5 py-8 sm:px-8 sm:py-10">
         {/* D1 (2) vendor scope — D1 (3) verdict — D1 (4) matrix — D1 (5) news */}
         {!hydrated || !verdict ? (
           <div aria-hidden className="space-y-4">
@@ -831,73 +858,17 @@ export function LookupView({
                   result={divergence}
                   lateAbsentVendors={lateAbsentVendors}
                 />
-                {exDateParsed && (
-                  <CoverageTimeline
-                    verdict={verdict}
-                    eventType={eventType}
-                    exDate={exDateParsed}
-                    today={today}
-                  />
-                )}
-
-                <SurfaceSection className="space-y-4">
-                  <h2 className="text-lg font-semibold tracking-tight">
-                    Coverage matrix
-                  </h2>
-                  {/* Vendors nobody has judged yet. This is the ENTRY point: a freshly
-                      selected vendor starts unchecked, so without this section there was
-                      nowhere to record an observation and the two groups below - both of
-                      which are defined BY a mark - could never fill. */}
-                  {(groups?.unchecked.length ?? 0) > 0 && (
-                    <section aria-labelledby="unchecked-heading">
-                      <h3 id="unchecked-heading" className="mb-2 text-sm font-semibold">Awaiting your check</h3>
-                      <p className="mb-3 text-xs text-muted-foreground">
-                        Mark each vendor as confirmed present or checked absent. Nothing below is graded until you do.
-                      </p>
-                      <CoverageMatrix rows={groups?.unchecked ?? []} onMarkChange={updateConfirmation} />
-                    </section>
-                  )}
-
-                  <div className="grid gap-4 lg:grid-cols-2">
-                    <section aria-labelledby="supplied-heading">
-                      <h3 id="supplied-heading" className="mb-2 text-sm font-semibold">Supplied data</h3>
-                      <p className="mb-3 text-xs text-muted-foreground">You marked these as provided.</p>
-                      <CoverageMatrix rows={groups?.supplied ?? []} onMarkChange={updateConfirmation} />
-                    </section>
-                    <section aria-labelledby="expected-heading">
-                      <h3 id="expected-heading" className="mb-2 text-sm font-semibold">Expected but absent</h3>
-                      <p className="mb-3 text-xs text-muted-foreground">You marked these absent, and their publication horizon has passed.</p>
-                      <CoverageMatrix rows={groups?.expectedAbsent ?? []} onMarkChange={updateConfirmation} />
-                      <VendorEntailmentPanel results={entailment} />
-                    </section>
-                  </div>
-
-                  {/* Not-yet-due vendors stay markable: you may check early, and the
-                      entailment engine still refuses to call them wrong. */}
-                  {(groups?.notYetDue.length ?? 0) > 0 && (
-                    <section aria-labelledby="notyetdue-heading">
-                      <h3 id="notyetdue-heading" className="mb-2 text-sm font-semibold">Not yet due</h3>
-                      <p className="mb-3 text-xs text-muted-foreground">Inside their publication lead time - silence here is early, not wrong.</p>
-                      <CoverageMatrix rows={groups?.notYetDue ?? []} onMarkChange={updateConfirmation} />
-                    </section>
-                  )}
-
-                  {(groups?.timingUnassessed.length ?? 0) > 0 && (
-                    <section aria-labelledby="unassessed-heading">
-                      <h3 id="unassessed-heading" className="mb-2 text-sm font-semibold">Timing not assessed</h3>
-                      <p className="mb-3 text-xs text-muted-foreground">No lead time is set, so silence here is ungraded rather than fine.</p>
-                      <CoverageMatrix rows={groups?.timingUnassessed ?? []} onMarkChange={updateConfirmation} />
-                    </section>
-                  )}
-
-                  {(groups?.notApplicable.length ?? 0) > 0 && (
-                    <section aria-labelledby="na-heading">
-                      <h3 id="na-heading" className="mb-2 text-sm font-semibold">Not applicable</h3>
-                      <p className="mb-3 text-xs text-muted-foreground">Out of scope for this event - uninvolved, never counted in any total.</p>
-                      <CoverageMatrix rows={groups?.notApplicable ?? []} onMarkChange={updateConfirmation} />
-                    </section>
-                  )}
-                </SurfaceSection>
+                <VendorInvestigationList
+                  ticker={ticker}
+                  eventName={eventName}
+                  verdict={verdict}
+                  eventType={eventType}
+                  exDate={exDateParsed ?? new Date(`${exDate}T00:00:00.000Z`)}
+                  today={today}
+                  groups={groups ?? { supplied: [], expectedAbsent: [], notYetDue: [], unchecked: [], timingUnassessed: [], notApplicable: [] }}
+                  entailment={entailment}
+                  onMarkChange={updateConfirmation}
+                />
               </>
             )}
 

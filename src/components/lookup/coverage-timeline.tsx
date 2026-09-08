@@ -44,6 +44,53 @@ const ROW_STYLES: Record<TimelineRowState, { band: string; marker: string; rule:
   },
 };
 
+/**
+ * The shared publication-window geometry. The investigation list uses this
+ * same primitive so the timeline is absorbed into each vendor row instead of
+ * being rendered as a second representation above the rows.
+ */
+export function TimelineGeometry({
+  row,
+  model,
+}: {
+  row: TimelineRow;
+  model: CoverageTimelineModel;
+}) {
+  const styles = ROW_STYLES[row.state];
+  const isNoHorizon = row.state === "no-horizon";
+  const isClosed = row.state === "overdue";
+
+  return (
+    <div className="relative h-8 min-w-0" aria-hidden="true">
+      <div className={`absolute inset-x-0 top-1/2 border-t ${styles.rule}`} />
+      <div
+        className="absolute inset-y-0 border-l border-primary/30"
+        style={{ left: `${model.axis.todayPercent}%` }}
+      />
+      <div
+        className="absolute inset-y-0 border-l border-foreground/20"
+        style={{ left: `${model.axis.exDatePercent}%` }}
+      />
+
+      {isNoHorizon ? (
+        <div className="absolute inset-x-0 top-1/2 border-t-2 border-dashed border-muted-foreground/40" />
+      ) : row.band ? (
+        <div
+          className={`absolute top-1/2 h-3 -translate-y-1/2 rounded-sm border-2 ${styles.band} ${isClosed ? "border-solid" : ""}`}
+          style={{ left: `${row.band.startPercent}%`, width: `${row.band.widthPercent}%` }}
+        />
+      ) : null}
+
+      {row.markerPercent !== null && (
+        <span
+          className={`absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 ${styles.marker} ${row.state === "published" ? "shadow-[0_0_0_2px_theme(colors.card)]" : ""}`}
+          style={{ left: `${row.markerPercent}%` }}
+        />
+      )}
+    </div>
+  );
+}
+
 function AxisMarker({
   label,
   date,
@@ -77,10 +124,6 @@ function AxisMarker({
 }
 
 function TimelineRowView({ row, model }: { row: TimelineRow; model: CoverageTimelineModel }) {
-  const styles = ROW_STYLES[row.state];
-  const isNoHorizon = row.state === "no-horizon";
-  const isClosed = row.state === "overdue";
-
   return (
     <li
       className="grid gap-x-3 gap-y-2 border-t border-border/70 py-3 first:border-t-0 sm:grid-cols-[8rem_minmax(0,1fr)_minmax(11rem,auto)] sm:items-center"
@@ -93,33 +136,7 @@ function TimelineRowView({ row, model }: { row: TimelineRow; model: CoverageTime
         </p>
       </div>
 
-      <div className="relative h-8 min-w-0" aria-hidden="true">
-        <div className={`absolute inset-x-0 top-1/2 border-t ${styles.rule}`} />
-        <div
-          className="absolute inset-y-0 border-l border-primary/30"
-          style={{ left: `${model.axis.todayPercent}%` }}
-        />
-        <div
-          className="absolute inset-y-0 border-l border-foreground/20"
-          style={{ left: `${model.axis.exDatePercent}%` }}
-        />
-
-        {isNoHorizon ? (
-          <div className="absolute inset-x-0 top-1/2 border-t-2 border-dashed border-muted-foreground/40" />
-        ) : row.band ? (
-          <div
-            className={`absolute top-1/2 h-3 -translate-y-1/2 rounded-sm border-2 ${styles.band} ${isClosed ? "border-solid" : ""}`}
-            style={{ left: `${row.band.startPercent}%`, width: `${row.band.widthPercent}%` }}
-          />
-        ) : null}
-
-        {row.markerPercent !== null && (
-          <span
-            className={`absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 ${styles.marker} ${row.state === "published" ? "shadow-[0_0_0_2px_theme(colors.card)]" : ""}`}
-            style={{ left: `${row.markerPercent}%` }}
-          />
-        )}
-      </div>
+      <TimelineGeometry row={row} model={model} />
 
       <p className="text-xs leading-relaxed text-muted-foreground sm:text-right">
         <span className="font-medium text-foreground">{row.status}</span>
