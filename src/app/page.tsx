@@ -4,10 +4,15 @@ import { FormEvent, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRightIcon, CalendarIcon, SearchIcon } from "lucide-react";
+import { ArrowRightIcon, CalendarIcon } from "lucide-react";
 
 import { SymbolTypeahead } from "@/components/home/symbol-typeahead";
 import { RouteShell } from "@/components/route-shell";
+import { Band } from "@/components/ui/band";
+import { Field, fieldControlClassName } from "@/components/ui/field";
+import { SectionHeader } from "@/components/ui/section-header";
+import { Surface } from "@/components/ui/surface";
+import { Button } from "@/components/ui/button";
 import { CANONICAL_EVENTS } from "@/lib/event-taxonomy";
 
 const TICKER_RE = /^[A-Za-z0-9.\-^=]{1,15}$/;
@@ -74,7 +79,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <section className="relative overflow-hidden border-b border-border">
+      <Band className="relative overflow-hidden border-b border-border">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.03] [background-image:linear-gradient(var(--foreground)_1px,transparent_1px),linear-gradient(90deg,var(--foreground)_1px,transparent_1px)] [background-size:64px_64px]"
@@ -85,45 +90,27 @@ export default function Home() {
           transition={{ duration: 0.3, ease: "easeOut" }}
           className="relative mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 md:py-16 lg:px-8"
         >
-          <div className="mx-auto max-w-2xl text-center">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-4 py-2 text-sm text-muted-foreground">
-              <SearchIcon className="h-4 w-4 text-primary" aria-hidden />
-              Corporate-action validation
-            </div>
-            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              Reconcile a corporate action before it becomes a gap.
-            </h1>
-            <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Enter the event you already know about. We&apos;ll map expected vendor coverage and cross-check the announcement.
-            </p>
-          </div>
+          <SectionHeader
+            className="mx-auto max-w-2xl text-center"
+            eyebrow="Corporate-action validation"
+            title="Reconcile a corporate action before it becomes a gap."
+            description="Enter the event you already know about. We&apos;ll map expected vendor coverage and cross-check the announcement."
+          />
 
-          <form
-            onSubmit={handleSubmit}
-            className="mx-auto mt-8 rounded-2xl border border-border bg-card/80 p-4 shadow-sm backdrop-blur-sm sm:p-6"
-            noValidate
-          >
+          <Surface className="mx-auto mt-8 max-w-3xl p-4 sm:p-6">
+            <form onSubmit={handleSubmit} noValidate>
             <div className="grid gap-4 md:grid-cols-2">
-              <div className="md:col-span-2">
-                <label htmlFor="ticker" className="mb-2 block text-sm font-semibold">
-                  Ticker symbol
-                </label>
+              <Field className="md:col-span-2" label="Ticker symbol" htmlFor="ticker" hint="Use the listed security&apos;s ticker, not its fund or index symbol.">
                 <SymbolTypeahead value={ticker} onChange={setTicker} />
-                <p id="ticker-help" className="mt-2 text-xs text-muted-foreground">
-                  Use the listed security&apos;s ticker, not its fund or index symbol.
-                </p>
-              </div>
+              </Field>
 
-              <div>
-                <label htmlFor="event-type" className="mb-2 block text-sm font-semibold">
-                  Event type
-                </label>
+              <Field label="Event type" htmlFor="event-type">
                 <select
                   id="event-type"
                   name="eventType"
                   value={eventType}
                   onChange={(event) => setEventType(event.target.value)}
-                  className="min-h-12 w-full rounded-xl border border-border bg-background px-4 text-base outline-none transition-colors focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring"
+                  className={fieldControlClassName()}
                 >
                   <option value="">Select an event type</option>
                   {CANONICAL_EVENTS.map((corporateAction) => (
@@ -132,12 +119,9 @@ export default function Home() {
                     </option>
                   ))}
                 </select>
-              </div>
+              </Field>
 
-              <div>
-                <label htmlFor="ex-date" className="mb-2 block text-sm font-semibold">
-                  Ex-date
-                </label>
+              <Field label="Ex-date" htmlFor="ex-date">
                 <div className="relative">
                   <CalendarIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
                   <input
@@ -146,10 +130,10 @@ export default function Home() {
                     type="date"
                     value={exDate}
                     onChange={(event) => setExDate(event.target.value)}
-                    className="min-h-12 w-full rounded-xl border border-border bg-background py-2 pl-11 pr-4 text-base outline-none transition-colors focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring"
+                    className={fieldControlClassName("py-2 pl-11 pr-4")}
                   />
                 </div>
-              </div>
+              </Field>
             </div>
 
             {error && (
@@ -158,45 +142,46 @@ export default function Home() {
               </p>
             )}
 
-            <button
+            <Button
               type="submit"
-              className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-base font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="mt-6 min-h-12 w-full px-5 py-3 text-base"
             >
               Validate corporate action
               <ArrowRightIcon className="h-5 w-5" aria-hidden />
-            </button>
-          </form>
+            </Button>
+            </form>
+          </Surface>
         </motion.div>
-      </section>
+      </Band>
 
       <RouteShell className="py-10">
         <div className="grid gap-4 sm:grid-cols-2">
           <Link
             href="/vendors/"
-            className="rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/50 hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="block rounded-[4px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            <h2 className="text-lg font-semibold">Vendor reference</h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Review methodology, timing, and treatment rules across index vendors.
-            </p>
+            <Surface className="p-5 transition-colors hover:border-primary/50 hover:bg-muted/50">
+              <h2 className="text-lg font-semibold">Vendor reference</h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Review methodology, timing, and treatment rules across index vendors.</p>
+            </Surface>
           </Link>
           <Link
             href="/vendors/iso-taxonomy/"
-            className="rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/50 hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="block rounded-[4px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            <h2 className="text-lg font-semibold">ISO taxonomy</h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Match corporate-action types to ISO 20022 CAEV classifications.
-            </p>
+            <Surface className="p-5 transition-colors hover:border-primary/50 hover:bg-muted/50">
+              <h2 className="text-lg font-semibold">ISO taxonomy</h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Match corporate-action types to ISO 20022 CAEV classifications.</p>
+            </Surface>
           </Link>
           <Link
             href="/upload/"
-            className="rounded-2xl border border-border bg-card p-5 transition-colors hover:border-primary/50 hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className="block rounded-[4px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
-            <h2 className="text-lg font-semibold">Screen a methodology</h2>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              Check a vendor methodology PDF before the ingestion service is configured.
-            </p>
+            <Surface className="p-5 transition-colors hover:border-primary/50 hover:bg-muted/50">
+              <h2 className="text-lg font-semibold">Screen a methodology</h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Check a vendor methodology PDF before the ingestion service is configured.</p>
+            </Surface>
           </Link>
         </div>
       </RouteShell>

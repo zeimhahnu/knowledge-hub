@@ -2,9 +2,8 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
-/** Shared outer shell: large radius, soft gradient, hairline ring (simulator aesthetic). */
-export const surfaceOuterClass =
-  "rounded-[2rem] border border-white/10 bg-gradient-to-br from-card/95 via-card/90 to-primary/5 ring-1 ring-white/5";
+/** Compatibility wrapper for older lookup compositions; the visual grammar now lives in Surface. */
+export const surfaceOuterClass = "ca-surface";
 
 const paddingClasses = {
   comfortable: "p-6 sm:p-8 md:p-10",
@@ -13,8 +12,8 @@ const paddingClasses = {
 } as const;
 
 const shadowClasses = {
-  section: "shadow-xl",
-  elevated: "shadow-2xl shadow-black/25",
+  section: "",
+  elevated: "",
 } as const;
 
 export type SurfaceSectionPadding = keyof typeof paddingClasses;

@@ -1,8 +1,9 @@
 import { promises as fs } from "fs";
 import path from "path";
 
-import { SurfaceSection } from "@/components/surface-section";
 import { RouteShell } from "@/components/route-shell";
+import { Band } from "@/components/ui/band";
+import { Surface } from "@/components/ui/surface";
 
 export default async function EventExtractionPage() {
   const filePath = path.join(
@@ -14,9 +15,10 @@ export default async function EventExtractionPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <Band className="min-h-screen">
       <main>
         <RouteShell className="py-8">
-        <SurfaceSection padding="tight">
+        <Surface as="article" className="p-5 sm:p-8">
         <div
           className="prose prose-invert max-w-none"
           style={{
@@ -25,9 +27,10 @@ export default async function EventExtractionPage() {
           }}
           dangerouslySetInnerHTML={{ __html: renderMarkdown(content) }}
         />
-        </SurfaceSection>
+        </Surface>
         </RouteShell>
       </main>
+      </Band>
     </div>
   );
 }

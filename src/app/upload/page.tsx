@@ -4,6 +4,11 @@ import { FormEvent, useState } from "react";
 import Link from "next/link";
 import { AlertTriangleIcon, CheckCircle2Icon, UploadIcon } from "lucide-react";
 import { RouteShell } from "@/components/route-shell";
+import { Band } from "@/components/ui/band";
+import { Button } from "@/components/ui/button";
+import { Field, fieldControlClassName } from "@/components/ui/field";
+import { SectionHeader } from "@/components/ui/section-header";
+import { Surface } from "@/components/ui/surface";
 
 type Verdict =
   | { accepted: true; vendor: string; chars: number; note: string }
@@ -65,31 +70,18 @@ export default function UploadPage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <section className="relative overflow-hidden border-b border-border">
+      <Band className="relative overflow-hidden border-b border-border">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.03] [background-image:linear-gradient(var(--foreground)_1px,transparent_1px),linear-gradient(90deg,var(--foreground)_1px,transparent_1px)] [background-size:64px_64px]"
         />
         <RouteShell className="relative py-12 md:py-16">
-          <div className="mx-auto max-w-2xl text-center">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-4 py-2 text-sm text-muted-foreground">
-              <UploadIcon className="h-4 w-4 text-primary" aria-hidden />
-              Methodology screening
-            </div>
-            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Screen a vendor methodology before ingest.</h1>
-            <p className="mt-4 text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Upload a text-based PDF and its vendor ID. We check that it is relevant, attributed, and safe to process.
-            </p>
-          </div>
+          <SectionHeader className="mx-auto max-w-2xl text-center" eyebrow="Methodology screening" title="Screen a vendor methodology before ingest." description="Upload a text-based PDF and its vendor ID. We check that it is relevant, attributed, and safe to process." />
 
-          <form
-            onSubmit={handleSubmit}
-            className="mx-auto mt-8 rounded-2xl border border-border bg-card/80 p-4 shadow-sm backdrop-blur-sm sm:p-6"
-            noValidate
-          >
+          <Surface className="mx-auto mt-8 max-w-3xl p-4 sm:p-6">
+          <form onSubmit={handleSubmit} noValidate>
             <div className="grid gap-4 md:grid-cols-2">
-              <div>
-                <label htmlFor="vendor" className="mb-2 block text-sm font-semibold">Vendor ID</label>
+              <Field label="Vendor ID" htmlFor="vendor" hint="Lowercase letters, numbers, and hyphens only.">
                 <input
                   id="vendor"
                   name="vendor"
@@ -100,13 +92,10 @@ export default function UploadPage() {
                   autoComplete="off"
                   maxLength={24}
                   required
-                  className="min-h-12 w-full rounded-xl border border-border bg-background px-4 text-base outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring"
-                  aria-describedby="vendor-help"
+                  className={fieldControlClassName()}
                 />
-                <p id="vendor-help" className="mt-2 text-xs text-muted-foreground">Lowercase letters, numbers, and hyphens only.</p>
-              </div>
-              <div>
-                <label htmlFor="file" className="mb-2 block text-sm font-semibold">Methodology PDF</label>
+              </Field>
+              <Field label="Methodology PDF" htmlFor="file" hint="Text-based PDF, checked before ingestion.">
                 <input
                   id="file"
                   name="file"
@@ -114,25 +103,22 @@ export default function UploadPage() {
                   accept="application/pdf"
                   required
                   onChange={(event) => setFile(event.currentTarget.files?.[0] ?? null)}
-                  className="block min-h-12 w-full rounded-xl border border-border bg-background px-4 py-3 text-sm file:mr-4 file:rounded-lg file:border-0 file:bg-muted file:px-3 file:py-1 file:font-medium file:text-foreground hover:file:bg-muted/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className={fieldControlClassName("py-3 file:mr-4 file:rounded-[4px] file:border-0 file:bg-muted file:px-3 file:py-1 file:font-medium file:text-foreground hover:file:bg-muted/80")}
                 />
-              </div>
+              </Field>
             </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-base font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-60"
-            >
+            <Button type="submit" disabled={isSubmitting} className="mt-6 min-h-12 w-full px-5 py-3 text-base">
               <UploadIcon className="h-5 w-5" aria-hidden />
               {isSubmitting ? "Screening methodology…" : "Screen methodology"}
-            </button>
+            </Button>
           </form>
+          </Surface>
 
           {verdict && (
             <section
               aria-live="polite"
-              className={`mx-auto mt-6 max-w-2xl rounded-2xl border p-5 ${verdict.accepted ? "border-success/40 bg-success/10" : "border-destructive/40 bg-destructive/10"}`}
+              className={`ca-surface mx-auto mt-6 max-w-2xl p-5 ${verdict.accepted ? "border-success/40 bg-success/10" : "border-destructive/40 bg-destructive/10"}`}
             >
               <div className="flex items-start gap-3">
                 {verdict.accepted ? <CheckCircle2Icon className="mt-0.5 h-5 w-5 text-success" aria-hidden /> : <AlertTriangleIcon className="mt-0.5 h-5 w-5 text-destructive" aria-hidden />}
@@ -156,7 +142,7 @@ export default function UploadPage() {
           <p className="mt-3 text-center text-sm"><Link className="font-medium text-primary underline-offset-4 hover:underline" href="/review">Review proposed rules</Link></p>
           <p className="mt-6 text-center text-sm"><Link className="font-medium text-primary underline-offset-4 hover:underline" href="/">Back to corporate-action validation</Link></p>
         </RouteShell>
-      </section>
+      </Band>
     </main>
   );
 }

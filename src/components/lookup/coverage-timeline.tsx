@@ -83,7 +83,7 @@ export function TimelineGeometry({
 
       {row.markerPercent !== null && (
         <span
-          className={`absolute top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 ${styles.marker} ${row.state === "published" ? "shadow-[0_0_0_2px_theme(colors.card)]" : ""}`}
+          className={`ca-line-marker h-4 w-4 border-2 ${styles.marker} ${row.state === "published" ? "shadow-[0_0_0_2px_theme(colors.card)]" : ""}`}
           style={{ left: `${row.markerPercent}%` }}
         />
       )}

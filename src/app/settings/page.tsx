@@ -7,13 +7,15 @@ import {
   PlusIcon,
   RotateCcwIcon,
   SaveIcon,
-  Settings2Icon,
   XIcon,
 } from "lucide-react";
 
 import { SurfaceSection } from "@/components/surface-section";
 import { RouteShell } from "@/components/route-shell";
 import { Button } from "@/components/ui/button";
+import { Band } from "@/components/ui/band";
+import { SectionHeader } from "@/components/ui/section-header";
+import { Surface } from "@/components/ui/surface";
 import { CANONICAL_EVENTS } from "@/lib/event-taxonomy";
 import { VENDOR_IDS, VENDOR_LABELS, type VendorId } from "@/lib/vendors";
 import {
@@ -359,32 +361,20 @@ export default function SettingsPage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <div className="border-b border-border bg-card/30">
+      <Band tone="light" className="!py-12">
         <RouteShell className="py-8">
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-3 py-1 text-xs font-medium text-muted-foreground">
-            <Settings2Icon className="h-3.5 w-3.5 text-primary" aria-hidden />
-            Coverage settings
-          </div>
-          <h1 className="mb-3 text-3xl font-semibold tracking-tight">Vendor publication horizons</h1>
-          <p className="max-w-prose text-sm leading-relaxed text-muted-foreground">
-            The publication horizon is how many days before the ex-date a vendor is expected to publish or hold
-            a forward projection for a pending corporate action. Before that horizon, silence is
-            expected (<em>not-yet-due</em>); inside it, silence is an operational gap (<em>missing</em>).
-            Set each vendor&apos;s horizon here — per-event-type overrides stay collapsed.
-          </p>
-          <p className="mt-3 max-w-prose text-xs leading-relaxed text-muted-foreground">
-            FTSE Russell is seeded at 5 days from its published proforma tracker; MSCI and the
-            remaining vendors start <em>not set</em> until you calibrate them — a publication horizon without
-            a source is never applied. Settings are stored in this browser only (localStorage), no
-            backend.
+          <SectionHeader eyebrow="Coverage settings" title="Vendor publication horizons" description={
+            <>
+              The publication horizon is how many days before the ex-date a vendor is expected to publish or hold a forward projection for a pending corporate action. Before that horizon, silence is expected (<em>not-yet-due</em>); inside it, silence is an operational gap (<em>missing</em>). Set each vendor&apos;s horizon here — per-event-type overrides stay collapsed.
+            </>
+          } />
+          <p className="ca-meta mt-3 max-w-prose">
+            FTSE Russell is seeded at 5 days from its published proforma tracker; MSCI and the remaining vendors start <em>not set</em> until you calibrate them — a publication horizon without a source is never applied. Settings are stored in this browser only (localStorage), no backend.
           </p>
         </RouteShell>
-      </div>
+      </Band>
       <RouteShell className="py-10">
-        <div
-          className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border bg-card p-3"
-          aria-live="polite"
-        >
+        <Surface className="mb-4 flex flex-wrap items-center justify-between gap-3 p-3" aria-live="polite">
           <p
             className={`text-sm font-medium ${dirty ? "text-amber-700 dark:text-amber-300" : "text-muted-foreground"}`}
           >
@@ -415,7 +405,7 @@ export default function SettingsPage() {
               Saving failed. Your changes are still here; check browser storage and try again.
             </p>
           )}
-        </div>
+        </Surface>
         <div className="space-y-4">
           {hydrated ? (
             VENDOR_IDS.map((vendor) => (
@@ -431,7 +421,7 @@ export default function SettingsPage() {
               {VENDOR_IDS.map((vendor) => (
                 <div
                   key={vendor}
-                  className="h-24 motion-safe:animate-pulse rounded-[2rem] border border-border bg-muted/40"
+                  className="ca-surface h-24 motion-safe:animate-pulse bg-muted/40"
                 />
               ))}
             </div>

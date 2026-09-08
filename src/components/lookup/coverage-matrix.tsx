@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FileTextIcon } from "lucide-react";
 
 import { GlossaryLinkedText } from "@/components/glossary-linked-text";
+import { StatusDot, type StatusTone } from "@/components/ui/status-dot";
 import { leadTimeProvenance } from "@/lib/lookup-verdict";
 import type { MatrixRow, TreatmentVariant } from "@/lib/lookup-verdict";
 import type { VendorMarkState } from "@/lib/vendor-confirmation";
@@ -37,13 +38,8 @@ const STATE_META: Record<MatrixRow["state"], { label: string; chip: string }> =
 
 function StateBadge({ state }: { state: MatrixRow["state"] }) {
   const meta = STATE_META[state];
-  return (
-    <span
-      className={`inline-flex rounded-full border px-2.5 py-0.5 text-xs font-medium ${meta.chip}`}
-    >
-      {meta.label}
-    </span>
-  );
+  const tone: StatusTone = state === "covered" ? "positive" : state === "missing" ? "negative" : state === "not-yet-due" ? "warning" : state === "not-assessed" ? "info" : "neutral";
+  return <StatusDot tone={tone} label={meta.label} />;
 }
 
 function HorizonCell({ row }: { row: MatrixRow }) {

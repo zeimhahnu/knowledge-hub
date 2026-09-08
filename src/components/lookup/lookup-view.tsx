@@ -22,6 +22,8 @@ import {
   type VendorMarkState,
 } from "@/lib/vendor-confirmation";
 import { SurfaceSection } from "@/components/surface-section";
+import { Band } from "@/components/ui/band";
+import { DataRow } from "@/components/ui/data-row";
 import { computeDivergence, type DivergenceResult } from "@/lib/divergence";
 import { canonicalEventById } from "@/lib/event-taxonomy";
 import {
@@ -283,6 +285,11 @@ function VendorScopeControl({
           Restore all vendors
         </button>
       </div>
+      <DataRow
+        label="Selected vendors"
+        meta="Only this scope contributes to the verdict and coverage rows."
+        value={`${scope.length} of ${VENDOR_IDS.length}`}
+      />
       <fieldset className="flex flex-wrap gap-2">
         <legend className="sr-only">Select vendors in scope</legend>
         {VENDOR_IDS.map((vendor) => {
@@ -734,6 +741,7 @@ export function LookupView({
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <Band className="min-h-screen" tone="dark">
       {/* Query header — D1 (1) */}
       <div className="border-b border-white/10 bg-[linear-gradient(115deg,#050505_0%,#171717_52%,#2b2b2b_100%)] text-white">
         <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
@@ -883,6 +891,7 @@ export function LookupView({
           </motion.div>
         )}
       </div>
+      </Band>
     </main>
   );
 }

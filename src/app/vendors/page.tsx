@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { surfaceOuterClass } from "@/components/surface-section";
 import { RouteShell } from "@/components/route-shell";
+import { Band } from "@/components/ui/band";
+import { SectionHeader } from "@/components/ui/section-header";
+import { Surface } from "@/components/ui/surface";
 import { AnimatePresence, motion } from "framer-motion";
 import Tippy from "@tippyjs/react";
 import {
@@ -688,7 +690,7 @@ function TimingFlow({ flow }: { flow: EventType["timingFlow"] }) {
         {flow.map((step, i) => (
           <div key={i} className="relative flex gap-3 pl-9 sm:pl-20">
             <div className="absolute left-3.5 sm:left-4.5 top-1.5 h-1 w-1 rounded-full bg-primary ring-2 ring-background" />
-            <div className="min-w-0 flex-1 rounded-xl border border-border bg-card p-3">
+            <div className="ca-surface min-w-0 flex-1 p-3">
               <div className="mb-1 text-xs font-semibold text-primary">{step.phase}</div>
               <div className="text-xs leading-relaxed text-muted-foreground"><GlossaryText text={step.what} /></div>
               <div className="mt-2 flex flex-wrap gap-1">
@@ -883,7 +885,7 @@ export default function VendorDashboard() {
               </div>
               <div className="max-h-[60vh] space-y-2 overflow-y-auto px-4 pb-4">
                 {GLOSSARY.map((g) => (
-                  <div key={g.term} className="rounded-xl border border-border bg-card p-3">
+                  <div key={g.term} className="ca-surface p-3">
                     <div className="mb-1 text-xs font-bold text-amber-400">{g.term}</div>
                     <div className="text-xs leading-relaxed text-muted-foreground">{g.definition}</div>
                     {g.detail && (
@@ -900,6 +902,7 @@ export default function VendorDashboard() {
       </AnimatePresence>
 
           {/* ─── Page Content ─── */}
+          <Band className="!py-12">
           <RouteShell wide className="py-6">
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
 
@@ -966,7 +969,7 @@ export default function VendorDashboard() {
                 <select
                   value={activeId}
                   onChange={(e) => setActiveId(e.target.value)}
-                  className="w-full rounded-xl border border-border bg-card px-3 py-2 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="ca-control px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
                 >
                   {eventsByCategory.map((cat) => (
                     <optgroup key={cat.name} label={cat.name}>
@@ -981,19 +984,15 @@ export default function VendorDashboard() {
               </div>
 
           {/* Main Content */}
-          <main
-            className={`order-1 min-w-0 flex-1 p-5 shadow-xl sm:p-8 lg:order-2 ${surfaceOuterClass}`}
-          >
+          <Surface as="main" className="order-1 min-w-0 flex-1 p-5 sm:p-8 lg:order-2">
 
             {/* Event Header */}
-            <div className="mb-6">
-              <div className="mb-2 flex items-center gap-2">
-                <Badge variant={active.badge} />
-                <span className="text-xs text-muted-foreground">{active.category}</span>
-              </div>
-              <h2 className="mb-2 text-2xl font-bold">{active.name}</h2>
-              <p className="text-sm leading-relaxed text-muted-foreground"><GlossaryText text={active.summary} /></p>
-            </div>
+            <SectionHeader
+              className="mb-6"
+              eyebrow={<span className="inline-flex items-center gap-2"><Badge variant={active.badge} /><span className="text-xs text-muted-foreground">{active.category}</span></span>}
+              title={active.name}
+              description={<GlossaryText text={active.summary} />}
+            />
 
             {/* Why No Adjustment */}
             {active.whyNoAdj && (
@@ -1143,9 +1142,10 @@ export default function VendorDashboard() {
                 <div><sup>2</sup> STOXX <strong>Artificial Price</strong> — if the target is no longer trading at deletion (delisted/suspended before effective date), STOXX calculates an artificial price based on acquisition terms: <strong>Cash only</strong> = cash term; <strong>Stock only</strong> = acquirer closing price × stock exchange ratio; <strong>Cash + Stock</strong> = cash term + (acquirer price × stock term); <strong>Cash or Stock</strong> = cash term. Only ordinary cash and stock terms used — CVRs excluded. Surviving stock replaces the largest original stock in Benchmark indices.</div>
               </div>
             </div>
-          </main>
+          </Surface>
         </div>
       </RouteShell>
+          </Band>
     </div>
   );
 }

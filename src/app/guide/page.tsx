@@ -3,6 +3,9 @@ import Link from "next/link";
 
 import glossary from "@/data/glossary.json";
 import { RouteShell } from "@/components/route-shell";
+import { Band } from "@/components/ui/band";
+import { SectionHeader } from "@/components/ui/section-header";
+import { Surface } from "@/components/ui/surface";
 
 export const metadata: Metadata = {
   title: "Glossary | Index Vendor Intelligence",
@@ -21,17 +24,9 @@ export default function GuidePage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <Band className="min-h-screen">
       <RouteShell className="py-10 md:py-14">
-        <header className="max-w-2xl">
-          <p className="text-sm font-medium text-primary">Reading guide</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            Corporate-action glossary
-          </h1>
-          <p className="mt-4 text-base leading-relaxed text-muted-foreground">
-            Plain-language explanations for the terms that appear in vendor treatment text.
-            Select a linked term in the lookup table to jump directly to its explanation.
-          </p>
-        </header>
+        <SectionHeader eyebrow="Reading guide" title="Corporate-action glossary" description="Plain-language explanations for the terms that appear in vendor treatment text. Select a linked term in the lookup table to jump directly to its explanation." className="max-w-2xl" />
 
         <div className="mt-10 space-y-10">
           {sections.map((section) => (
@@ -47,10 +42,11 @@ export default function GuidePage() {
                   const entry = entries.get(id);
                   if (!entry) return null;
                   return (
-                    <article
+                    <Surface
+                      as="article"
                       key={entry.id}
                       id={entry.id}
-                      className="scroll-mt-6 rounded-2xl border border-border bg-card/70 p-5 shadow-sm"
+                      className="scroll-mt-6 p-5"
                     >
                       <h3 className="text-lg font-semibold tracking-tight">{entry.term}</h3>
                       <p className="mt-2 text-sm font-medium leading-relaxed text-foreground/90">
@@ -64,7 +60,7 @@ export default function GuidePage() {
                           Source: {entry.sourceRef}
                         </p>
                       )}
-                    </article>
+                    </Surface>
                   );
                 })}
               </div>
@@ -76,6 +72,7 @@ export default function GuidePage() {
           Need the underlying vendor rule? Return to the <Link className="text-primary underline underline-offset-2" href="/">lookup</Link> and open the cited source reference.
         </p>
       </RouteShell>
+      </Band>
     </main>
   );
 }

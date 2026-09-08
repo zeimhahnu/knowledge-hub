@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { LookupView } from "@/components/lookup/lookup-view";
+import { Band } from "@/components/ui/band";
+import { Surface } from "@/components/ui/surface";
 import { canonicalEventById } from "@/lib/event-taxonomy";
 
 /**
@@ -46,14 +48,16 @@ export async function generateMetadata({
 function MissingParams({ title, body }: { title: string; body: string }) {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-4xl px-6 py-16">
-        <div className="rounded-[2rem] border border-border bg-card/60 p-8 shadow-sm">
+      <Band className="min-h-screen">
+        <div className="mx-auto max-w-4xl px-6 py-16">
+          <Surface className="p-8">
           <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
           <p className="mt-2 max-w-prose text-sm leading-relaxed text-muted-foreground">
             {body}
           </p>
+          </Surface>
         </div>
-      </div>
+      </Band>
     </main>
   );
 }

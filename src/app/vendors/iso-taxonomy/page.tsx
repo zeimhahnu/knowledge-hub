@@ -12,6 +12,9 @@ import Link from "next/link";
 
 import { SurfaceSection } from "@/components/surface-section";
 import { RouteShell } from "@/components/route-shell";
+import { Band } from "@/components/ui/band";
+import { SectionHeader } from "@/components/ui/section-header";
+import { Surface } from "@/components/ui/surface";
 
 type EventRow = {
   masterCategory: string;
@@ -283,6 +286,7 @@ export default function IsoTaxonomyPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <Band className="min-h-screen">
       {/* Header */}
       <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3">
@@ -306,25 +310,18 @@ export default function IsoTaxonomyPage() {
       <RouteShell wide className="space-y-8 py-8">
         <SurfaceSection padding="tight" className="space-y-8">
         {/* Hero */}
-        <div className="rounded-2xl border border-border bg-gradient-to-br from-card to-background p-6 sm:p-8">
+        <Surface className="p-6 sm:p-8">
           <div className="flex items-start gap-4">
-            <div className="hidden sm:flex shrink-0 w-14 h-14 rounded-2xl bg-primary/20 items-center justify-center">
+            <div className="hidden sm:flex shrink-0 w-14 h-14 rounded-[4px] bg-primary/20 items-center justify-center">
               <NetworkIcon className="h-7 w-7 text-primary" />
             </div>
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold mb-2">
-                ISO 20022 Corporate Action Taxonomy
-              </h1>
-              <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-                A universal mapping between ISO 20022 CAEV codes, SWIFT MT564 event types, and vendor-specific terminology used by MSCI, S&amp;P DJI, FTSE Russell, STOXX, Solactive, Morningstar, and VettaFi.
-              </p>
-            </div>
+            <SectionHeader title="ISO 20022 Corporate Action Taxonomy" description="A universal mapping between ISO 20022 CAEV codes, SWIFT MT564 event types, and vendor-specific terminology used by MSCI, S&P DJI, FTSE Russell, STOXX, Solactive, Morningstar, and VettaFi." />
           </div>
-        </div>
+        </Surface>
 
         {/* How to Read + Quick Nav */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="rounded-2xl border border-border bg-card p-5">
+          <Surface className="p-5">
             <div className="flex items-center gap-2 mb-3">
               <InfoIcon className="h-4 w-4 text-primary" />
               <h3 className="text-sm font-semibold">How to Use This Page</h3>
@@ -347,8 +344,8 @@ export default function IsoTaxonomyPage() {
                 CAEV codes are the SWIFT standard — your MT564 feed uses these
               </li>
             </ul>
-          </div>
-          <div className="rounded-2xl border border-border bg-card p-5">
+          </Surface>
+          <Surface className="p-5">
             <div className="flex items-center gap-2 mb-3">
               <SearchIcon className="h-4 w-4 text-primary" />
               <h3 className="text-sm font-semibold">Quick Filters</h3>
@@ -364,7 +361,7 @@ export default function IsoTaxonomyPage() {
                 </button>
               ))}
             </div>
-          </div>
+          </Surface>
         </div>
 
         {/* Search */}
@@ -375,7 +372,7 @@ export default function IsoTaxonomyPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search events, ISO codes, or vendor terms..."
-            className="w-full rounded-xl border border-border bg-card pl-11 pr-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+            className="ca-control pl-11 pr-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
           />
           {search && (
             <button
@@ -472,7 +469,7 @@ export default function IsoTaxonomyPage() {
                   key={item.code}
                   initial={false}
                   animate={{ opacity: showCAEV ? 1 : 0 }}
-                  className="rounded-xl border border-border bg-card p-3"
+                  className="ca-surface p-3"
                 >
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-mono text-[11px] font-bold text-primary bg-primary/20 px-2 py-0.5 rounded-full">
@@ -509,6 +506,7 @@ export default function IsoTaxonomyPage() {
         </div>
         </SurfaceSection>
       </RouteShell>
+      </Band>
     </div>
   );
 }
