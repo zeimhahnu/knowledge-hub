@@ -1,7 +1,7 @@
 import { timingSafeEqual } from "node:crypto";
 import type { NextRequest } from "next/server";
-import { accessFailureCode, accessJwtFromHeaders, verifyAccessJwt } from "./lib/ca-analyst/auth";
-import { originAccessMode, originBoundaryDecision } from "./lib/ca-analyst/origin-boundary";
+import { accessFailureCode, accessJwtFromHeaders, verifyAccessJwt } from "./lib/ca-analyst/auth.ts";
+import { originAccessMode, originBoundaryDecision } from "./lib/ca-analyst/origin-boundary.ts";
 
 const ACCESS_JWKS_FALLBACK_URL = "https://hub.vpszeimhahnu.uk/cdn-cgi/access/certs";
 
@@ -65,7 +65,9 @@ export async function middleware(request: NextRequest) {
       headers: { "cache-control": "no-store" },
     });
   }
-  if (request.nextUrl.pathname !== "/upload" && !request.nextUrl.pathname.startsWith("/api/ingest")) return NextResponse.next();
+  const pathname = request.nextUrl.pathname;
+  const isIngestSurface = pathname === "/upload" || pathname.startsWith("/review") || pathname.startsWith("/api/ingest") || pathname.startsWith("/api/rules/proposals");
+  if (!isIngestSurface) return NextResponse.next();
   if (!isAuthorized(request.headers.get("authorization"), process.env.INGEST_BASIC_AUTH)) {
     return new NextResponse("Authentication required", {
       status: 401,

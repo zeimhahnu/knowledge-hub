@@ -3,6 +3,7 @@ import { extractText, getDocumentProxy } from "unpdf";
 
 import screeningRules from "@/data/screening-rules.json" with { type: "json" };
 import { judge } from "@/lib/screen-methodology";
+import { persistIngestedDocument } from "@/lib/ingest";
 import { contentLengthStatus } from "@/middleware";
 
 export const runtime = "nodejs";
@@ -17,8 +18,8 @@ function rejected(reasons: string[], status = 422) {
 /**
  * POST /api/ingest
  *
- * Screens an uploaded methodology PDF only. Accepted files are deliberately
- * not stored or queued until the authenticated ingest step is configured.
+ * Screens, persists, and proposes an uploaded methodology PDF. Proposal
+ * extraction never mutates the curated rule set; approval is a separate action.
  */
 export async function POST(request: Request) {
   // ponytail: dailyQuota in screening-rules.json is unenforced — single shared key today makes
@@ -67,8 +68,10 @@ export async function POST(request: Request) {
   }
 
   let text: string;
+  let pageCount = 0;
   try {
     const pdf = await getDocumentProxy(bytes);
+    pageCount = pdf.numPages;
     const extracted = await extractText(pdf, { mergePages: true });
     text = extracted.text;
   } catch {
@@ -82,10 +85,21 @@ export async function POST(request: Request) {
   const verdict = judge(text, vendor);
   if (!verdict.accepted) return rejected(verdict.reasons);
 
+  let persisted;
+  try {
+    persisted = await persistIngestedDocument({ vendor, filename: upload.name, bytes, text, pageCount });
+  } catch {
+    return rejected(["The document passed screening but could not be persisted safely."], 500);
+  }
+
   return NextResponse.json({
     accepted: true,
     vendor,
     chars: text.length,
-    note: "This document passed screening, but ingestion is not yet configured. Nothing was stored or queued.",
+    pages: pageCount,
+    sha256: persisted.sha256,
+    proposals: persisted.proposals.length,
+    proposalPath: persisted.proposalPath,
+    note: `Stored the extracted text and proposed ${persisted.proposals.length} event rules for human review. Nothing was added to the curated rule set.`,
   });
 }

@@ -1,4 +1,4 @@
-import { createHash, createPublicKey, createVerify } from "node:crypto";
+import { createPublicKey, createVerify } from "node:crypto";
 
 export type AccessClaims = {
   sub: string;

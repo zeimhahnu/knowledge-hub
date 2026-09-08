@@ -151,8 +151,9 @@ export default function UploadPage() {
           )}
 
           <p className="mx-auto mt-6 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
-            Screening does not store, publish, or queue your document. A passed screen only confirms that the file is eligible for the next, not-yet-configured ingest step.
+            A passed screen stores extracted text and proposes rules for review. Nothing reaches the curated rule set until a human approves it on the review page.
           </p>
+          <p className="mt-3 text-center text-sm"><Link className="font-medium text-primary underline-offset-4 hover:underline" href="/review">Review proposed rules</Link></p>
           <p className="mt-6 text-center text-sm"><Link className="font-medium text-primary underline-offset-4 hover:underline" href="/">Back to corporate-action validation</Link></p>
         </RouteShell>
       </section>
