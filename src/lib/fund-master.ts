@@ -16,6 +16,15 @@ export const franklinSnapshot = snapshotData as FranklinEtfSnapshot;
 export const franklinCatalog = catalogData as FranklinEtfCatalog;
 export function activeFranklinCatalog(catalog: FranklinEtfCatalog = franklinCatalog): FranklinCatalogRecord[] { return catalog.records; }
 export function findFranklinFund(ticker: string, snapshot: FranklinEtfSnapshot = franklinSnapshot): FundMasterRecord | null { const normalized = ticker.trim().toUpperCase(); return snapshot.records.find((record) => record.ticker === normalized) ?? null; }
+/**
+ * Resolve a fund to its index type and scope the rules to it.
+ *
+ * A rule with no index_type (or "*") is index-agnostic: it applies whatever the
+ * fund is weighted by. Filtering on strict equality dropped every one of those,
+ * so resolving a fund made the rule set SMALLER than not resolving one - a
+ * market-cap-weighted fund saw 1 rule instead of 77, and 3-d scope returned
+ * worse answers than 2-d. Index-specific rules still require an exact match.
+ */
 export function resolveFundRules(selectedFundTicker: string | undefined, snapshot: FranklinEtfSnapshot, rules: VendorRule[], catalog: FranklinEtfCatalog = franklinCatalog): { resolution: FundResolution; rows: VendorRule[] } {
   if (!selectedFundTicker?.trim()) return { resolution: { mode: "p0-compat", ruleScope: "2-d", warnings: [] }, rows: rules };
   const ticker = selectedFundTicker.trim().toUpperCase(); const fund = findFranklinFund(ticker, snapshot);
@@ -25,5 +34,5 @@ export function resolveFundRules(selectedFundTicker: string | undefined, snapsho
     return { resolution: { mode: "fund-unresolved", ticker, reason: "unknown-ticker", ruleScope: "2-d", warnings: [`${ticker} is not in the reviewed Franklin snapshot; using the existing P0 2-D rules.`] }, rows: rules };
   }
   if (!fund.underlying_index || !fund.index_provider || !fund.index_type) return { resolution: { mode: "fund-unresolved", ticker, reason: "missing-index-fields", ruleScope: "2-d", warnings: [`${ticker} is missing an index resolver field: ${fund.missing_fields.join(", ") || "index metadata"}.` ] }, rows: rules };
-  return { resolution: { mode: "fund-resolved", ticker, fund, indexType: fund.index_type, ruleScope: "3-d", warnings: [] }, rows: rules.filter((rule) => rule.index_type === fund.index_type) };
+  return { resolution: { mode: "fund-resolved", ticker, fund, indexType: fund.index_type, ruleScope: "3-d", warnings: [] }, rows: rules.filter((rule) => !rule.index_type || rule.index_type === "*" || rule.index_type === fund.index_type) };
 }
