@@ -16,6 +16,7 @@ import { CaAnalystDock } from "@/components/lookup/ca-analyst-dock";
 import { VendorEntailmentPanel } from "@/components/lookup/vendor-entailment-panel";
 import { computeCuratedEntailment } from "@/lib/vendor-entailment";
 import { CoverageMatrix } from "@/components/lookup/coverage-matrix";
+import { CoverageTimeline } from "@/components/lookup/coverage-timeline";
 import { buildAnalystLookupContext } from "@/lib/ca-analyst/context";
 import {
   getVendorConfirmation,
@@ -830,6 +831,14 @@ export function LookupView({
                   result={divergence}
                   lateAbsentVendors={lateAbsentVendors}
                 />
+                {exDateParsed && (
+                  <CoverageTimeline
+                    verdict={verdict}
+                    eventType={eventType}
+                    exDate={exDateParsed}
+                    today={today}
+                  />
+                )}
 
                 <SurfaceSection className="space-y-4">
                   <h2 className="text-lg font-semibold tracking-tight">
