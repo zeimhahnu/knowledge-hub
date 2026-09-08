@@ -79,7 +79,7 @@ export async function POST(request: Request) {
   try {
     const upstream = await fetch(`${process.env.CA_ANALYST_SERVICE_URL.replace(/\/$/, "")}/v1/turn`, {
       method: "POST",
-      headers: { "content-type": "application/json", "cf-access-token": assertion as string, accept: "text/event-stream" },
+      headers: { "content-type": "application/json", "cf-access-jwt-assertion": assertion as string, accept: "text/event-stream" },
       body: JSON.stringify(payload),
       cache: "no-store",
     });
