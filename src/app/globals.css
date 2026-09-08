@@ -59,6 +59,8 @@
   --space-44: 44px;
   --space-48: 48px;
   --space-80: 80px;
+  --default-transition-timing-function: var(--ease-in-out);
+  --default-transition-duration: var(--dur-state);
 }
 
 /* ─── Dark theme (default) ───────────────────────────────────────────────── */
@@ -110,6 +112,16 @@
   --warning: oklch(0.82 0.16 80);
   --body-copy: oklch(0.83 0.01 260);
   --meta-copy: #959494;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-linear: linear;
+  --dur-press: 80ms;
+  --dur-state: 160ms;
+  --dur-panel: 260ms;
+  --dur-page: 320ms;
+  --dur-propagation: 600ms;
+  --dur-ambient: 9s;
+  --stagger-dock: 40ms;
 }
 
 /* ─── Light theme override ─────────────────────────────────────────────── */
@@ -191,7 +203,7 @@
 .ca-eyebrow, .ca-label { color: var(--primary); font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: var(--type-label); font-weight: 650; letter-spacing: var(--tracking-label); line-height: 1.4; text-transform: uppercase; }
 .ca-body-copy { color: var(--body-copy); font-size: var(--type-body); line-height: 1.65; }
 .ca-meta { color: var(--meta-copy); font-size: 0.75rem; line-height: 1.5; }
-.ca-control { min-height: 48px; width: 100%; border: 1px solid var(--border); border-radius: 4px; background: var(--background); padding: 12px 16px; color: var(--foreground); outline: none; transition: border-color 160ms ease, box-shadow 160ms ease; }
+.ca-control { min-height: 48px; width: 100%; border: 1px solid var(--border); border-radius: 4px; background: var(--background); padding: 12px 16px; color: var(--foreground); outline: none; transition: border-color var(--dur-state) var(--ease-in-out), box-shadow var(--dur-state) var(--ease-in-out); }
 .ca-control::placeholder { color: var(--meta-copy); }
 .ca-control:focus-visible { border-color: var(--ring); box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 35%, transparent); }
 .ca-field-error { color: var(--destructive); font-size: 0.8125rem; line-height: 1.5; }
@@ -205,6 +217,98 @@
 .ca-status-neutral { color: var(--meta-copy); }
 /* Any timeline marker must use its percentage anchor and translate its own centre. */
 .ca-line-marker { box-sizing: border-box; position: absolute; top: 50%; transform: translate(-50%, -50%); border-radius: 9999px; }
+section[id], [data-anchor-target] { scroll-margin-top: 5rem; }
+
+/* Motion is a small vocabulary, not a bag of one-off effects. */
+.ca-brand-rule {
+  height: 3px;
+  background-image: linear-gradient(90deg, #fc4c02, #ef2cc1, #bdbbff, #ef2cc1, #fc4c02);
+  background-repeat: repeat-x;
+  background-size: 200% 100%;
+  animation: flow var(--dur-ambient) var(--ease-linear) infinite;
+}
+
+.ca-page-transition { animation: ca-page-enter var(--dur-page) var(--ease-out) both; }
+.ca-state-transition { animation: ca-state-enter var(--dur-state) var(--ease-in-out) both; }
+.ca-dock { transform-origin: right center; animation: ca-dock-enter var(--dur-panel) var(--ease-out) both; }
+.ca-dock[data-closing="true"] { animation: ca-dock-exit var(--dur-state) var(--ease-in-out) both; }
+.ca-dock-step { animation: ca-dock-step-in var(--dur-state) var(--ease-out) both; }
+.ca-dock-step-2 { animation-delay: var(--stagger-dock); }
+.ca-dock-step-3 { animation-delay: calc(var(--stagger-dock) * 2); }
+.ca-dock-scroll { overscroll-behavior: contain; }
+.ca-dock[data-closing="true"] .ca-dock-step { animation: ca-dock-step-out var(--dur-state) var(--ease-in-out) both; }
+.ca-dock[data-closing="true"] .ca-dock-step-1 { animation-delay: calc(var(--stagger-dock) * 2); }
+.ca-dock[data-closing="true"] .ca-dock-step-2 { animation-delay: var(--stagger-dock); }
+
+.ca-vendor-row {
+  border-inline-start: 1px solid transparent;
+  transition: background-color var(--dur-state) var(--ease-in-out), border-color var(--dur-state) var(--ease-in-out), color var(--dur-state) var(--ease-in-out);
+}
+.ca-vendor-row-covered { background-color: color-mix(in oklab, var(--success) 5%, transparent); }
+.ca-vendor-row-missing { background-color: color-mix(in oklab, var(--destructive) 5%, transparent); }
+.ca-vendor-row-not-yet-due { background-color: color-mix(in oklab, var(--warning) 5%, transparent); }
+.ca-vendor-row-not-checked { background-color: transparent; }
+.ca-vendor-row-not-assessed { background-color: color-mix(in oklab, var(--primary) 4%, transparent); }
+.ca-vendor-row-not-applicable { background-color: transparent; }
+.ca-verdict-cell { animation: ca-verdict-crossfade var(--dur-state) var(--ease-out) both; }
+.ca-progress-segment { transition: background-color var(--dur-state) var(--ease-in-out); }
+.ca-propagation-pulse {
+  border-inline-start-color: var(--primary);
+  animation: ca-propagation-pulse var(--dur-propagation) var(--ease-in-out) 1 both;
+}
+
+@keyframes flow { to { background-position: 200% 0; } }
+@keyframes ca-page-enter {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ca-state-enter {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ca-dock-enter {
+  from { opacity: 0; transform: translateX(16px) scale(0.99); }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes ca-dock-exit {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to { opacity: 0; transform: translateX(8px) scale(0.99); }
+}
+@keyframes ca-dock-step-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ca-dock-step-out {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(4px); }
+}
+@keyframes ca-verdict-crossfade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes ca-propagation-pulse {
+  0%, 100% { border-inline-start-color: transparent; }
+  30%, 70% { border-inline-start-color: var(--primary); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition-duration: var(--dur-press) !important;
+    scroll-behavior: auto !important;
+  }
+  .ca-brand-rule,
+  .ca-page-transition,
+  .ca-state-transition,
+  .ca-dock,
+  .ca-dock[data-closing="true"],
+  .ca-dock-step,
+  .ca-verdict-cell { animation: none !important; }
+  .ca-propagation-pulse {
+    animation: none !important;
+    border-inline-start-color: var(--primary);
+  }
+}
 @media (max-width: 639px) {
   .ca-band { padding-block: 48px; }
   .ca-data-row { grid-template-columns: 1fr; gap: 8px; }

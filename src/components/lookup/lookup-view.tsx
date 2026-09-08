@@ -1,8 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 import {
   AlertTriangleIcon,
   CalendarDaysIcon,
@@ -44,6 +43,14 @@ import { VENDOR_IDS, VENDOR_LABELS, type VendorId } from "@/lib/vendors";
 import { activeFranklinCatalog, franklinCatalog, franklinSnapshot, resolveFundRules, type FranklinCatalogRecord, type FundResolution } from "@/lib/fund-master";
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+function motionDurationMs(token: string): number {
+  if (typeof window === "undefined") return 0;
+  const value = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+  const amount = Number.parseFloat(value);
+  if (!Number.isFinite(amount)) return 0;
+  return value.endsWith("s") && !value.endsWith("ms") ? amount * 1000 : amount;
+}
 
 function parseExDate(s: string): Date | null {
   if (!DATE_RE.test(s)) return null;
@@ -164,7 +171,7 @@ function NewsPanel({
           {[0, 1].map((i) => (
             <div
               key={i}
-              className="h-24 motion-safe:animate-pulse rounded-2xl border border-border bg-muted/40"
+              className="h-24 rounded-2xl border border-border bg-muted/40"
             />
           ))}
         </div>
@@ -610,7 +617,6 @@ export function LookupView({
   /** Server-computed private feature gate; false preserves the P0 lookup. */
   caAnalystEnabled?: boolean;
 }) {
-  const reduceMotion = useReducedMotion();
   // Hydration guard: observations, qualifiers, and horizons live in localStorage, so the
   // client's first render must not disagree with server HTML. The state flip
   // IS the point of this effect; react-hooks/set-state-in-effect has no
@@ -623,6 +629,11 @@ export function LookupView({
   const [filters, setFilters] = useState<LookupFilters>({});
   const [fundTicker, setFundTicker] = useState("");
   const [newsResult, setNewsResult] = useState<NewsValidationResult | null>(null);
+  const [propagatedVendors, setPropagatedVendors] = useState<Set<VendorId>>(() => new Set());
+  const [recentlyMarkedVendor, setRecentlyMarkedVendor] = useState<VendorId | null>(null);
+  const [markRevision, setMarkRevision] = useState(0);
+  const previousEntailment = useRef<Map<VendorId, string> | null>(null);
+  const lastMarkedVendor = useRef<VendorId | null>(null);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard
@@ -719,9 +730,35 @@ export function LookupView({
     [caAnalystEnabled],
   );
 
+  useEffect(() => {
+    const next = new Map(entailment.map((result) => [result.vendor, result.verdict]));
+    const previous = previousEntailment.current;
+    const markedVendor = lastMarkedVendor.current;
+    if (previous && markedVendor) {
+      const changed = [...next.entries()]
+        .filter(([vendor, verdictValue]) => vendor !== markedVendor && previous.get(vendor) !== verdictValue)
+        .map(([vendor]) => vendor);
+      if (changed.length > 0) {
+        setPropagatedVendors(new Set(changed));
+        const timer = window.setTimeout(
+          () => setPropagatedVendors(new Set()),
+          motionDurationMs("--dur-propagation"),
+        );
+        previousEntailment.current = next;
+        lastMarkedVendor.current = null;
+        return () => window.clearTimeout(timer);
+      }
+    }
+    previousEntailment.current = next;
+    lastMarkedVendor.current = null;
+  }, [entailment]);
+
   const updateConfirmation = (vendor: VendorId, state: VendorMarkState) => {
+    lastMarkedVendor.current = vendor;
     setVendorConfirmation(ticker, eventType, exDate, vendor, state);
     setConfirmationRevision((revision) => revision + 1);
+    setRecentlyMarkedVendor(vendor);
+    setMarkRevision((revision) => revision + 1);
   };
 
   const updateScope = (next: VendorId[]) => {
@@ -783,11 +820,21 @@ export function LookupView({
               </p>
             </div>
             <div className="min-w-0">
-              <div className="h-1 rounded-[4px] bg-white/15" aria-hidden>
-                <div
-                  className="h-1 rounded-[4px] bg-white transition-[width] duration-300"
-                  style={{ width: verdict && checkableVendorCount > 0 ? `${(checkedVendorCount / checkableVendorCount) * 100}%` : "0%" }}
-                />
+              <div
+                className="flex gap-1"
+                role="progressbar"
+                aria-label="Vendor investigation progress"
+                aria-valuemin={0}
+                aria-valuemax={checkableVendorCount}
+                aria-valuenow={checkedVendorCount}
+              >
+                {Array.from({ length: checkableVendorCount }, (_, index) => (
+                  <span
+                    key={index}
+                    className={`ca-progress-segment h-1 min-w-0 flex-1 rounded-[4px] ${index < checkedVendorCount ? "bg-white" : "bg-white/15"}`}
+                    aria-hidden
+                  />
+                ))}
               </div>
               <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/65">
                 {verdict && verdict.totals.unchecked > 0
@@ -798,6 +845,7 @@ export function LookupView({
           </div>
         </div>
       </div>
+      <div className="ca-brand-rule" aria-hidden />
 
       <div className="mx-auto max-w-6xl space-y-4 px-5 py-8 sm:px-8 sm:py-10">
         {/* D1 (2) vendor scope — D1 (3) verdict — D1 (4) matrix — D1 (5) news */}
@@ -806,17 +854,12 @@ export function LookupView({
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
-                className="h-40 motion-safe:animate-pulse rounded-[2rem] border border-border bg-muted/40"
+                className="h-40 rounded-[2rem] border border-border bg-muted/40"
               />
             ))}
           </div>
         ) : (
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="space-y-4"
-          >
+          <div className="space-y-4">
             <VendorScopeControl scope={scope} onChange={updateScope} />
             <FundContextControl selectedTicker={fundTicker} onChange={setFundTicker} resolution={fundResolution} catalogRecords={activeFranklinCatalog(franklinCatalog)} />
             <QualifierControls
@@ -875,6 +918,9 @@ export function LookupView({
                   today={today}
                   groups={groups ?? { supplied: [], expectedAbsent: [], notYetDue: [], unchecked: [], timingUnassessed: [], notApplicable: [] }}
                   entailment={entailment}
+                  propagatedVendors={propagatedVendors}
+                  recentlyMarkedVendor={recentlyMarkedVendor}
+                  markRevision={markRevision}
                   onMarkChange={updateConfirmation}
                 />
               </>
@@ -888,7 +934,7 @@ export function LookupView({
               onResult={caAnalystEnabled ? handleNewsResult : undefined}
             />
             {analystContext && <CaAnalystDock context={analystContext} />}
-          </motion.div>
+          </div>
         )}
       </div>
       </Band>

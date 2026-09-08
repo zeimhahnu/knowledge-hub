@@ -6,7 +6,6 @@ import { RouteShell } from "@/components/route-shell";
 import { Band } from "@/components/ui/band";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Surface } from "@/components/ui/surface";
-import { AnimatePresence, motion } from "framer-motion";
 import Tippy from "@tippyjs/react";
 import {
   ArrowLeftIcon,
@@ -234,8 +233,6 @@ function GlossaryTerm({ term }: { term: string }) {
         </div>
       }
       placement="top"
-      duration={200}
-      delay={[200, 0]}
     >
       <span className="cursor-help border-b border-dashed border-amber-400/60 text-amber-400 hover:border-amber-400 hover:bg-amber-400/10">
         {term}
@@ -847,26 +844,16 @@ export default function VendorDashboard() {
       </button>
 
       {/* ─── Floating Glossary Popup ─── */}
-      <AnimatePresence>
-        {showGlossary && (
+      {showGlossary && (
           <>
             {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+            <div
               onClick={() => setShowGlossary(false)}
               className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm sm:hidden"
               aria-hidden="true"
             />
             {/* Panel */}
-            <motion.div
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
-              className="fixed bottom-20 right-4 z-50 w-[calc(100vw-2rem)] rounded-2xl border border-border bg-background shadow-2xl sm:bottom-8 sm:right-8 sm:w-96"
-            >
+            <div className="fixed bottom-20 right-4 z-50 w-[calc(100vw-2rem)] rounded-2xl border border-border bg-background shadow-2xl sm:bottom-8 sm:right-8 sm:w-96">
               {/* Drag handle for mobile visual cue */}
               <div className="mt-3 mb-1 flex justify-center">
                 <div className="h-1 w-8 rounded-full bg-border" />
@@ -896,10 +883,9 @@ export default function VendorDashboard() {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </div>
           </>
         )}
-      </AnimatePresence>
 
           {/* ─── Page Content ─── */}
           <Band className="!py-12">
@@ -925,15 +911,8 @@ export default function VendorDashboard() {
                             className={`h-3 w-3 transition-transform ${expandedCategories.has(cat.name) ? "rotate-90" : ""}`}
                           />
                         </button>
-                        <AnimatePresence>
-                          {expandedCategories.has(cat.name) && (
-                            <motion.div
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: "auto", opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              transition={{ duration: 0.2 }}
-                              className="overflow-hidden"
-                            >
+                        {expandedCategories.has(cat.name) && (
+                            <div className="overflow-hidden">
                               <div className="space-y-0.5 pl-5">
                                 {cat.events.map((evt) => (
                                   <button
@@ -952,9 +931,8 @@ export default function VendorDashboard() {
                                   </button>
                                 ))}
                               </div>
-                            </motion.div>
+                            </div>
                           )}
-                        </AnimatePresence>
                       </div>
                     ))}
                   </div>

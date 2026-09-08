@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeftIcon, ArrowRightIcon, CheckIcon } from "lucide-react";
 
 import { surfaceOuterClass } from "@/components/surface-section";
@@ -421,15 +420,7 @@ export function ProjectionGapSimulator() {
           </div>
 
           <div className="max-h-[min(70vh,640px)] min-h-0 min-w-0 overflow-y-auto overflow-x-hidden pr-1 [-webkit-overflow-scrolling:touch]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={step}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                className="pb-4"
-              >
+            <div key={step} className="ca-state-transition pb-4">
                 {step === 0 && (
                   <div className="space-y-4">
                     <p className="text-base font-medium text-foreground">
@@ -452,7 +443,7 @@ export function ProjectionGapSimulator() {
                           })
                         }
                         className={cn(
-                          "min-w-0 rounded-3xl border px-5 py-6 text-left transition-all duration-200",
+                          "min-w-0 rounded-3xl border px-5 py-6 text-left transition-all",
                           input.eventCategory === "mandatory"
                             ? "border-primary/40 bg-primary/10 shadow-md ring-1 ring-primary/20"
                             : "border-border/80 bg-background/40 hover:border-primary/25 hover:bg-background/60",
@@ -478,7 +469,7 @@ export function ProjectionGapSimulator() {
                           })
                         }
                         className={cn(
-                          "min-w-0 rounded-3xl border px-5 py-6 text-left transition-all duration-200",
+                          "min-w-0 rounded-3xl border px-5 py-6 text-left transition-all",
                           input.eventCategory === "voluntary"
                             ? "border-primary/40 bg-primary/10 shadow-md ring-1 ring-primary/20"
                             : "border-border/80 bg-background/40 hover:border-primary/25 hover:bg-background/60",
@@ -943,8 +934,7 @@ export function ProjectionGapSimulator() {
                     <p className="text-[11px] text-muted-foreground">Rules version {result.rulesVersion}</p>
                   </div>
                 )}
-              </motion.div>
-            </AnimatePresence>
+            </div>
           </div>
 
           {stepError && (

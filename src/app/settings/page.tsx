@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useReducer, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   ChevronDownIcon,
   PlusIcon,
@@ -91,7 +90,6 @@ function VendorCard({
   draft: SettingsDraft;
   onChange: (draft: SettingsDraft) => void;
 }) {
-  const reduceMotion = useReducedMotion();
   const [overridesOpen, setOverridesOpen] = useState(false);
   const label = VENDOR_LABELS[vendor];
   const vendorValue = getVendorLeadDaysFromDraft(vendor, draft);
@@ -179,17 +177,12 @@ function VendorCard({
           </span>
           <ChevronDownIcon
             aria-hidden
-            className={`h-4 w-4 transition-transform duration-200 ${overridesOpen ? "rotate-180" : ""}`}
+            className={`h-4 w-4 transition-transform ${overridesOpen ? "rotate-180" : ""}`}
           />
         </Button>
-        <AnimatePresence initial={false}>
-          {overridesOpen && (
-            <motion.div
+        {overridesOpen && (
+            <div
               id={`overrides-${vendor}`}
-              initial={reduceMotion ? false : { height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={reduceMotion ? undefined : { height: 0, opacity: 0 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
               className="overflow-hidden"
             >
               <div className="space-y-3 pt-3">
@@ -255,9 +248,8 @@ function VendorCard({
                   />
                 )}
               </div>
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
       </div>
     </SurfaceSection>
   );
@@ -421,7 +413,7 @@ export default function SettingsPage() {
               {VENDOR_IDS.map((vendor) => (
                 <div
                   key={vendor}
-                  className="ca-surface h-24 motion-safe:animate-pulse bg-muted/40"
+                  className="ca-surface h-24 bg-muted/40"
                 />
               ))}
             </div>

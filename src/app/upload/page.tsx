@@ -70,6 +70,7 @@ export default function UploadPage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <div className="ca-brand-rule" aria-hidden />
       <Band className="relative overflow-hidden border-b border-border">
         <div
           aria-hidden

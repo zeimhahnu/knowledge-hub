@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   ArrowLeftIcon,
   NetworkIcon,
@@ -458,19 +457,10 @@ export default function IsoTaxonomyPage() {
             <ChevronDownIcon className={`h-4 w-4 transition-transform ${showCAEV ? "rotate-180" : ""}`} />
             All ISO 20022 CAEV Codes
           </button>
-          <motion.div
-            initial={false}
-            animate={{ height: showCAEV ? "auto" : 0, opacity: showCAEV ? 1 : 0 }}
-            className="overflow-hidden"
-          >
+          {showCAEV && <div className="overflow-hidden">
             <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
               {CAEV_CODES.map((item) => (
-                <motion.div
-                  key={item.code}
-                  initial={false}
-                  animate={{ opacity: showCAEV ? 1 : 0 }}
-                  className="ca-surface p-3"
-                >
+                <div key={item.code} className="ca-surface p-3">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="font-mono text-[11px] font-bold text-primary bg-primary/20 px-2 py-0.5 rounded-full">
                       {item.code}
@@ -478,10 +468,10 @@ export default function IsoTaxonomyPage() {
                     <span className="text-xs font-semibold text-foreground">{item.name}</span>
                   </div>
                   <p className="text-[11px] text-muted-foreground leading-relaxed">{item.desc}</p>
-                </motion.div>
+                </div>
               ))}
             </div>
-          </motion.div>
+          </div>}
         </div>
 
         {/* SWIFT MT564 Reference */}

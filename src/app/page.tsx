@@ -1,7 +1,6 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRightIcon, CalendarIcon } from "lucide-react";
@@ -57,7 +56,6 @@ function validationMessage(ticker: string, eventType: string, exDate: string): s
 
 export default function Home() {
   const router = useRouter();
-  const prefersReducedMotion = useReducedMotion();
   const [ticker, setTicker] = useState("");
   const [eventType, setEventType] = useState("");
   const [exDate, setExDate] = useState("");
@@ -84,12 +82,7 @@ export default function Home() {
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.03] [background-image:linear-gradient(var(--foreground)_1px,transparent_1px),linear-gradient(90deg,var(--foreground)_1px,transparent_1px)] [background-size:64px_64px]"
         />
-        <motion.div
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="relative mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 md:py-16 lg:px-8"
-        >
+        <div className="relative mx-auto w-full max-w-4xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
           <SectionHeader
             className="mx-auto max-w-2xl text-center"
             eyebrow="Corporate-action validation"
@@ -151,7 +144,7 @@ export default function Home() {
             </Button>
             </form>
           </Surface>
-        </motion.div>
+        </div>
       </Band>
 
       <RouteShell className="py-10">

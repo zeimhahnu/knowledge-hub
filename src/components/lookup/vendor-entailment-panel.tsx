@@ -33,7 +33,7 @@ export function VendorEntailmentPanel({ results }: { results: VendorEntailment[]
         {ranked.map((result) => {
           const tone = TONE[result.verdict];
           return (
-            <li key={result.vendor} className={`rounded-xl border px-4 py-3 ${tone.ring}`}>
+            <li key={`${result.vendor}-${result.verdict}`} className={`rounded-xl border px-4 py-3 ${tone.ring}`}>
               <div className="flex items-center gap-2">
                 <span className={`h-2 w-2 shrink-0 rounded-full ${tone.dot}`} aria-hidden />
                 <span className="text-sm font-medium uppercase">{result.vendor}</span>

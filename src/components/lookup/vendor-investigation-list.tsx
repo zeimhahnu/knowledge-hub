@@ -191,20 +191,29 @@ function VendorRow({
   item,
   timelineRow,
   timelineModel,
+  propagatedVendors,
+  recentlyMarkedVendor,
+  markRevision,
   onMarkChange,
 }: {
   item: OrderedVendorRow;
   timelineRow: TimelineRow;
   timelineModel: CoverageTimelineModel;
+  propagatedVendors: ReadonlySet<VendorId>;
+  recentlyMarkedVendor: VendorId | null;
+  markRevision: number;
   onMarkChange: (vendor: VendorId, state: VendorMarkState) => void;
 }) {
   const { row, group } = item;
   const groupTone = row.applicable ? "" : "opacity-70";
+  const rowStateClass = `ca-vendor-row-${row.state}`;
+  const propagated = propagatedVendors.has(row.vendor);
   return (
     <li
       data-vendor-row
       data-vendor-id={row.vendor}
-      className={`min-w-0 border-t border-border/80 py-5 first:border-t-0 ${groupTone}`}
+      data-propagated={propagated || undefined}
+      className={`ca-vendor-row ${rowStateClass} min-w-0 border-t border-border/80 py-5 first:border-t-0 ${groupTone} ${propagated ? "ca-propagation-pulse" : ""}`}
     >
       <div className="mb-3 flex flex-wrap items-center gap-x-3 gap-y-1">
         <span className="font-mono text-[0.65rem] uppercase tracking-[0.16em] text-muted-foreground">{GROUP_META[group].label}</span>
@@ -217,7 +226,10 @@ function VendorRow({
         </div>
         <PublicationWindow timelineRow={timelineRow} model={timelineModel} />
         <MarkControl row={row} onMarkChange={onMarkChange} />
-        <div className="min-w-0 space-y-2">
+        <div
+          key={`${row.state}-${row.confirmation?.state ?? "unchecked"}-${row.confirmation?.checkedAt ?? "none"}-${recentlyMarkedVendor === row.vendor ? markRevision : "stable"}`}
+          className={`${recentlyMarkedVendor === row.vendor ? "ca-verdict-cell" : ""} min-w-0 space-y-2`}
+        >
           <p className="text-sm leading-relaxed text-foreground/90">{markMeaning(row)}</p>
           <TreatmentSummary row={row} />
         </div>
@@ -293,6 +305,9 @@ export function VendorInvestigationList({
   today,
   groups,
   entailment,
+  propagatedVendors,
+  recentlyMarkedVendor,
+  markRevision,
   onMarkChange,
 }: {
   ticker: string;
@@ -310,6 +325,9 @@ export function VendorInvestigationList({
     notApplicable: MatrixRow[];
   };
   entailment: VendorEntailment[];
+  propagatedVendors: ReadonlySet<VendorId>;
+  recentlyMarkedVendor: VendorId | null;
+  markRevision: number;
   onMarkChange: (vendor: VendorId, state: VendorMarkState) => void;
 }) {
   const timelineModel = useMemo(
@@ -351,6 +369,9 @@ export function VendorInvestigationList({
                 item={item}
                 timelineRow={timelineRow}
                 timelineModel={timelineModel}
+                propagatedVendors={propagatedVendors}
+                recentlyMarkedVendor={recentlyMarkedVendor}
+                markRevision={markRevision}
                 onMarkChange={onMarkChange}
               />
             );
