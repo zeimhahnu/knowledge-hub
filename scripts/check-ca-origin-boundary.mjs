@@ -79,6 +79,11 @@ assert.equal(
   "the exact CF_Authorization cookie must be used when the assertion header is absent",
 );
 assert.equal(
+  accessJwtFromHeaders(new Headers({ "cf-access-jwt-assertion": "", cookie: accessCookie })),
+  cookieAssertion,
+  "an empty upstream assertion header must not suppress the signed Access cookie",
+);
+assert.equal(
   accessJwtFromHeaders(new Headers({ "cf-access-jwt-assertion": "invalid", cookie: accessCookie })),
   "invalid",
   "an invalid assertion header must not fall back to a cookie",

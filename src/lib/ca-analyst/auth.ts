@@ -24,7 +24,7 @@ const ACCESS_COOKIE = "CF_Authorization=";
  */
 export function accessJwtFromHeaders(headers: Headers): string | null {
   const assertion = headers.get("cf-access-jwt-assertion");
-  if (assertion !== null) return assertion;
+  if (assertion?.trim()) return assertion;
   const cookieHeader = headers.get("cookie");
   if (!cookieHeader) return null;
   for (const cookie of cookieHeader.split(";")) {
