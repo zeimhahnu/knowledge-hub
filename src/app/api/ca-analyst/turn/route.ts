@@ -77,9 +77,13 @@ export async function POST(request: Request) {
   }
   if (!validRequest(payload) || !process.env.CA_ANALYST_SERVICE_URL) return error(!validRequest(payload) ? "invalid_request" : "service_unavailable");
   try {
+    // Cloudflare linked-app-token handoff: forward the user JWT as cf-access-token.
+    // Access validates it against the linked-app rule, then mints a NEW
+    // cf-access-jwt-assertion scoped to App B AUD for the origin.
+    // Renaming this to cf-access-jwt-assertion breaks it (see revert of 407337f).
     const upstream = await fetch(`${process.env.CA_ANALYST_SERVICE_URL.replace(/\/$/, "")}/v1/turn`, {
       method: "POST",
-      headers: { "content-type": "application/json", "cf-access-jwt-assertion": assertion as string, accept: "text/event-stream" },
+      headers: { "content-type": "application/json", "cf-access-token": assertion as string, accept: "text/event-stream" },
       body: JSON.stringify(payload),
       cache: "no-store",
     });
