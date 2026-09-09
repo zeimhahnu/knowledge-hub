@@ -14,6 +14,19 @@ type Verdict =
   | { accepted: true; vendor: string; chars: number; note: string }
   | { accepted: false; reasons: string[] };
 
+function responseReasons(result: unknown): string[] | null {
+  if (
+    typeof result === "object" &&
+    result !== null &&
+    "reasons" in result &&
+    Array.isArray(result.reasons) &&
+    result.reasons.every((reason): reason is string => typeof reason === "string")
+  ) {
+    return result.reasons;
+  }
+  return null;
+}
+
 export default function UploadPage() {
   const [file, setFile] = useState<File | null>(null);
   const [vendor, setVendor] = useState("");
@@ -30,11 +43,49 @@ export default function UploadPage() {
     setIsSubmitting(true);
     setVerdict(null);
 
+    const body = new FormData();
+    body.set("file", file);
+    body.set("vendor", vendor.trim().toLowerCase());
+
+    let response: Response;
     try {
-      const body = new FormData();
-      body.set("file", file);
-      body.set("vendor", vendor.trim().toLowerCase());
-      const response = await fetch("/api/ingest", { method: "POST", body });
+      response = await fetch("/api/ingest/", { method: "POST", body });
+    } catch {
+      setVerdict({ accepted: false, reasons: ["Could not reach the screening service. Try again."] });
+      setIsSubmitting(false);
+      return;
+    }
+
+    const contentType = response.headers.get("content-type") ?? "";
+    const isJson = /application\/json/i.test(contentType);
+    if (!response.ok) {
+      if (response.status === 401) {
+        setVerdict({ accepted: false, reasons: ["Sign-in required for uploads."] });
+      } else if (response.status === 413) {
+        setVerdict({ accepted: false, reasons: ["The file is over the size limit."] });
+      } else if (response.status === 422 && isJson) {
+        try {
+          const reasons = responseReasons(await response.json());
+          setVerdict({ accepted: false, reasons: reasons ?? ["Screening rejected without reasons."] });
+        } catch {
+          setVerdict({ accepted: false, reasons: ["Screening rejected without reasons."] });
+        }
+      } else if (response.status >= 500) {
+        setVerdict({ accepted: false, reasons: ["The screening service failed. Try again."] });
+      } else {
+        setVerdict({ accepted: false, reasons: [`Upload failed (HTTP ${response.status}). Try again.`] });
+      }
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (!isJson) {
+      setVerdict({ accepted: false, reasons: ["The screening service returned an unexpected response. Try again."] });
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
       const result: unknown = await response.json();
 
       if (
@@ -50,19 +101,16 @@ export default function UploadPage() {
         typeof result.note === "string"
       ) {
         setVerdict({ accepted: true, vendor: result.vendor, chars: result.chars, note: result.note });
-      } else if (
-        typeof result === "object" &&
-        result !== null &&
-        "reasons" in result &&
-        Array.isArray(result.reasons) &&
-        result.reasons.every((reason): reason is string => typeof reason === "string")
-      ) {
-        setVerdict({ accepted: false, reasons: result.reasons });
       } else {
-        setVerdict({ accepted: false, reasons: ["The screening service returned an unexpected response. Try again."] });
+        const reasons = responseReasons(result);
+        if (reasons) {
+          setVerdict({ accepted: false, reasons });
+        } else {
+          setVerdict({ accepted: false, reasons: ["The screening service returned an unexpected response. Try again."] });
+        }
       }
     } catch {
-      setVerdict({ accepted: false, reasons: ["Could not reach the screening service. Try again."] });
+      setVerdict({ accepted: false, reasons: ["The screening service returned an unexpected response. Try again."] });
     } finally {
       setIsSubmitting(false);
     }

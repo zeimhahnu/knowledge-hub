@@ -23,7 +23,7 @@ export default function ReviewPage() {
   const [message, setMessage] = useState("Loading proposals…");
 
   async function load() {
-    const response = await fetch("/api/rules/proposals", { cache: "no-store" });
+    const response = await fetch("/api/rules/proposals/", { cache: "no-store" });
     if (!response.ok) throw new Error("Could not load proposals");
     setFiles((await response.json()) as ProposalFile[]);
     setMessage("");
@@ -37,7 +37,7 @@ export default function ReviewPage() {
 
   async function decide(id: string, decision: "approve" | "reject", index?: number) {
     setMessage(`${decision === "approve" ? "Approving" : "Rejecting"} proposal…`);
-    const response = await fetch("/api/rules/proposals", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id, decision, ...(index === undefined ? {} : { index }) }) });
+    const response = await fetch("/api/rules/proposals/", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id, decision, ...(index === undefined ? {} : { index }) }) });
     const result = (await response.json()) as { error?: string };
     if (!response.ok) {
       setMessage(result.error ?? "Could not save decision.");

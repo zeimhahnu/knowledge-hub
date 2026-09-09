@@ -133,7 +133,7 @@ function NewsPanel({
 
     void (async () => {
       try {
-        const res = await fetch(`/api/news?${params.toString()}`, {
+        const res = await fetch(`/api/news/?${params.toString()}`, {
           signal: controller.signal,
         });
         const body = (await res.json()) as NewsValidationResult;

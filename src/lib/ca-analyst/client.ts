@@ -154,7 +154,7 @@ export async function streamAnalystTurn(
   fetchImpl: typeof fetch = fetch,
 ): Promise<void> {
   try {
-    const response = await fetchImpl("/api/ca-analyst/turn", {
+    const response = await fetchImpl("/api/ca-analyst/turn/", {
       method: "POST",
       headers: { "content-type": "application/json", accept: "text/event-stream" },
       body: JSON.stringify(request),
