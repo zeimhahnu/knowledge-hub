@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server";
-import { extractText, getDocumentProxy } from "unpdf";
-
 import screeningRules from "@/data/screening-rules.json" with { type: "json" };
 import { judge } from "@/lib/screen-methodology";
-import { persistIngestedDocument } from "@/lib/ingest";
+import { extractIngestedPdf, persistIngestedDocument } from "@/lib/ingest";
 import { contentLengthStatus } from "@/middleware";
 
 export const runtime = "nodejs";
@@ -70,10 +68,7 @@ export async function POST(request: Request) {
   let text: string;
   let pageCount = 0;
   try {
-    const pdf = await getDocumentProxy(bytes);
-    pageCount = pdf.numPages;
-    const extracted = await extractText(pdf, { mergePages: true });
-    text = extracted.text;
+    ({ text, pageCount } = await extractIngestedPdf(bytes));
   } catch {
     return rejected(["could not read a text layer — rejecting rather than guessing (fail closed)"]);
   }

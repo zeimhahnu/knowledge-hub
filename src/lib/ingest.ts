@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { extractText, getDocumentProxy } from "unpdf";
 
 import { CANONICAL_EVENTS, type CanonicalEventId } from "./event-taxonomy.ts";
 import { normalizeTreatmentText } from "./finding-language.ts";
@@ -62,6 +63,14 @@ const EVENT_ALIASES: Record<CanonicalEventId, readonly string[]> = {
 const ABSENT_LANGUAGE = /\b(not addressed|not covered|does not address|not specified|no treatment is specified|no treatment)\b/i;
 const HEADING = /^(?:\d+(?:\.\d+)*[.)]?\s+)?[A-Z][A-Z\s/&-]{4,}$/;
 const NUMBERED_TITLE_HEADING = /^\d+(?:\.\d+)*[.)]?\s+[A-Z][A-Za-z\s/&-]{4,}$/;
+
+export async function extractIngestedPdf(bytes: Uint8Array): Promise<{ text: string; pageCount: number }> {
+  // pdf.js takes ownership of its input ArrayBuffer and detaches it. Keep the
+  // original bytes intact because persistence hashes those bytes for identity.
+  const pdf = await getDocumentProxy(bytes.slice());
+  const extracted = await extractText(pdf, { mergePages: true });
+  return { text: extracted.text, pageCount: pdf.numPages };
+}
 
 function safeSegment(value: string, fallback: string): string {
   const segment = value.toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "");
