@@ -836,7 +836,7 @@ export default function VendorDashboard() {
           </>
         )}
 
-      <Band tone="dark" className="!py-12">
+      <Band tone="dark">
         <RouteShell wide className="space-y-8">
           <SectionHeader
             eyebrow="Vendor reference"
@@ -866,8 +866,8 @@ export default function VendorDashboard() {
         </RouteShell>
       </Band>
 
-      <Band tone="light" className="min-h-screen !py-12">
-        <RouteShell wide className="py-6">
+      <Band tone="light" className="min-h-screen">
+        <RouteShell wide>
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
 
               {/* Left Sidebar: desktop only */}

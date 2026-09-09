@@ -49,13 +49,13 @@ export async function generateMetadata({
 function MissingParams({ title, body }: { title: string; body: string }) {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <Band tone="dark" className="!py-0">
-        <RouteShell className="py-12 md:py-16">
+      <Band tone="dark">
+        <RouteShell>
           <h1 className="ca-display-title">{title}</h1>
         </RouteShell>
       </Band>
-      <Band tone="light" className="min-h-[40vh] !py-0">
-        <RouteShell className="py-12 md:py-16">
+      <Band tone="light" className="min-h-[40vh]">
+        <RouteShell>
           <Surface className="max-w-3xl p-8">
           <p className="ca-body-copy max-w-prose">
             {body}

@@ -50,19 +50,19 @@ export default function ReviewPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <Band tone="dark">
-        <RouteShell className="py-12 md:py-16">
+        <RouteShell>
           <SectionHeader eyebrow="Human review" title="Proposed methodology rules" description="Extraction only proposes. Approve a document to append its candidates to the curated rule set; rejected or absent candidates never become rules." />
         </RouteShell>
       </Band>
       <Band tone="light" className="min-h-screen">
-      <RouteShell className="py-12 md:py-16">
+      <RouteShell>
         <div className="max-w-5xl">
           {message && <Surface className="mt-6 p-4 text-sm text-muted-foreground" role="status">{message}</Surface>}
           <div className="mt-8 space-y-6">
             {files.filter((file) => file.status === "proposed").map((file) => (
               <Surface as="section" key={file.id} className="overflow-hidden">
                 <header className="flex flex-wrap items-center justify-between gap-4 border-b border-border p-5">
-                  <div><h2 className="font-semibold">{file.document.vendor} · {file.document.filename}</h2><p className="mt-1 text-xs text-muted-foreground">Retrieved {new Date(file.document.retrieved_at).toLocaleString()}</p></div>
+                  <div><h2 className="ca-section-title">{file.document.vendor} · {file.document.filename}</h2><p className="mt-1 text-xs text-muted-foreground">Retrieved {new Date(file.document.retrieved_at).toLocaleString()}</p></div>
                   <div className="flex gap-2"><Button type="button" variant="destructive" onClick={() => void decide(file.id, "reject")}><XIcon className="h-4 w-4" aria-hidden />Reject</Button><Button type="button" onClick={() => void decide(file.id, "approve")}><CheckIcon className="h-4 w-4" aria-hidden />Approve all</Button></div>
                 </header>
                 <div className="divide-y divide-border">

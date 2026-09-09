@@ -101,7 +101,7 @@ function VendorCard({
   return (
     <SurfaceSection padding="tight" className="space-y-4">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-        <h2 className="text-lg font-semibold tracking-tight">{label}</h2>
+        <h2 className="ca-section-title">{label}</h2>
         <div className="flex min-w-40 flex-1 items-center gap-2 sm:max-w-xs">
           <label className="sr-only" htmlFor={`lead-${vendor}`}>
             {label} publication publication horizon in days
@@ -353,8 +353,8 @@ export default function SettingsPage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <Band tone="dark" className="!py-12">
-        <RouteShell className="py-8">
+      <Band tone="dark">
+        <RouteShell>
           <SectionHeader eyebrow="Coverage settings" title="Vendor publication horizons" description={
             <>
               The publication horizon is how many days before the ex-date a vendor is expected to publish or hold a forward projection for a pending corporate action. Before that horizon, silence is expected (<em>not-yet-due</em>); inside it, silence is an operational gap (<em>missing</em>). Set each vendor&apos;s horizon here — per-event-type overrides stay collapsed.
@@ -366,7 +366,7 @@ export default function SettingsPage() {
         </RouteShell>
       </Band>
       <Band tone="light">
-      <RouteShell className="py-10">
+      <RouteShell>
         <Surface className="mb-4 flex flex-wrap items-center justify-between gap-3 p-3" aria-live="polite">
           <p
             className={`text-sm font-medium ${dirty ? "text-amber-700 dark:text-amber-300" : "text-muted-foreground"}`}

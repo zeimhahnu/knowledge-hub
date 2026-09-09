@@ -271,7 +271,7 @@ function FindingCopy({
         <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[#5b5b58]">Closing note</p>
         <div className="mt-3 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-3xl">
-            <h2 id="what-you-can-say" className="text-2xl font-medium tracking-[-0.04em]">What you can say</h2>
+            <h2 id="what-you-can-say" className="ca-section-title">What you can say</h2>
             <p className="mt-3 text-base leading-relaxed text-[#333331]">{note}</p>
           </div>
           <button
@@ -349,7 +349,7 @@ export function VendorInvestigationList({
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">Step 2 of 6 · investigate coverage</p>
-            <h2 id="vendor-investigation-heading" className="mt-2 text-2xl font-medium tracking-[-0.04em]">Read the vendor rows left to right</h2>
+            <h2 id="vendor-investigation-heading" className="ca-section-title mt-2">Read the vendor rows left to right</h2>
           </div>
           <p className="font-mono text-sm uppercase tracking-[0.12em] text-muted-foreground">{verdict.rows.length} vendors in scope</p>
         </div>

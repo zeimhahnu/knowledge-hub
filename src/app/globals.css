@@ -70,7 +70,7 @@
   --radius-canonical: 4px;
   --radius-launcher: 9999px;
   --type-display-xl: clamp(2.5rem, 5vw, 4rem);
-  --type-display-lg: clamp(2rem, 4vw, 3.5rem);
+  --type-display-lg: 40px;
   --type-body: 1rem;
   --type-label: 0.6875rem;
   --tracking-display: -0.04em;
@@ -260,8 +260,8 @@
   border-block: 1px solid var(--border);
 }
 .ca-surface { border: 1px solid var(--border); border-radius: 4px; background: var(--card); color: var(--card-foreground); }
-.ca-display-title { color: var(--foreground); font-size: var(--type-display-lg); font-weight: 500; letter-spacing: -0.8px; line-height: 1.05; }
-.ca-section-title { color: var(--foreground); font-size: 1.25rem; font-weight: 500; letter-spacing: -0.02em; line-height: 1.2; }
+.ca-display-title { color: var(--foreground); font-size: 40px; font-weight: 500; letter-spacing: -0.8px; line-height: 48px; }
+.ca-section-title { color: var(--foreground); font-size: 22px; font-weight: 500; letter-spacing: -0.22px; line-height: 25.3px; }
 .ca-eyebrow, .ca-label { color: var(--primary); font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: var(--type-label); font-weight: 650; letter-spacing: var(--tracking-label); line-height: 1.4; text-transform: uppercase; }
 .ca-body-copy { color: var(--body-copy); font-size: var(--type-body); line-height: 1.65; }
 .ca-meta { color: var(--meta-copy); font-size: 0.75rem; line-height: 1.5; }

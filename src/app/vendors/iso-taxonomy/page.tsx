@@ -276,7 +276,7 @@ export default function IsoTaxonomyPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Band tone="dark" className="!py-12">
+      <Band tone="dark">
         <RouteShell wide className="space-y-8">
           <SectionHeader
             eyebrow="ISO 20022 reference"
@@ -297,8 +297,8 @@ export default function IsoTaxonomyPage() {
         </RouteShell>
       </Band>
 
-      <Band tone="light" className="min-h-screen !py-12">
-      <RouteShell wide className="space-y-8 py-6">
+      <Band tone="light" className="min-h-screen">
+      <RouteShell wide className="space-y-8">
         <SurfaceSection padding="tight" className="space-y-8">
 
         {/* How to Read + Quick Nav */}

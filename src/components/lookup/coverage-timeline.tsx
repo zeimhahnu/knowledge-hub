@@ -173,7 +173,7 @@ export function CoverageTimeline({
     <SurfaceSection className="space-y-4" padding="compact">
       <figure>
         <figcaption className="space-y-1">
-          <h2 className="text-lg font-semibold tracking-tight">Publication horizon</h2>
+          <h2 className="ca-section-title">Publication horizon</h2>
           <p className="max-w-prose text-sm leading-relaxed text-muted-foreground">
             Each band is the vendor&apos;s resolved publication window before the ex-date. The marker is today&apos;s observation; geometry is anchored to the ex-date, not to a status colour.
           </p>

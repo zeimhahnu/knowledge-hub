@@ -15,6 +15,27 @@ const pages = [
 ];
 const problems = [];
 
+const headingSizes = new Map([
+  ["ca-display-title", "40px"],
+  ["ca-section-title", "22px"],
+  ["text-2xl", "24px"],
+  ["text-xl", "20px"],
+  ["text-lg", "18px"],
+]);
+
+function resolvedHeadingSize(className) {
+  return className.split(/\s+/).map((token) => headingSizes.get(token)).find(Boolean) ?? null;
+}
+
+function headingsIn(file) {
+  const headings = [];
+  if (file.includes("<SectionHeader")) headings.push({ tag: "h1", size: "40px" });
+  for (const match of file.matchAll(/<(h[12])\b[^>]*className="([^"]*)"/g)) {
+    headings.push({ tag: match[1], size: resolvedHeadingSize(match[2]) });
+  }
+  return headings;
+}
+
 for (const relative of pages) {
   const file = fs.readFileSync(path.join(root, relative), "utf8");
   if (!file.includes("@/components/ui/band") && !file.includes('<Band')) problems.push(`${relative}: missing shared Band import`);
@@ -32,6 +53,17 @@ for (const relative of pages) {
   }
   if (/oklch\([^)]*(?:250|260)/.test(file) || /bg-\[[^\]]*oklch/.test(file)) {
     problems.push(`${relative}: raw oklch blue token used in a page or CTA`);
+  }
+
+  const headings = headingsIn(file);
+  for (const h1 of headings.filter((heading) => heading.tag === "h1")) {
+    for (const h2 of headings.filter((heading) => heading.tag === "h2")) {
+      if (h1.size === null || h2.size === null) {
+        problems.push(`${relative}: h1/h2 heading size is not part of the type ramp`);
+      } else if (h1.size === h2.size) {
+        problems.push(`${relative}: h1 and h2 resolve to the same font-size (${h1.size})`);
+      }
+    }
   }
 
   if (relative.startsWith("src/app/vendors/")) {
@@ -66,6 +98,26 @@ for (const token of expectedPalette) {
   if (!css.includes(token)) problems.push(`globals.css: missing together palette token ${token}`);
 }
 if (/--primary:\s*oklch\(/.test(css)) problems.push("globals.css: CTA primary still uses an oklch token");
+if (!/\.ca-display-title\s*\{[^}]*font-size:\s*40px;[^}]*font-weight:\s*500;[^}]*letter-spacing:\s*-0\.8px;[^}]*line-height:\s*48px;/.test(css)) {
+  problems.push("globals.css: display type ramp is not 40px/48px/500/-0.8px");
+}
+if (!/\.ca-section-title\s*\{[^}]*font-size:\s*22px;[^}]*font-weight:\s*500;[^}]*letter-spacing:\s*-0\.22px;[^}]*line-height:\s*25\.3px;/.test(css)) {
+  problems.push("globals.css: section type ramp is not 22px/25.3px/500/-0.22px");
+}
+
+const lookup = fs.readFileSync(path.join(root, "src/components/lookup/lookup-view.tsx"), "utf8");
+if (/<span[^>]*className="[^"]*(?:chart-3|chart-4|destructive)[^"]*"[^>]*>\s*\{totals\.dataStatesTreatment\} states a treatment/s.test(lookup)) {
+  problems.push("lookup-view.tsx: states-a-treatment chip uses a semantic accent colour");
+}
+if (/<span[^>]*className="[^"]*(?:chart-3|chart-4|destructive)[^"]*"[^>]*>\s*\{totals\.dataSilent\} silent/s.test(lookup)) {
+  problems.push("lookup-view.tsx: silent chip uses a semantic accent colour");
+}
+if (!/key: "missing"[\s\S]*?cls: "border-accent\/40 bg-accent\/10 text-accent"/.test(lookup)) {
+  problems.push("lookup-view.tsx: genuine discrepancy chip does not use the accent token");
+}
+if (/rounded-full[^"\n]*(?:text|bg|border)-(?:amber|teal|cyan|orange|red|green|blue|purple|pink)-\d/.test(lookup)) {
+  problems.push("lookup-view.tsx: rendered chip uses a raw hue instead of a palette token");
+}
 
 assert.equal(problems.length, 0, problems.join("\n"));
 console.log(`check-design-system: PASS (${pages.length} core pages have dark/light bands, together palette, and type-ramp headlines)`);

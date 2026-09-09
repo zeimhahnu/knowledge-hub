@@ -75,13 +75,13 @@ export default function UploadPage() {
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.03] [background-image:linear-gradient(var(--foreground)_1px,transparent_1px),linear-gradient(90deg,var(--foreground)_1px,transparent_1px)] [background-size:64px_64px]"
         />
-        <RouteShell className="relative py-12 md:py-16">
+        <RouteShell className="relative">
           <SectionHeader eyebrow="Methodology screening" title="Screen a vendor methodology before ingest." description="Upload a text-based PDF and its vendor ID. We check that it is relevant, attributed, and safe to process." />
         </RouteShell>
       </Band>
 
       <Band tone="light">
-        <RouteShell className="py-12 md:py-16">
+        <RouteShell>
 
           <Surface className="mx-auto mt-8 max-w-3xl p-4 sm:p-6">
           <form onSubmit={handleSubmit} noValidate>
@@ -128,7 +128,7 @@ export default function UploadPage() {
               <div className="flex items-start gap-3">
                 {verdict.accepted ? <CheckCircle2Icon className="mt-0.5 h-5 w-5 text-success" aria-hidden /> : <AlertTriangleIcon className="mt-0.5 h-5 w-5 text-destructive" aria-hidden />}
                 <div>
-                  <h2 className="font-semibold">{verdict.accepted ? "Screening passed" : "Screening rejected"}</h2>
+                  <h2 className="ca-section-title">{verdict.accepted ? "Screening passed" : "Screening rejected"}</h2>
                   {verdict.accepted ? (
                     <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{verdict.note}</p>
                   ) : (

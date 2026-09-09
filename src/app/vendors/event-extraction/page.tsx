@@ -17,7 +17,7 @@ export default async function EventExtractionPage() {
     <div className="min-h-screen bg-background text-foreground">
       <Band className="min-h-screen">
       <main>
-        <RouteShell className="py-8">
+        <RouteShell>
         <Surface as="article" className="p-5 sm:p-8">
         <div
           className="prose prose-invert max-w-none"

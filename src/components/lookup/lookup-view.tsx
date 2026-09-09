@@ -91,7 +91,7 @@ const NEWS_VERDICT_META: Record<
   },
   contradicted: {
     label: "Contradicted",
-    chip: "border-destructive/40 bg-destructive/10 text-destructive",
+    chip: "border-accent/40 bg-accent/10 text-accent",
     icon: AlertTriangleIcon,
   },
   unverified: {
@@ -157,7 +157,7 @@ function NewsPanel({
   return (
     <SurfaceSection className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
-        <h2 className="text-lg font-semibold tracking-tight">
+        <h2 className="ca-section-title">
           News cross-validation
         </h2>
         <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
@@ -275,7 +275,7 @@ function VendorScopeControl({
     <SurfaceSection className="space-y-3">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h2 id="vendor-scope-heading" className="text-lg font-semibold tracking-tight">
+          <h2 id="vendor-scope-heading" className="ca-section-title">
             Vendor scope
           </h2>
           <p className="mt-1 max-w-prose text-sm text-muted-foreground">
@@ -366,7 +366,7 @@ function DivergencePanel({
   return (
     <SurfaceSection className="space-y-3">
       <div className="flex flex-wrap items-center gap-3">
-        <h2 className="text-lg font-semibold tracking-tight">
+        <h2 className="ca-section-title">
           Where vendors diverge
         </h2>
       </div>
@@ -406,7 +406,7 @@ const TOTAL_CHIPS: Array<{
   {
     key: "missing",
     label: "missing",
-    cls: "border-destructive/40 bg-destructive/10 text-destructive",
+    cls: "border-accent/40 bg-accent/10 text-accent",
   },
   {
     key: "notYetDue",
@@ -434,7 +434,7 @@ function VerdictPanel({
   return (
     <SurfaceSection className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
-        <h2 className="text-lg font-semibold tracking-tight">Finding so far</h2>
+        <h2 className="ca-section-title">Finding so far</h2>
       </div>
 
       {!timingNoticeDismissed && totals.notAssessed > 0 && (
@@ -472,12 +472,12 @@ function VerdictPanel({
 
       <div className="flex flex-wrap gap-2">
         {totals.dataStatesTreatment > 0 && (
-          <span className="inline-flex items-center rounded-full border border-chart-3/40 bg-chart-3/10 px-2.5 py-0.5 text-xs font-medium text-chart-3">
+          <span className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-0.5 font-mono text-xs uppercase tracking-wide text-muted-foreground">
             {totals.dataStatesTreatment} states a treatment
           </span>
         )}
         {totals.dataSilent > 0 && (
-          <span className="inline-flex items-center rounded-full border border-chart-4/40 bg-chart-4/10 px-2.5 py-0.5 text-xs font-medium text-chart-4">
+          <span className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-0.5 font-mono text-xs uppercase tracking-wide text-muted-foreground">
             {totals.dataSilent} silent
           </span>
         )}
@@ -536,7 +536,7 @@ function QualifierControls({
   return (
     <SurfaceSection className="space-y-3">
       <div>
-        <h2 className="text-lg font-semibold tracking-tight">Narrow this lookup</h2>
+        <h2 className="ca-section-title">Narrow this lookup</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           Optional answers filter the matrix. Unanswered controls show every branch.
         </p>
@@ -583,7 +583,7 @@ function FundContextControl({ selectedTicker, onChange, resolution, catalogRecor
   return (
     <SurfaceSection className="space-y-3">
       <div>
-        <h2 className="text-lg font-semibold tracking-tight">Optional fund context</h2>
+        <h2 className="ca-section-title">Optional fund context</h2>
         <p className="mt-1 text-sm text-muted-foreground">Search the committed Franklin ETF catalog. Only reviewed metadata enables the 3-D lookup; leave unset for the unchanged P0 lookup.</p>
       </div>
       <label className="grid max-w-sm gap-1.5 text-sm">
@@ -778,10 +778,10 @@ export function LookupView({
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <Band className="!py-0" tone="dark">
+      <Band tone="dark">
       {/* Query header — D1 (1) */}
       <div className="border-b border-border bg-background text-foreground">
-        <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
+        <div className="mx-auto max-w-6xl px-5 sm:px-8">
           <p className="ca-eyebrow">Corporate-action lookup · step 2 of 6</p>
           <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
             <h1 className="ca-display-title">{ticker}</h1>
@@ -846,8 +846,8 @@ export function LookupView({
         </div>
       </div>
       </Band>
-      <Band className="!py-0" tone="light">
-      <div className="mx-auto max-w-6xl space-y-4 px-5 py-8 sm:px-8 sm:py-10">
+      <Band tone="light">
+      <div className="mx-auto max-w-6xl space-y-4 px-5 sm:px-8">
         {/* D1 (2) vendor scope — D1 (3) verdict — D1 (4) matrix — D1 (5) news */}
         {!hydrated || !verdict ? (
           <div aria-hidden className="space-y-4">
@@ -871,7 +871,7 @@ export function LookupView({
             />
             {scope.length === 0 ? (
               <SurfaceSection className="space-y-2">
-                <h2 className="text-lg font-semibold tracking-tight">
+                <h2 className="ca-section-title">
                   Nothing selected
                 </h2>
                 <p className="max-w-prose text-sm leading-relaxed text-muted-foreground">

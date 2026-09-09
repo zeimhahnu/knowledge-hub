@@ -101,7 +101,7 @@ export default function Home() {
     <main className="min-h-screen bg-background text-foreground">
       <Band tone="dark" className="relative overflow-hidden border-b border-border">
         <div aria-hidden className="pointer-events-none absolute inset-0 opacity-[0.04] [background-image:linear-gradient(var(--foreground)_1px,transparent_1px),linear-gradient(90deg,var(--foreground)_1px,transparent_1px)] [background-size:64px_64px]" />
-        <RouteShell className="relative py-12 md:py-16">
+        <RouteShell className="relative">
           <SectionHeader
             eyebrow="Corporate-action validation"
             title="Reconcile a corporate action before it becomes a gap."
@@ -142,9 +142,9 @@ export default function Home() {
       </Band>
 
       <Band tone="light">
-        <RouteShell className="py-12 md:py-16">
+        <RouteShell>
           <p className="ca-eyebrow">Workbench</p>
-          <h2 className="ca-display-title mt-2">Open investigations</h2>
+          <h2 className="ca-section-title mt-2">Open investigations</h2>
           <p className="ca-body-copy mt-4 max-w-prose">Pick up where you left off. Your observations stay in this browser; nothing is invented when the list is empty.</p>
 
           {!hydrated ? (

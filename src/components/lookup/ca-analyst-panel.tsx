@@ -72,7 +72,7 @@ export function CaAnalystPanel({
         <div className="flex items-start gap-2">
           <BotIcon className="mt-0.5 h-5 w-5 text-primary" aria-hidden />
           <div>
-            <h2 id="ca-analyst-heading" className="text-lg font-semibold tracking-tight">CA Analyst</h2>
+          <h2 id="ca-analyst-heading" className="ca-section-title">CA Analyst</h2>
             <p className="mt-1 text-sm text-muted-foreground">
               Context: {context.ticker} · {context.eventType} · ex-date {context.exDate} · {context.selectedVendors.length} selected vendor{context.selectedVendors.length === 1 ? "" : "s"}.
             </p>
