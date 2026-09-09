@@ -29,11 +29,26 @@ function resolvedHeadingSize(className) {
 
 function headingsIn(file) {
   const headings = [];
-  if (file.includes("<SectionHeader")) headings.push({ tag: "h1", size: "40px" });
+  for (const match of file.matchAll(/<SectionHeader\b([\s\S]*?)(?:\/>)|<SectionHeader\b([\s\S]*?)>/g)) {
+    const props = match[1] ?? match[2] ?? "";
+    const tag = props.match(/\btitleAs="(h[123])"/)?.[1] ?? "h1";
+    headings.push({ tag, size: tag === "h1" ? "40px" : "22px" });
+  }
   for (const match of file.matchAll(/<(h[12])\b[^>]*className="([^"]*)"/g)) {
     headings.push({ tag: match[1], size: resolvedHeadingSize(match[2]) });
   }
   return headings;
+}
+
+function assertPaletteChipClasses(source, relative) {
+  const chipSources = [
+    ...source.matchAll(/(?:chip|cls):\s*"([^"]+)"/g),
+    ...source.matchAll(/className="([^"]*rounded-(?:full|\[4px\])[^"]*)"/g),
+  ].map((match) => match[1]);
+  const forbidden = /(?:bg|text|border)-\[(?:#|rgb|hsl|oklch)|(?:bg|text|border)-(?:amber|teal|cyan|orange|red|green|blue|purple|pink|indigo|emerald)-\d/;
+  for (const className of chipSources) {
+    if (forbidden.test(className)) problems.push(`${relative}: rendered chip uses a colour outside the palette (${className})`);
+  }
 }
 
 for (const relative of pages) {
@@ -42,6 +57,7 @@ for (const relative of pages) {
   if (!file.includes("@/components/ui/surface") && !file.includes("<Surface")) problems.push(`${relative}: missing shared Surface import`);
   if (!file.includes('tone="dark"')) problems.push(`${relative}: missing dark opening band`);
   if (!file.includes('tone="light"')) problems.push(`${relative}: missing light work band`);
+  if (/<Band\b[^>]*className="[^"]*\b!?py-/.test(file)) problems.push(`${relative}: band overrides the shared 80px rhythm`);
   if (/rounded-(?:2xl|xl|\[2rem\])\s+border\s+border-border\s+bg-card/.test(file)) {
     problems.push(`${relative}: hand-rolled card detected; use Surface`);
   }
@@ -77,6 +93,8 @@ for (const relative of pages) {
       problems.push(`${relative}: horizontal overflow escape hatch detected; use responsive table/card grammar`);
     }
   }
+
+  assertPaletteChipClasses(file, relative);
 }
 
 const css = fs.readFileSync(path.join(root, "src/app/globals.css"), "utf8");
@@ -117,6 +135,12 @@ if (!/key: "missing"[\s\S]*?cls: "border-accent\/40 bg-accent\/10 text-accent"/.
 }
 if (/rounded-full[^"\n]*(?:text|bg|border)-(?:amber|teal|cyan|orange|red|green|blue|purple|pink)-\d/.test(lookup)) {
   problems.push("lookup-view.tsx: rendered chip uses a raw hue instead of a palette token");
+}
+if (!/dataStatesTreatment[\s\S]*?className="[^\"]*rounded-full border border-border bg-muted\/30[^\"]*font-mono[^\"]*uppercase[^\"]*text-muted-foreground"[\s\S]*?totals\.dataStatesTreatment/.test(lookup)) {
+  problems.push("lookup-view.tsx: states-a-treatment chip is not the neutral mono surface treatment");
+}
+if (!/dataSilent[\s\S]*?className="[^\"]*rounded-full border border-border bg-muted\/30[^\"]*font-mono[^\"]*uppercase[^\"]*text-muted-foreground"[\s\S]*?totals\.dataSilent/.test(lookup)) {
+  problems.push("lookup-view.tsx: silent chip is not the neutral mono surface treatment");
 }
 
 assert.equal(problems.length, 0, problems.join("\n"));
