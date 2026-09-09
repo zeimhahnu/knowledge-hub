@@ -1,23 +1,32 @@
-import { readFile, rename, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { NextResponse } from "next/server";
+import bundledRules from "@/data/rules.json" with { type: "json" };
 
-import { listProposalFiles, type ProposalFile } from "@/lib/ingest";
+import { listProposalFiles, StorageUnavailableError, type ProposalFile } from "@/lib/ingest";
 import { asRulesDocument, validateRulesDocument, type CuratedRule } from "@/lib/rule-validation";
+import { readStoredText, writeStoredJson } from "@/lib/durable-storage";
 
 export const runtime = "nodejs";
 
-const RULES_PATH = path.join(process.cwd(), "src", "data", "rules.json");
+const RULES_KEY = "src/data/rules.json";
+
+function storageUnavailable() {
+  return NextResponse.json({ error: "storage unavailable", code: "STORAGE_UNAVAILABLE" }, { status: 503 });
+}
 
 export async function GET() {
-  const files = await listProposalFiles();
-  return NextResponse.json(files.map(({ id, path: proposalPath, proposal }) => ({
-    id,
-    path: proposalPath,
-    status: proposal.status,
-    document: proposal.document,
-    proposals: proposal.proposals,
-  })));
+  try {
+    const files = await listProposalFiles();
+    return NextResponse.json(files.map(({ id, path: proposalPath, proposal }) => ({
+      id,
+      path: proposalPath,
+      status: proposal.status,
+      document: proposal.document,
+      proposals: proposal.proposals,
+    })));
+  } catch (error) {
+    if (error instanceof StorageUnavailableError) return storageUnavailable();
+    throw error;
+  }
 }
 
 export async function POST(request: Request) {
@@ -32,7 +41,13 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "id and decision (approve or reject) are required" }, { status: 400 });
   }
 
-  const files = await listProposalFiles();
+  let files;
+  try {
+    files = await listProposalFiles();
+  } catch (error) {
+    if (error instanceof StorageUnavailableError) return storageUnavailable();
+    throw error;
+  }
   const match = files.find((file) => file.id === body.id);
   if (!match) return NextResponse.json({ error: "proposal not found" }, { status: 404 });
   if (match.proposal.status !== "proposed") return NextResponse.json({ error: "proposal already decided" }, { status: 409 });
@@ -46,7 +61,14 @@ export async function POST(request: Request) {
 
   if (body.decision === "approve") {
     const selected = selectedIndices.map((candidateIndex) => match.proposal.proposals[candidateIndex]);
-    const current = asRulesDocument(JSON.parse(await readFile(RULES_PATH, "utf8")));
+    let current;
+    try {
+      const storedRules = await readStoredText(RULES_KEY);
+      current = asRulesDocument(storedRules ? JSON.parse(storedRules) : bundledRules);
+    } catch (error) {
+      if (error instanceof StorageUnavailableError) return storageUnavailable();
+      throw error;
+    }
     const existingKeys = new Set(current.rules.map((rule) => `${rule.vendor}|${rule.event_type}|${rule.index_type}`));
     const selectedKeys = new Set<string>();
     for (const rule of selected) {
@@ -60,19 +82,29 @@ export async function POST(request: Request) {
     next.vendors = [...new Set([...next.vendors, ...selected.map((rule) => rule.vendor)])];
     const errors = validateRulesDocument(next);
     if (errors.length > 0) return NextResponse.json({ error: "proposal failed rules schema validation", details: errors }, { status: 422 });
-    await writeRulesAtomically(next);
+    try {
+      await writeStoredJson(RULES_KEY, next, { allowOverwrite: true });
+    } catch (error) {
+      if (error instanceof StorageUnavailableError) return storageUnavailable();
+      throw error;
+    }
     selectedIndices.forEach((candidateIndex) => alreadyApproved.add(candidateIndex));
   } else {
     selectedIndices.forEach((candidateIndex) => alreadyRejected.add(candidateIndex));
   }
   const decided = alreadyApproved.size + alreadyRejected.size === match.proposal.proposals.length;
-  await writeDecision(match.path, {
-    ...match.proposal,
-    status: decided ? (alreadyApproved.size > 0 ? "approved" : "rejected") : "proposed",
-    approved_indices: [...alreadyApproved].sort((a, b) => a - b),
-    rejected_indices: [...alreadyRejected].sort((a, b) => a - b),
-    ...(decided ? { decided_at: new Date().toISOString() } : {}),
-  });
+  try {
+    await writeDecision(match.path, {
+      ...match.proposal,
+      status: decided ? (alreadyApproved.size > 0 ? "approved" : "rejected") : "proposed",
+      approved_indices: [...alreadyApproved].sort((a, b) => a - b),
+      rejected_indices: [...alreadyRejected].sort((a, b) => a - b),
+      ...(decided ? { decided_at: new Date().toISOString() } : {}),
+    });
+  } catch (error) {
+    if (error instanceof StorageUnavailableError) return storageUnavailable();
+    throw error;
+  }
   return NextResponse.json({ status: body.decision === "approve" ? "approved" : "rejected", added: body.decision === "approve" ? selectedIndices.length : 0 });
 }
 
@@ -90,12 +122,5 @@ function toCuratedRule(rule: ProposalFile["proposals"][number]): CuratedRule {
 }
 
 async function writeDecision(relativePath: string, proposal: ProposalFile) {
-  const absolute = path.join(process.cwd(), relativePath);
-  await writeFile(absolute, `${JSON.stringify(proposal, null, 2)}\n`, "utf8");
-}
-
-async function writeRulesAtomically(document: ReturnType<typeof asRulesDocument>) {
-  const temp = `${RULES_PATH}.${process.pid}.tmp`;
-  await writeFile(temp, `${JSON.stringify(document, null, 2)}\n`, "utf8");
-  await rename(temp, RULES_PATH);
+  await writeStoredJson(relativePath, proposal, { allowOverwrite: true });
 }

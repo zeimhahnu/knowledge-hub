@@ -82,6 +82,7 @@ export type NewsValidationResult = ScoreResult & {
   /** False = the live search could not run at all (no key / backend down). */
   validationRan: boolean;
   warning?: string;
+  errorCode?: "NEWS_NOT_CONFIGURED" | "NEWS_AUTH_ERROR" | "NEWS_PROVIDER_ERROR";
 };
 
 const DEFAULT_WINDOW_BEFORE_DAYS = 90;
@@ -547,6 +548,7 @@ export async function validateNews(
       reasoning:
         "Validation could not run: no TAVILY_API_KEY configured. No search was performed, so nothing is confirmed or denied.",
       validationRan: false,
+      errorCode: "NEWS_NOT_CONFIGURED",
       warning:
         "News search is not configured (TAVILY_API_KEY missing) — validation could not run.",
     };
@@ -560,6 +562,7 @@ export async function validateNews(
       sources: [],
       reasoning: `Validation could not run: unparseable ex-date "${input.exDate}".`,
       validationRan: false,
+      errorCode: "NEWS_PROVIDER_ERROR",
       warning: `Invalid ex-date "${input.exDate}" — expected YYYY-MM-DD.`,
     };
   }
@@ -598,20 +601,24 @@ export async function validateNews(
         sources: [],
         reasoning: `Validation could not run: Tavily returned HTTP ${res.status}.`,
         validationRan: false,
-        warning: `News validation is unavailable: Tavily returned HTTP ${res.status} — ${providerMessage}.`,
+        errorCode: res.status === 401 || res.status === 403 ? "NEWS_AUTH_ERROR" : "NEWS_PROVIDER_ERROR",
+        warning: res.status === 401 || res.status === 403
+          ? `News validation failed because Tavily rejected the configured key (HTTP ${res.status}) — ${providerMessage}. Fix TAVILY_API_KEY.`
+          : `News provider is unavailable (HTTP ${res.status}) — ${providerMessage}. Retry later.`,
       };
     }
     json = responseBody;
   } catch (err) {
-    const detail = err instanceof Error ? err.message : "unknown error";
-    console.error(`[news] Tavily request failed message=${safeLogMessage(detail)}`);
+    const detail = err instanceof Error ? safeLogMessage(err.message) : "unknown error";
+    console.error(`[news] Tavily request failed message=${detail}`);
     return {
       verdict: "unverified",
       confidence: "low",
       sources: [],
       reasoning: `Validation could not run: search backend request failed (${detail}).`,
       validationRan: false,
-      warning: "News search backend unreachable — validation could not run.",
+      errorCode: "NEWS_PROVIDER_ERROR",
+      warning: "News provider is unreachable — retry later.",
     };
   }
 

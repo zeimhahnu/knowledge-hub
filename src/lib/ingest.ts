@@ -1,10 +1,11 @@
 import { createHash } from "node:crypto";
-import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
-import path from "node:path";
 import { extractText, getDocumentProxy } from "unpdf";
 
 import { CANONICAL_EVENTS, type CanonicalEventId } from "./event-taxonomy.ts";
 import { normalizeTreatmentText } from "./finding-language.ts";
+import { getDurableStore, StorageUnavailableError } from "./durable-storage.ts";
+
+export { StorageUnavailableError };
 
 export type ProposedRule = {
   vendor: string;
@@ -108,16 +109,6 @@ export function buildProposedRules(vendor: string, text: string, documentRef: st
   });
 }
 
-async function writeImmutable(filePath: string, contents: string): Promise<boolean> {
-  try {
-    await writeFile(filePath, contents, { encoding: "utf8", flag: "wx" });
-    return true;
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "EEXIST") return false;
-    throw error;
-  }
-}
-
 export async function persistIngestedDocument(input: {
   vendor: string;
   filename: string;
@@ -132,17 +123,10 @@ export async function persistIngestedDocument(input: {
   const day = retrievedAt.toISOString().slice(0, 10);
   const vendorSegment = safeSegment(input.vendor, "vendor");
   const basename = `${vendorSegment}-${sha256}`;
-  const root = input.rootDir ?? process.cwd();
-  const documentDir = path.join(root, "src", "data", "methodologies", day);
-  const proposalDir = path.join(root, "src", "data", "proposed-rules", day);
-  await Promise.all([mkdir(documentDir, { recursive: true }), mkdir(proposalDir, { recursive: true })]);
-
-  const metadataPath = path.join(documentDir, `${basename}.json`);
-  const textPath = path.join(documentDir, `${basename}.txt`);
-  const proposalPath = path.join(proposalDir, `${basename}.json`);
-  const metadataRef = path.relative(root, metadataPath);
-  const textRef = path.relative(root, textPath);
-  const proposalRef = path.relative(root, proposalPath);
+  const metadataRef = `src/data/methodologies/${day}/${basename}.json`;
+  const textRef = `src/data/methodologies/${day}/${basename}.txt`;
+  const proposalRef = `src/data/proposed-rules/${day}/${basename}.json`;
+  const store = getDurableStore(input.rootDir);
   const proposals = buildProposedRules(input.vendor, input.text, metadataRef);
   const metadata = {
     vendor: input.vendor,
@@ -157,16 +141,28 @@ export async function persistIngestedDocument(input: {
   const document = { ...metadata, metadata_path: metadataRef };
   const proposal: ProposalFile = { status: "proposed", document, proposals };
 
-  const [metadataCreated, textCreated, proposalCreated] = await Promise.all([
-    writeImmutable(metadataPath, `${JSON.stringify(metadata, null, 2)}\n`),
-    writeImmutable(textPath, input.text),
-    writeImmutable(proposalPath, `${JSON.stringify(proposal, null, 2)}\n`),
-  ]);
+  let metadataCreated = false;
+  let textCreated = false;
+  let proposalCreated = false;
+  try {
+    [metadataCreated, textCreated, proposalCreated] = await Promise.all([
+      store.writeJson(metadataRef, metadata),
+      store.put(textRef, input.text, { contentType: "text/plain; charset=utf-8" }).then(() => true),
+      store.writeJson(proposalRef, proposal),
+    ]);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "EEXIST") {
+      if (error instanceof StorageUnavailableError) throw error;
+      throw new StorageUnavailableError(`Could not persist ${proposalRef}.`, { cause: error });
+    }
+  }
   if (metadataCreated && textCreated && proposalCreated) {
     return { metadataPath: metadataRef, textPath: textRef, proposalPath: proposalRef, sha256, proposals, reused: false };
   }
 
-  const existing = JSON.parse(await readFile(proposalPath, "utf8")) as ProposalFile;
+  const existingContents = await store.get(proposalRef);
+  if (!existingContents) throw new StorageUnavailableError(`Existing proposal ${proposalRef} could not be read.`);
+  const existing = JSON.parse(existingContents) as ProposalFile;
   return {
     metadataPath: metadataRef,
     textPath: textRef,
@@ -178,23 +174,16 @@ export async function persistIngestedDocument(input: {
 }
 
 export async function listProposalFiles(rootDir = process.cwd()): Promise<Array<{ id: string; path: string; proposal: ProposalFile }>> {
-  const root = path.join(rootDir, "src", "data", "proposed-rules");
-  const entries: string[] = [];
-  try {
-    const days = await readdir(root, { withFileTypes: true });
-    for (const day of days) {
-      if (!day.isDirectory()) continue;
-      const files = await readdir(path.join(root, day.name));
-      entries.push(...files.filter((file) => file.endsWith(".json")).map((file) => path.join(day.name, file)));
-    }
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
-    throw error;
-  }
-  const proposals = await Promise.all(entries.map(async (relativePath) => ({
-    id: relativePath.replace(/\.json$/, ""),
-    path: path.join("src", "data", "proposed-rules", relativePath),
-    proposal: JSON.parse(await readFile(path.join(root, relativePath), "utf8")) as ProposalFile,
-  })));
+  const store = getDurableStore(rootDir === process.cwd() ? undefined : rootDir);
+  const entries = (await store.list("src/data/proposed-rules/")).filter((entry) => entry.endsWith(".json"));
+  const proposals = await Promise.all(entries.map(async (proposalPath) => {
+    const contents = await store.get(proposalPath);
+    if (!contents) throw new StorageUnavailableError(`Proposal ${proposalPath} disappeared while reading.`);
+    return {
+      id: proposalPath.replace(/^src\/data\/proposed-rules\//, "").replace(/\.json$/, ""),
+      path: proposalPath,
+      proposal: JSON.parse(contents) as ProposalFile,
+    };
+  }));
   return proposals.sort((a, b) => a.id.localeCompare(b.id));
 }

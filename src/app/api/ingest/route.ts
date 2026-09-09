@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import screeningRules from "@/data/screening-rules.json" with { type: "json" };
 import { judge } from "@/lib/screen-methodology";
-import { extractIngestedPdf, persistIngestedDocument } from "@/lib/ingest";
+import { extractIngestedPdf, persistIngestedDocument, StorageUnavailableError } from "@/lib/ingest";
 import { contentLengthStatus } from "@/middleware";
 
 export const runtime = "nodejs";
@@ -83,7 +83,10 @@ export async function POST(request: Request) {
   let persisted;
   try {
     persisted = await persistIngestedDocument({ vendor, filename: upload.name, bytes, text, pageCount });
-  } catch {
+  } catch (error) {
+    if (error instanceof StorageUnavailableError) {
+      return NextResponse.json({ accepted: false, code: "STORAGE_UNAVAILABLE", error: "storage unavailable", reasons: ["The document passed screening, but durable storage is unavailable. Try again later."] }, { status: 503 });
+    }
     return rejected(["The document passed screening but could not be persisted safely."], 500);
   }
 

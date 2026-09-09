@@ -25,6 +25,7 @@ try {
   assert.equal(unconfigured.status, 503, "missing Tavily key must be honest degradation");
   const degraded = await unconfigured.json();
   assert.equal(degraded.validationRan, false);
+  assert.equal(degraded.errorCode, "NEWS_NOT_CONFIGURED");
   assert.equal(degraded.verdict, "unverified", "degradation must not fabricate a result");
   assert.deepEqual(degraded.sources, []);
 
@@ -43,6 +44,7 @@ try {
   console.error = originalConsoleError;
   assert.equal(rejected.status, 503, "an upstream provider rejection must stay honest degradation");
   const rejectedBody = await rejected.json();
+  assert.equal(rejectedBody.errorCode, "NEWS_AUTH_ERROR");
   assert.match(rejectedBody.warning, /HTTP 401.*Invalid API key/);
   assert.ok(errors.some((line) => /status=401.*Invalid API key/.test(line)), "provider status and message must be logged");
 
