@@ -38,7 +38,7 @@ import {
   type SettingsStorage,
 } from "./coverage-settings.ts";
 import { VENDOR_IDS, type VendorId } from "./vendors.ts";
-import { franklinSnapshot, resolveFundRules, type VendorRule } from "./fund-master.ts";
+import { franklinSnapshot, resolveFundRules, type FundResolution, type IndexType, type VendorRule } from "./fund-master.ts";
 import {
   getVendorConfirmation,
   type VendorConfirmation,
@@ -344,6 +344,10 @@ export function dataCoverageFor(
 
 export interface MatrixRow {
   vendor: VendorId;
+  /** Fund context selected for this vendor row, if any. */
+  fundResolution: FundResolution;
+  /** Null means this vendor remains at honest 2-D scope. */
+  resolvedIndexType: IndexType | null;
   /** Corpus fact: treatment stated, methodology silent, or no sourced row. */
   dataCoverage: DataCoverage;
   state: MatrixState;
@@ -417,6 +421,8 @@ export interface LookupVerdictInput {
   filters?: LookupFilters;
   /** Optional reviewed Franklin ETF; omitted preserves the P0 path. */
   fundTicker?: string;
+  /** Each vendor can publish against a different fund/index construction. */
+  fundTickers?: Partial<Record<VendorId, string>>;
 }
 
 /**
@@ -437,16 +443,19 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
     input.getConfirmation ??
     ((vendor) =>
       getVendorConfirmation(ticker, eventType, exDateKey, vendor, storage));
-  const fundRules = resolveFundRules(
-    input.fundTicker,
-    franklinSnapshot,
-    rules.rules as unknown as VendorRule[],
-  );
-  const scopedRules: RuleLike[] = fundRules.resolution.mode === "fund-resolved"
-    ? (fundRules.rows as unknown as RuleLike[])
-    : rules.rules;
-
   const rows: MatrixRow[] = scope.map((vendor): MatrixRow => {
+    const selectedFundTicker = input.fundTickers?.[vendor] ?? input.fundTicker;
+    const fundRules = resolveFundRules(
+      selectedFundTicker,
+      franklinSnapshot,
+      rules.rules as unknown as VendorRule[],
+    );
+    const scopedRules: RuleLike[] = fundRules.resolution.mode === "fund-resolved"
+      ? (fundRules.rows as unknown as RuleLike[])
+      : rules.rules;
+    const resolvedIndexType: IndexType | null = fundRules.resolution.mode === "fund-resolved"
+      ? fundRules.resolution.indexType
+      : null;
     const applicable =
       securityInVendorUniverse(ticker, vendor) &&
       vendorAppliesToEvent(vendor, eventType);
@@ -484,6 +493,8 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
     if (!applicable) {
       return {
         vendor,
+        fundResolution: fundRules.resolution,
+        resolvedIndexType,
         dataCoverage,
         state: "not-applicable",
         applicable: false,
@@ -505,6 +516,8 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
     if (confirmation === null) {
       return {
         vendor,
+        fundResolution: fundRules.resolution,
+        resolvedIndexType,
         dataCoverage,
         state: "not-checked",
         applicable: true,
@@ -527,6 +540,8 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
       if (confirmation.state === "confirmed") {
         return {
           vendor,
+          fundResolution: fundRules.resolution,
+          resolvedIndexType,
           dataCoverage,
           state: coverageState({
             exDate,
@@ -551,6 +566,8 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
       // §11c: no number, no source, no verdict. Never feed null to coverageState.
       return {
         vendor,
+        fundResolution: fundRules.resolution,
+        resolvedIndexType,
         dataCoverage,
         state: "not-assessed",
         applicable: true,
@@ -576,6 +593,8 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
     });
     return {
       vendor,
+      fundResolution: fundRules.resolution,
+      resolvedIndexType,
       dataCoverage,
       state,
       applicable: true,

@@ -75,6 +75,9 @@ export interface EntailmentInput {
   confirmed: readonly VendorId[];
   notYetDue?: readonly VendorId[];
   rules: readonly EntailmentRule[];
+  /** Per-vendor resolved index types; null is the honest 2-D scope. */
+  indexTypes?: Readonly<Record<string, IndexType | null | undefined>>;
+  /** Backwards-compatible page-level value for callers that have one fund. */
   indexType?: IndexType | null;
 }
 
@@ -139,14 +142,26 @@ const ENTAILING: ReadonlySet<PeerRelation> = new Set<PeerRelation>([
 const label = (v: string) => v.toUpperCase();
 
 export function computeEntailment(input: EntailmentInput): VendorEntailment[] {
-  const { eventType, absent, confirmed, rules, indexType } = input;
+  const { eventType, absent, confirmed, rules } = input;
   const notYetDue = new Set(input.notYetDue ?? []);
-  const scope: RuleScope = indexType != null ? "3-d" : "2-d";
-  const admissible = admissibleRules(rules, eventType, indexType);
-  const ruleFor = (vendor: string) => admissible.find((r) => r.vendor === vendor);
-  const caveat = scope === "2-d" ? " (index-agnostic rules only, no fund resolved)" : "";
+  const indexTypeFor = (vendor: string): IndexType | null => {
+    if (input.indexTypes && Object.prototype.hasOwnProperty.call(input.indexTypes, vendor)) {
+      return input.indexTypes[vendor] ?? null;
+    }
+    return input.indexType ?? null;
+  };
+  const ruleFor = (vendor: string) =>
+    admissibleRules(rules, eventType, indexTypeFor(vendor)).find((r) => r.vendor === vendor);
+  const comparable = (subjectVendor: string, peerVendor: string): boolean => {
+    // Cross-vendor inference is valid only inside the same resolved scope.
+    // An unresolved 2-D row must not borrow a resolved 3-D rule either.
+    return indexTypeFor(subjectVendor) === indexTypeFor(peerVendor);
+  };
 
   return absent.map((vendor): VendorEntailment => {
+    const indexType = indexTypeFor(vendor);
+    const scope: RuleScope = indexType != null ? "3-d" : "2-d";
+    const caveat = scope === "2-d" ? " (index-agnostic rules only, no fund resolved)" : "";
     const base = { vendor, drivers: [] as VendorId[], peers: [] as EntailmentPeer[], scope };
 
     if (notYetDue.has(vendor)) {
@@ -168,6 +183,7 @@ export function computeEntailment(input: EntailmentInput): VendorEntailment[] {
 
     const peers: EntailmentPeer[] = [];
     for (const peerVendor of confirmed) {
+      if (!comparable(vendor, peerVendor)) continue;
       const peerRule = ruleFor(peerVendor);
       if (!peerRule || !states(peerRule)) continue;
       const relation = relate(subject, peerRule);

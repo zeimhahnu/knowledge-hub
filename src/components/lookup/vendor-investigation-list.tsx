@@ -17,6 +17,7 @@ import {
 } from "@/lib/lookup-verdict";
 import type { VendorEntailment } from "@/lib/vendor-entailment";
 import type { VendorMarkState } from "@/lib/vendor-confirmation";
+import type { FranklinCatalogRecord } from "@/lib/fund-master";
 import { vendorLabel, type VendorId } from "@/lib/vendors";
 import { GlossaryLinkedText } from "@/components/glossary-linked-text";
 
@@ -220,6 +221,56 @@ function PublicationWindow({
   );
 }
 
+function FundSelectionControl({
+  row,
+  catalogRecords,
+  onFundChange,
+}: {
+  row: MatrixRow;
+  catalogRecords: readonly FranklinCatalogRecord[];
+  onFundChange: (vendor: VendorId, ticker: string) => void;
+}) {
+  const selectedTicker = row.fundResolution.mode === "p0-compat" ? "" : row.fundResolution.ticker;
+  const listId = `franklin-etf-catalog-${row.vendor}`;
+  return (
+    <div className="min-w-0 space-y-1.5">
+      <label className="grid gap-1 text-sm" htmlFor={`vendor-fund-${row.vendor}`}>
+        <span className="font-medium text-foreground">Fund context</span>
+        <input
+          id={`vendor-fund-${row.vendor}`}
+          list={listId}
+          value={selectedTicker}
+          onChange={(event) => onFundChange(row.vendor, event.target.value.toUpperCase())}
+          placeholder="Optional fund ticker"
+          aria-describedby={`${listId}-help`}
+          className="h-8 min-w-0 w-full rounded-[4px] border border-border bg-background px-2 text-sm text-foreground outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
+        />
+      </label>
+      <datalist id={listId}>
+        {catalogRecords.map((fund) => (
+          <option key={fund.ticker} value={fund.ticker} label={fund.name.replaceAll("-", " ")} />
+        ))}
+      </datalist>
+      <p id={`${listId}-help`} className="text-xs leading-relaxed text-muted-foreground">
+        {row.fundResolution.mode === "fund-resolved" && `${row.fundResolution.indexType} · 3-D rules`}
+        {row.fundResolution.mode === "cataloged-unreviewed" && "Cataloged, unreviewed · 2-D rules"}
+        {row.fundResolution.mode === "fund-unresolved" && "Not resolved · 2-D rules"}
+        {row.fundResolution.mode === "p0-compat" && "No fund selected · 2-D rules"}
+      </p>
+      {row.fundResolution.mode === "fund-resolved" && (
+        <p className="text-[0.68rem] leading-relaxed text-muted-foreground">
+          {row.fundResolution.fund.underlying_index} · {row.fundResolution.fund.index_provider}
+        </p>
+      )}
+      {row.fundResolution.mode === "cataloged-unreviewed" && (
+        <p role="status" className="text-[0.68rem] leading-relaxed text-chart-4">
+          {row.fundResolution.warnings[0]}
+        </p>
+      )}
+    </div>
+  );
+}
+
 function VendorRow({
   item,
   timelineRow,
@@ -228,6 +279,8 @@ function VendorRow({
   recentlyMarkedVendor,
   markRevision,
   onMarkChange,
+  catalogRecords,
+  onFundChange,
 }: {
   item: OrderedVendorRow;
   timelineRow: TimelineRow;
@@ -236,6 +289,8 @@ function VendorRow({
   recentlyMarkedVendor: VendorId | null;
   markRevision: number;
   onMarkChange: (vendor: VendorId, state: VendorMarkState) => void;
+  catalogRecords: readonly FranklinCatalogRecord[];
+  onFundChange: (vendor: VendorId, ticker: string) => void;
 }) {
   const { row, group } = item;
   const groupTone = row.applicable ? "" : "opacity-70";
@@ -252,12 +307,13 @@ function VendorRow({
         <span className="font-mono text-[0.65rem] uppercase tracking-[0.16em] text-muted-foreground">{GROUP_META[group].label}</span>
         <span className="text-xs text-muted-foreground">{GROUP_META[group].description}</span>
       </div>
-      <div className="grid min-w-0 gap-5 lg:grid-cols-[minmax(8rem,0.8fr)_minmax(14rem,1.6fr)_minmax(10rem,0.9fr)_minmax(12rem,1.4fr)] lg:items-start">
+      <div className="grid min-w-0 gap-5 lg:grid-cols-[minmax(8rem,0.8fr)_minmax(14rem,1.6fr)_minmax(12rem,1.1fr)_minmax(10rem,0.9fr)_minmax(12rem,1.4fr)] lg:items-start">
         <div className="min-w-0">
           <p className="text-lg font-medium tracking-[-0.03em] text-foreground">{vendorLabel(row.vendor)}</p>
           <p className="mt-1 text-xs leading-relaxed text-muted-foreground">{row.state === "not-applicable" ? "Outside scope" : "Vendor publication"}</p>
         </div>
         <PublicationWindow timelineRow={timelineRow} model={timelineModel} />
+        <FundSelectionControl row={row} catalogRecords={catalogRecords} onFundChange={onFundChange} />
         <MarkControl row={row} onMarkChange={onMarkChange} />
         <div
           key={`${row.state}-${row.confirmation?.state ?? "unchecked"}-${row.confirmation?.checkedAt ?? "none"}-${recentlyMarkedVendor === row.vendor ? markRevision : "stable"}`}
@@ -342,6 +398,8 @@ export function VendorInvestigationList({
   recentlyMarkedVendor,
   markRevision,
   onMarkChange,
+  catalogRecords,
+  onFundChange,
 }: {
   ticker: string;
   eventName: string;
@@ -362,6 +420,8 @@ export function VendorInvestigationList({
   recentlyMarkedVendor: VendorId | null;
   markRevision: number;
   onMarkChange: (vendor: VendorId, state: VendorMarkState) => void;
+  catalogRecords: readonly FranklinCatalogRecord[];
+  onFundChange: (vendor: VendorId, ticker: string) => void;
 }) {
   const timelineModel = useMemo(
     () => buildCoverageTimelineModel({ verdict, eventType, exDate, today }),
@@ -386,14 +446,14 @@ export function VendorInvestigationList({
           </div>
           <p className="font-mono text-sm uppercase tracking-[0.12em] text-muted-foreground">{verdict.rows.length} vendors in scope</p>
         </div>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-foreground/80">Each vendor row answers the adjustment question first. Open the methodology wording when you need the source sentence; on small screens the same row stacks instead of becoming a scrolling table.</p>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-foreground/80">Each vendor row owns its fund context because vendors can index different funds. Choose a cataloged ticker to resolve that vendor&apos;s index type; an unreviewed or empty choice stays at honest 2-D scope.</p>
         {groups.unchecked.length > 0 && (
           <p role="status" className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
             {groups.unchecked.length} vendor{groups.unchecked.length === 1 ? " remains" : "s remain"} unchecked, so the observation is still needed before the coverage result can be graded.
           </p>
         )}
-        <div className="mt-6 hidden gap-5 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-muted-foreground lg:grid lg:grid-cols-[minmax(8rem,0.8fr)_minmax(14rem,1.6fr)_minmax(10rem,0.9fr)_minmax(12rem,1.4fr)]">
-          <span>Vendor</span><span>Publication window</span><span>Your mark</span><span>What it means</span>
+        <div className="mt-6 hidden gap-5 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-muted-foreground lg:grid lg:grid-cols-[minmax(8rem,0.8fr)_minmax(14rem,1.6fr)_minmax(12rem,1.1fr)_minmax(10rem,0.9fr)_minmax(12rem,1.4fr)]">
+          <span>Vendor</span><span>Publication window</span><span>Fund context</span><span>Your mark</span><span>What it means</span>
         </div>
       </div>
       <div className="px-5 sm:px-8">
@@ -411,6 +471,8 @@ export function VendorInvestigationList({
                 recentlyMarkedVendor={recentlyMarkedVendor}
                 markRevision={markRevision}
                 onMarkChange={onMarkChange}
+                catalogRecords={catalogRecords}
+                onFundChange={onFundChange}
               />
             );
           })}

@@ -22,6 +22,24 @@
     "missing_fields":["isin","inception_date"],
     "coverage_quality":"complete",
     "notes":["The reviewed acquisition evidence did not expose ISIN or inception date reliably; those fields remain explicitly missing."]
+  },{
+    "ticker":"FLQS",
+    "name":"Franklin U.S. Small Cap Multifactor Index ETF",
+    "isin":null,
+    "underlying_index":"LibertyQ U.S. Small Cap Equity Index",
+    "index_provider":"FTSE Russell",
+    "index_type":"capped-factor",
+    "universe":"U.S. small-cap equities selected from the Russell 2000 Index",
+    "weighting":"Multifactor weighting anchored to 50% quality, 30% value, 10% momentum, and 10% volatility factors",
+    "reconstitution_frequency":"Semi-annually",
+    "inception_date":null,
+    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25771/SINGLCLASS/franklin-u-s-small-cap-multifactor-index-etf/FLQS","https://www.franklintempleton.com/forms-literature/download/ETF-P"],
+    "source_as_of":"2026-08-01",
+    "confidence":"medium",
+    "field_confidence":{"ticker":"stated","name":"stated","underlying_index":"stated","index_provider":"stated","index_type":"inferred","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","isin":"absent","inception_date":"absent"},
+    "missing_fields":["isin","inception_date"],
+    "coverage_quality":"complete",
+    "notes":["Index type is classified as capped-factor because the published LibertyQ methodology combines explicit factor weights rather than a plain market-capitalization weighting."]
   }],
-  "acquisition":{"requested_sources":["https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP","https://www.lseg.com/en/ftse-russell/indices/capped"],"successful_sources":["https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP","https://www.lseg.com/en/ftse-russell/indices/capped"],"failed_sources":[],"excluded_sources":[{"name":"VettaFi","reason":"Explicitly out of P1b scope."},{"name":"Solactive","reason":"No product-specific evidence required for the one-record slice."}],"record_count":1,"count_note":"One reviewed Franklin ETF record is intentionally shipped for the P1b vertical slice; this is not a claim about the total Franklin ETF universe."}
+  "acquisition":{"requested_sources":["https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP","https://www.lseg.com/en/ftse-russell/indices/capped","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25771/SINGLCLASS/franklin-u-s-small-cap-multifactor-index-etf/FLQS","https://www.franklintempleton.com/forms-literature/download/ETF-P"],"successful_sources":["https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP","https://www.lseg.com/en/ftse-russell/indices/capped","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25771/SINGLCLASS/franklin-u-s-small-cap-multifactor-index-etf/FLQS","https://www.franklintempleton.com/forms-literature/download/ETF-P"],"failed_sources":[],"excluded_sources":[{"name":"VettaFi","reason":"Explicitly out of P1b scope."},{"name":"Solactive","reason":"No product-specific evidence required for the reviewed slice."}],"record_count":2,"count_note":"Two reviewed Franklin ETF records are shipped as a dated, source-backed table to exercise contrasting index types; the separate catalog remains cataloged-unreviewed."}
 }

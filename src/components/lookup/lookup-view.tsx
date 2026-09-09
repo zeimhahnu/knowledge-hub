@@ -38,7 +38,7 @@ import {
 } from "@/lib/lookup-verdict";
 import type { NewsValidationResult } from "@/lib/news-validation";
 import { VENDOR_IDS, VENDOR_LABELS, type VendorId } from "@/lib/vendors";
-import { activeFranklinCatalog, franklinCatalog, franklinSnapshot, resolveFundRules, type FranklinCatalogRecord, type FundResolution } from "@/lib/fund-master";
+import { activeFranklinCatalog, franklinCatalog } from "@/lib/fund-master";
 
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -476,28 +476,6 @@ function QualifierControls({
   );
 }
 
-function FundContextControl({ selectedTicker, onChange, resolution, catalogRecords }: { selectedTicker: string; onChange: (ticker: string) => void; resolution: FundResolution; catalogRecords: readonly FranklinCatalogRecord[] }) {
-  return (
-    <SurfaceSection className="space-y-3">
-      <div>
-        <h2 className="ca-section-title">Optional fund context</h2>
-        <p className="mt-1 text-sm text-muted-foreground">Search the committed Franklin ETF catalog. Only reviewed metadata enables the 3-D lookup; leave unset for the unchanged P0 lookup.</p>
-      </div>
-      <label className="grid max-w-sm gap-1.5 text-sm">
-        <span className="font-medium">Franklin ETF</span>
-        <input list="franklin-etf-catalog" value={selectedTicker} onChange={(event) => onChange(event.target.value.toUpperCase())} placeholder="Search by ticker or fund name" aria-describedby="franklin-etf-help" className="h-10 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none focus-visible:ring-3 focus-visible:ring-ring/50" />
-        <datalist id="franklin-etf-catalog">
-          {catalogRecords.map((fund) => <option key={fund.ticker} value={fund.ticker} label={fund.name.replaceAll("-", " ")} />)}
-        </datalist>
-        <span id="franklin-etf-help" className="text-xs text-muted-foreground">{catalogRecords.length} active cataloged ETFs · metadata is reviewed separately</span>
-      </label>
-      {resolution.mode === "fund-resolved" && <div className="rounded-xl border border-chart-3/40 bg-chart-3/10 px-4 py-3 text-sm"><p className="font-medium">{resolution.fund.ticker} → {resolution.fund.underlying_index} → {resolution.fund.index_provider}</p><p className="mt-1 text-muted-foreground">Index type: {resolution.indexType}. The selected event uses the reviewed 3-D rule when one exists.</p><p className="mt-1 text-xs text-muted-foreground">Sources: {resolution.fund.source_urls.join(" · ")}</p></div>}
-      {resolution.mode === "cataloged-unreviewed" && <p role="status" className="rounded-xl border border-chart-4/40 bg-chart-4/10 px-4 py-3 text-sm text-chart-4"><span className="font-medium">Cataloged, metadata unreviewed:</span> {resolution.warnings[0]} No provider, weighting, index type, or 3-D rule is inferred.</p>}
-      {resolution.mode === "fund-unresolved" && <p role="status" className="rounded-xl border border-chart-4/40 bg-chart-4/10 px-4 py-3 text-sm text-chart-4">{resolution.warnings[0]}</p>}
-    </SurfaceSection>
-  );
-}
-
 // ─── Page body (client half of /lookup/[ticker]) ────────────────────────────
 
 export function LookupView({
@@ -523,7 +501,7 @@ export function LookupView({
   const [scope, setScope] = useState<VendorId[]>([]);
   const [confirmationRevision, setConfirmationRevision] = useState(0);
   const [filters, setFilters] = useState<LookupFilters>({});
-  const [fundTicker, setFundTicker] = useState("");
+  const [fundTickers, setFundTickers] = useState<Partial<Record<VendorId, string>>>({});
   const [newsResult, setNewsResult] = useState<NewsValidationResult | null>(null);
   const [propagatedVendors, setPropagatedVendors] = useState<Set<VendorId>>(() => new Set());
   const [recentlyMarkedVendor, setRecentlyMarkedVendor] = useState<VendorId | null>(null);
@@ -557,7 +535,7 @@ export function LookupView({
       today,
       scope,
       filters,
-      fundTicker: fundTicker || undefined,
+      fundTickers,
       getConfirmation: (vendor) =>
         getVendorConfirmation(ticker, eventType, exDate, vendor),
     });
@@ -570,7 +548,7 @@ export function LookupView({
     today,
     scope,
     filters,
-    fundTicker,
+    fundTickers,
     confirmationRevision,
   ]);
 
@@ -579,7 +557,6 @@ export function LookupView({
     [companyParam, ticker],
   );
   const eventName = canonicalEventById(eventType)?.name ?? eventType;
-  const fundResolution = useMemo(() => resolveFundRules(fundTicker || undefined, franklinSnapshot, []).resolution, [fundTicker]);
   const caev = useMemo(() => caevForEventType(eventType), [eventType]);
   const daysOutNum = exDateParsed ? daysOut(exDateParsed, today) : null;
   const groups = verdict ? deriveVendorGroups(verdict) : null;
@@ -591,11 +568,12 @@ export function LookupView({
             absent: groups.expectedAbsent.map((row) => row.vendor),
             confirmed: groups.supplied.map((row) => row.vendor),
             notYetDue: groups.notYetDue.map((row) => row.vendor),
-            indexType:
-              fundResolution.mode === "fund-resolved" ? fundResolution.indexType : null,
+            indexTypes: Object.fromEntries(
+              [...groups.supplied, ...groups.expectedAbsent].map((row) => [row.vendor, row.resolvedIndexType]),
+            ),
           })
         : [],
-    [groups, eventType, fundResolution],
+    [groups, eventType],
   );
   const comparableVendors = useMemo(
     () => groups ? [...groups.supplied, ...groups.expectedAbsent].map((row) => row.vendor) : [],
@@ -667,6 +645,15 @@ export function LookupView({
   const updateScope = (next: VendorId[]) => {
     setScope(next);
     setScopeVendors(next);
+  };
+
+  const updateFund = (vendor: VendorId, tickerValue: string) => {
+    setFundTickers((previous) => {
+      const next = { ...previous };
+      if (tickerValue.trim()) next[vendor] = tickerValue.trim().toUpperCase();
+      else delete next[vendor];
+      return next;
+    });
   };
 
   const lateAbsentVendors =
@@ -764,7 +751,6 @@ export function LookupView({
         ) : (
           <div className="space-y-4">
             <VendorScopeControl scope={scope} onChange={updateScope} />
-            <FundContextControl selectedTicker={fundTicker} onChange={setFundTicker} resolution={fundResolution} catalogRecords={activeFranklinCatalog(franklinCatalog)} />
             <QualifierControls
               ticker={ticker}
               eventType={eventType}
@@ -816,6 +802,8 @@ export function LookupView({
                   today={today}
                   groups={groups ?? { supplied: [], expectedAbsent: [], notYetDue: [], unchecked: [], timingUnassessed: [], notApplicable: [] }}
                   entailment={entailment}
+                  catalogRecords={activeFranklinCatalog(franklinCatalog)}
+                  onFundChange={updateFund}
                   propagatedVendors={propagatedVendors}
                   recentlyMarkedVendor={recentlyMarkedVendor}
                   markRevision={markRevision}
