@@ -130,17 +130,14 @@ if (/<span[^>]*className="[^"]*(?:chart-3|chart-4|destructive)[^"]*"[^>]*>\s*\{t
 if (/<span[^>]*className="[^"]*(?:chart-3|chart-4|destructive)[^"]*"[^>]*>\s*\{totals\.dataSilent\} silent/s.test(lookup)) {
   problems.push("lookup-view.tsx: silent chip uses a semantic accent colour");
 }
-if (!/key: "missing"[\s\S]*?cls: "border-accent\/40 bg-accent\/10 text-accent"/.test(lookup)) {
-  problems.push("lookup-view.tsx: genuine discrepancy chip does not use the accent token");
-}
 if (/rounded-full[^"\n]*(?:text|bg|border)-(?:amber|teal|cyan|orange|red|green|blue|purple|pink)-\d/.test(lookup)) {
   problems.push("lookup-view.tsx: rendered chip uses a raw hue instead of a palette token");
 }
-if (!/dataStatesTreatment[\s\S]*?className="[^\"]*rounded-full border border-border bg-muted\/30[^\"]*font-mono[^\"]*uppercase[^\"]*text-muted-foreground"[\s\S]*?totals\.dataStatesTreatment/.test(lookup)) {
-  problems.push("lookup-view.tsx: states-a-treatment chip is not the neutral mono surface treatment");
+if (/Finding so far|TOTAL_CHIPS|dataStatesTreatment|dataSilent/.test(lookup)) {
+  problems.push("lookup-view.tsx: redundant finding summary or chip row still rendered");
 }
-if (!/dataSilent[\s\S]*?className="[^\"]*rounded-full border border-border bg-muted\/30[^\"]*font-mono[^\"]*uppercase[^\"]*text-muted-foreground"[\s\S]*?totals\.dataSilent/.test(lookup)) {
-  problems.push("lookup-view.tsx: silent chip is not the neutral mono surface treatment");
+if (!/This is not a final verdict while/.test(lookup)) {
+  problems.push("lookup-view.tsx: incomplete-verdict notice is not next to investigation progress");
 }
 
 assert.equal(problems.length, 0, problems.join("\n"));

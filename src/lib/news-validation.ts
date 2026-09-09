@@ -581,10 +581,30 @@ export async function validateNews(
       }),
       signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
     });
-    if (!res.ok) throw new Error(`tavily http ${res.status}`);
-    json = await res.json();
+    const responseText = await res.text();
+    let responseBody: unknown = null;
+    try {
+      responseBody = responseText ? JSON.parse(responseText) as unknown : null;
+    } catch {
+      // Some upstream failures are plain text; retain only a bounded, redacted
+      // message rather than echoing an arbitrary response into the UI/log.
+    }
+    if (!res.ok) {
+      const providerMessage = safeProviderMessage(responseBody, responseText, res.statusText);
+      console.error(`[news] Tavily upstream failure status=${res.status} message=${providerMessage}`);
+      return {
+        verdict: "unverified",
+        confidence: "low",
+        sources: [],
+        reasoning: `Validation could not run: Tavily returned HTTP ${res.status}.`,
+        validationRan: false,
+        warning: `News validation is unavailable: Tavily returned HTTP ${res.status} — ${providerMessage}.`,
+      };
+    }
+    json = responseBody;
   } catch (err) {
     const detail = err instanceof Error ? err.message : "unknown error";
+    console.error(`[news] Tavily request failed message=${safeLogMessage(detail)}`);
     return {
       verdict: "unverified",
       confidence: "low",
@@ -604,4 +624,26 @@ export async function validateNews(
     companyName: input.companyName,
   });
   return { ...scored, validationRan: true };
+}
+
+function safeLogMessage(value: string): string {
+  return value
+    .replace(/(api[_-]?key|authorization|bearer)\s*[:=]\s*[^\s,;]+/gi, "$1=[redacted]")
+    .replace(/\b[a-zA-Z0-9_-]{24,}\b/g, "[redacted]")
+    .slice(0, 240);
+}
+
+function safeProviderMessage(body: unknown, raw: string, statusText: string): string {
+  let message: string | undefined;
+  if (body && typeof body === "object") {
+    const record = body as Record<string, unknown>;
+    for (const key of ["message", "error", "detail", "reason"]) {
+      const value = record[key];
+      if (typeof value === "string" && value.trim()) {
+        message = value.trim();
+        break;
+      }
+    }
+  }
+  return safeLogMessage(message ?? (raw.trim() || statusText || "no provider message"));
 }

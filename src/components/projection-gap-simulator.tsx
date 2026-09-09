@@ -738,7 +738,7 @@ export function ProjectionGapSimulator() {
                         type="date"
                         value={input.effectiveDate}
                         onChange={(e) => setInput((p) => ({ ...p, effectiveDate: e.target.value }))}
-                        className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus-visible:border-primary/50 focus-visible:shadow-[0_0_0_3px_oklch(0.72_0.19_250/0.25)]"
+                        className="w-full rounded-xl border border-border bg-background px-3 py-2.5 pr-12 text-sm outline-none focus-visible:border-primary/50 focus-visible:shadow-[0_0_0_3px_oklch(0.72_0.19_250/0.25)]"
                       />
                     </label>
                     <label className="block space-y-2">
@@ -749,7 +749,7 @@ export function ProjectionGapSimulator() {
                         type="date"
                         value={input.exDate}
                         onChange={(e) => setInput((p) => ({ ...p, exDate: e.target.value }))}
-                        className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus-visible:border-primary/50 focus-visible:shadow-[0_0_0_3px_oklch(0.72_0.19_250/0.25)]"
+                        className="w-full rounded-xl border border-border bg-background px-3 py-2.5 pr-12 text-sm outline-none focus-visible:border-primary/50 focus-visible:shadow-[0_0_0_3px_oklch(0.72_0.19_250/0.25)]"
                       />
                     </label>
                     <label className="block space-y-2">
@@ -758,7 +758,7 @@ export function ProjectionGapSimulator() {
                         type="date"
                         value={input.dataAsOf}
                         onChange={(e) => setInput((p) => ({ ...p, dataAsOf: e.target.value }))}
-                        className="w-full rounded-xl border border-border bg-background px-3 py-2.5 text-sm outline-none focus-visible:border-primary/50 focus-visible:shadow-[0_0_0_3px_oklch(0.72_0.19_250/0.25)]"
+                        className="w-full rounded-xl border border-border bg-background px-3 py-2.5 pr-12 text-sm outline-none focus-visible:border-primary/50 focus-visible:shadow-[0_0_0_3px_oklch(0.72_0.19_250/0.25)]"
                       />
                       <span className="text-xs leading-relaxed text-muted-foreground">
                         Usually the date of the file drop you are comparing.

@@ -873,14 +873,14 @@ export default function VendorDashboard() {
               {/* Left Sidebar: desktop only */}
               <aside id="event-taxonomy" className="hidden w-56 shrink-0 lg:block">
                 <div className="sticky top-20">
-                  <div className="border border-foreground/20 bg-foreground p-4 text-background">
-                  <Eyebrow className="mb-3 text-background">Event taxonomy</Eyebrow>
-                  <div className="divide-y divide-background/20">
+                  <div className="ca-surface p-4">
+                  <Eyebrow className="mb-3 text-muted-foreground">Event taxonomy</Eyebrow>
+                  <div className="divide-y divide-border">
                     {eventsByCategory.map((cat) => (
                       <div key={cat.name} className="py-3 first:pt-0 last:pb-0">
                         <button
                           onClick={() => toggleCategory(cat.name)}
-                          className="mb-1 flex w-full items-center gap-2 text-left text-[11px] font-semibold uppercase tracking-wider text-background/70 transition-colors hover:text-background"
+                          className="mb-1 flex w-full items-center gap-2 text-left text-[11px] font-semibold uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground"
                         >
                           <cat.icon aria-hidden className="h-3.5 w-3.5" />
                           <span className="flex-1 text-left">{cat.name}</span>
@@ -898,7 +898,7 @@ export default function VendorDashboard() {
                                     className={`flex w-full items-center gap-1.5 px-2 py-1.5 text-left text-[12px] transition-colors ${
                                       activeId === evt.id
                                         ? "bg-background font-medium text-foreground"
-                                        : "text-background/70 hover:bg-background/10 hover:text-background"
+                                        : "text-muted-foreground hover:bg-muted hover:text-foreground"
                                     }`}
                                   >
                                     <ArrowRightIcon

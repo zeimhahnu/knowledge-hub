@@ -125,7 +125,7 @@ export default function Home() {
                 <Field label="Ex-date" htmlFor="ex-date">
                   <div className="relative">
                     <CalendarIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
-                    <input id="ex-date" name="exDate" type="date" value={exDate} onChange={(event) => setExDate(event.target.value)} className={fieldControlClassName("py-2 pl-11 pr-4")} />
+                    <input id="ex-date" name="exDate" type="date" value={exDate} onChange={(event) => setExDate(event.target.value)} className={fieldControlClassName("ca-date-control py-2 pl-11")} />
                   </div>
                 </Field>
               </div>

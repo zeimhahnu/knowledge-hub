@@ -29,6 +29,23 @@ try {
   assert.deepEqual(degraded.sources, []);
 
   process.env.TAVILY_API_KEY = "offline-test-key";
+  const errors = [];
+  const originalConsoleError = console.error;
+  console.error = (...args) => errors.push(args.join(" "));
+  globalThis.fetch = async () =>
+    new Response(JSON.stringify({ detail: "Invalid API key" }), {
+      status: 401,
+      headers: { "content-type": "application/json" },
+    });
+  const rejected = await GET(
+    request("ticker=AAPL&eventType=cash-dividend&exDate=2026-11-15&companyName=Apple Inc."),
+  );
+  console.error = originalConsoleError;
+  assert.equal(rejected.status, 503, "an upstream provider rejection must stay honest degradation");
+  const rejectedBody = await rejected.json();
+  assert.match(rejectedBody.warning, /HTTP 401.*Invalid API key/);
+  assert.ok(errors.some((line) => /status=401.*Invalid API key/.test(line)), "provider status and message must be logged");
+
   globalThis.fetch = async () =>
     new Response(
       JSON.stringify({

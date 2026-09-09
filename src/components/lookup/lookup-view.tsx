@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Link from "next/link";
 import {
   AlertTriangleIcon,
   CalendarDaysIcon,
@@ -34,7 +33,6 @@ import {
   deriveVendorGroups,
   resolveCompanyName,
   setScopeVendors,
-  verdictSummary,
   type LookupFilters,
   type LookupVerdict,
 } from "@/lib/lookup-verdict";
@@ -370,11 +368,23 @@ function DivergencePanel({
           Where vendors diverge
         </h2>
       </div>
-      <p className="max-w-prose text-sm leading-relaxed text-foreground/90">
+      <p className="text-sm leading-relaxed text-foreground/90">
         {summary}
       </p>
+      {result.groups.length > 0 && (
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-label="Divergence groups">
+          {result.groups.map((group) => (
+            <li key={`${group.value}-${group.vendors.join("-")}`} className="min-w-0 rounded-[4px] border border-border bg-background/50 p-4">
+              <p className="font-mono text-xs uppercase tracking-wide text-muted-foreground">{group.value}</p>
+              <p className="mt-2 text-sm leading-relaxed text-foreground">
+                {vendorList(group.vendors)}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
       {lateAbsentVendors.length > 0 && (
-        <p className="max-w-prose text-sm leading-relaxed text-destructive">
+        <p className="text-sm leading-relaxed text-destructive">
           Operational gap: {vendorList(lateAbsentVendors)}{" "}
           {lateAbsentVendors.length === 1 ? "is" : "are"}{" "}
           past {lateAbsentVendors.length === 1 ? "its" : "their"} publication
@@ -387,119 +397,6 @@ function DivergencePanel({
           {notCovered > 0 ? ` ${vendorList(result.notCovered)} have no extracted methodology rule.` : ""}
         </p>
       )}
-    </SurfaceSection>
-  );
-}
-
-// ─── Verdict panel ──────────────────────────────────────────────────────────
-
-const TOTAL_CHIPS: Array<{
-  key: "covered" | "missing" | "notYetDue" | "unchecked";
-  label: string;
-  cls: string;
-}> = [
-  {
-    key: "covered",
-    label: "covered",
-    cls: "border-chart-3/40 bg-chart-3/10 text-chart-3",
-  },
-  {
-    key: "missing",
-    label: "missing",
-    cls: "border-accent/40 bg-accent/10 text-accent",
-  },
-  {
-    key: "notYetDue",
-    label: "not-yet-due",
-    cls: "border-chart-4/40 bg-chart-4/10 text-chart-4",
-  },
-  {
-    key: "unchecked",
-    label: "not checked",
-    cls: "border-border bg-muted/30 text-muted-foreground",
-  },
-];
-
-function VerdictPanel({
-  verdict,
-  timingNoticeDismissed,
-  onDismissTimingNotice,
-}: {
-  verdict: LookupVerdict;
-  timingNoticeDismissed: boolean;
-  onDismissTimingNotice: () => void;
-}) {
-  const { totals } = verdict;
-
-  return (
-    <SurfaceSection className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <h2 className="ca-section-title">Finding so far</h2>
-      </div>
-
-      {!timingNoticeDismissed && totals.notAssessed > 0 && (
-        <div className="flex flex-wrap items-start justify-between gap-3 rounded-xl border border-chart-2/50 bg-chart-2/10 px-4 py-3 text-sm text-foreground">
-          <p className="max-w-prose leading-relaxed">
-            {totals.notAssessed} publication horizon
-            {totals.notAssessed === 1 ? " is" : "s are"} not configured yet, so
-            timing is unassessed for those vendors. Set them in{" "}
-            <Link
-              href="/settings/"
-              className="font-medium text-primary underline-offset-4 hover:underline"
-            >
-              Coverage settings
-            </Link>
-            .
-          </p>
-          <button
-            type="button"
-            onClick={onDismissTimingNotice}
-            className="rounded-md px-2 py-1 text-xs font-medium text-muted-foreground outline-none transition-colors hover:bg-background/60 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
-          >
-            Dismiss
-          </button>
-        </div>
-      )}
-
-      <p className="max-w-prose text-sm leading-relaxed text-foreground/90">
-        {verdictSummary(totals)}
-      </p>
-      {totals.unchecked > 0 && (
-        <p className="max-w-prose border-l-2 border-chart-4 pl-3 text-sm leading-relaxed text-chart-4">
-          This is not a final verdict: {totals.unchecked} vendor{totals.unchecked === 1 ? " remains" : "s remain"} unchecked.
-        </p>
-      )}
-
-      <div className="flex flex-wrap gap-2">
-        {totals.dataStatesTreatment > 0 && (
-          <span className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-0.5 font-mono text-xs uppercase tracking-wide text-muted-foreground">
-            {totals.dataStatesTreatment} states a treatment
-          </span>
-        )}
-        {totals.dataSilent > 0 && (
-          <span className="inline-flex items-center rounded-full border border-border bg-muted/30 px-2.5 py-0.5 font-mono text-xs uppercase tracking-wide text-muted-foreground">
-            {totals.dataSilent} silent
-          </span>
-        )}
-        {totals.dataNotCovered > 0 && (
-          <span className="inline-flex items-center rounded-full border border-dashed border-border px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
-            {totals.dataNotCovered} not covered
-          </span>
-        )}
-        {TOTAL_CHIPS.filter((c) => totals[c.key] > 0).map((c) => (
-          <span
-            key={c.key}
-            className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium ${c.cls}`}
-          >
-            {totals[c.key]} {c.label}
-          </span>
-        ))}
-        {totals.notApplicable > 0 && (
-          <span className="inline-flex items-center rounded-full border border-dashed border-border px-2.5 py-0.5 text-xs font-medium text-muted-foreground">
-            {totals.notApplicable} not applicable — excluded
-          </span>
-        )}
-      </div>
     </SurfaceSection>
   );
 }
@@ -624,7 +521,6 @@ export function LookupView({
   // cascading-renders rule). Same pattern as the settings page.
   const [hydrated, setHydrated] = useState(false);
   const [scope, setScope] = useState<VendorId[]>([]);
-  const [timingNoticeDismissed, setTimingNoticeDismissed] = useState(false);
   const [confirmationRevision, setConfirmationRevision] = useState(0);
   const [filters, setFilters] = useState<LookupFilters>({});
   const [fundTicker, setFundTicker] = useState("");
@@ -711,14 +607,21 @@ export function LookupView({
   );
   const analystContext = useMemo(
     () =>
-      caAnalystEnabled && verdict && newsResult && scope.length > 0
+      caAnalystEnabled && verdict && scope.length > 0
         ? buildAnalystLookupContext({
             ticker,
             eventType,
             exDate,
             selectedVendors: scope,
             verdict,
-            news: newsResult,
+            news: newsResult ?? {
+              verdict: "unverified",
+              confidence: "low",
+              sources: [],
+              reasoning: "News validation has not run yet.",
+              validationRan: false,
+              warning: "News validation is unavailable for this lookup.",
+            },
           })
         : null,
     [caAnalystEnabled, verdict, newsResult, scope, ticker, eventType, exDate],
@@ -838,8 +741,8 @@ export function LookupView({
               </div>
               <p className="ca-meta mt-2 max-w-2xl">
                 {verdict && verdict.totals.unchecked > 0
-                  ? "Finding so far — this picture is incomplete until every in-scope vendor is checked."
-                  : "All in-scope vendors have an observation; review the rows before sharing the finding."}
+                  ? `This is not a final verdict while ${verdict.totals.unchecked} vendor${verdict.totals.unchecked === 1 ? " remains" : "s remain"} unchecked.`
+                  : "All in-scope vendors are checked."}
               </p>
             </div>
           </div>
@@ -886,11 +789,6 @@ export function LookupView({
               </SurfaceSection>
             ) : (
               <>
-                <VerdictPanel
-                  verdict={verdict}
-                  timingNoticeDismissed={timingNoticeDismissed}
-                  onDismissTimingNotice={() => setTimingNoticeDismissed(true)}
-                />
                 {groups && (groups.notYetDue.length > 0 || groups.timingUnassessed.length > 0) && (
                   <SurfaceSection padding="tight" className="space-y-1">
                     {groups.notYetDue.length > 0 && (

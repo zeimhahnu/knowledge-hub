@@ -29,7 +29,7 @@ export function VendorEntailmentPanel({ results }: { results: VendorEntailment[]
         Whether each absence is contradicted by what another vendor already published.
         {ranked[0]?.scope === "2-d" && " No fund resolved, so only index-agnostic rules are compared."}
       </p>
-      <ul className="space-y-2">
+      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {ranked.map((result) => {
           const tone = TONE[result.verdict];
           return (
