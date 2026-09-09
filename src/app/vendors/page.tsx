@@ -64,7 +64,7 @@ const GLOSSARY: GEntry[] = [
   {
     term: "QIR",
     definition: "Quarterly Index Review — a scheduled rebalance where index composition is updated.",
-    detail: "Below-threshold events accumulate until the next QIR. MSCI, S&P, FTSE, STOXX: Quarterly (Mar/Jun/Sep/Dec). Solactive GPR Global 100: SEMI-ANNUAL.",
+    detail: "Below-threshold events may accumulate until a scheduled review, but the applicable schedule is product-specific. Solactive’s v1.20 framework does not make the former GPR Global 100 cadence universal.",
   },
   {
     term: "Ongoing",
@@ -1075,9 +1075,10 @@ export default function VendorDashboard() {
               <div>FTSE Russell — Corporate Actions and Events Guide v6.8 (Oct 2025)</div>
               <div>STOXX — Calculation Guide (Apr 2026)</div>
               <div>S&P Dow Jones Indices — Equity Indices Policies and Practices (Mar 2026)</div>
-              <div>Solactive — GPR Global 100 Index Guideline (Mar 2026)</div>
+              <div>Solactive — <strong>solactive-equity-index-methodology-v1.20-2026-06-16.pdf</strong> · v1.20 · 2026-06-16 · SHA-256 <code>e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb</code></div>
               <div>Morningstar — Corporate Actions Methodology (Jan 2026)</div>
-              <div>VettaFi — Corporate Action Initiators Methodology + Index Maintenance Policy (Apr 2026)</div>
+              <div>VettaFi — <strong>vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf</strong> · v1.1.8 · May 2026 · SHA-256 <code>7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a</code></div>
+              <div className="max-w-prose pt-2">Solactive rows cite the v1.20 general framework; a product Index Guideline supersedes it when different, so framework rules are not universal product coverage. VettaFi merger treatment is index-specific (Approaches 1.0/2.0/3.0); a product methodology is required before selecting one.</div>
               <div>MSCI — Corporate Events Methodology (2026)</div>
 
               {/* Footnotes */}

@@ -16,9 +16,9 @@ for (const vendor of ["msci", "sp", "ftse", "morningstar"]) {
   );
 }
 
-for (const vendor of ["stoxx", "solactive"]) {
-  assert.equal(dataCoverageFor(vendor, eventType), "silent", `${vendor} is methodology silent`);
-}
+assert.equal(dataCoverageFor("stoxx", eventType), "silent", "stoxx is methodology silent");
+assert.equal(dataCoverageFor("solactive", eventType), "states-treatment", "Solactive v1.20 states a framework treatment");
+assert.equal(dataCoverageFor("vettafi", eventType), "states-treatment", "VettaFi states a weighting-branch treatment");
 
 assert.equal(
   dataCoverageFor("absent-vendor", eventType),
@@ -26,7 +26,7 @@ assert.equal(
   "an absent vendor is a corpus gap, not silence",
 );
 
-for (const vendor of ["msci", "sp", "ftse", "morningstar", "stoxx", "solactive"]) {
+for (const vendor of ["msci", "sp", "ftse", "morningstar", "stoxx", "solactive", "vettafi"]) {
   const coverage = dataCoverageFor(vendor, eventType);
   assert.equal(typeof coverage, "string");
   assert.ok(!coverage.includes("timing"), `${vendor} data coverage contains no timing state`);

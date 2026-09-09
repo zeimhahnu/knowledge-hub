@@ -1,8 +1,7 @@
 /**
  * Vendor rule table — used by the simulator engine to produce concrete,
- * vendor-named explanations. Rules are derived from
- * `SOURCES/index-vendor-methodology.md` (§1–§13) and mirror the threshold
- * tables shown on `/vendors/`. Keep this file aligned with both.
+ * vendor-named explanations. Rules mirror the curated 13-event matrix in
+ * `src/data/rules.json` and the treatment cards shown on `/vendors/`.
  */
 
 import type { CanonicalEventId } from "@/lib/event-taxonomy";
@@ -77,11 +76,11 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "STOXX Calc Guide §8.1",
     },
     solactive: {
-      rule: "Per Equity Index Methodology — ex-date",
+      rule: "PR neglects regular cash; GTR/NTR reinvest",
       trigger: "always",
       reason:
-        "Solactive applies regular cash dividends per its Equity Index Methodology on ex-date.",
-      citation: "Solactive GPR Global 100 §1",
+        "Solactive v1.20 neglects regular Cash Dividends in Price Return and reinvests Cash and Special Dividends in Gross and Net Total Return branches.",
+      citation: "Solactive Equity Index Methodology v1.20 §2.1.1 (p.13)",
     },
     morningstar: {
       rule: "Ex-date — TR/NTR reinvested, no PR adjustment",
@@ -91,10 +90,11 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "Morningstar CA §1",
     },
     vettafi: {
-      rule: "Per index methodology — ex-date",
+      rule: "PR none; GTR/NTR reinvest",
       trigger: "always",
       reason:
-        "VettaFi applies regular cash dividends per the relevant ETF benchmark methodology.",
+        "VettaFi applies regular cash dividends on the ex-date to Total Return and Net Total Return variants, with no Price Return adjustment.",
+      citation: "VettaFi Index Maintenance Policy v1.1.8 §9 (p.3)",
     },
   },
 
@@ -132,11 +132,11 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "STOXX Calc Guide §8.1.1",
     },
     solactive: {
-      rule: "Case-by-case per methodology",
+      rule: "PR special; GTR/NTR reinvest",
       trigger: "completion-gate",
       reason:
-        "Solactive treats specials case-by-case; smaller distributions may not surface as a separate line in the projection feed.",
-      citation: "Solactive GPR Global 100 §2",
+        "Solactive v1.20 includes Special Dividends in Price Return and reinvests them in Gross and Net Total Return branches; product Index Guidelines may supersede this framework.",
+      citation: "Solactive Equity Index Methodology v1.20 §2.1.1 (p.13)",
     },
     morningstar: {
       rule: "PR adjusted only if ≥5% of price (since Aug 2024)",
@@ -147,10 +147,11 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "Morningstar CA §2",
     },
     vettafi: {
-      rule: "Always classified as special — PR adjusted",
+      rule: "Weighting-specific proceeds treatment",
       trigger: "always",
       reason:
-        "VettaFi always classifies the distribution as special and always adjusts PR.",
+        "VettaFi adjusts special dividends in Price, Total Return, and Net Total Return variants; market-cap-weighted indexes redistribute proceeds, while non-market-cap-weighted indexes reinvest them into the payer.",
+      citation: "VettaFi Index Maintenance Policy v1.1.8 §§11.1–11.2 (p.4)",
     },
   },
 
@@ -185,10 +186,11 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "STOXX §8.1.5",
     },
     solactive: {
-      rule: "Per Equity Index Methodology",
+      rule: "PAF = 1 + stock terms; no divisor change",
       trigger: "completion-gate",
       reason:
-        "Solactive handles stock dividends per its Equity Index Methodology.",
+        "Solactive v1.20 increases shares and lowers the theoretical price proportionally, with no Divisor change.",
+      citation: "Solactive Equity Index Methodology v1.20 §§2.1.2–2.1.2.1 (pp.19–20)",
     },
     morningstar: {
       rule: "Absolute share-count ratio — distinct from bonus",
@@ -198,9 +200,10 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "Morningstar §3",
     },
     vettafi: {
-      rule: "Per index methodology",
+      rule: "Shares and price move proportionally",
       trigger: "completion-gate",
-      reason: "VettaFi handles stock dividends per the relevant index methodology.",
+      reason: "VettaFi’s supplied policy increases shares and decreases price proportionally for stock dividends, leaving weight unchanged.",
+      citation: "VettaFi Index Maintenance Policy v1.1.8 §6 (p.2)",
     },
   },
 
@@ -232,10 +235,10 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§4",
     },
     solactive: {
-      rule: "Identical across vendors — shares × ratio, no divisor change",
+      rule: "Mapped to stock-dividend treatment",
       trigger: "always",
-      reason: "Solactive applies the bonus identically to MSCI.",
-      citation: "§4",
+      reason: "Solactive v1.20 has no separate Bonus Issue section; this app maps a pro-rata no-charge share distribution to its Stock Dividend treatment.",
+      citation: "Solactive Equity Index Methodology v1.20 §§2.1.2–2.1.2.1 (pp.19–20)",
     },
     morningstar: {
       rule: "Identical across vendors — shares × ratio, no divisor change",
@@ -244,9 +247,10 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§4",
     },
     vettafi: {
-      rule: "Per index methodology",
+      rule: "Mapped to stock-dividend formula",
       trigger: "completion-gate",
-      reason: "VettaFi has no documented divergence for bonus issues.",
+      reason: "VettaFi does not publish a separate Bonus Issue section; this app maps the pro-rata no-charge distribution to the stock-dividend formula.",
+      citation: "VettaFi Index Maintenance Policy v1.1.8 §§6, III.6 (pp.2,8–9)",
     },
   },
 
@@ -278,9 +282,10 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§5",
     },
     solactive: {
-      rule: "Per Equity Index Methodology",
+      rule: "Shares and price move proportionally",
       trigger: "always",
-      reason: "Solactive applies the split per its Equity Index Methodology.",
+      reason: "Solactive v1.20 treats Stock Splits and Reverse Stock Splits as proportional share and price changes that preserve market capitalization.",
+      citation: "Solactive Equity Index Methodology v1.20 §2.1.3 (pp.20–21)",
     },
     morningstar: {
       rule: "Pre/post share count PAF; divisor unchanged",
@@ -289,9 +294,10 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§5",
     },
     vettafi: {
-      rule: "Per index methodology",
+      rule: "Split and reverse split are weight-neutral",
       trigger: "always",
-      reason: "VettaFi applies the split per the relevant index methodology.",
+      reason: "VettaFi changes shares and price proportionally for splits and reverse splits while leaving constituent weight unchanged.",
+      citation: "VettaFi Index Maintenance Policy v1.1.8 §§6–7, III.4 (pp.2–3,8)",
     },
   },
 
@@ -330,7 +336,7 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       trigger: "placeholder-immediate",
       reason:
         "Solactive uses a 0.00000001 price floor on the effective date and switches to official prices when trading begins; Swedish redemption shares are excluded — only the final form of the security is added.",
-      citation: "§6 (Solactive ECA Guideline v1.4, Oct 2024)",
+      citation: "Solactive Equity Index Methodology v1.20 §§2.1.6–2.1.6.3 (pp.24–26)",
     },
     morningstar: {
       rule: "Zero placeholder — 40-day grace (60 in India)",
@@ -340,9 +346,9 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§6",
     },
     vettafi: {
-      rule: "Not documented",
-      trigger: "no-coverage",
-      reason: "VettaFi does not document a distinct spin-off path in the sourced methodology.",
+      rule: "Weighting-specific spin-off treatment",
+      trigger: "always",
+      reason: "VettaFi documents separate market-cap and non-market-cap spin-off branches, including a zero-price fallback when value is unknown.",
     },
   },
 
@@ -377,11 +383,11 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§7",
     },
     solactive: {
-      rule: "Adjusts ITM only; semi-annual review can defer",
+      rule: "Adjusts only when subscription price < prior close",
       trigger: "itm-only",
       reason:
-        "Solactive adjusts only ITM rights; because GPR Global 100 reviews semi-annually, an ITM rights issue between rebalances can miss an entire cycle.",
-      citation: "§7",
+        "Solactive v1.20 implements a Rights Issue only when the subscription price is below the stock close on the day before the ex-date; it provides Standard and Divisor formulas.",
+      citation: "Solactive Equity Index Methodology v1.20 §§2.1.4–2.1.4.2 (pp.21–23)",
     },
     morningstar: {
       rule: "Adjusts ITM rights only — TERP-based",
@@ -390,9 +396,9 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§7",
     },
     vettafi: {
-      rule: "Not documented",
-      trigger: "no-coverage",
-      reason: "VettaFi does not document a distinct rights-issue path in the sourced methodology.",
+      rule: "ITM only; weighting branch differs",
+      trigger: "itm-only",
+      reason: "VettaFi exercises rights only when subscription price is below the prior close, with market-cap and non-market-cap share treatments documented separately.",
     },
   },
 
@@ -431,13 +437,11 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§8",
     },
     solactive: {
-      rule: "Case-by-case; ECAs with free float <15% & unconditional → 2 BD notice",
-      trigger: "threshold-float",
-      thresholdPct: 15,
-      noticeDays: 2,
+      rule: "No dedicated secondary-offering rule; framework discretion",
+      trigger: "completion-gate",
       reason:
-        "Solactive treats secondaries case-by-case; equity capital actions with free float <15% and an unconditional offer are applied with at least two business days’ notice.",
-      citation: "§8 (Solactive ECA Guideline)",
+        "Solactive v1.20 does not publish a dedicated secondary-offering treatment; it permits default/discretionary handling for undescribed or exceptional actions, with product Guidelines taking precedence.",
+      citation: "Solactive Equity Index Methodology v1.20 §2.1 (p.12)",
     },
     morningstar: {
       rule: "Materiality assessment — no fixed % stated",
@@ -447,9 +451,10 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§8",
     },
     vettafi: {
-      rule: "Per index methodology",
+      rule: "Rebalance for share-count changes",
       trigger: "completion-gate",
-      reason: "VettaFi has no documented divergence for secondary offerings.",
+      reason: "VettaFi groups Share Offerings with Tenders and Buybacks and implements share-count changes at rebalancing; the policy does not state a >5% share-count trigger.",
+      citation: "VettaFi Index Maintenance Policy v1.1.8 §4 (p.2)",
     },
   },
 
@@ -487,13 +492,11 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§9",
     },
     solactive: {
-      rule: "Free float <15% & unconditional → 2 BD notice",
-      trigger: "threshold-float",
-      thresholdPct: 15,
-      noticeDays: 2,
+      rule: "No dedicated private-placement rule; framework discretion",
+      trigger: "completion-gate",
       reason:
-        "Solactive surfaces a private placement when free float falls below 15% and the deal is unconditional, with two business days’ notice.",
-      citation: "§9",
+        "Solactive v1.20 does not publish a dedicated private-placement treatment; undescribed or exceptional actions may be handled by discretion and announced before effectiveness.",
+      citation: "Solactive Equity Index Methodology v1.20 §2.1 (p.12)",
     },
     morningstar: {
       rule: "Materiality assessment — no fixed % stated",
@@ -503,9 +506,10 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§9",
     },
     vettafi: {
-      rule: "Per index methodology",
+      rule: "No separate private-placement rule",
       trigger: "completion-gate",
-      reason: "VettaFi has no documented divergence for private placements.",
+      reason: "VettaFi’s supplied policy does not separately address private placements; its broad share-offering wording must not be treated as a private-placement-specific rule.",
+      citation: "VettaFi Index Maintenance Policy v1.1.8 §4 (p.2)",
     },
   },
 
@@ -538,9 +542,10 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "STOXX §8.1.6",
     },
     solactive: {
-      rule: "Per Equity Index Methodology",
+      rule: "Special dividend unless repetitive ordinary pattern",
       trigger: "always",
-      reason: "Solactive applies per its Equity Index Methodology.",
+      reason: "Solactive v1.20 treats return of capital as a special dividend free of withholding tax unless its amount/frequency is repetitive and it replaces a regular Cash Dividend; no numeric threshold is stated.",
+      citation: "Solactive Equity Index Methodology v1.20 §2.1.1.3.7 (p.16)",
     },
     morningstar: {
       rule: "Special dividend if outside normal cadence",
@@ -549,9 +554,9 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§10",
     },
     vettafi: {
-      rule: "Not documented",
+      rule: "No separate return-of-capital rule",
       trigger: "no-coverage",
-      reason: "VettaFi does not document a return-of-capital path.",
+      reason: "VettaFi’s supplied policy is silent on a distinct return-of-capital treatment; silence is not a contrary treatment.",
     },
   },
 
@@ -589,11 +594,10 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "STOXX §8.3.1",
     },
     solactive: {
-      rule: "Float <15% AND deal unconditional",
-      trigger: "threshold-float",
-      thresholdPct: 15,
-      reason: "Solactive requires both free float <15% and the deal to be unconditional.",
-      citation: "§11",
+      rule: "Cash/stock terms branch; product Guideline may supersede",
+      trigger: "completion-gate",
+      reason: "Solactive v1.20 removes the target on the effective date and distributes cash consideration or increases surviving shares according to the component/non-component and cash/stock terms branches. An Index Guideline supersedes this framework when different.",
+      citation: "Solactive Equity Index Methodology v1.20 §§2.1.7–2.1.7.2 (pp.26–32)",
     },
     morningstar: {
       rule: "Removed on deal completion",
@@ -602,9 +606,9 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§11",
     },
     vettafi: {
-      rule: "Per index methodology",
+      rule: "Approach 1/2/3 is index-specific",
       trigger: "completion-gate",
-      reason: "VettaFi varies by ETF benchmark.",
+      reason: "VettaFi does not establish a universal merger approach: 1.0, 2.0, and 3.0 depend on weighting and the Appendix/product index.",
     },
   },
 
@@ -642,11 +646,10 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "STOXX §8.3.1.1",
     },
     solactive: {
-      rule: "Float <15% AND offer unconditional",
-      trigger: "threshold-float",
-      thresholdPct: 15,
-      reason: "Solactive applies the same Float <15% + unconditional rule as M&A.",
-      citation: "§12",
+      rule: "Mapped to takeover-offer M&A timing",
+      trigger: "completion-gate",
+      reason: "Solactive v1.20 maps takeover offers to its M&A timing: deletion can follow delisting, squeeze-out, or a successful unconditional offer with free float below 15%, with at least two Business Days notice. Product Guidelines may supersede this framework.",
+      citation: "Solactive Equity Index Methodology v1.20 §§2.1.7–2.1.7.2 (pp.26–32)",
     },
     morningstar: {
       rule: "Deletes on offer completion (no % threshold)",
@@ -655,9 +658,10 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§12",
     },
     vettafi: {
-      rule: "Per index methodology",
+      rule: "Rebalance for tender share-count changes",
       trigger: "completion-gate",
-      reason: "VettaFi varies by ETF benchmark.",
+      reason: "VettaFi explicitly groups Tenders with share offerings and buybacks: share-count changes are implemented at rebalancing, with no separate universal acceptance threshold stated.",
+      citation: "VettaFi Index Maintenance Policy v1.1.8 §4 (p.2)",
     },
   },
 
@@ -690,10 +694,11 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§13",
     },
     solactive: {
-      rule: "Last available price; if none, 0.00000001 floor",
-      trigger: "always",
-      reason: "Solactive uses the last available price or its 0.00000001 floor.",
-      citation: "§13",
+      rule: "Last/alternative price; 0.00000001 if none",
+      trigger: "notice-required",
+      noticeDays: 2,
+      reason: "Solactive v1.20 removes bankrupt or insolvent components with at least two Business Days notice, using last close or an official alternative-market price; if none is robust, 0.00000001 is used and weight is redistributed only when a determined price exists.",
+      citation: "Solactive Equity Index Methodology v1.20 §§2.1.10–2.1.10.2 (pp.35–36)",
     },
     morningstar: {
       rule: "Removed at market price upon event",
@@ -702,9 +707,9 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       citation: "§13",
     },
     vettafi: {
-      rule: "Not documented",
-      trigger: "no-coverage",
-      reason: "VettaFi does not document a distinct delisting path in the sourced methodology.",
+      rule: "Delisting/bankruptcy removal with price fallback",
+      trigger: "always",
+      reason: "VettaFi documents removal for delisting and bankruptcy, alternate-market pricing, and a 0.01 local-currency fallback when a security is worthless or too illiquid.",
     },
   },
 };

@@ -5,6 +5,7 @@ import type {
   AnalystLookupContext,
   AnalystMatrixRow,
   AnalystNewsContext,
+  AnalystRuleEvidence,
 } from "./types.ts";
 
 const MAX_VENDORS = 7;
@@ -32,6 +33,18 @@ function sourceRefs(row: MatrixRow): string[] {
     .map((ref) => cleanText(ref, 100))
     .filter(Boolean);
   return [...new Set(refs)].slice(0, MAX_RULE_REFS);
+}
+
+function ruleEvidence(row: MatrixRow): AnalystRuleEvidence[] {
+  return row.treatments.slice(0, MAX_RULE_REFS).map((treatment) => ({
+    indexType: cleanText(treatment.indexType, 64),
+    conditions: treatment.conditions,
+    treatment: treatment.treatment === null ? null : cleanText(treatment.treatment, 2_000),
+    sourceRef: treatment.sourceRef ? cleanText(treatment.sourceRef, 500) : null,
+    confidence: ["stated", "inferred", "absent", "user-set"].includes(treatment.confidence)
+      ? treatment.confidence as AnalystRuleEvidence["confidence"]
+      : "absent",
+  }));
 }
 
 function rowState(row: MatrixRow): AnalystMatrixRow["state"] {
@@ -101,6 +114,7 @@ export function buildAnalystLookupContext({
         state: rowState(row),
         provenance: provenance(row, news),
         ruleRefs: sourceRefs(row),
+        rules: ruleEvidence(row),
       })),
     news: newsContext(news),
   };

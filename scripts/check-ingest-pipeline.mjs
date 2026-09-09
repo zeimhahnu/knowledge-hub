@@ -26,6 +26,6 @@ const approvedCandidate = proposals.find((proposal) => proposal.treatment !== nu
 assert.ok(approvedCandidate);
 const approved = asRulesDocument({ ...rules, rules: [...rules.rules, approvedCandidate] });
 assert.deepEqual(validateRulesDocument(approved), [], "approving a candidate must yield a schema-valid rules document");
-assert.equal(rules.rules.some((rule) => rule.vendor === "vettafi"), false, "the fixture check must not mutate curated rules");
+assert.equal(rules.rules.some((rule) => rule.vendor === "vettafi"), true, "the fixture check must not mutate the already-curated VettaFi rules");
 
 console.log("OK — screened fixture proposes candidates, absent methodology stays absent, and approval validates");

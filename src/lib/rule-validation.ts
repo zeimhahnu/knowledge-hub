@@ -12,6 +12,7 @@ export type CuratedRule = {
   lead_days_confidence: string;
   source_ref: string;
   confidence: string;
+  mapping_note?: string;
   caev?: string;
 };
 
@@ -28,7 +29,7 @@ export function validateRule(rule: CuratedRule): string[] {
   const errors: string[] = [];
   if (!VENDOR_IDS.includes(rule.vendor as (typeof VENDOR_IDS)[number])) errors.push("vendor is not registered");
   if (!CANONICAL_EVENTS.some((event) => event.id === rule.event_type)) errors.push("event_type is not canonical");
-  if (!["*", "price-return", "total-return", "net-total-return", "market-cap-weighted"].includes(rule.index_type)) errors.push("index_type is invalid");
+  if (!["*", "price-return", "total-return", "gross-total-return", "net-total-return", "market-cap-weighted", "non-market-cap-weighted"].includes(rule.index_type)) errors.push("index_type is invalid");
   if (rule.treatment === null) {
     if (rule.confidence !== "absent") errors.push("null treatment requires absent confidence");
   } else if (typeof rule.treatment !== "string" || rule.treatment.trim().length === 0) {

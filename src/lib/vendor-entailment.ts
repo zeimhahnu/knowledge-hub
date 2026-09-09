@@ -29,7 +29,7 @@
 
 import curatedRules from "../data/rules.json" with { type: "json" };
 import type { VendorId } from "./vendors.ts";
-import type { IndexType } from "./fund-master.ts";
+import { ruleIndexTypeMatchesFund, type IndexType } from "./fund-master.ts";
 
 export type EntailmentVerdict = "contradicted" | "consistent" | "indeterminate";
 export type RuleScope = "3-d" | "2-d";
@@ -114,7 +114,7 @@ function admissibleRules(
     if (rule.event_type !== eventType) return false;
     const scope = rule.index_type;
     if (!scope || scope === "*") return true;
-    return indexType != null && scope === indexType;
+    return indexType != null && ruleIndexTypeMatchesFund(scope, indexType);
   });
 }
 

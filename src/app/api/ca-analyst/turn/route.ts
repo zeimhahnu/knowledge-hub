@@ -8,6 +8,7 @@ export const dynamic = "force-dynamic";
 const VENDORS = new Set<string>(VENDOR_IDS);
 const STATES = new Set(["covered", "not-yet-due", "missing", "not-assessed", "not-applicable"]);
 const PROVENANCE = new Set(["measured", "news-confirmed", "inferred", "no-rule"]);
+const RULE_CONFIDENCE = new Set(["stated", "inferred", "absent", "user-set"]);
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
 const MAX_BODY = 120_000;
 const ACCESS_JWKS_FALLBACK_URL = "https://hub.vpszeimhahnu.uk/cdn-cgi/access/certs";
@@ -34,9 +35,19 @@ function validRequest(value: unknown): value is Record<string, unknown> {
   if (!Array.isArray(l.matrixRows) || l.matrixRows.length > 7 || l.matrixRows.some((row) => {
     if (!row || typeof row !== "object" || Array.isArray(row)) return true;
     const r = row as Record<string, unknown>;
-    return !ownKeys(r, ["vendor", "state", "provenance", "ruleRefs"]) || typeof r.vendor !== "string" || !VENDORS.has(r.vendor) ||
+    return !ownKeys(r, ["vendor", "state", "provenance", "ruleRefs", "rules"]) || typeof r.vendor !== "string" || !VENDORS.has(r.vendor) ||
       typeof r.state !== "string" || !STATES.has(r.state) || typeof r.provenance !== "string" || !PROVENANCE.has(r.provenance) ||
-      !Array.isArray(r.ruleRefs) || r.ruleRefs.length > 8 || r.ruleRefs.some((ref) => !boundedString(ref, 100));
+      !Array.isArray(r.ruleRefs) || r.ruleRefs.length > 8 || r.ruleRefs.some((ref) => !boundedString(ref, 500)) ||
+      !Array.isArray(r.rules) || r.rules.length > 8 || r.rules.some((rule) => {
+        if (!rule || typeof rule !== "object" || Array.isArray(rule)) return true;
+        const evidence = rule as Record<string, unknown>;
+        return !ownKeys(evidence, ["indexType", "conditions", "treatment", "sourceRef", "confidence"]) ||
+          !boundedString(evidence.indexType, 64) ||
+          (evidence.conditions !== null && (typeof evidence.conditions !== "object" || Array.isArray(evidence.conditions))) ||
+          (evidence.treatment !== null && !boundedString(evidence.treatment, 2_000)) ||
+          (evidence.sourceRef !== null && !boundedString(evidence.sourceRef, 500)) ||
+          typeof evidence.confidence !== "string" || !RULE_CONFIDENCE.has(evidence.confidence);
+      });
   })) return false;
   const selectedVendors = l.selectedVendors as string[];
   const rows = l.matrixRows as Array<Record<string, unknown>>;

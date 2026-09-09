@@ -1,6 +1,6 @@
 {
-  "schema_version": 1,
-  "generated": "2026-09-02",
+  "schema_version": 2,
+  "generated": "2026-09-09",
   "event_types": [
     "cash-dividend",
     "special-dividend",
@@ -16,8 +16,24 @@
     "tender-offer",
     "bankruptcy"
   ],
-  "index_types": ["*", "price-return", "total-return", "net-total-return", "market-cap-weighted"],
-  "vendors": ["msci", "sp", "ftse", "stoxx", "morningstar", "solactive"],
+  "index_types": [
+    "*",
+    "price-return",
+    "total-return",
+    "gross-total-return",
+    "net-total-return",
+    "market-cap-weighted",
+    "non-market-cap-weighted"
+  ],
+  "vendors": [
+    "msci",
+    "sp",
+    "ftse",
+    "stoxx",
+    "morningstar",
+    "solactive",
+    "vettafi"
+  ],
   "rules": [
     {
       "vendor": "msci",
@@ -933,149 +949,6 @@
       "confidence": "stated"
     },
     {
-      "vendor": "solactive",
-      "event_type": "cash-dividend",
-      "caev": "DVOP",
-      "index_type": "*",
-      "treatment": "For the GPR Global 100 Index, dividends or other distributions are reinvested across the entire basket through a divisor at the opening of the effective date (ex-date); the guideline states no price adjustment or PAF for an ordinary cash dividend.",
-      "lead_days": 2,
-      "lead_days_confidence": "stated",
-      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.1 (p. 9); §4.3 (p. 9)",
-      "confidence": "stated"
-    },
-    {
-      "vendor": "solactive",
-      "event_type": "special-dividend",
-      "caev": "DVOP",
-      "index_type": "*",
-      "treatment": "Not addressed in the single-product GPR Global 100 Index Guideline; no treatment is published for this event.",
-      "lead_days": null,
-      "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11; event not addressed)",
-      "confidence": "absent"
-    },
-    {
-      "vendor": "solactive",
-      "event_type": "stock-dividend",
-      "caev": "BONU",
-      "index_type": "*",
-      "treatment": "For the GPR Global 100 Index, stock distributions (including a dividend paid in additional shares) are a relevant corporate action; the index is adjusted from cum-day to ex-day in accordance with the referenced Equity Index Methodology.",
-      "lead_days": 2,
-      "lead_days_confidence": "stated",
-      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (p. 10)",
-      "confidence": "stated"
-    },
-    {
-      "vendor": "solactive",
-      "event_type": "bonus-issue",
-      "caev": "BONU",
-      "index_type": "*",
-      "treatment": "Not addressed in the single-product GPR Global 100 Index Guideline; no treatment is published for this event.",
-      "lead_days": null,
-      "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11; event not addressed)",
-      "confidence": "absent"
-    },
-    {
-      "vendor": "solactive",
-      "event_type": "stock-split",
-      "caev": "SPLT",
-      "index_type": "*",
-      "treatment": "For the GPR Global 100 Index, share splits are a relevant corporate action; the index is adjusted from cum-day to ex-day in accordance with the referenced Equity Index Methodology.",
-      "lead_days": 2,
-      "lead_days_confidence": "stated",
-      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (p. 10)",
-      "confidence": "stated"
-    },
-    {
-      "vendor": "solactive",
-      "event_type": "spin-off",
-      "caev": "SPIN",
-      "index_type": "*",
-      "treatment": "For the GPR Global 100 Index, spin-offs are a relevant corporate action; the index is adjusted from cum-day to ex-day in accordance with the referenced Equity Index Methodology.",
-      "lead_days": 2,
-      "lead_days_confidence": "stated",
-      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (p. 10)",
-      "confidence": "stated"
-    },
-    {
-      "vendor": "solactive",
-      "event_type": "rights-issue",
-      "caev": "RHDI",
-      "index_type": "*",
-      "treatment": "Not addressed in the single-product GPR Global 100 Index Guideline; no treatment is published for this event.",
-      "lead_days": null,
-      "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11; event not addressed)",
-      "confidence": "absent"
-    },
-    {
-      "vendor": "solactive",
-      "event_type": "secondary-offering",
-      "caev": "OFFO",
-      "index_type": "*",
-      "treatment": "Not addressed in the single-product GPR Global 100 Index Guideline; no treatment is published for this event.",
-      "lead_days": null,
-      "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11; event not addressed)",
-      "confidence": "absent"
-    },
-    {
-      "vendor": "solactive",
-      "event_type": "private-placement",
-      "caev": "OFFO",
-      "index_type": "*",
-      "treatment": "Not addressed in the single-product GPR Global 100 Index Guideline; no treatment is published for this event.",
-      "lead_days": null,
-      "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11; event not addressed)",
-      "confidence": "absent"
-    },
-    {
-      "vendor": "solactive",
-      "event_type": "return-of-capital",
-      "caev": "REDU",
-      "index_type": "*",
-      "treatment": "Not addressed in the single-product GPR Global 100 Index Guideline; no treatment is published for this event.",
-      "lead_days": null,
-      "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11; event not addressed)",
-      "confidence": "absent"
-    },
-    {
-      "vendor": "solactive",
-      "event_type": "merger",
-      "caev": "MRGR",
-      "index_type": "*",
-      "treatment": "For a stock-for-stock merger or acquisition where both acquirer and target are in the GPR Global 100 Index, Solactive removes the target, increases the acquirer’s total shares according to the stock terms, and sets the weighting cap factor so the post-event index market cap equals the two pre-event index market caps combined.",
-      "lead_days": 2,
-      "lead_days_confidence": "stated",
-      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11)",
-      "confidence": "stated"
-    },
-    {
-      "vendor": "solactive",
-      "event_type": "tender-offer",
-      "caev": "TEND",
-      "index_type": "*",
-      "treatment": "Not addressed in the single-product GPR Global 100 Index Guideline; no treatment is published for this event.",
-      "lead_days": null,
-      "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (pp. 10–11; event not addressed)",
-      "confidence": "absent"
-    },
-    {
-      "vendor": "solactive",
-      "event_type": "bankruptcy",
-      "caev": "DELI",
-      "index_type": "*",
-      "treatment": "For the GPR Global 100 Index, delistings and insolvency are relevant corporate actions; the index is adjusted from cum-day to ex-day in accordance with the referenced Equity Index Methodology. The guideline does not specify a separate removal or pricing rule.",
-      "lead_days": 2,
-      "lead_days_confidence": "stated",
-      "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §4.4 (p. 10)",
-      "confidence": "stated"
-    },
-    {
       "vendor": "ftse",
       "event_type": "stock-split",
       "caev": "SPLT",
@@ -1085,10 +958,476 @@
       "treatment": "No index divisor adjustment; the price adjustment factor is shares held before ÷ after, applied on the ex-date with no change in company market capitalisation.",
       "coverage": "product-specific",
       "provenance": "stated",
-      "source_refs": ["SOURCES/ftse-russell-corporate-actions-guide.pdf §4.1 (Splits)", "Franklin XDAT benchmark Russell 3000 review"],
-      "source_urls": ["https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP", "https://www.lseg.com/en/ftse-russell/indices/capped"],
+      "source_refs": [
+        "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.1 (Splits)",
+        "Franklin XDAT benchmark Russell 3000 review"
+      ],
+      "source_urls": [
+        "https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP",
+        "https://www.lseg.com/en/ftse-russell/indices/capped"
+      ],
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.1 (Splits)",
       "confidence": "stated"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "cash-dividend",
+      "index_type": "price-return",
+      "treatment": "Regular Cash Dividends are neglected in a Price Return Index; no price adjustment or PAF is made for the regular cash distribution.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1 Dividends (p.13)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "cash-dividend",
+      "index_type": "gross-total-return",
+      "treatment": "Gross Total Return Indexes reinvest Cash and Special Dividend distributions without deducting withholding tax.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1 Dividends (p.13)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "cash-dividend",
+      "index_type": "net-total-return",
+      "treatment": "Net Total Return Indexes reinvest Cash and Special Dividend distributions after deducting withholding tax.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1 Dividends (p.13)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "special-dividend",
+      "index_type": "price-return",
+      "treatment": "Special Dividends are included in a Price Return Index; regular Cash Dividends are the distributions neglected by the Price Return variant.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1 Dividends (p.13)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "special-dividend",
+      "index_type": "gross-total-return",
+      "treatment": "Gross Total Return Indexes reinvest Special Dividend distributions without deducting withholding tax.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1 Dividends (p.13)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "special-dividend",
+      "index_type": "net-total-return",
+      "treatment": "Net Total Return Indexes reinvest Special Dividend distributions after deducting withholding tax.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1 Dividends (p.13)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "stock-dividend",
+      "index_type": "*",
+      "treatment": "A Stock Dividend applies a PAF of 1 + stock terms, lowers the theoretical price proportionally, and increases index shares by the same factor; it is treated identically in Standard and Divisor Indices with no Divisor change.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.2 Stock Dividend; §2.1.2.1 Stock Dividend Adjustment (pp.19–20)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "bonus-issue",
+      "index_type": "*",
+      "treatment": "Mapped to the Solactive Stock Dividend treatment: a pro-rata no-charge share distribution is adjusted with the stock-distribution PAF and corresponding shares; the source does not publish a separately named Bonus Issue rule.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.2 Stock Dividend; §2.1.2.1 Stock Dividend Adjustment (pp.19–20)",
+      "confidence": "inferred",
+      "coverage": "framework-default",
+      "mapping_note": "App event bonus-issue is mapped to the methodology's stock-dividend treatment because both describe a pro-rata additional-share distribution; no separate Bonus Issue section is published."
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "stock-split",
+      "index_type": "*",
+      "treatment": "Stock Splits and Reverse Stock Splits preserve company market capitalization by changing shares and price proportionally; the adjustment follows the Stock Split methodology.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.3 Stock Split (pp.20–21)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "spin-off",
+      "index_type": "*",
+      "treatment": "The spin-off company is added on the effective date with shares from the transaction terms; it starts at zero or a calculated theoretical price until official trading, while the parent remains. An ineligible or non-tradable distribution can instead be treated as an extraordinary dividend, temporary addition/removal, or non-event under the stated alternatives.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.6 Spin-off; §2.1.6.1–§2.1.6.3 (pp.24–26)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "rights-issue",
+      "index_type": "*",
+      "treatment": "A Rights Issue is implemented only when the subscription price is below the stock close price on the day before the ex-date; the PAF/TERP-style adjustment and share treatment then follow the Standard or Divisor formula.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.4 Rights Issue; §2.1.4.1–§2.1.4.2 (pp.21–23)",
+      "confidence": "stated",
+      "coverage": "framework-default",
+      "conditions": {
+        "rights_moneyness": "in-the-money"
+      }
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "secondary-offering",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1 Corporate Actions (p.12; no dedicated secondary-offering treatment published)",
+      "confidence": "absent",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "private-placement",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1 Corporate Actions (p.12; no dedicated private-placement treatment published)",
+      "confidence": "absent",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "return-of-capital",
+      "index_type": "*",
+      "treatment": "Return of capital is generally applied as a special dividend free of withholding tax; when repetitive in amount and frequency and paid in lieu of a regular Cash Dividend, it is classified as an ordinary Cash Dividend. No numeric threshold is stated.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1.3.7 Return of Capital (p.16)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "merger",
+      "index_type": "*",
+      "treatment": "Under the general Solactive framework, the target is removed on the effective date. For an index-component acquirer, cash terms redistribute the target weight pro rata, stock terms increase the surviving shares, and mixed terms split those treatments; for a non-component acquirer, the target weight is redistributed for all listed terms. An Index Guideline supersedes this framework when it differs, so this is not universal product coverage.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.7 Mergers & Acquisitions; §2.1.7.1 Mergers & Acquisition Adjustment (pp.26–27)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "tender-offer",
+      "index_type": "*",
+      "treatment": "Mapped from Solactive's takeover/tender-offer M&A treatment: a target is removed when the stated M&A timing conditions are met, including delisting, squeeze-out, or a successful unconditional offer with free float below 15%; at least two Business Days notice is stated. An Index Guideline may supersede this framework.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.7 Mergers & Acquisitions; §2.1.7.2 Timing of Adjustment (pp.26–32)",
+      "confidence": "inferred",
+      "coverage": "framework-default",
+      "mapping_note": "App event tender-offer is mapped to the methodology's takeover-offer branch in M&A; Solactive does not publish a separate Tender Offer section in this framework."
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "bankruptcy",
+      "index_type": "*",
+      "treatment": "Bankruptcy, insolvency, or liquidation triggers removal after the last trading day with at least two Business Days notice. Last close or an official alternative-market price is used; if no robust price exists, 0.00000001 is used, and weight is redistributed only when a determined price is available. Bankruptcy protection alone does not satisfy the removal condition unless delisting is announced.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.8 Delisting; §2.1.10 Bankruptcy / Insolvency / Liquidation; §2.1.10.1–§2.1.10.2 (pp.33,35–36)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "cash-dividend",
+      "index_type": "price-return",
+      "treatment": "Regular cash dividends do not adjust the Price Return index.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §9 Regular Cash Dividends (p.3)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "cash-dividend",
+      "index_type": "gross-total-return",
+      "treatment": "Regular cash dividends are applied on the ex-date to the Gross Total Return variant; the policy states dividends are reinvested in total-return indexes.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §8 Treatment of Distributions; §9 Regular Cash Dividends; §II.1 Index Formula (pp.3,5)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "cash-dividend",
+      "index_type": "net-total-return",
+      "treatment": "Regular cash dividends are applied on the ex-date to the Net Total Return variant; the policy states dividends are reinvested in total-return indexes.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §9 Regular Cash Dividends; §II.1 Index Formula (pp.3,5)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "special-dividend",
+      "index_type": "market-cap-weighted",
+      "treatment": "For a market-cap-weighted index, the security price is reduced by the special dividend and proceeds are redistributed proportionally to remaining constituents. The adjustment applies to Price, Total Return, and Net Total Return variants.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §11.1 Market Cap weighted indexes (p.4)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "special-dividend",
+      "index_type": "non-market-cap-weighted",
+      "treatment": "For a non-market-cap-weighted index, the security price is reduced by the special dividend and proceeds are reinvested into the payer by increasing index shares so the weight is unchanged. The adjustment applies to Price, Total Return, and Net Total Return variants.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §11.2 Non-Market Cap weighted indexes (p.4)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "stock-dividend",
+      "index_type": "*",
+      "treatment": "Stock dividends increase index shares and reduce security price proportionally; constituent weight is unchanged. The divisor/formula table gives adjusted price = closing price × A/(A+B) and new shares = old shares × (A+B)/A.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §6 Stock Splits and Stock Dividends; §III.6 Stock Dividend (pp.2,8–9)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "bonus-issue",
+      "index_type": "*",
+      "treatment": "Mapped to VettaFi's Stock Dividend treatment: the policy does not publish a separately named Bonus Issue rule, but its stock-distribution formula covers the same pro-rata no-charge share-distribution mechanics.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §6 Stock Splits and Stock Dividends; §III.6 Stock Dividend (pp.2,8–9)",
+      "confidence": "inferred",
+      "coverage": "framework-default",
+      "mapping_note": "App event bonus-issue is mapped to the policy's stock-dividend branch because VettaFi does not publish a separate Bonus Issue section."
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "stock-split",
+      "index_type": "*",
+      "treatment": "Stock splits and reverse stock splits change shares and price proportionally while leaving constituent weight unchanged; the divisor/formula table gives adjusted price = closing price × A/B and new shares = old shares × B/A.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §6 Stock Splits and Stock Dividends; §7 Reverse Stock Splits; §III.4 Split and Reverse Split (pp.2–3,8)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "spin-off",
+      "index_type": "market-cap-weighted",
+      "treatment": "For a market-cap-weighted index, the parent price is reduced by the spin-off value, the parent remains, and the spin-off is initially dropped with its weight redistributed; if value is unknown, it is added at zero and removed after two trading days.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §3.1 Market Cap weighted indexes (p.2)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "spin-off",
+      "index_type": "non-market-cap-weighted",
+      "treatment": "For a non-market-cap-weighted index, the parent price is reduced by the spin-off value and parent shares increase to keep weight unchanged; an unknown-value spin-off is added at zero, removed after two trading days, and its weight transfers to the parent.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §3.2 Non-Market Cap weighted indexes (p.2)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "rights-issue",
+      "index_type": "market-cap-weighted",
+      "treatment": "Rights are exercised only when the subscription price is below the prior-day close (in-the-money); price is adjusted downward by rights value, shares increase on full terms, and exercise costs come proportionally from remaining constituents.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §5.1 Market Cap weighted indexes (p.2)",
+      "confidence": "stated",
+      "coverage": "framework-default",
+      "conditions": {
+        "rights_moneyness": "in-the-money"
+      }
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "rights-issue",
+      "index_type": "non-market-cap-weighted",
+      "treatment": "Rights are exercised only when the subscription price is below the prior-day close (in-the-money); price is adjusted downward by rights value and shares increase to offset the price decrease so weight remains unchanged.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §5.2 Non-Market Cap weighted indexes (p.2)",
+      "confidence": "stated",
+      "coverage": "framework-default",
+      "conditions": {
+        "rights_moneyness": "in-the-money"
+      }
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "rights-issue",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §5 Rights Offerings (p.2; no at/above-market treatment stated)",
+      "confidence": "absent",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "secondary-offering",
+      "index_type": "*",
+      "treatment": "Mapped from the policy's broad Share Offerings treatment: share offerings that change shares outstanding are implemented at the rebalancing. The policy does not state a >5% share-count trigger; its >5% figure belongs to weight-smoothing, not this event rule.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §4 Share Offerings, Tenders, and Share Buy-Backs; §II.5 Multi-Constraint Capped Weight Smoothing Process (pp.2,7)",
+      "confidence": "inferred",
+      "coverage": "framework-default",
+      "mapping_note": "App event secondary-offering is a defensible mapping of the policy's broad Share Offerings term; no separate secondary-offering formula is published."
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "private-placement",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §4 Share Offerings, Tenders, and Share Buy-Backs (p.2; private placement not separately addressed)",
+      "confidence": "absent",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "return-of-capital",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §8–§11 Distributions and Dividends (pp.3–4; return of capital not separately addressed)",
+      "confidence": "absent",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "merger",
+      "index_type": "*",
+      "treatment": "Merger treatment is index-specific, not universal: Approach 1.0 transfers weight to a surviving component, Approach 2.0 redistributes it to remaining constituents, and Approach 3.0 depends on cash/stock terms. Approaches 1.0/2.0 are defaults by weighting; Approach 3.0 applies to listed indexes in the Appendix. A product methodology is required to resolve the applicable approach.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §2 Mergers/Takeovers; §2.1 Between component stocks; Appendix — Indexes not employing default merger approaches (pp.1,14)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "tender-offer",
+      "index_type": "*",
+      "treatment": "Mapped from the policy's Share Offerings, Tenders, and Share Buy-Backs treatment: a tender that changes shares outstanding is implemented at rebalancing. The policy does not publish a separate tender acceptance threshold or universal tender formula.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §4 Share Offerings, Tenders, and Share Buy-Backs (p.2)",
+      "confidence": "inferred",
+      "coverage": "framework-default",
+      "mapping_note": "App event tender-offer is mapped to the policy's explicit Tenders grouping; only the broad rebalancing treatment is stated."
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "bankruptcy",
+      "index_type": "*",
+      "treatment": "A component delisted from all eligible exchanges is removed with weight reallocated; a component entering bankruptcy is removed and remains ineligible until emergence, subject to Committee review. If price is unavailable, use alternate exchange/OTC sources in the stated order; if no traded price or bid/ask range exists and the security is worthless or too illiquid, remove it at 0.01 local currency.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §12 Removal of Stocks Due to Delisting, Bankruptcy or Extreme Financial Distress; §13 Pricing of Stocks in Extreme Financial Distress (pp.4)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "rights-issue",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.4 Rights Issue (p.21; no adjustment condition stated)",
+      "confidence": "absent",
+      "coverage": "framework-default",
+      "conditions": {
+        "rights_moneyness": "out-of-the-money"
+      }
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "rights-issue",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §5 Rights Offerings (p.2; no at/above-market treatment stated)",
+      "confidence": "absent",
+      "coverage": "framework-default",
+      "conditions": {
+        "rights_moneyness": "out-of-the-money"
+      }
+    }
+  ],
+  "source_documents": [
+    {
+      "vendor": "solactive",
+      "filename": "solactive-equity-index-methodology-v1.20-2026-06-16.pdf",
+      "version": "1.20",
+      "published_date": "2026-06-16",
+      "sha256": "e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb",
+      "source_path": "src/data/methodologies/sources/solactive-equity-index-methodology-v1.20-2026-06-16.pdf",
+      "scope": "General Solactive Equity Index framework; an Index Guideline supersedes it when the two differ. These rows are framework-default coverage, not universal product coverage.",
+      "landmarks": "Framework precedence p6; corporate actions/default/discretion p12; dividends p13–19; stock dividend p19–20; split p20–21; rights p21–23; capital decrease p23–24; spin-off p24–26; M&A p26–33; delisting p33–34; nationalization p34–35; bankruptcy/insolvency/liquidation p35–36; announcements p36."
+    },
+    {
+      "vendor": "vettafi",
+      "filename": "vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf",
+      "version": "1.1.8",
+      "published_date": "2026-05",
+      "sha256": "7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a",
+      "source_path": "src/data/methodologies/sources/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf",
+      "scope": "General VettaFi Index Maintenance Policy; merger approach and weighting branches are index-specific. These rows do not establish universal product coverage.",
+      "landmarks": "Mergers p1–2; share offerings/tenders/buybacks and rights p2; splits/dividends/reverse splits p2–3; special dividends and delisting/bankruptcy p3–4; divisor/formula table p8–9."
     }
   ]
 }

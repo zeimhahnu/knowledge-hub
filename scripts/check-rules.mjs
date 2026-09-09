@@ -12,7 +12,9 @@
  * Run from repo root: node scripts/check-rules.mjs
  */
 import assert from "node:assert/strict"
+import crypto from "node:crypto"
 import fs from "node:fs"
+import path from "node:path"
 import { CANONICAL_EVENTS } from "../src/lib/event-taxonomy.ts"
 import { VENDOR_IDS } from "../src/lib/vendors.ts"
 
@@ -28,11 +30,22 @@ const INDEX_TYPES = schema.$defs.index_type.enum
 const CONDITION_PROPERTIES = ruleProps.conditions.properties
 // Rules currently published in rules.json; add the vendor here as each verified
 // 13-event block lands, while VENDOR_IDS remains the broader app-level registry.
-const RULE_VENDOR_ALLOWLIST = ["msci", "sp", "ftse", "stoxx", "morningstar", "solactive"]
+const RULE_VENDOR_ALLOWLIST = ["msci", "sp", "ftse", "stoxx", "morningstar", "solactive", "vettafi"]
 
 const raw = JSON.parse(fs.readFileSync("src/data/rules.json", "utf8"))
 const rules = raw.rules
 assert.ok(Array.isArray(rules), "rules.json must contain a `rules` array")
+
+// Verify the user-supplied PDFs, not a copied or silently substituted artifact.
+assert.ok(Array.isArray(raw.source_documents), "rules.json must carry source_documents")
+for (const source of raw.source_documents) {
+  assert.ok(typeof source.sha256 === "string" && /^[a-f0-9]{64}$/.test(source.sha256), `source ${source.vendor} has a malformed SHA-256`)
+  assert.ok(typeof source.filename === "string" && source.filename.endsWith(".pdf"), `source ${source.vendor} must name a PDF`)
+  const sourcePath = path.resolve(process.cwd(), source.source_path)
+  assert.ok(fs.existsSync(sourcePath), `source PDF missing: ${sourcePath}`)
+  const digest = crypto.createHash("sha256").update(fs.readFileSync(sourcePath)).digest("hex")
+  assert.equal(digest, source.sha256, `source PDF hash mismatch for ${source.filename}`)
+}
 
 const canonicalIds = CANONICAL_EVENTS.map((e) => e.id)
 
@@ -60,6 +73,14 @@ for (const rule of rules) {
     `${rule.event_type}: vendor \`${rule.vendor}\` not in the rules allowlist`,
   )
   assertRule(typeof rule.source_ref === "string" && rule.source_ref.trim().length > 0, `${rule.event_type}: source_ref must be non-empty`)
+  if (["solactive", "vettafi"].includes(rule.vendor) && rule.confidence !== "user-set") {
+    assertRule(/^[^ ]+\.pdf\b/.test(rule.source_ref), `${rule.vendor}/${rule.event_type}: source_ref must name the exact PDF filename`)
+    assertRule(/sha256:[a-f0-9]{64}/.test(rule.source_ref), `${rule.vendor}/${rule.event_type}: source_ref must carry the PDF SHA-256`)
+    assertRule(/\bp{1,2}\.\s*\d+/i.test(rule.source_ref), `${rule.vendor}/${rule.event_type}: source_ref must carry a page reference`)
+  }
+  if (rule.confidence === "inferred") {
+    assertRule(typeof rule.mapping_note === "string" && rule.mapping_note.trim().length > 0, `${rule.vendor}/${rule.event_type}: inferred rule must explain its event-id mapping in mapping_note`)
+  }
   assertRule(rule.lead_days === null || Number.isInteger(rule.lead_days), `${rule.event_type}: lead_days must be an integer or null`)
   checkTreatment(rule, fail)
   checkLeadDays(rule, fail)

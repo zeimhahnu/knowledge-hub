@@ -14,7 +14,7 @@ const row = (vendor, state, confirmation = null) => ({
   state,
   rulePresent: true,
   confirmation,
-  treatments: refs.map((sourceRef) => ({ sourceRef })),
+  treatments: refs.map((sourceRef) => ({ indexType: "*", conditions: null, treatment: "Rule treatment", confidence: "stated", sourceRef })),
 });
 const verdict = {
   rows: [
@@ -48,6 +48,7 @@ assert.equal(unavailable.matrixRows[0].provenance, "inferred");
 assert.equal(unavailable.matrixRows[1].provenance, "measured");
 assert.equal(unavailable.matrixRows[0].ruleRefs.length, 8, "rule refs are capped");
 assert.equal(unavailable.matrixRows[0].ruleRefs[0], "Rule 0", "display markup is stripped from rule refs");
+assert.equal(unavailable.matrixRows[0].rules.length, 8, "structured rule evidence is capped with refs");
 assert.equal(unavailable.news.validationRan, false, "unavailable P0 state is preserved exactly");
 assert.equal(unavailable.news.warning, "News unavailable", "display markup is stripped from warnings");
 assert.equal(unavailable.news.sources.length, 8, "news sources are capped");

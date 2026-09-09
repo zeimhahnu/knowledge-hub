@@ -90,10 +90,10 @@ function statedFinding(rule: FindingRule): LeadFinding {
           reason: "Ordinary cash dividends do not change the price-return index.",
         };
       }
-      if (rule.indexType === "total-return") {
+      if (rule.indexType === "total-return" || rule.indexType === "gross-total-return") {
         return {
-          leadAnswer: "No price adjustment; TR reinvests the dividend.",
-          reason: "The dividend is reinvested in the Total Return index.",
+          leadAnswer: "No price adjustment; the gross TR branch reinvests the dividend.",
+          reason: "The dividend is reinvested without withholding tax in the gross Total Return branch.",
         };
       }
       if (rule.indexType === "net-total-return") {
@@ -207,8 +207,8 @@ export function leadFindingForRules(rules: readonly FindingRule[]): LeadFinding 
   );
   if (rules[0]?.eventType === "cash-dividend" && indexTypes.size > 1) {
     return {
-      leadAnswer: "No PAF in Price Return; TR/NTR reinvest the dividend.",
-      reason: "The vendor publishes separate treatment by return index.",
+      leadAnswer: "No PAF in Price Return; gross TR/NTR reinvest the dividend.",
+      reason: "The vendor publishes separate treatment by return index, including gross and net reinvestment branches.",
     };
   }
   if (rules[0]?.eventType === "rights-issue" && conditionKeys.size > 1) {
@@ -219,8 +219,8 @@ export function leadFindingForRules(rules: readonly FindingRule[]): LeadFinding 
   }
   if (indexTypes.size > 1) {
     return {
-      leadAnswer: "Treatment depends on the return index.",
-      reason: "The vendor publishes separate rules by index type.",
+      leadAnswer: "Treatment depends on the selected index branch.",
+      reason: "The vendor publishes separate rules by return variant or weighting branch.",
     };
   }
   if (conditionKeys.size > 1) {

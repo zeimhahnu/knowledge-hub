@@ -10,7 +10,8 @@ const specialDividend = computeDivergence(
 assert.equal(specialDividend.divergenceField, "threshold");
 assert.ok(specialDividend.disagree.length > 0, "special dividend must report speakers that differ");
 assert.ok(specialDividend.silent.includes("stoxx"));
-assert.ok(specialDividend.silent.includes("solactive"));
+assert.ok(!specialDividend.silent.includes("solactive"));
+assert.ok(specialDividend.agree.includes("solactive"));
 
 // These four methodologies all say ordinary dividends have no price adjustment.
 const cashDividend = computeDivergence(
@@ -27,9 +28,10 @@ assert.equal(leadTimes.divergenceField, null);
 assert.deepEqual(leadTimes.silent, ["msci", "sp"]);
 assert.deepEqual(leadTimes.disagree, []);
 
-// A registered app vendor with no rule row is distinct from methodology silence.
+// VettaFi now has a sourced cash-dividend rule; absence is no longer a corpus gap.
 const notCovered = computeDivergence(["vettafi"], "cash-dividend");
-assert.deepEqual(notCovered.notCovered, ["vettafi"]);
+assert.deepEqual(notCovered.notCovered, []);
 assert.deepEqual(notCovered.silent, []);
+assert.deepEqual(notCovered.agree, ["vettafi"]);
 
 console.log("OK — divergence computation distinguishes treatment disagreement, consensus, silence, and not-covered vendors");

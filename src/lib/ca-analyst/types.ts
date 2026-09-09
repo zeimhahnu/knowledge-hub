@@ -32,6 +32,15 @@ export type AnalystMatrixRow = {
     | "not-applicable";
   provenance: "measured" | "news-confirmed" | "inferred" | "no-rule";
   ruleRefs: string[];
+  rules: AnalystRuleEvidence[];
+};
+
+export type AnalystRuleEvidence = {
+  indexType: string;
+  conditions: Record<string, string | number | boolean> | null;
+  treatment: string | null;
+  sourceRef: string | null;
+  confidence: "stated" | "inferred" | "absent" | "user-set";
 };
 
 export type AnalystLookupContext = {

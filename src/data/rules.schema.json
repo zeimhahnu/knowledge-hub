@@ -2,12 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://zeimhahnu.github.io/knowledge-hub/rules.schema.json",
   "title": "Vendor Corporate-Action Treatment Rules",
-  "description": "Machine-readable vendor treatment rules for the corporate-action hub (§5b, §7a-i, §9). Keyed by {vendor, event_type, index_type} — a 3-D matrix. `event_type` is the app's canonical 13-event id (per src/lib/event-taxonomy.ts `CANONICAL_EVENTS`); the ISO 20022 CAEV code for the same event lives in `caev`. `index_type` is '*' when the vendor's treatment does not vary by weighting scheme. `lead_days` is the vendor's published per-event publication lead time before ex-date — the input to slice 1's coverage-window engine (7a-i). Where the source doc does not state a lead time, `lead_days` MUST be null (never a fabricated number), and `lead_days_confidence` reflects why.",
+  "description": "Machine-readable vendor treatment rules for the corporate-action hub (§5b, §7a-i, §9). Keyed by {vendor, event_type, index_type} — a 3-D matrix. `event_type` is the app's canonical 13-event id (per src/lib/event-taxonomy.ts `CANONICAL_EVENTS`); the ISO 20022 CAEV code for the same event lives in `caev`. `index_type` is '*' when the vendor's treatment does not vary by the represented return or weighting branch. `lead_days` is the vendor's published per-event publication lead time before ex-date — the input to slice 1's coverage-window engine (7a-i). Where the source doc does not state a lead time, `lead_days` MUST be null (never a fabricated number), and `lead_days_confidence` reflects why.",
   "type": "object",
   "$defs": {
     "index_type": {
-      "enum": ["*", "price-return", "total-return", "net-total-return", "market-cap-weighted"],
-      "description": "Index return-variant discriminator. '*' means the treatment does not vary by return variant."
+      "enum": ["*", "price-return", "total-return", "gross-total-return", "net-total-return", "market-cap-weighted", "non-market-cap-weighted"],
+      "description": "Index return-variant or weighting-branch discriminator. '*' means the treatment does not vary by the represented branch."
     }
   },
   "additionalProperties": false,
@@ -17,7 +17,8 @@
     "event_types",
     "index_types",
     "vendors",
-    "rules"
+    "rules",
+    "source_documents"
   ],
   "properties": {
     "schema_version": { "type": "integer", "minimum": 1 },
@@ -31,7 +32,7 @@
     },
     "index_types": {
       "type": "array",
-      "description": "The index/fund-type dimension values in use ('*' for rules that do not vary by weighting scheme; see §5b taxonomy).",
+      "description": "The index/fund-type dimension values in use ('*' for rules that do not vary by return or weighting branch; see §5b taxonomy).",
       "items": { "$ref": "#/$defs/index_type" },
       "uniqueItems": true
     },
@@ -96,7 +97,12 @@
             "enum": ["stated", "inferred", "absent", "user-set"],
             "description": "treatment provenance: 'stated' when the doc says it outright, 'inferred' when reasoned from surrounding text, 'absent' when the doc does not address the event, 'user-set' when an operator tuned the value in the coverage settings surface (§11c constraint 2: a user-typed lead time must never render identically to one the methodology states)."
           },
-          "coverage": {"enum": ["complete", "partial", "product-specific", "not-applicable"]},
+          "mapping_note": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Required for inferred event-id mappings: state why the source terminology maps to the app event without claiming the source used that exact label."
+          },
+          "coverage": {"enum": ["complete", "partial", "product-specific", "framework-default", "not-applicable"]},
           "provenance": {"enum": ["measured", "inferred", "stated", "no-rule"]},
           "source_refs": {"type": "array", "items": {"type": "string"}, "minItems": 1},
           "source_urls": {"type": "array", "items": {"type": "string", "pattern": "^https://"}, "minItems": 1, "uniqueItems": true},
@@ -119,6 +125,25 @@
               }
             }
           }
+        }
+      }
+    },
+    "source_documents": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["vendor", "filename", "version", "published_date", "sha256", "source_path", "scope", "landmarks"],
+        "properties": {
+          "vendor": {"type": "string"},
+          "filename": {"type": "string", "minLength": 1},
+          "version": {"type": "string", "minLength": 1},
+          "published_date": {"type": "string", "minLength": 1},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "source_path": {"type": "string", "minLength": 1},
+          "scope": {"type": "string", "minLength": 1},
+          "landmarks": {"type": "string", "minLength": 1}
         }
       }
     }
