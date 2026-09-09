@@ -16,7 +16,9 @@ const rules = [
 const fljp = resolveFundRules("fljp", franklinSnapshot, rules);
 assert.equal(fljp.resolution.mode, "fund-resolved");
 assert.equal(fljp.resolution.ruleScope, "3-d");
-assert.deepEqual(fljp.rows.map((row) => row.vendor), ["ftse"]);
+// The msci rule is index-agnostic ("*"), so it survives 3-D resolution too.
+// Asserting ["ftse"] encoded the pre-0f222dc filter that made 3-D worse than 2-D.
+assert.deepEqual(fljp.rows.map((row) => row.vendor), ["ftse", "msci"]);
 
 const cataloged = resolveFundRules("FLIA", franklinSnapshot, rules);
 assert.equal(cataloged.resolution.mode, "cataloged-unreviewed");
