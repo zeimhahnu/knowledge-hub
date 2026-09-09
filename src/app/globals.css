@@ -322,8 +322,8 @@ section[id], [data-anchor-target] { scroll-margin-top: 5rem; }
 
 @keyframes flow { to { background-position: 200% 0; } }
 @keyframes ca-page-enter {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 @keyframes ca-state-enter {
   from { opacity: 0; transform: translateY(4px); }

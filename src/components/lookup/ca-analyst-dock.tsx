@@ -1,10 +1,15 @@
 "use client";
 
-import { type AnimationEvent, useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { type AnimationEvent, useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { BotIcon, XIcon } from "lucide-react";
 
 import { CaAnalystPanel } from "@/components/lookup/ca-analyst-panel";
 import type { AnalystLookupContext } from "@/lib/ca-analyst/types";
+
+const subscribeToMount = () => () => undefined;
+const getClientMount = () => true;
+const getServerMount = () => false;
 
 /**
  * CA Analyst as a side dock rather than another column.
@@ -15,6 +20,7 @@ import type { AnalystLookupContext } from "@/lib/ca-analyst/types";
  * you think of while looking at the rows.
  */
 export function CaAnalystDock({ context }: { context: AnalystLookupContext }) {
+  const mounted = useSyncExternalStore(subscribeToMount, getClientMount, getServerMount);
   const [open, setOpen] = useState(false);
   const [rendered, setRendered] = useState(false);
   const [closing, setClosing] = useState(false);
@@ -71,7 +77,9 @@ export function CaAnalystDock({ context }: { context: AnalystLookupContext }) {
     }
   };
 
-  return (
+  if (!mounted) return null;
+
+  return createPortal(
     <>
       <button
         ref={launcherRef}
@@ -79,7 +87,7 @@ export function CaAnalystDock({ context }: { context: AnalystLookupContext }) {
         onClick={toggleDock}
         aria-expanded={open}
         aria-controls="ca-analyst-dock"
-        className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full border border-border bg-primary px-5 py-3 text-sm font-medium text-primary-foreground shadow-lg transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+        className="box-border fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full border border-border bg-primary px-5 py-3 text-sm font-medium text-primary-foreground shadow-lg transition hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
       >
         <BotIcon className="h-4 w-4" aria-hidden />
         {open ? "Hide CA Analyst" : "Ask CA Analyst"}
@@ -93,7 +101,7 @@ export function CaAnalystDock({ context }: { context: AnalystLookupContext }) {
         hidden={!rendered}
         data-closing={closing || undefined}
         onAnimationEnd={finishAnimation}
-        className="ca-dock fixed inset-y-0 right-0 z-50 flex w-full max-w-full flex-col border-l border-border bg-background shadow-2xl sm:w-[440px]"
+        className="ca-dock box-border fixed inset-y-0 right-0 z-50 flex w-full max-w-full flex-col border-l border-border bg-background shadow-2xl sm:w-[440px]"
       >
         <div className="ca-brand-rule shrink-0" aria-hidden />
         <div className="ca-dock-step ca-dock-step-1 flex items-center justify-between border-b border-border px-4 py-3">
@@ -116,6 +124,7 @@ export function CaAnalystDock({ context }: { context: AnalystLookupContext }) {
           <CaAnalystPanel context={context} composerRef={composerRef} />
         </div>
       </aside>
-    </>
+    </>,
+    document.body,
   );
 }
