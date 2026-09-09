@@ -43,6 +43,11 @@ import {
   getVendorConfirmation,
   type VendorConfirmation,
 } from "./vendor-confirmation.ts";
+import {
+  leadFindingForRules,
+  normalizeTreatmentText,
+  type LeadFinding,
+} from "./finding-language.ts";
 
 const MS_PER_DAY = 86_400_000;
 
@@ -158,7 +163,10 @@ export interface TreatmentVariant {
   conditions: Record<string, string | number | boolean> | null;
   treatment: string | null;
   sourceRef: string | null;
+  confidence: string;
 }
+
+export { leadFindingForRule } from "./finding-language.ts";
 
 type RuleLike = (typeof rules.rules)[number];
 
@@ -173,8 +181,9 @@ export function treatmentFor(
   return ruleVariants(vendor, eventType).map((rule) => ({
     indexType: rule.index_type ?? "*",
     conditions: rule.conditions as unknown as TreatmentVariant["conditions"],
-    treatment: rule.treatment,
+    treatment: rule.treatment === null ? null : normalizeTreatmentText(rule.treatment, eventType),
     sourceRef: rule.source_ref ?? null,
+    confidence: rule.confidence,
   }));
 }
 
@@ -234,8 +243,9 @@ export function filteredTreatmentFor(
     .map((rule) => ({
       indexType: rule.index_type ?? "*",
       conditions: rule.conditions as unknown as TreatmentVariant["conditions"],
-      treatment: rule.treatment,
+      treatment: rule.treatment === null ? null : normalizeTreatmentText(rule.treatment, eventType),
       sourceRef: rule.source_ref ?? null,
+      confidence: rule.confidence,
     }));
 }
 
@@ -355,6 +365,10 @@ export interface MatrixRow {
   rulePresent: boolean;
   /** A null/absent rule is methodology silence, not a contrary treatment. */
   treatmentStated: boolean;
+  /** Deterministic operator-facing answer, derived from structured rule fields. */
+  leadAnswer: string;
+  /** One short deterministic reason; full wording remains in the disclosure. */
+  leadReason: string;
   /** All selected rule variants, retained so the matrix cannot hide rows. */
   treatments: TreatmentVariant[];
 }
@@ -443,15 +457,27 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
     const treatments = selectedRules.map((rule) => ({
       indexType: rule.index_type ?? "*",
       conditions: rule.conditions as unknown as TreatmentVariant["conditions"],
-      treatment: rule.treatment,
+      treatment: rule.treatment === null ? null : normalizeTreatmentText(rule.treatment, eventType),
       sourceRef: rule.source_ref ?? null,
+      confidence: rule.confidence,
     }));
     const rule = selectedRules[0];
-    const treatment = rule?.treatment ?? null;
+    const treatment = rule?.treatment === null || rule?.treatment === undefined
+      ? null
+      : normalizeTreatmentText(rule.treatment, eventType);
     const sourceRef = rule?.source_ref ?? null;
     const rulePresent = allRules.length > 0;
     const treatmentStated = selectedRules.some(
       (row) => row.treatment !== null && row.confidence !== "absent",
+    );
+    const finding: LeadFinding = leadFindingForRules(
+      selectedRules.map((selectedRule) => ({
+        eventType,
+        indexType: selectedRule.index_type,
+        conditions: selectedRule.conditions as unknown as Record<string, string | number | boolean> | null,
+        confidence: selectedRule.confidence,
+        treatment: selectedRule.treatment,
+      })),
     );
     const dataCoverage = dataCoverageFor(vendor, eventType);
 
@@ -469,6 +495,8 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         sourceRef,
         rulePresent,
         treatmentStated,
+        leadAnswer: finding.leadAnswer,
+        leadReason: finding.reason,
         treatments,
       };
     }
@@ -488,6 +516,8 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         sourceRef,
         rulePresent,
         treatmentStated,
+        leadAnswer: finding.leadAnswer,
+        leadReason: finding.reason,
         treatments,
       };
     }
@@ -513,6 +543,8 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
           sourceRef,
           rulePresent,
           treatmentStated,
+          leadAnswer: finding.leadAnswer,
+          leadReason: finding.reason,
           treatments,
         };
       }
@@ -530,6 +562,8 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         sourceRef,
         rulePresent,
         treatmentStated,
+        leadAnswer: finding.leadAnswer,
+        leadReason: finding.reason,
         treatments,
       };
     }
@@ -553,6 +587,8 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
       sourceRef,
       rulePresent,
       treatmentStated,
+      leadAnswer: finding.leadAnswer,
+      leadReason: finding.reason,
       treatments,
     };
   });

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { CheckIcon, ClipboardIcon, MinusIcon, XIcon } from "lucide-react";
+import { CheckIcon, ClipboardIcon, FileTextIcon, MinusIcon, XIcon } from "lucide-react";
 
 import { VendorEntailmentPanel } from "@/components/lookup/vendor-entailment-panel";
 import { TimelineGeometry } from "@/components/lookup/coverage-timeline";
@@ -134,25 +134,58 @@ function markMeaning(row: MatrixRow): string {
     if (row.state === "missing") return "You say no data was supplied after the window closed.";
     return "You say no data was supplied; timing does not call it late.";
   }
-  return "Your observation is still needed before this can be graded.";
+  return "Not checked yet.";
+}
+
+function variantLabel(variant: MatrixRow["treatments"][number]): string {
+  const parts = variant.indexType !== "*" ? [variant.indexType] : [];
+  for (const [key, value] of Object.entries(variant.conditions ?? {})) {
+    parts.push(`${key.replaceAll("_", " ")}: ${String(value)}`);
+  }
+  return parts.join(" · ");
+}
+
+function Citation({ source }: { source: string }) {
+  return (
+    <p className="flex min-w-0 items-start gap-1.5 text-xs text-muted-foreground">
+      <FileTextIcon className="mt-0.5 h-3 w-3 shrink-0" aria-hidden />
+      <span className="break-words">Citation: {source}</span>
+    </p>
+  );
 }
 
 function TreatmentSummary({ row }: { row: MatrixRow }) {
   if (!row.rulePresent) {
-    return <p className="text-sm leading-relaxed text-muted-foreground">No sourced rule covers this event.</p>;
+    return (
+      <div className="space-y-1.5">
+        <p className="text-base font-medium leading-snug text-foreground">{row.leadAnswer}</p>
+        <p className="text-sm leading-relaxed text-muted-foreground">{row.leadReason}</p>
+      </div>
+    );
   }
-  if (!row.treatmentStated) {
-    return <p className="text-sm leading-relaxed text-muted-foreground"><span className="font-medium text-foreground">Silent.</span> This methodology does not state a treatment.</p>;
-  }
-  const first = row.treatments[0];
-  if (!first?.treatment) return <p className="text-sm leading-relaxed text-muted-foreground">Treatment is silent.</p>;
   return (
     <div className="space-y-1">
-      <p className="text-xs font-mono uppercase tracking-[0.12em] text-muted-foreground">Methodology treatment</p>
-      <p className="text-sm leading-relaxed text-foreground/90"><GlossaryLinkedText text={first.treatment} /></p>
-      {row.treatments.length > 1 && (
-        <p className="text-xs text-muted-foreground">{row.treatments.length - 1} additional variant{row.treatments.length === 2 ? "" : "s"} retained below.</p>
-      )}
+      <p className="text-base font-medium leading-snug text-foreground">{row.leadAnswer}</p>
+      <p className="text-sm leading-relaxed text-muted-foreground">{row.leadReason}</p>
+      <details className="group rounded-[4px] border border-border/70 bg-muted/20 px-3 py-2">
+        <summary className="cursor-pointer list-none text-xs font-medium text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
+          <span className="underline decoration-border underline-offset-4 group-open:no-underline">Methodology wording</span>
+        </summary>
+        <div className="mt-3 space-y-3 border-t border-border/70 pt-3">
+          {row.treatments.map((variant, index) => (
+            <div key={`${variant.indexType}-${index}-${variant.sourceRef ?? "rule"}`} className="space-y-1.5">
+              {variantLabel(variant) && <p className="text-[0.65rem] font-mono uppercase tracking-[0.12em] text-muted-foreground">{variantLabel(variant)}</p>}
+              {variant.treatment ? (
+                <p className="text-sm leading-relaxed text-foreground/90"><GlossaryLinkedText text={variant.treatment} /></p>
+              ) : (
+                <p className="text-sm leading-relaxed text-muted-foreground">No treatment wording is published for this variant.</p>
+              )}
+              {variant.sourceRef && <Citation source={variant.sourceRef} />}
+            </div>
+          ))}
+        </div>
+      </details>
+      {row.sourceRef && <Citation source={row.sourceRef} />}
     </div>
   );
 }
@@ -353,7 +386,12 @@ export function VendorInvestigationList({
           </div>
           <p className="font-mono text-sm uppercase tracking-[0.12em] text-muted-foreground">{verdict.rows.length} vendors in scope</p>
         </div>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-foreground/80">Each vendor is one object: publication window, your mark, what that mark means, and the sourced treatment. On small screens the same row stacks; it never becomes a scrolling table.</p>
+        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-foreground/80">Each vendor row answers the adjustment question first. Open the methodology wording when you need the source sentence; on small screens the same row stacks instead of becoming a scrolling table.</p>
+        {groups.unchecked.length > 0 && (
+          <p role="status" className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+            {groups.unchecked.length} vendor{groups.unchecked.length === 1 ? " remains" : "s remain"} unchecked, so the observation is still needed before the coverage result can be graded.
+          </p>
+        )}
         <div className="mt-6 hidden gap-5 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-muted-foreground lg:grid lg:grid-cols-[minmax(8rem,0.8fr)_minmax(14rem,1.6fr)_minmax(10rem,0.9fr)_minmax(12rem,1.4fr)]">
           <span>Vendor</span><span>Publication window</span><span>Your mark</span><span>What it means</span>
         </div>

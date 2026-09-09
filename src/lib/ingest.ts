@@ -3,6 +3,7 @@ import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 import { CANONICAL_EVENTS, type CanonicalEventId } from "./event-taxonomy.ts";
+import { normalizeTreatmentText } from "./finding-language.ts";
 
 export type ProposedRule = {
   vendor: string;
@@ -60,6 +61,7 @@ const EVENT_ALIASES: Record<CanonicalEventId, readonly string[]> = {
 
 const ABSENT_LANGUAGE = /\b(not addressed|not covered|does not address|not specified|no treatment is specified|no treatment)\b/i;
 const HEADING = /^(?:\d+(?:\.\d+)*[.)]?\s+)?[A-Z][A-Z\s/&-]{4,}$/;
+const NUMBERED_TITLE_HEADING = /^\d+(?:\.\d+)*[.)]?\s+[A-Z][A-Za-z\s/&-]{4,}$/;
 
 function safeSegment(value: string, fallback: string): string {
   const segment = value.toLowerCase().replace(/[^a-z0-9-]+/g, "-").replace(/^-+|-+$/g, "");
@@ -71,7 +73,7 @@ function sectionSnippet(lines: string[], index: number): string {
   for (let cursor = index + 1; cursor < lines.length && collected.length < 6; cursor += 1) {
     const line = lines[cursor].trim();
     if (!line) continue;
-    if (collected.length > 1 && HEADING.test(line)) break;
+    if (collected.length > 1 && (HEADING.test(line) || NUMBERED_TITLE_HEADING.test(line))) break;
     collected.push(line);
   }
   return collected.join(" ").replace(/\s+/g, " ").trim();
@@ -88,7 +90,7 @@ export function buildProposedRules(vendor: string, text: string, documentRef: st
       vendor,
       event_type: event.id,
       index_type: "*",
-      treatment: absent ? null : snippet,
+      treatment: absent ? null : normalizeTreatmentText(snippet, event.id),
       lead_days: null,
       lead_days_confidence: "absent",
       source_ref: `${documentRef} §${event.name}`,
