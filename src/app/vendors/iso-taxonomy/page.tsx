@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import {
-  ArrowLeftIcon,
+  FileTextIcon,
   NetworkIcon,
   SearchIcon,
   ChevronDownIcon,
@@ -12,6 +12,7 @@ import Link from "next/link";
 import { SurfaceSection } from "@/components/surface-section";
 import { RouteShell } from "@/components/route-shell";
 import { Band } from "@/components/ui/band";
+import { Eyebrow } from "@/components/ui/design-system";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Surface } from "@/components/ui/surface";
 
@@ -257,16 +258,6 @@ const CAEV_CODES = [
 
 const VENDORS = ["MSCI", "S&P DJI", "FTSE Russell", "STOXX", "Solactive", "Morningstar", "VettaFi"];
 
-const VENDOR_COLORS: Record<string, string> = {
-  MSCI: "text-blue-400",
-  "S&P DJI": "text-blue-300",
-  "FTSE Russell": "text-teal-400",
-  STOXX: "text-cyan-400",
-  Solactive: "text-indigo-400",
-  Morningstar: "text-purple-400",
-  VettaFi: "text-pink-400",
-};
-
 export default function IsoTaxonomyPage() {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -285,44 +276,36 @@ export default function IsoTaxonomyPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Band className="min-h-screen">
-      {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3">
-          <div className="flex items-center justify-between">
-            <Link
-              href="/vendors/"
-              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ArrowLeftIcon className="h-4 w-4" />
-              <span className="hidden sm:inline">Index Vendor Intelligence</span>
-              <span className="sm:hidden">Back</span>
+      <Band tone="dark" className="!py-12">
+        <RouteShell wide className="space-y-8">
+          <SectionHeader
+            eyebrow="ISO 20022 reference"
+            title="Corporate action taxonomy"
+            description="A universal mapping between ISO 20022 CAEV codes, SWIFT MT564 event types, and vendor-specific terminology used by MSCI, S&P DJI, FTSE Russell, STOXX, Solactive, Morningstar, and VettaFi."
+          />
+          <nav aria-label="Vendor reference" className="flex flex-wrap items-center gap-x-6 border-t border-border pt-2">
+            <Link href="/vendors/" className="border-b-2 border-transparent px-1 py-3 text-xs text-muted-foreground transition-colors hover:border-primary hover:text-primary">Event taxonomy</Link>
+            <Link href="/vendors/iso-taxonomy/" aria-current="page" className="flex items-center gap-2 border-b-2 border-primary px-1 py-3 text-xs font-medium text-primary">
+              <NetworkIcon aria-hidden className="h-3.5 w-3.5" />
+              ISO CAEV Taxonomy
             </Link>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <NetworkIcon className="h-3.5 w-3.5 text-primary" />
-              <span>ISO CAEV Taxonomy</span>
-            </div>
-          </div>
-        </div>
-      </header>
+            <Link href="/vendors/event-extraction/" className="flex items-center gap-2 border-b-2 border-transparent px-1 py-3 text-xs text-muted-foreground transition-colors hover:border-primary hover:text-primary">
+              <FileTextIcon aria-hidden className="h-3.5 w-3.5" />
+              Event Parameters
+            </Link>
+          </nav>
+        </RouteShell>
+      </Band>
 
-      <RouteShell wide className="space-y-8 py-8">
+      <Band tone="light" className="min-h-screen !py-12">
+      <RouteShell wide className="space-y-8 py-6">
         <SurfaceSection padding="tight" className="space-y-8">
-        {/* Hero */}
-        <Surface className="p-6 sm:p-8">
-          <div className="flex items-start gap-4">
-            <div className="hidden sm:flex shrink-0 w-14 h-14 rounded-[4px] bg-primary/20 items-center justify-center">
-              <NetworkIcon className="h-7 w-7 text-primary" />
-            </div>
-            <SectionHeader title="ISO 20022 Corporate Action Taxonomy" description="A universal mapping between ISO 20022 CAEV codes, SWIFT MT564 event types, and vendor-specific terminology used by MSCI, S&P DJI, FTSE Russell, STOXX, Solactive, Morningstar, and VettaFi." />
-          </div>
-        </Surface>
 
         {/* How to Read + Quick Nav */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Surface className="p-5">
             <div className="flex items-center gap-2 mb-3">
-              <InfoIcon className="h-4 w-4 text-primary" />
+              <InfoIcon aria-hidden className="h-4 w-4 text-foreground" />
               <h3 className="text-sm font-semibold">How to Use This Page</h3>
             </div>
             <ul className="space-y-1.5 text-xs text-muted-foreground">
@@ -346,7 +329,7 @@ export default function IsoTaxonomyPage() {
           </Surface>
           <Surface className="p-5">
             <div className="flex items-center gap-2 mb-3">
-              <SearchIcon className="h-4 w-4 text-primary" />
+              <SearchIcon aria-hidden className="h-4 w-4 text-foreground" />
               <h3 className="text-sm font-semibold">Quick Filters</h3>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -354,7 +337,7 @@ export default function IsoTaxonomyPage() {
                 <button
                   key={f}
                   onClick={() => setSearch(f)}
-                  className="rounded-full border border-border bg-background px-3 py-1 text-[11px] text-muted-foreground hover:border-primary hover:text-primary transition-colors"
+                  className="border border-border bg-background px-3 py-1 text-[11px] text-muted-foreground transition-colors hover:border-primary hover:text-primary"
                 >
                   {f}
                 </button>
@@ -371,7 +354,7 @@ export default function IsoTaxonomyPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search events, ISO codes, or vendor terms..."
-            className="ca-control pl-11 pr-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+            className="ca-control pl-11 pr-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           />
           {search && (
             <button
@@ -385,20 +368,19 @@ export default function IsoTaxonomyPage() {
 
         {/* Master Mapping Table */}
         <div>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-base font-semibold">Master Mapping Table</h2>
+          <div className="mb-4 flex items-center justify-between">
+            <Eyebrow>Master mapping table</Eyebrow>
             <span className="text-xs text-muted-foreground">{filtered.length} events</span>
           </div>
-          <div className="rounded-2xl border border-border overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full text-xs min-w-[700px]">
+          <div className="hidden overflow-hidden border border-border md:block">
+              <table className="w-full table-fixed text-[11px]">
                 <thead>
                   <tr className="border-b border-border bg-muted/50">
-                    <th className="px-4 py-3 text-left font-semibold text-muted-foreground whitespace-nowrap">Event</th>
-                    <th className="px-3 py-3 text-center font-semibold text-muted-foreground">ISO CAEV</th>
-                    <th className="px-3 py-3 text-center font-semibold text-muted-foreground">SWIFT MT564</th>
+                    <th className="w-32 break-words px-2 py-2 text-left font-semibold text-muted-foreground">Event</th>
+                    <th className="w-16 break-words px-1.5 py-2 text-center font-semibold text-muted-foreground">ISO CAEV</th>
+                    <th className="w-24 break-words px-1.5 py-2 text-center font-semibold text-muted-foreground">SWIFT MT564</th>
                     {VENDORS.map((v) => (
-                      <th key={v} className={`px-3 py-3 text-center font-semibold whitespace-nowrap ${VENDOR_COLORS[v] || "text-foreground"}`}>
+                      <th key={v} className="break-words px-1.5 py-2 text-center font-semibold text-muted-foreground">
                         {v}
                       </th>
                     ))}
@@ -410,27 +392,27 @@ export default function IsoTaxonomyPage() {
                     return (
                       <tr
                         key={i}
-                        className={`border-b border-border/40 cursor-pointer transition-colors ${
+                        className={`cursor-pointer border-b border-border/40 transition-colors ${
                           isHighlighted ? "bg-primary/10" : i % 2 === 0 ? "bg-card" : "bg-muted/5"
                         }`}
                         onClick={() =>
                           setSelectedCategory(isHighlighted ? "" : row.masterCategory)
                         }
                       >
-                        <td className="px-4 py-3 font-medium text-foreground whitespace-nowrap">{row.masterCategory}</td>
-                        <td className="px-3 py-3 text-center">
-                          <span className="inline-flex items-center rounded-full bg-primary/20 px-2 py-0.5 text-[10px] font-mono font-semibold text-primary">
+                        <td className="break-words px-2 py-2 align-top font-medium text-foreground">{row.masterCategory}</td>
+                        <td className="px-1.5 py-2 text-center align-top">
+                          <span className="inline-flex items-center border border-border px-1.5 py-0.5 text-[10px] font-mono font-semibold text-foreground">
                             {row.isoCAEV}
                           </span>
                         </td>
-                        <td className="px-3 py-3 text-center text-muted-foreground text-[10px]">{row.swiftMT564}</td>
+                        <td className="break-words px-1.5 py-2 text-center text-[10px] text-muted-foreground">{row.swiftMT564}</td>
                         {[
                           row.msci, row.spdj, row.ftse, row.stoxx,
                           row.solactive, row.morningstar, row.vettafi,
                         ].map((val, j) => (
                           <td
                             key={j}
-                            className={`px-3 py-3 text-center text-muted-foreground ${
+                            className={`break-words px-1.5 py-2 text-center text-muted-foreground ${
                               val.includes("not separately") || val.includes("ineligible") || val.includes("handled via")
                                 ? "text-muted-foreground/50 italic"
                                 : ""
@@ -444,7 +426,36 @@ export default function IsoTaxonomyPage() {
                   })}
                 </tbody>
               </table>
-            </div>
+          </div>
+          <div className="grid gap-2 md:hidden">
+            {filtered.map((row) => {
+              const isHighlighted = selectedCategory === row.masterCategory;
+              const vendors = [
+                ["MSCI", row.msci], ["S&P DJI", row.spdj], ["FTSE Russell", row.ftse],
+                ["STOXX", row.stoxx], ["Solactive", row.solactive], ["Morningstar", row.morningstar], ["VettaFi", row.vettafi],
+              ] as const;
+              return (
+                <Surface
+                  key={row.masterCategory}
+                  className={`cursor-pointer p-3 transition-colors ${isHighlighted ? "border-primary" : "hover:border-primary"}`}
+                  onClick={() => setSelectedCategory(isHighlighted ? "" : row.masterCategory)}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="min-w-0 break-words text-sm font-medium">{row.masterCategory}</p>
+                    <span className="shrink-0 border border-border px-1.5 py-0.5 font-mono text-[10px] font-semibold">{row.isoCAEV}</span>
+                  </div>
+                  <p className="ca-meta mt-2 break-words">{row.swiftMT564}</p>
+                  <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2">
+                    {vendors.map(([vendor, value]) => (
+                      <div key={vendor} className="min-w-0 border-t border-border pt-2">
+                        <p className="ca-meta">{vendor}</p>
+                        <p className="mt-1 break-words text-[11px] leading-relaxed text-muted-foreground">{value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </Surface>
+              );
+            })}
           </div>
         </div>
 
@@ -458,11 +469,11 @@ export default function IsoTaxonomyPage() {
             All ISO 20022 CAEV Codes
           </button>
           {showCAEV && <div className="overflow-hidden">
-            <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {CAEV_CODES.map((item) => (
                 <div key={item.code} className="ca-surface p-3">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="font-mono text-[11px] font-bold text-primary bg-primary/20 px-2 py-0.5 rounded-full">
+                    <span className="border border-border px-2 py-0.5 font-mono text-[11px] font-bold text-foreground">
                       {item.code}
                     </span>
                     <span className="text-xs font-semibold text-foreground">{item.name}</span>
@@ -475,25 +486,22 @@ export default function IsoTaxonomyPage() {
         </div>
 
         {/* SWIFT MT564 Reference */}
-        <div className="rounded-2xl border border-blue-500/30 bg-blue-500/5 p-6">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="h-6 w-6 rounded-lg bg-blue-500/20 flex items-center justify-center">
-              <span className="text-blue-400 text-[10px] font-bold">MT</span>
-            </div>
-            <h3 className="text-sm font-semibold text-blue-400">SWIFT MT564 Reference</h3>
-          </div>
-          <p className="text-xs text-muted-foreground leading-relaxed mb-3">
-            The MT564 Corporate Action Notification is the standard SWIFT message that carries corporate action events across the industry. Sequence A field <span className="font-mono text-blue-400">22F</span> contains the CAEV (Corporate Action Event) code — the bridge between the wire format and vendor terminology.
-          </p>
-          <div className="rounded-xl bg-black/20 p-3 font-mono text-[11px] text-muted-foreground leading-loose">
+        <Surface className="p-6">
+          <SectionHeader
+            titleAs="h2"
+            eyebrow="Wire reference"
+            title="SWIFT MT564 reference"
+            description={<>The MT564 Corporate Action Notification is the standard SWIFT message that carries corporate action events across the industry. Sequence A field <span className="font-mono text-accent">22F</span> contains the CAEV (Corporate Action Event) code — the bridge between the wire format and vendor terminology.</>}
+          />
+          <div className="mt-6 border border-border bg-muted p-3 font-mono text-[11px] leading-loose text-muted-foreground">
             <div>:20C: Reference</div>
-            <div>:22F:  <span className="text-blue-400">CAEV — DVCA</span> ← event type code</div>
+            <div>:22F:  <span className="text-accent">CAEV — DVCA</span> ← event type code</div>
             <div>:35B:  ISIN/US1234567890</div>
             <div>:98C:  EXDT/200101</div>
             <div>:36B:  ELIG/UNIT/1000</div>
             <div>:70E:  ADDB/OFFEROR/ACME CORP</div>
           </div>
-        </div>
+        </Surface>
         </SurfaceSection>
       </RouteShell>
       </Band>

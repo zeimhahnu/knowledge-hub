@@ -1,5 +1,5 @@
 // Responsive/a11y acceptance gate for the CA hub.
-// Runs the audit matrix from docs: 5 widths x 8 routes, asserting no document-level
+// Runs the audit matrix from docs: 7 widths x 8 routes, asserting no document-level
 // horizontal scroll, a minimum outer gutter, and that wide tables scroll only inside
 // their own labelled wrapper.
 //
@@ -9,7 +9,7 @@
 import { chromium } from 'playwright';
 
 const BASE = (process.argv[2] || 'http://127.0.0.1:3100').replace(/\/$/, '');
-const WIDTHS = [320, 375, 768, 1024, 1440];
+const WIDTHS = [320, 375, 390, 768, 1024, 1280, 1440];
 const MIN_GUTTER = 16;
 
 const ROUTES = [

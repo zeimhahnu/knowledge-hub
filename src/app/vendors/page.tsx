@@ -4,11 +4,11 @@ import { useState } from "react";
 import Link from "next/link";
 import { RouteShell } from "@/components/route-shell";
 import { Band } from "@/components/ui/band";
+import { Eyebrow } from "@/components/ui/design-system";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Surface } from "@/components/ui/surface";
 import Tippy from "@tippyjs/react";
 import {
-  ArrowLeftIcon,
   ArrowRightIcon,
   BookOpenIcon,
   CheckCircleIcon,
@@ -226,7 +226,7 @@ function GlossaryTerm({ term }: { term: string }) {
           <p className="mb-1 text-[13px] font-semibold text-white">{entry.term}</p>
           <p className="mb-2 text-[12px] leading-relaxed text-white/80">{entry.definition}</p>
           {entry.detail && (
-            <p className="rounded-lg bg-white/10 p-2.5 text-[11px] leading-relaxed text-white/60">
+            <p className="mt-2 border border-white/20 bg-white/5 p-2.5 text-[11px] leading-relaxed text-white/70">
               {entry.detail}
             </p>
           )}
@@ -234,7 +234,7 @@ function GlossaryTerm({ term }: { term: string }) {
       }
       placement="top"
     >
-      <span className="cursor-help border-b border-dashed border-amber-400/60 text-amber-400 hover:border-amber-400 hover:bg-amber-400/10">
+      <span className="cursor-help border-b border-dashed border-foreground/60 text-foreground hover:border-accent hover:text-accent">
         {term}
       </span>
     </Tippy>
@@ -650,10 +650,10 @@ assertVendorEventsMatchCanonical(EVENTS);
 // ─── Taxonomy tree ────────────────────────────────────────────────────────────
 
 const CATEGORIES = [
-  { name: "Equity Income", icon: TrendingUpIcon, color: "text-emerald-400" },
-  { name: "Corporate Structure", icon: ScaleIcon, color: "text-blue-400" },
-  { name: "Equity Offerings", icon: AlertTriangleIcon, color: "text-orange-400" },
-  { name: "M&A", icon: CheckCircleIcon, color: "text-red-400" },
+  { name: "Equity Income", icon: TrendingUpIcon },
+  { name: "Corporate Structure", icon: ScaleIcon },
+  { name: "Equity Offerings", icon: AlertTriangleIcon },
+  { name: "M&A", icon: CheckCircleIcon },
 ];
 
 const VENDORS = ["MSCI", "S&P DJI", "FTSE Russell", "STOXX", "Solactive", "Morningstar", "VettaFi"];
@@ -663,16 +663,14 @@ const VENDORS = ["MSCI", "S&P DJI", "FTSE Russell", "STOXX", "Solactive", "Morni
 function Badge({ variant }: { variant: "mandatory" | "voluntary" }) {
   return (
     <span
-      className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide ${
-        variant === "mandatory"
-          ? "bg-emerald-500/15 text-emerald-400"
-          : "bg-orange-500/15 text-orange-400"
+      className={`inline-flex items-center gap-1 border border-border px-2 py-1 text-[11px] font-semibold uppercase tracking-wide ${
+        variant === "mandatory" ? "text-foreground" : "text-muted-foreground"
       }`}
     >
       {variant === "mandatory" ? (
-        <CheckCircleIcon className="h-3 w-3" />
+        <CheckCircleIcon aria-hidden className="h-3 w-3" />
       ) : (
-        <AlertTriangleIcon className="h-3 w-3" />
+        <AlertTriangleIcon aria-hidden className="h-3 w-3" />
       )}
       {variant}
     </span>
@@ -692,7 +690,7 @@ function TimingFlow({ flow }: { flow: EventType["timingFlow"] }) {
               <div className="text-xs leading-relaxed text-muted-foreground"><GlossaryText text={step.what} /></div>
               <div className="mt-2 flex flex-wrap gap-1">
                 {step.who.map((w) => (
-                  <span key={w} className="rounded-full bg-muted/60 px-2 py-0.5 text-[10px] text-muted-foreground">
+                  <span key={w} className="border border-border px-2 py-0.5 text-[10px] text-muted-foreground">
                     {w}
                   </span>
                 ))}
@@ -707,14 +705,14 @@ function TimingFlow({ flow }: { flow: EventType["timingFlow"] }) {
 
 function ComparisonTable({ fields }: { fields: ComparisonField[] }) {
   return (
-    <div className="overflow-x-auto rounded-2xl border border-border">
-      <div className="overflow-x-auto">
-      <table className="w-full text-xs min-w-[600px]">
+    <>
+      <div className="hidden overflow-hidden border border-border md:block">
+      <table className="w-full table-fixed text-xs">
         <thead>
           <tr className="border-b border-border bg-muted/40">
-            <th className="min-w-[140px] px-4 py-3 text-left font-semibold text-muted-foreground">Field</th>
+            <th className="w-28 px-2 py-2 text-left font-semibold text-muted-foreground">Field</th>
             {VENDORS.map((v) => (
-              <th key={v} className="min-w-[110px] px-3 py-3 text-center font-semibold text-muted-foreground">
+              <th key={v} className="break-words px-1.5 py-2 text-center font-semibold text-muted-foreground">
                 {v}
               </th>
             ))}
@@ -722,12 +720,12 @@ function ComparisonTable({ fields }: { fields: ComparisonField[] }) {
         </thead>
         <tbody>
           {fields.map((row, ri) => (
-            <tr key={row.label} className={`border-b border-border/40 ${ri % 2 === 0 ? "bg-card" : "bg-muted/10"} hover:bg-accent/60 transition-colors`}>
-              <td className="px-4 py-2.5 font-medium">{row.label}</td>
+            <tr key={row.label} className={`border-b border-border/40 ${ri % 2 === 0 ? "bg-card" : "bg-muted/10"} hover:bg-muted transition-colors`}>
+              <td className="break-words px-2 py-2 align-top font-medium">{row.label}</td>
               {VENDORS.map((v) => {
                 const val = row.values[v] ?? "—";
                 const isCritical = val.includes("only") || val.includes("divisor only") || val.includes("unique") || val.includes("UNIQUE") || val.includes("No distinction");
-                const cellClass = isCritical ? "px-2 py-2.5 text-center tabular-nums font-semibold text-amber-400" : "px-2 py-2.5 text-center tabular-nums text-muted-foreground";
+                const cellClass = isCritical ? "break-words px-1.5 py-2 text-center tabular-nums font-semibold text-accent" : "break-words px-1.5 py-2 text-center tabular-nums text-muted-foreground";
                 return (
                   <td key={v} className={cellClass}>
                     {val === "N/A" ? <span className="text-muted-foreground/50">{val}</span> : <GlossaryText text={val} />}
@@ -739,7 +737,28 @@ function ComparisonTable({ fields }: { fields: ComparisonField[] }) {
         </tbody>
       </table>
       </div>
-    </div>
+      <div className="grid gap-2 md:hidden">
+        {fields.map((row) => (
+          <Surface key={row.label} className="p-3">
+            <Eyebrow>{row.label}</Eyebrow>
+            <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2">
+              {VENDORS.map((v) => {
+                const val = row.values[v] ?? "—";
+                const isCritical = val.includes("only") || val.includes("divisor only") || val.includes("unique") || val.includes("UNIQUE") || val.includes("No distinction");
+                return (
+                  <div key={v} className="min-w-0 border-t border-border pt-2">
+                    <p className="ca-meta">{v}</p>
+                    <p className={`mt-1 break-words text-[11px] leading-relaxed ${isCritical ? "font-semibold text-accent" : "text-muted-foreground"}`}>
+                      {val === "N/A" ? <span className="text-muted-foreground/50">{val}</span> : <GlossaryText text={val} />}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </Surface>
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -771,77 +790,7 @@ export default function VendorDashboard() {
   return (
     <div className="min-h-screen bg-background text-foreground">
 
-      {/* Top Navigation */}
-      <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 py-3">
-          <div className="flex items-center justify-between gap-4">
-            <Link href="/" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors">
-              <ArrowLeftIcon className="h-4 w-4" />
-              <span className="hidden sm:inline">Index Vendor Intelligence</span>
-              <span className="sm:hidden">Vendors</span>
-            </Link>
-
-            {/* Desktop nav */}
-            <div className="hidden sm:flex flex-wrap items-center gap-3">
-              <Link href="/vendors/iso-taxonomy/" className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent transition-colors">
-                <NetworkIcon className="h-3.5 w-3.5" />
-                ISO CAEV Taxonomy
-              </Link>
-              <Link href="/vendors/event-extraction/" className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent transition-colors">
-                <FileTextIcon className="h-3.5 w-3.5" />
-                Event Parameters
-              </Link>
-              <button
-                onClick={() => setShowGlossary(!showGlossary)}
-                className={`flex items-center gap-2 rounded-lg border px-3 py-1.5 text-xs transition-all ${
-                  showGlossary
-                    ? "border-amber-500/50 bg-amber-500/10 text-amber-400"
-                    : "border-border bg-card hover:bg-accent"
-                }`}
-              >
-                <BookOpenIcon className="h-3.5 w-3.5" />
-                Glossary
-              </button>
-            </div>
-
-            {/* Mobile nav: icon-only compact */}
-            <div className="flex sm:hidden items-center gap-2">
-              <Link href="/vendors/iso-taxonomy/" className="rounded-lg border border-border bg-card p-2 hover:bg-accent transition-colors" aria-label="ISO CAEV Taxonomy">
-                <NetworkIcon className="h-4 w-4" />
-              </Link>
-              <Link href="/vendors/event-extraction/" className="rounded-lg border border-border bg-card p-2 hover:bg-accent transition-colors" aria-label="Event Parameters">
-                <FileTextIcon className="h-4 w-4" />
-              </Link>
-              <button
-                onClick={() => setShowGlossary(!showGlossary)}
-                className={`rounded-lg border p-2 transition-all ${
-                  showGlossary
-                    ? "border-amber-500/50 bg-amber-500/10 text-amber-400"
-                    : "border-border bg-card hover:bg-accent"
-                }`}
-                aria-label="Toggle Glossary"
-              >
-                <BookOpenIcon className="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Glossary Panel */}
-
-      {/* ─── Floating Glossary FAB ─── */}
-      <button
-        onClick={() => setShowGlossary(!showGlossary)}
-        aria-label="Glossary"
-        className={`fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full shadow-lg transition-all hover:scale-105 active:scale-95 sm:bottom-8 sm:right-8 ${
-          showGlossary
-            ? "bg-amber-500 text-black"
-            : "bg-primary text-primary-foreground hover:bg-primary/90"
-        }`}
-      >
-        <BookOpenIcon className="h-5 w-5" />
-      </button>
+      {/* Glossary panel is opened from the in-band reference tabs below. */}
 
       {/* ─── Floating Glossary Popup ─── */}
       {showGlossary && (
@@ -853,10 +802,10 @@ export default function VendorDashboard() {
               aria-hidden="true"
             />
             {/* Panel */}
-            <div className="fixed bottom-20 right-4 z-50 w-[calc(100vw-2rem)] rounded-2xl border border-border bg-background shadow-2xl sm:bottom-8 sm:right-8 sm:w-96">
+            <div className="ca-surface fixed bottom-4 right-4 z-50 w-[calc(100vw-2rem)] sm:bottom-8 sm:right-8 sm:w-96">
               {/* Drag handle for mobile visual cue */}
               <div className="mt-3 mb-1 flex justify-center">
-                <div className="h-1 w-8 rounded-full bg-border" />
+                <div className="h-1 w-8 bg-border" />
               </div>
               <div className="flex items-center justify-between px-4 pb-3">
                 <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -864,7 +813,7 @@ export default function VendorDashboard() {
                 </div>
                 <button
                   onClick={() => setShowGlossary(false)}
-                  className="rounded-lg border border-border p-1.5 text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
+                  className="border border-border p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                   aria-label="Close glossary"
                 >
                   <XIcon className="h-4 w-4" />
@@ -873,10 +822,10 @@ export default function VendorDashboard() {
               <div className="max-h-[60vh] space-y-2 overflow-y-auto px-4 pb-4">
                 {GLOSSARY.map((g) => (
                   <div key={g.term} className="ca-surface p-3">
-                    <div className="mb-1 text-xs font-bold text-amber-400">{g.term}</div>
+                    <div className="mb-1 text-xs font-bold text-foreground">{g.term}</div>
                     <div className="text-xs leading-relaxed text-muted-foreground">{g.definition}</div>
                     {g.detail && (
-                      <div className="mt-2 rounded-lg bg-black/20 p-2 text-[11px] leading-relaxed text-muted-foreground/80">
+                      <div className="mt-2 border border-border bg-muted p-2 text-[11px] leading-relaxed text-muted-foreground">
                         {g.detail}
                       </div>
                     )}
@@ -887,25 +836,53 @@ export default function VendorDashboard() {
           </>
         )}
 
-          {/* ─── Page Content ─── */}
-          <Band className="!py-12">
-          <RouteShell wide className="py-6">
+      <Band tone="dark" className="!py-12">
+        <RouteShell wide className="space-y-8">
+          <SectionHeader
+            eyebrow="Vendor reference"
+            title="Corporate-action vendor methodology"
+            description="Browse the event taxonomy, compare methodology rules, and keep the glossary close without leaving the shared product language."
+          />
+          <nav aria-label="Vendor reference" className="flex flex-wrap items-center gap-x-6 border-t border-border pt-2">
+            <Link href="#event-taxonomy" className="border-b-2 border-primary px-1 py-3 text-xs font-medium text-primary">Event taxonomy</Link>
+            <Link href="/vendors/iso-taxonomy/" className="flex items-center gap-2 border-b-2 border-transparent px-1 py-3 text-xs text-muted-foreground transition-colors hover:border-primary hover:text-primary">
+              <NetworkIcon aria-hidden className="h-3.5 w-3.5" />
+              ISO CAEV Taxonomy
+            </Link>
+            <Link href="/vendors/event-extraction/" className="flex items-center gap-2 border-b-2 border-transparent px-1 py-3 text-xs text-muted-foreground transition-colors hover:border-primary hover:text-primary">
+              <FileTextIcon aria-hidden className="h-3.5 w-3.5" />
+              Event Parameters
+            </Link>
+            <button
+              type="button"
+              onClick={() => setShowGlossary(!showGlossary)}
+              aria-expanded={showGlossary}
+              className={`flex items-center gap-2 border-b-2 px-1 py-3 text-xs transition-colors ${showGlossary ? "border-accent text-accent" : "border-transparent text-muted-foreground hover:border-primary hover:text-primary"}`}
+            >
+              <BookOpenIcon aria-hidden className="h-3.5 w-3.5" />
+              Glossary
+            </button>
+          </nav>
+        </RouteShell>
+      </Band>
+
+      <Band tone="light" className="min-h-screen !py-12">
+        <RouteShell wide className="py-6">
             <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
 
               {/* Left Sidebar: desktop only */}
-              <aside className="hidden lg:block w-52 shrink-0">
+              <aside id="event-taxonomy" className="hidden w-56 shrink-0 lg:block">
                 <div className="sticky top-20">
-                  <div className="mb-3 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
-                    Event Taxonomy
-                  </div>
-                  <div className="space-y-3">
+                  <div className="border border-foreground/20 bg-foreground p-4 text-background">
+                  <Eyebrow className="mb-3 text-background">Event taxonomy</Eyebrow>
+                  <div className="divide-y divide-background/20">
                     {eventsByCategory.map((cat) => (
-                      <div key={cat.name}>
+                      <div key={cat.name} className="py-3 first:pt-0 last:pb-0">
                         <button
                           onClick={() => toggleCategory(cat.name)}
-                          className="mb-1 flex w-full items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground"
+                          className="mb-1 flex w-full items-center gap-2 text-left text-[11px] font-semibold uppercase tracking-wider text-background/70 transition-colors hover:text-background"
                         >
-                          <cat.icon className={`h-3.5 w-3.5 ${cat.color}`} />
+                          <cat.icon aria-hidden className="h-3.5 w-3.5" />
                           <span className="flex-1 text-left">{cat.name}</span>
                           <ChevronRightIcon
                             className={`h-3 w-3 transition-transform ${expandedCategories.has(cat.name) ? "rotate-90" : ""}`}
@@ -918,10 +895,10 @@ export default function VendorDashboard() {
                                   <button
                                     key={evt.id}
                                     onClick={() => setActiveId(evt.id)}
-                                    className={`flex w-full items-center gap-1.5 rounded-lg px-2 py-1.5 text-[12px] transition-all ${
+                                    className={`flex w-full items-center gap-1.5 px-2 py-1.5 text-left text-[12px] transition-colors ${
                                       activeId === evt.id
-                                        ? "bg-primary/20 text-primary font-medium"
-                                        : "text-muted-foreground hover:bg-accent hover:text-foreground"
+                                        ? "bg-background font-medium text-foreground"
+                                        : "text-background/70 hover:bg-background/10 hover:text-background"
                                     }`}
                                   >
                                     <ArrowRightIcon
@@ -936,6 +913,7 @@ export default function VendorDashboard() {
                       </div>
                     ))}
                   </div>
+                  </div>
                 </div>
               </aside>
 
@@ -947,7 +925,7 @@ export default function VendorDashboard() {
                 <select
                   value={activeId}
                   onChange={(e) => setActiveId(e.target.value)}
-                  className="ca-control px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="ca-control px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-ring"
                 >
                   {eventsByCategory.map((cat) => (
                     <optgroup key={cat.name} label={cat.name}>
@@ -974,64 +952,49 @@ export default function VendorDashboard() {
 
             {/* Why No Adjustment */}
             {active.whyNoAdj && (
-              <div className="mb-5 rounded-2xl border border-blue-500/30 bg-blue-500/5 p-4">
-                <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-blue-400">
-                  Why is there NO price adjustment?
-                </div>
-                <p className="text-sm leading-relaxed"><GlossaryText text={active.whyNoAdj} /></p>
-              </div>
+              <Surface className="mb-5 p-4">
+                <SectionHeader titleAs="h2" eyebrow="Methodology rationale" title="Why is there no price adjustment?" description={<GlossaryText text={active.whyNoAdj} />} />
+              </Surface>
             )}
 
             {/* Why Adjustment */}
             {active.whyAdj && (
-              <div className="mb-5 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4">
-                <div className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-amber-400">
-                  Why IS there a price adjustment?
-                </div>
-                <p className="text-sm leading-relaxed"><GlossaryText text={active.whyAdj} /></p>
-              </div>
+              <Surface className="mb-5 p-4">
+                <SectionHeader titleAs="h2" eyebrow="Methodology rationale" title="Why is there a price adjustment?" description={<GlossaryText text={active.whyAdj} />} />
+              </Surface>
             )}
 
             {/* Recognition vs Adjustment */}
             <div className="mb-6 grid gap-3 md:grid-cols-2">
-              <div className="rounded-2xl border border-blue-500/30 bg-blue-500/5 p-4">
-                <div className="mb-1 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-blue-400">
-                  <span className="h-2 w-2 rounded-full bg-blue-400" />
-                  When Vendor Recognises
-                </div>
-                <div className="text-sm font-medium">{active.recognitionTiming}</div>
-              </div>
-              <div className="rounded-2xl border border-green-500/30 bg-green-500/5 p-4">
-                <div className="mb-1 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-green-400">
-                  <span className="h-2 w-2 rounded-full bg-green-400" />
-                  When Adjustment Applied
-                </div>
-                <div className="text-sm font-medium">{active.adjustmentTiming}</div>
-              </div>
+              <Surface className="p-4">
+                <SectionHeader titleAs="h2" eyebrow="Recognition timing" title="When vendor recognises" description={active.recognitionTiming} />
+              </Surface>
+              <Surface className="p-4">
+                <SectionHeader titleAs="h2" eyebrow="Adjustment timing" title="When adjustment applied" description={active.adjustmentTiming} />
+              </Surface>
             </div>
 
             {/* Thresholds */}
             {active.thresholds.length > 0 && (
               <div className="mb-6">
-                <h3 className="mb-3 text-sm font-semibold">Threshold Rules</h3>
-                <div className="rounded-xl border border-border overflow-hidden">
-                  <div className="overflow-x-auto">
-                    <table className="w-full text-xs min-w-[640px]">
+                <Eyebrow className="mb-3">Threshold rules</Eyebrow>
+                <div className="hidden overflow-hidden border border-border md:block">
+                    <table className="w-full table-fixed text-xs">
                       <thead>
                         <tr className="border-b border-border bg-muted/50">
-                          <th className="px-4 py-2.5 text-left font-semibold text-muted-foreground whitespace-nowrap">Vendor</th>
+                          <th className="w-28 px-3 py-2.5 text-left font-semibold text-muted-foreground">Vendor</th>
                           <th className="px-4 py-2.5 text-left font-semibold text-muted-foreground">Threshold Rule</th>
-                          <th className="px-4 py-2.5 text-left font-semibold text-muted-foreground whitespace-nowrap">Notes</th>
+                          <th className="w-1/3 px-4 py-2.5 text-left font-semibold text-muted-foreground">Notes</th>
                         </tr>
                       </thead>
                       <tbody>
                         {active.thresholds.map((t, i) => (
                           <tr key={t.vendor} className={`border-b border-border/40 ${i % 2 === 0 ? "bg-card" : "bg-muted/5"}`}>
-                            <td className="px-4 py-3 align-top font-semibold text-foreground whitespace-nowrap">{t.vendor}</td>
-                            <td className="px-4 py-3 align-top leading-relaxed"><GlossaryText text={t.value} /></td>
+                            <td className="break-words px-3 py-2 align-top font-semibold text-foreground">{t.vendor}</td>
+                            <td className="break-words px-4 py-2 align-top leading-relaxed"><GlossaryText text={t.value} /></td>
                             <td className="px-4 py-3 align-top">
                               {t.note && (
-                                <span className="inline-block text-[11px] text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-full leading-relaxed">
+                                <span className="inline-block text-[11px] text-muted-foreground leading-relaxed">
                                   <GlossaryText text={t.note} />
                                 </span>
                               )}
@@ -1040,21 +1003,29 @@ export default function VendorDashboard() {
                         ))}
                       </tbody>
                     </table>
-                  </div>
+                </div>
+                <div className="grid gap-2 md:hidden">
+                  {active.thresholds.map((t) => (
+                    <Surface key={t.vendor} className="p-3">
+                      <Eyebrow>{t.vendor}</Eyebrow>
+                      <p className="mt-2 break-words text-xs leading-relaxed"><GlossaryText text={t.value} /></p>
+                      {t.note && <p className="ca-meta mt-2 break-words"><GlossaryText text={t.note} /></p>}
+                    </Surface>
+                  ))}
                 </div>
               </div>
             )}
 
             {/* Timing Flow */}
             <div className="mb-6">
-              <h3 className="mb-3 text-sm font-semibold">Timing Flow</h3>
+              <Eyebrow className="mb-3">Timing flow</Eyebrow>
               <TimingFlow flow={active.timingFlow} />
             </div>
 
             {/* Key Terms with hover tooltips */}
             {active.keyTerms.length > 0 && (
               <div className="mb-6">
-                <h3 className="mb-3 text-sm font-semibold">Key Terms</h3>
+                <Eyebrow className="mb-3">Key terms</Eyebrow>
                 <div className="flex flex-wrap gap-2">
                   {active.keyTerms.map((term) => {
                     const exists = GLOSSARY.some((g) => g.term === term);
@@ -1062,7 +1033,7 @@ export default function VendorDashboard() {
                     return (
                       <span
                         key={term}
-                        className="rounded-full border border-amber-500/40 bg-amber-500/5 px-3 py-1 text-xs text-amber-400"
+                        className="ca-surface px-3 py-1 text-xs text-foreground"
                       >
                         <GlossaryTerm term={term} />
                       </span>
@@ -1073,24 +1044,20 @@ export default function VendorDashboard() {
             )}
 
             {/* Critical Rule */}
-            <div className="mb-6 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4">
-              <div className="mb-2 flex items-center gap-2 text-sm font-semibold text-amber-400">
-                <AlertTriangleIcon className="h-4 w-4" />
-                Critical Rule to Watch
-              </div>
-              <p className="text-sm leading-relaxed"><GlossaryText text={active.criticalRule} /></p>
-            </div>
+            <Surface className="mb-6 border-accent/60 p-4">
+              <SectionHeader titleAs="h2" eyebrow={<span className="flex items-center gap-2 text-accent"><AlertTriangleIcon aria-hidden className="h-4 w-4" />Critical divergence</span>} title="Critical rule to watch" description={<GlossaryText text={active.criticalRule} />} />
+            </Surface>
 
             {/* Vendor Comparison Table */}
             <div className="mb-6">
-              <h3 className="mb-3 text-sm font-semibold">Vendor Comparison</h3>
+              <Eyebrow className="mb-3">Vendor comparison</Eyebrow>
               <ComparisonTable fields={active.comparisonFields} />
             </div>
 
             {/* Legend + hover hint */}
             <div className="flex flex-wrap items-center gap-4 text-[11px] text-muted-foreground mb-8">
               <div className="flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-amber-400" />
+                <span className="h-2 w-2 bg-accent" />
                 Critical — unique or divergent rule
               </div>
               <div className="flex items-center gap-1.5">
@@ -1098,13 +1065,13 @@ export default function VendorDashboard() {
                 Not applicable
               </div>
               <div className="flex items-center gap-1.5">
-                Hover any <span className="ml-1 border-b border-dashed border-amber-400 text-amber-400">highlighted term</span> for tooltip definition
+                Hover any <span className="ml-1 border-b border-dashed border-foreground text-foreground">highlighted term</span> for tooltip definition
               </div>
             </div>
 
             {/* Source Notes */}
             <div className="space-y-1 border-t border-border pt-5 text-[11px] text-muted-foreground overflow-x-hidden">
-              <div className="font-semibold uppercase tracking-wider text-muted-foreground/60">Sources</div>
+              <Eyebrow className="text-muted-foreground">Sources</Eyebrow>
               <div>FTSE Russell — Corporate Actions and Events Guide v6.8 (Oct 2025)</div>
               <div>STOXX — Calculation Guide (Apr 2026)</div>
               <div>S&P Dow Jones Indices — Equity Indices Policies and Practices (Mar 2026)</div>
@@ -1115,7 +1082,7 @@ export default function VendorDashboard() {
 
               {/* Footnotes */}
               <div className="mt-4 space-y-1 border-t border-border/50 pt-3">
-                <div className="font-semibold uppercase tracking-wider text-muted-foreground/60">Footnotes</div>
+                <Eyebrow className="text-muted-foreground">Footnotes</Eyebrow>
                 <div><sup>1</sup> STOXX thresholds apply specifically to <strong>STOXX Europe 600 (SXXR)</strong> and <strong>STOXX Europe 600 PAB (SXXPPAB)</strong>. The deletion trigger requires BOTH: (a) ≥85% of shares acquired through the tender offer, AND (b) remaining free float of the target falls below 10%. If condition (a) is not met, no immediate deletion occurs — deferred to the next quarterly review. Tender offers follow the same M&A methodology.</div>
                 <div><sup>2</sup> STOXX <strong>Artificial Price</strong> — if the target is no longer trading at deletion (delisted/suspended before effective date), STOXX calculates an artificial price based on acquisition terms: <strong>Cash only</strong> = cash term; <strong>Stock only</strong> = acquirer closing price × stock exchange ratio; <strong>Cash + Stock</strong> = cash term + (acquirer price × stock term); <strong>Cash or Stock</strong> = cash term. Only ordinary cash and stock terms used — CVRs excluded. Surviving stock replaces the largest original stock in Benchmark indices.</div>
               </div>

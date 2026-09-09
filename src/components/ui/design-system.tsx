@@ -42,17 +42,20 @@ export function SectionHeader({
   eyebrow,
   title,
   description,
+  titleAs = "h1",
   className,
 }: {
   eyebrow?: ReactNode;
   title: ReactNode;
   description?: ReactNode;
+  titleAs?: "h1" | "h2" | "h3";
   className?: string;
 }) {
+  const Title = titleAs;
   return (
     <header className={cn("ca-section-header", className)}>
       {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-      <h1 className="ca-display-title">{title}</h1>
+      <Title className={titleAs === "h1" ? "ca-display-title" : "ca-section-title"}>{title}</Title>
       {description && <p className="ca-body-copy mt-4 max-w-prose">{description}</p>}
     </header>
   );

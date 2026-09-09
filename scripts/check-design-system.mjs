@@ -10,6 +10,8 @@ const pages = [
   "src/app/settings/page.tsx",
   "src/app/upload/page.tsx",
   "src/app/review/page.tsx",
+  "src/app/vendors/page.tsx",
+  "src/app/vendors/iso-taxonomy/page.tsx",
 ];
 const problems = [];
 
@@ -30,6 +32,18 @@ for (const relative of pages) {
   }
   if (/oklch\([^)]*(?:250|260)/.test(file) || /bg-\[[^\]]*oklch/.test(file)) {
     problems.push(`${relative}: raw oklch blue token used in a page or CTA`);
+  }
+
+  if (relative.startsWith("src/app/vendors/")) {
+    if (/\b(?:blue|green|amber|yellow|emerald|teal|cyan|indigo|purple|pink|orange|red)-\d/.test(file)) {
+      problems.push(`${relative}: legacy hue-specific accent class detected; use system tokens`);
+    }
+    if (/\b(?:bg|text|border)-(?:blue|green|amber|yellow|emerald|teal|cyan|indigo|purple|pink|orange|red)-/.test(file)) {
+      problems.push(`${relative}: hand-rolled hue accent detected; map meaning to system accent or surface`);
+    }
+    if (/min-w-\[|overflow-x-auto/.test(file)) {
+      problems.push(`${relative}: horizontal overflow escape hatch detected; use responsive table/card grammar`);
+    }
   }
 }
 
