@@ -26,10 +26,10 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="border-b border-border bg-card/80 backdrop-blur-sm">
+    <header className="border-b border-border bg-background text-foreground">
       <nav
         aria-label="Primary navigation"
-        className="mx-auto flex w-full max-w-4xl items-center justify-between px-4 py-3 text-sm sm:px-6 lg:px-8"
+        className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-5 text-sm sm:px-6 lg:px-8"
       >
         <Link href="/" className="shrink-0 font-semibold text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Index Vendor Intelligence</Link>
         <div className="hidden items-center gap-x-5 sm:flex">

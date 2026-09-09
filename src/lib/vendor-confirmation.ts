@@ -14,6 +14,13 @@ interface ConfirmationDraft {
   marks: Record<string, Partial<Record<VendorId, VendorConfirmation>>>;
 }
 
+export interface StoredInvestigation {
+  ticker: string;
+  eventType: string;
+  exDate: string;
+  marks: Partial<Record<VendorId, VendorConfirmation>>;
+}
+
 /** One local, versioned store for all lookup-specific vendor observations. */
 export const VENDOR_CONFIRMATION_STORAGE_KEY = "ca-hub.vendor-confirmation.v1";
 
@@ -71,6 +78,29 @@ function readDraft(storage?: SettingsStorage): ConfirmationDraft {
   } catch {
     return freshDraft();
   }
+}
+
+/** Read real lookup marks for the home workbench without exposing storage to SSR. */
+export function getStoredInvestigations(storage?: SettingsStorage): StoredInvestigation[] {
+  const draft = readDraft(storage);
+  const investigations: StoredInvestigation[] = [];
+  for (const [rawKey, marks] of Object.entries(draft.marks)) {
+    try {
+      const [ticker, eventType, exDate] = JSON.parse(rawKey) as unknown[];
+      if (
+        typeof ticker === "string" &&
+        typeof eventType === "string" &&
+        typeof exDate === "string"
+      ) {
+        investigations.push({ ticker, eventType, exDate, marks });
+      }
+    } catch {
+      // Ignore malformed legacy keys; a corrupt entry must not hide other work.
+    }
+  }
+  return investigations.sort((a, b) =>
+    `${b.exDate}${b.ticker}`.localeCompare(`${a.exDate}${a.ticker}`),
+  );
 }
 
 function writeDraft(

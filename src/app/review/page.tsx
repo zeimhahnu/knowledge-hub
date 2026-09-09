@@ -49,10 +49,14 @@ export default function ReviewPage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <Band className="min-h-screen">
-      <RouteShell className="py-12 md:py-16">
-        <div className="mx-auto max-w-5xl">
+      <Band tone="dark">
+        <RouteShell className="py-12 md:py-16">
           <SectionHeader eyebrow="Human review" title="Proposed methodology rules" description="Extraction only proposes. Approve a document to append its candidates to the curated rule set; rejected or absent candidates never become rules." />
+        </RouteShell>
+      </Band>
+      <Band tone="light" className="min-h-screen">
+      <RouteShell className="py-12 md:py-16">
+        <div className="max-w-5xl">
           {message && <Surface className="mt-6 p-4 text-sm text-muted-foreground" role="status">{message}</Surface>}
           <div className="mt-8 space-y-6">
             {files.filter((file) => file.status === "proposed").map((file) => (

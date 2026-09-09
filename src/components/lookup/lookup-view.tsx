@@ -227,7 +227,7 @@ function NewsPanel({
                         href={s.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="block rounded-xl border border-border bg-card/60 p-3 text-sm outline-none transition-colors hover:border-primary/40 focus-visible:ring-2 focus-visible:ring-ring"
+                        className="block ca-surface p-3 text-sm outline-none transition-colors hover:border-primary/40 focus-visible:ring-2 focus-visible:ring-ring"
                       >
                         <span className="block font-medium text-foreground">
                           {s.title}
@@ -778,43 +778,43 @@ export function LookupView({
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <Band className="min-h-screen" tone="dark">
+      <Band className="!py-0" tone="dark">
       {/* Query header — D1 (1) */}
-      <div className="border-b border-white/10 bg-[linear-gradient(115deg,#050505_0%,#171717_52%,#2b2b2b_100%)] text-white">
+      <div className="border-b border-border bg-background text-foreground">
         <div className="mx-auto max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
-          <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[#959494]">Corporate-action lookup · step 2 of 6</p>
+          <p className="ca-eyebrow">Corporate-action lookup · step 2 of 6</p>
           <div className="flex flex-wrap items-end gap-x-4 gap-y-2">
-            <h1 className="text-4xl font-medium tracking-[-0.05em]">{ticker}</h1>
+            <h1 className="ca-display-title">{ticker}</h1>
             {company && (
-              <span className="pb-1 text-sm text-white/65">
+              <span className="pb-1 text-sm text-muted-foreground">
                 {company}
               </span>
             )}
           </div>
 
           <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center rounded-[4px] border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white">
+            <span className="inline-flex items-center rounded-[4px] border border-border bg-card px-3 py-1 text-xs font-medium text-foreground">
               {eventName}
             </span>
             {caev && (
-              <span className="inline-flex items-center rounded-[4px] border border-white/20 bg-white/10 px-3 py-1 font-mono text-xs font-medium text-white/65">
+              <span className="inline-flex items-center rounded-[4px] border border-border bg-card px-3 py-1 font-mono text-xs font-medium text-muted-foreground">
                 {caev}
               </span>
             )}
-            <span className="inline-flex items-center gap-1.5 rounded-[4px] border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white/65">
+            <span className="inline-flex items-center gap-1.5 rounded-[4px] border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
               <CalendarDaysIcon className="h-3.5 w-3.5" aria-hidden />
               ex-date {exDate}
             </span>
             {daysOutNum !== null && (
-              <span className="inline-flex items-center gap-1.5 rounded-[4px] border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white/65">
+              <span className="inline-flex items-center gap-1.5 rounded-[4px] border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
                 <ClockIcon className="h-3.5 w-3.5" aria-hidden />
                 {daysOutLabel(daysOutNum)}
               </span>
             )}
           </div>
-          <div className="mt-8 grid gap-5 border-t border-white/15 pt-5 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-end sm:gap-8">
+          <div className="mt-8 grid gap-5 border-t border-border pt-5 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-end sm:gap-8">
             <div>
-              <p className="font-mono text-[0.65rem] uppercase tracking-[0.16em] text-white/55">Investigation progress</p>
+              <p className="ca-label">Investigation progress</p>
               <p className="mt-1 text-xl font-medium tracking-[-0.03em]">
                 {verdict ? `${checkedVendorCount} of ${checkableVendorCount} checked` : "Preparing your checks"}
               </p>
@@ -831,12 +831,12 @@ export function LookupView({
                 {Array.from({ length: checkableVendorCount }, (_, index) => (
                   <span
                     key={index}
-                    className={`ca-progress-segment h-1 min-w-0 flex-1 rounded-[4px] ${index < checkedVendorCount ? "bg-white" : "bg-white/15"}`}
+                    className={`ca-progress-segment h-1 min-w-0 flex-1 rounded-[4px] ${index < checkedVendorCount ? "bg-foreground" : "bg-border"}`}
                     aria-hidden
                   />
                 ))}
               </div>
-              <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/65">
+              <p className="ca-meta mt-2 max-w-2xl">
                 {verdict && verdict.totals.unchecked > 0
                   ? "Finding so far — this picture is incomplete until every in-scope vendor is checked."
                   : "All in-scope vendors have an observation; review the rows before sharing the finding."}
@@ -845,8 +845,8 @@ export function LookupView({
           </div>
         </div>
       </div>
-      <div className="ca-brand-rule" aria-hidden />
-
+      </Band>
+      <Band className="!py-0" tone="light">
       <div className="mx-auto max-w-6xl space-y-4 px-5 py-8 sm:px-8 sm:py-10">
         {/* D1 (2) vendor scope — D1 (3) verdict — D1 (4) matrix — D1 (5) news */}
         {!hydrated || !verdict ? (
@@ -854,7 +854,7 @@ export function LookupView({
             {[0, 1, 2].map((i) => (
               <div
                 key={i}
-                className="h-40 rounded-[2rem] border border-border bg-muted/40"
+                className="ca-surface h-40 bg-muted/40"
               />
             ))}
           </div>

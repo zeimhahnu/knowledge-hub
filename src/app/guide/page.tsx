@@ -24,9 +24,13 @@ export default function GuidePage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <Band className="min-h-screen">
-      <RouteShell className="py-10 md:py-14">
+      <Band tone="dark" className="!py-0">
+      <RouteShell className="py-12 md:py-16">
         <SectionHeader eyebrow="Reading guide" title="Corporate-action glossary" description="Plain-language explanations for the terms that appear in vendor treatment text. Select a linked term in the lookup table to jump directly to its explanation." className="max-w-2xl" />
+      </RouteShell>
+      </Band>
+      <Band tone="light" className="min-h-screen !py-0">
+      <RouteShell className="py-10 md:py-14">
 
         <div className="mt-10 space-y-10">
           {sections.map((section) => (

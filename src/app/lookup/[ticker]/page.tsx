@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { LookupView } from "@/components/lookup/lookup-view";
 import { Band } from "@/components/ui/band";
 import { Surface } from "@/components/ui/surface";
+import { RouteShell } from "@/components/route-shell";
 import { canonicalEventById } from "@/lib/event-taxonomy";
 
 /**
@@ -48,15 +49,19 @@ export async function generateMetadata({
 function MissingParams({ title, body }: { title: string; body: string }) {
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <Band className="min-h-screen">
-        <div className="mx-auto max-w-4xl px-6 py-16">
-          <Surface className="p-8">
-          <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-          <p className="mt-2 max-w-prose text-sm leading-relaxed text-muted-foreground">
+      <Band tone="dark" className="!py-0">
+        <RouteShell className="py-12 md:py-16">
+          <h1 className="ca-display-title">{title}</h1>
+        </RouteShell>
+      </Band>
+      <Band tone="light" className="min-h-[40vh] !py-0">
+        <RouteShell className="py-12 md:py-16">
+          <Surface className="max-w-3xl p-8">
+          <p className="ca-body-copy max-w-prose">
             {body}
           </p>
           </Surface>
-        </div>
+        </RouteShell>
       </Band>
     </main>
   );

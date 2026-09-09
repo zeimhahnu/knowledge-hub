@@ -353,7 +353,7 @@ export default function SettingsPage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <Band tone="light" className="!py-12">
+      <Band tone="dark" className="!py-12">
         <RouteShell className="py-8">
           <SectionHeader eyebrow="Coverage settings" title="Vendor publication horizons" description={
             <>
@@ -365,6 +365,7 @@ export default function SettingsPage() {
           </p>
         </RouteShell>
       </Band>
+      <Band tone="light">
       <RouteShell className="py-10">
         <Surface className="mb-4 flex flex-wrap items-center justify-between gap-3 p-3" aria-live="polite">
           <p
@@ -428,6 +429,7 @@ export default function SettingsPage() {
           </p>
         </footer>
       </RouteShell>
+      </Band>
     </main>
   );
 }

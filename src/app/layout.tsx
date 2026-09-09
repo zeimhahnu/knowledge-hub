@@ -22,6 +22,7 @@ export default function RootLayout({
         className="min-h-dvh min-h-screen bg-background font-sans antialiased"
       >
         <SiteHeader />
+        <div className="ca-brand-rule" aria-hidden />
         {children}
       </body>
     </html>

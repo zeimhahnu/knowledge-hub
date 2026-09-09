@@ -70,14 +70,18 @@ export default function UploadPage() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <div className="ca-brand-rule" aria-hidden />
-      <Band className="relative overflow-hidden border-b border-border">
+      <Band tone="dark" className="relative overflow-hidden border-b border-border">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 opacity-[0.03] [background-image:linear-gradient(var(--foreground)_1px,transparent_1px),linear-gradient(90deg,var(--foreground)_1px,transparent_1px)] [background-size:64px_64px]"
         />
         <RouteShell className="relative py-12 md:py-16">
-          <SectionHeader className="mx-auto max-w-2xl text-center" eyebrow="Methodology screening" title="Screen a vendor methodology before ingest." description="Upload a text-based PDF and its vendor ID. We check that it is relevant, attributed, and safe to process." />
+          <SectionHeader eyebrow="Methodology screening" title="Screen a vendor methodology before ingest." description="Upload a text-based PDF and its vendor ID. We check that it is relevant, attributed, and safe to process." />
+        </RouteShell>
+      </Band>
+
+      <Band tone="light">
+        <RouteShell className="py-12 md:py-16">
 
           <Surface className="mx-auto mt-8 max-w-3xl p-4 sm:p-6">
           <form onSubmit={handleSubmit} noValidate>
@@ -140,8 +144,8 @@ export default function UploadPage() {
           <p className="mx-auto mt-6 max-w-2xl text-center text-sm leading-relaxed text-muted-foreground">
             A passed screen stores extracted text and proposes rules for review. Nothing reaches the curated rule set until a human approves it on the review page.
           </p>
-          <p className="mt-3 text-center text-sm"><Link className="font-medium text-primary underline-offset-4 hover:underline" href="/review">Review proposed rules</Link></p>
-          <p className="mt-6 text-center text-sm"><Link className="font-medium text-primary underline-offset-4 hover:underline" href="/">Back to corporate-action validation</Link></p>
+          <p className="mt-3 text-sm"><Link className="font-medium text-accent underline-offset-4 hover:underline" href="/review">Review proposed rules</Link></p>
+          <p className="mt-6 text-sm"><Link className="font-medium text-accent underline-offset-4 hover:underline" href="/">Back to corporate-action validation</Link></p>
         </RouteShell>
       </Band>
     </main>
