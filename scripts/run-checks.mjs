@@ -18,12 +18,16 @@ const names = (await readdir(dir))
   .filter((f) => !only.length || only.some((frag) => f.includes(frag)))
   .sort();
 
+// Keep in-process mock JWKS servers local. Gateway egress proxying otherwise sends
+// localhost test requests to the proxy and turns a cryptographic check into CA05.
+const noProxy = [...new Set([...(process.env.NO_PROXY || process.env.no_proxy || "").split(",").filter(Boolean), "127.0.0.1", "localhost"])].join(",");
 const failed = [];
 for (const name of names) {
   const run = spawnSync(process.execPath, ["--experimental-transform-types", dir + name], {
     stdio: ["ignore", "pipe", "pipe"],
     encoding: "utf8",
     timeout: 120_000,
+    env: { ...process.env, NO_PROXY: noProxy, no_proxy: noProxy },
   });
   if (run.status === 0) {
     console.log(`  ok   ${name}`);
