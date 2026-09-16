@@ -43,6 +43,24 @@ export type AnalystRuleEvidence = {
   confidence: "stated" | "inferred" | "absent" | "user-set";
 };
 
+/**
+ * Cross-vendor entailment, already computed and rendered in the UI.
+ *
+ * `divergence` compares what two methodologies SAY. Entailment compares a
+ * methodology against what the operator OBSERVED, using one vendor's
+ * publication as evidence about another's silence. Until 2026-09-16 it was
+ * never sent: the model re-derived the same reasoning from raw rule text and
+ * happened to agree, so two engines computed one verdict and nothing would
+ * have detected the day they diverged.
+ */
+export type AnalystEntailment = {
+  vendor: string;
+  verdict: "contradicted" | "consistent" | "indeterminate";
+  reason: string;
+  drivers: string[];
+  scope: "3-d" | "2-d";
+};
+
 export type AnalystLookupContext = {
   ticker: string;
   eventType: string;
@@ -50,6 +68,7 @@ export type AnalystLookupContext = {
   selectedVendors: string[];
   matrixRows: AnalystMatrixRow[];
   news: AnalystNewsContext;
+  entailment?: AnalystEntailment[];
 };
 
 export type AnalystTurnRequest = {

@@ -1,7 +1,9 @@
 import type { NewsValidationResult } from "../news-validation.ts";
 import type { LookupVerdict, MatrixRow } from "../lookup-verdict.ts";
 import { VENDOR_IDS, type VendorId } from "../vendors.ts";
+import type { VendorEntailment } from "../vendor-entailment.ts";
 import type {
+  AnalystEntailment,
   AnalystLookupContext,
   AnalystMatrixRow,
   AnalystNewsContext,
@@ -12,6 +14,8 @@ const MAX_VENDORS = 7;
 const MAX_ROWS = 7;
 const MAX_RULE_REFS = 8;
 const MAX_SOURCES = 8;
+const MAX_ENTAILMENT = 7;
+const MAX_REASON = 600;
 
 function cleanText(value: string, max: number): string {
   return value
@@ -83,6 +87,25 @@ function newsContext(news: NewsValidationResult): AnalystNewsContext {
   };
 }
 
+/**
+ * The UI already renders this; the Analyst never saw it. Only the fields the
+ * model reasons from travel: `peers` is the derivation detail behind `reason`,
+ * and `ruleRefs` already ride on matrixRows, so neither is duplicated onto the
+ * wire.
+ */
+function entailmentContext(results: readonly VendorEntailment[], selected: ReadonlySet<string>): AnalystEntailment[] {
+  return results
+    .filter((result) => selected.has(result.vendor))
+    .slice(0, MAX_ENTAILMENT)
+    .map((result) => ({
+      vendor: result.vendor,
+      verdict: result.verdict,
+      reason: cleanText(result.reason, MAX_REASON),
+      drivers: [...new Set(result.drivers)].filter(isVendor).slice(0, MAX_VENDORS),
+      scope: result.scope,
+    }));
+}
+
 /** Build the bounded P1a wire context from the lookup already on screen. */
 export function buildAnalystLookupContext({
   ticker,
@@ -91,6 +114,7 @@ export function buildAnalystLookupContext({
   selectedVendors,
   verdict,
   news,
+  entailment,
 }: {
   ticker: string;
   eventType: string;
@@ -98,6 +122,7 @@ export function buildAnalystLookupContext({
   selectedVendors: readonly VendorId[];
   verdict: LookupVerdict;
   news: NewsValidationResult;
+  entailment?: readonly VendorEntailment[];
 }): AnalystLookupContext {
   const selected = [...new Set(selectedVendors.filter(isVendor))].slice(0, MAX_VENDORS);
   const selectedSet = new Set(selected);
@@ -117,5 +142,10 @@ export function buildAnalystLookupContext({
         rules: ruleEvidence(row),
       })),
     news: newsContext(news),
+    // Omitted entirely when absent: the wire contract makes entailment optional,
+    // and an empty array would claim "computed, found nothing".
+    ...(entailment && entailment.length
+      ? { entailment: entailmentContext(entailment, selectedSet) }
+      : {}),
   };
 }

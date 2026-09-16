@@ -30,7 +30,7 @@ function validRequest(value: unknown): value is Record<string, unknown> {
   const lookup = request.lookup;
   if (!lookup || typeof lookup !== "object" || Array.isArray(lookup)) return false;
   const l = lookup as Record<string, unknown>;
-  if (!ownKeys(l, ["ticker", "eventType", "exDate", "selectedVendors", "matrixRows", "news"]) ||
+  if (!ownKeys(l, ["ticker", "eventType", "exDate", "selectedVendors", "matrixRows", "news", "entailment"]) ||
       !boundedString(l.ticker, 15) || !boundedString(l.eventType, 64) || !validDate(l.exDate)) return false;
   if (!Array.isArray(l.selectedVendors) || l.selectedVendors.length > 7 || l.selectedVendors.some((v) => typeof v !== "string" || !VENDORS.has(v))) return false;
   if (!Array.isArray(l.matrixRows) || l.matrixRows.length > 7 || l.matrixRows.some((row) => {
@@ -54,6 +54,24 @@ function validRequest(value: unknown): value is Record<string, unknown> {
   const rows = l.matrixRows as Array<Record<string, unknown>>;
   if (new Set(selectedVendors).size !== selectedVendors.length || new Set(rows.map((row) => row.vendor)).size !== rows.length ||
       rows.some((row) => !selectedVendors.includes(row.vendor as string))) return false;
+  // Mirrors parseEntailment in ca-analyst-service/src/contracts.ts. Both sides
+  // reject unknown keys, so a field added to one and not the other is rejected
+  // wholesale -- which is how `rules` sat unreadable on the wire since 09-09.
+  const VERDICTS = ["contradicted", "consistent", "indeterminate"];
+  const SCOPES = ["3-d", "2-d"];
+  if (l.entailment !== undefined) {
+    if (!Array.isArray(l.entailment) || l.entailment.length > 7) return false;
+    if (l.entailment.some((entry) => {
+      if (!entry || typeof entry !== "object" || Array.isArray(entry)) return true;
+      const e = entry as Record<string, unknown>;
+      return !ownKeys(e, ["vendor", "verdict", "reason", "drivers", "scope"]) ||
+        typeof e.vendor !== "string" || !VENDORS.has(e.vendor) ||
+        !VERDICTS.includes(String(e.verdict)) || !SCOPES.includes(String(e.scope)) ||
+        !boundedString(e.reason, 600) ||
+        !Array.isArray(e.drivers) || e.drivers.length > 7 ||
+        e.drivers.some((d) => typeof d !== "string" || !VENDORS.has(d));
+    })) return false;
+  }
   const news = l.news;
   if (!news || typeof news !== "object" || Array.isArray(news)) return false;
   const n = news as Record<string, unknown>;
