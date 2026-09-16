@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { accessJwtFromHeaders, verifyAccessJwt } from "../../../../lib/ca-analyst/auth";
 import { VENDOR_IDS } from "../../../../lib/vendors";
+import { relayFailure, upstreamHost } from "../../../../lib/ca-analyst/relay-diagnostics";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -86,7 +87,12 @@ export async function POST(request: Request) {
   } catch {
     return error("invalid_request");
   }
-  if (!validRequest(payload) || !process.env.CA_ANALYST_SERVICE_URL) return error(!validRequest(payload) ? "invalid_request" : "service_unavailable");
+  if (!validRequest(payload)) return error("invalid_request");
+  if (!process.env.CA_ANALYST_SERVICE_URL) {
+    relayFailure("CA_ANALYST_SERVICE_URL is unset");
+    return error("service_unavailable");
+  }
+  const host = upstreamHost(process.env.CA_ANALYST_SERVICE_URL);
   try {
     // Cloudflare linked-app-token handoff: forward the user JWT as cf-access-token.
     // Access validates it against the linked-app rule, then mints a NEW
@@ -98,9 +104,18 @@ export async function POST(request: Request) {
       body: JSON.stringify(payload),
       cache: "no-store",
     });
-    if (!upstream.ok || !upstream.body) return error(upstream.status === 403 ? "access_required" : "service_unavailable");
+    if (!upstream.ok || !upstream.body) {
+      // 403 is Access doing its job and already maps to a distinct client code,
+      // so it is not a mystery worth logging. Everything else is.
+      if (upstream.status !== 403) {
+        relayFailure(`upstream ${host} returned ${upstream.status}${upstream.body ? "" : " with no body"}`);
+      }
+      return error(upstream.status === 403 ? "access_required" : "service_unavailable");
+    }
     return new Response(upstream.body, { status: 200, headers: { "content-type": "text/event-stream; charset=utf-8", "cache-control": "no-store", "x-content-type-options": "nosniff" } });
-  } catch {
+  } catch (cause) {
+    // DNS failure, TLS failure, a malformed URL reaching fetch, or a timeout.
+    relayFailure(`fetch to ${host} threw ${cause instanceof Error ? cause.name : "unknown"}`);
     return error("service_unavailable");
   }
 }

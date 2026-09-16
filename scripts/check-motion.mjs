@@ -1,15 +1,18 @@
 import assert from "node:assert/strict";
 import { readFile, readdir } from "node:fs/promises";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 
 const sourceRoots = [new URL("../src/", import.meta.url)];
 const files = [];
 
 async function collect(directory) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
-    const path = join(directory.pathname, entry.name);
+    const path = join(fileURLToPath(directory), entry.name);
     if (entry.isDirectory()) await collect(new URL(`${entry.name}/`, directory));
-    else if (/\.(css|tsx|ts|js|mjs)$/.test(entry.name)) files.push(path);
+    // Normalise to forward slashes at the source: every comparison below is
+    // written as endsWith("src/app/..."), which no Windows join() ever matches.
+    else if (/\.(css|tsx|ts|js|mjs)$/.test(entry.name)) files.push(path.replaceAll("\\", "/"));
   }
 }
 

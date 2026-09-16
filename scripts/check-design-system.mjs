@@ -1,8 +1,11 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = path.resolve(new URL("..", import.meta.url).pathname);
+// fileURLToPath, never .pathname: on Windows .pathname is "/C:/..." and resolve()
+// then prepends the drive, giving "C:\C:\...". This gate passed only on Linux.
+const root = path.resolve(fileURLToPath(new URL("..", import.meta.url)));
 const pages = [
   "src/app/page.tsx",
   "src/app/guide/page.tsx",

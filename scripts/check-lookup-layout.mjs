@@ -9,8 +9,11 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const root = resolve(new URL("..", import.meta.url).pathname);
+// fileURLToPath, never .pathname: on Windows .pathname is "/C:/..." and resolve()
+// then prepends the drive, giving "C:\C:\...". This gate passed only on Linux.
+const root = resolve(fileURLToPath(new URL("..", import.meta.url)));
 const lookup = readFileSync(resolve(root, "src/components/lookup/lookup-view.tsx"), "utf8");
 const listPath = resolve(root, "src/components/lookup/vendor-investigation-list.tsx");
 let list = "";

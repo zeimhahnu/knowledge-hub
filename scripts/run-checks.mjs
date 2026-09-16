@@ -21,9 +21,16 @@ const names = (await readdir(dir))
 // Keep in-process mock JWKS servers local. Gateway egress proxying otherwise sends
 // localhost test requests to the proxy and turns a cryptographic check into CA05.
 const noProxy = [...new Set([...(process.env.NO_PROXY || process.env.no_proxy || "").split(",").filter(Boolean), "127.0.0.1", "localhost"])].join(",");
+// Node >=22.18 strips TypeScript natively and Node 26 REMOVED this flag, so
+// passing it unconditionally aborts the runtime before any check runs: the whole
+// suite reported 0/46 on v26.1.0 with "bad option". A gate that only runs on the
+// Node version its author happened to have is decoration -- the same failure this
+// file was written to fix, one layer down.
+const typeFlags = process.features.typescript ? [] : ["--experimental-transform-types"];
+
 const failed = [];
 for (const name of names) {
-  const run = spawnSync(process.execPath, ["--experimental-transform-types", dir + name], {
+  const run = spawnSync(process.execPath, [...typeFlags, dir + name], {
     stdio: ["ignore", "pipe", "pipe"],
     encoding: "utf8",
     timeout: 120_000,
