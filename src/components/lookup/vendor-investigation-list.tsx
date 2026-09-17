@@ -128,12 +128,19 @@ function MarkControl({
   );
 }
 
+/**
+ * Names the finding, not the practitioner. The prior copy narrated the user back
+ * to themselves ("You say no data was supplied; timing does not call it late"),
+ * which buried the one thing that matters: whether an absence is a real gap or
+ * simply early. The vendor's own window is already on the row beside this, so
+ * the label carries the verdict and the row carries the evidence.
+ */
 function markMeaning(row: MatrixRow): string {
   const state = row.confirmation?.state ?? "unchecked";
-  if (state === "confirmed") return "You say this vendor supplied the data.";
+  if (state === "confirmed") return "Supplied by this vendor.";
   if (state === "absent") {
-    if (row.state === "missing") return "You say no data was supplied after the window closed.";
-    return "You say no data was supplied; timing does not call it late.";
+    if (row.state === "missing") return "Genuine gap - the publication window has closed.";
+    return "Timing issue - the publication window is still open.";
   }
   return "Not checked yet.";
 }
