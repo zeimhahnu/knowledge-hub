@@ -1,8 +1,8 @@
 import { RouteShell } from "@/components/route-shell";
 import { Band } from "@/components/ui/band";
 import { SectionHeader } from "@/components/ui/section-header";
-import { Surface } from "@/components/ui/surface";
 import { VendorReferenceNav } from "@/components/vendor-reference-nav";
+import { GlossaryList } from "@/components/vendors/glossary-list";
 import { GLOSSARY } from "@/lib/glossary";
 
 export const metadata = {
@@ -36,26 +36,10 @@ export default function GlossaryPage() {
 
       <Band tone="light" className="min-h-screen">
         <main>
-          <RouteShell wide className="space-y-6 py-10">
-            <p className="text-sm text-muted-foreground">
-              {GLOSSARY.length} terms, in the order they tend to come up during an
-              investigation.
-            </p>
-            <dl className="grid gap-4 sm:grid-cols-2">
-              {GLOSSARY.map((entry) => (
-                <Surface key={entry.term} as="div" className="space-y-2 p-5">
-                  <dt className="text-sm font-medium text-foreground">{entry.term}</dt>
-                  <dd className="space-y-2">
-                    <p className="text-sm text-muted-foreground">{entry.definition}</p>
-                    {entry.detail && (
-                      <p className="text-xs leading-relaxed text-muted-foreground/80">
-                        {entry.detail}
-                      </p>
-                    )}
-                  </dd>
-                </Surface>
-              ))}
-            </dl>
+          {/* No extra vertical padding: .ca-band-light already supplies 80px, and
+              adding py-10 on top produced a 120px dead band above the first line. */}
+          <RouteShell wide>
+            <GlossaryList entries={GLOSSARY} />
           </RouteShell>
         </main>
       </Band>
