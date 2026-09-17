@@ -103,6 +103,29 @@ export function getStoredInvestigations(storage?: SettingsStorage): StoredInvest
   );
 }
 
+/**
+ * Drop one investigation and every vendor mark under it.
+ *
+ * The workbench could only ever accumulate: a lookup opened by mistake, or one
+ * closed out weeks ago, stayed on the list forever with no way to clear it, so
+ * the list stopped describing what is actually open. Returns false when storage
+ * is unavailable so the caller can leave the row in place rather than showing a
+ * removal that did not happen.
+ */
+export function removeInvestigation(
+  ticker: string,
+  eventType: string,
+  exDate: string,
+  storage?: SettingsStorage,
+): boolean {
+  const draft = readDraft(storage);
+  const lookupKey = keyFor(ticker, eventType, exDate);
+  if (!(lookupKey in draft.marks)) return true;
+  const marks = { ...draft.marks };
+  delete marks[lookupKey];
+  return writeDraft({ ...draft, marks }, storage);
+}
+
 function writeDraft(
   draft: ConfirmationDraft,
   storage?: SettingsStorage,

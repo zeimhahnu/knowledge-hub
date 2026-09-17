@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRightIcon, CalendarIcon } from "lucide-react";
+import { ArrowRightIcon, CalendarIcon, Trash2Icon } from "lucide-react";
 
 import { SymbolTypeahead } from "@/components/home/symbol-typeahead";
 import { RouteShell } from "@/components/route-shell";
@@ -13,7 +13,7 @@ import { SectionHeader } from "@/components/ui/section-header";
 import { Surface } from "@/components/ui/surface";
 import { Button } from "@/components/ui/button";
 import { CANONICAL_EVENTS } from "@/lib/event-taxonomy";
-import { getStoredInvestigations, type StoredInvestigation } from "@/lib/vendor-confirmation";
+import { getStoredInvestigations, removeInvestigation, type StoredInvestigation } from "@/lib/vendor-confirmation";
 import { VENDOR_IDS } from "@/lib/vendors";
 
 const TICKER_RE = /^[A-Za-z0-9.\-^=]{1,15}$/;
@@ -76,12 +76,32 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [hydrated, setHydrated] = useState(false);
   const [investigations, setInvestigations] = useState<StoredInvestigation[]>([]);
+  // Two-step inline confirm rather than a modal: removal is irreversible (the
+  // marks live only in this browser) but it does not need protected focus.
+  const [pendingRemoval, setPendingRemoval] = useState<string | null>(null);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- hydration guard
     setInvestigations(getStoredInvestigations());
     setHydrated(true);
   }, []);
+
+  function investigationKey(item: StoredInvestigation) {
+    return `${item.ticker}-${item.eventType}-${item.exDate}`;
+  }
+
+  function handleRemove(item: StoredInvestigation) {
+    const key = investigationKey(item);
+    if (pendingRemoval !== key) {
+      setPendingRemoval(key);
+      return;
+    }
+    const removed = removeInvestigation(item.ticker, item.eventType, item.exDate);
+    setPendingRemoval(null);
+    // Re-read rather than filter local state: storage is the source of truth, and
+    // a blocked write must leave the row visible instead of faking a removal.
+    if (removed) setInvestigations(getStoredInvestigations());
+  }
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -157,19 +177,50 @@ export default function Home() {
           ) : (
             <div className="mt-8 max-w-4xl space-y-3">
               {investigations.map((investigation) => (
-                <Link key={`${investigation.ticker}-${investigation.eventType}-${investigation.exDate}`} href={buildLookupUrl(investigation.ticker, investigation.eventType, investigation.exDate) ?? "/"} className="block rounded-[4px] outline-none focus-visible:ring-2 focus-visible:ring-ring">
-                  <Surface className="grid gap-4 p-5 transition-colors hover:border-accent sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.5fr)_auto] sm:items-center">
-                    <div>
-                      <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">{investigation.ticker}</p>
-                      <p className="mt-1 text-sm text-foreground">Ex-date {investigation.exDate}</p>
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">{eventLabel(investigation.eventType)}</p>
-                      <p className="ca-meta mt-1">{findingSoFar(investigation)}</p>
-                    </div>
-                    <span className="text-sm font-medium text-accent sm:text-right">Continue →</span>
-                  </Surface>
-                </Link>
+                <Surface
+                  key={investigationKey(investigation)}
+                  className="relative grid gap-4 p-5 transition-colors hover:border-accent sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.5fr)_auto] sm:items-center"
+                >
+                  {/* Stretched link: the whole card stays clickable without nesting a
+                      button inside an anchor, which is invalid and unreachable by keyboard. */}
+                  <Link
+                    href={buildLookupUrl(investigation.ticker, investigation.eventType, investigation.exDate) ?? "/"}
+                    className="absolute inset-0 rounded-[4px] outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    <span className="sr-only">
+                      Continue {investigation.ticker} {eventLabel(investigation.eventType)}, ex-date {investigation.exDate}
+                    </span>
+                  </Link>
+                  <div>
+                    <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">{investigation.ticker}</p>
+                    <p className="mt-1 text-sm text-foreground">Ex-date {investigation.exDate}</p>
+                  </div>
+                  <div>
+                    <p className="font-medium text-foreground">{eventLabel(investigation.eventType)}</p>
+                    <p className="ca-meta mt-1">{findingSoFar(investigation)}</p>
+                  </div>
+                  <div className="relative z-10 flex items-center gap-3 justify-self-start sm:justify-self-end">
+                    <span aria-hidden className="text-sm font-medium text-accent">Continue →</span>
+                    <button
+                      type="button"
+                      onClick={() => handleRemove(investigation)}
+                      onBlur={() => setPendingRemoval((key) => (key === investigationKey(investigation) ? null : key))}
+                      aria-label={
+                        pendingRemoval === investigationKey(investigation)
+                          ? `Confirm removing ${investigation.ticker}`
+                          : `Remove ${investigation.ticker} from open investigations`
+                      }
+                      className={`inline-flex items-center gap-1.5 rounded-[4px] border px-2.5 py-1.5 text-xs transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                        pendingRemoval === investigationKey(investigation)
+                          ? "border-destructive bg-destructive/10 text-destructive"
+                          : "border-border text-muted-foreground hover:border-destructive/60 hover:text-destructive"
+                      }`}
+                    >
+                      <Trash2Icon aria-hidden className="h-3.5 w-3.5" />
+                      {pendingRemoval === investigationKey(investigation) ? "Confirm" : "Remove"}
+                    </button>
+                  </div>
+                </Surface>
               ))}
             </div>
           )}
