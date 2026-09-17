@@ -99,21 +99,32 @@ assert.equal(byEvent.get("special-dividend")?.values().next().value, "DVCA",
 assert.equal(badge.get("special-dividend"), "mandatory",
   "special-dividend is mandatory: a cash distribution offers the holder no election");
 
-// 4. Every CAEV named in the ISO reference page resolves to a real event, so the
-//    page can never document a code the product does not use.
+// 4. The WIRE SAMPLE must only show codes the product actually uses - that was
+//    the reported bug: the sample showed DVCA while no event carried it, so a
+//    reader following the reference found nothing.
+//
+//    Scoped to the sample on purpose. The CAEV_CODES catalogue and the mapping
+//    table are ISO REFERENCE material and legitimately document codes we do not
+//    implement (CAPG, DRIP, INTR, and SPLR for the consolidation direction our
+//    single stock-split event bundles). Asserting over those would force the
+//    reference to shrink to our coverage, which is backwards.
 const isoPage = readFileSync("src/app/vendors/iso-taxonomy/page.tsx", "utf8");
-const documented = new Set(
-  [...isoPage.matchAll(/CAEV\s*[—-]\s*([A-Z]{4})/g)].map((m) => m[1]),
-);
+const inSample = [...isoPage.matchAll(/CAEV\/\/([A-Z]{4})/g)].map((m) => m[1]);
+assert.ok(inSample.length > 0, "no CAEV found in the MT564 sample - the matcher has drifted");
 const available = new Set(seen.map((s) => s.caev));
-for (const code of documented) {
-  assert.ok(
-    available.has(code),
-    `the ISO page documents CAEV ${code}, but no event in rules.json uses it - ` +
-      `a reader following the reference finds nothing`,
-  );
+for (const code of inSample) {
+  assert.ok(available.has(code),
+    `the MT564 sample shows CAEV ${code}, but no event in rules.json uses it - ` +
+    `a reader following the reference finds nothing`);
+}
+
+// 5. And the page must never carry a retired non-event code anywhere, including
+//    its reference catalogue - that is what made it misleading in the first place.
+for (const [code, why] of NOT_EVENT_CODES) {
+  assert.ok(!new RegExp(`"${code}"`).test(isoPage),
+    `the ISO page still lists "${code}", which is ${why}`);
 }
 
 console.log(
-  `check-caev-codes: ok (${byEvent.size} events, ${available.size} codes, ${documented.size} documented on the ISO page)`,
+  `check-caev-codes: ok (${byEvent.size} events, ${available.size} codes, sample shows ${inSample.join(", ")})`,
 );

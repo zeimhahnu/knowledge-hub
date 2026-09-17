@@ -30,7 +30,7 @@ type EventRow = {
 const MASTER_TABLE: EventRow[] = [
   {
     masterCategory: "Cash Dividend (Regular)",
-    isoCAEV: "DVOP",
+    isoCAEV: "DVCA",
     swiftMT564: "NEWM (Dividend)",
     msci: "Cash Dividend",
     spdj: "Dividend (Cash)",
@@ -42,7 +42,7 @@ const MASTER_TABLE: EventRow[] = [
   },
   {
     masterCategory: "Special Cash Dividend",
-    isoCAEV: "DVOP",
+    isoCAEV: "DVCA",
     swiftMT564: "NEWM (Dividend)",
     msci: "Special Cash Dividend",
     spdj: "Special Dividend",
@@ -54,7 +54,7 @@ const MASTER_TABLE: EventRow[] = [
   },
   {
     masterCategory: "Stock Dividend / Bonus Issue",
-    isoCAEV: "BONU",
+    isoCAEV: "DVSE / BONU",
     swiftMT564: "NEWM (Bonus Issue)",
     msci: "Stock Dividend / Bonus Issue",
     spdj: "Stock Dividend",
@@ -66,7 +66,7 @@ const MASTER_TABLE: EventRow[] = [
   },
   {
     masterCategory: "Spin-off / Demerger",
-    isoCAEV: "SPIN",
+    isoCAEV: "SOFF",
     swiftMT564: "NEWM (Spin-off)",
     msci: "Spin-off",
     spdj: "Spin-off",
@@ -78,7 +78,7 @@ const MASTER_TABLE: EventRow[] = [
   },
   {
     masterCategory: "Rights Issue",
-    isoCAEV: "RHDI",
+    isoCAEV: "RHTS",
     swiftMT564: "NEWM (Rights Issue)",
     msci: "Rights Issue",
     spdj: "Rights Offering",
@@ -90,7 +90,7 @@ const MASTER_TABLE: EventRow[] = [
   },
   {
     masterCategory: "Share Consolidation / Reverse Split",
-    isoCAEV: "CONS / SPLT",
+    isoCAEV: "SPLR",
     swiftMT564: "NEWM (Stock Split / Consolidation)",
     msci: "Split / Reverse Split",
     spdj: "Stock Split / Consolidation",
@@ -102,7 +102,7 @@ const MASTER_TABLE: EventRow[] = [
   },
   {
     masterCategory: "Return of Capital",
-    isoCAEV: "REDU",
+    isoCAEV: "CAPD",
     swiftMT564: "NEWM (Reduction of Capital)",
     msci: "Return of Capital",
     spdj: "Return of Capital",
@@ -138,7 +138,7 @@ const MASTER_TABLE: EventRow[] = [
   },
   {
     masterCategory: "Delisting / Bankruptcy",
-    isoCAEV: "DELI / BANK",
+    isoCAEV: "DLST / BRUP",
     swiftMT564: "NEWM (Delisting / Bankruptcy)",
     msci: "Delisting / Bankruptcy",
     spdj: "Bankruptcy / Liquidation",
@@ -150,7 +150,7 @@ const MASTER_TABLE: EventRow[] = [
   },
   {
     masterCategory: "Stock Split",
-    isoCAEV: "SPLT",
+    isoCAEV: "SPLF",
     swiftMT564: "NEWM (Stock Split)",
     msci: "Stock Split",
     spdj: "Stock Split",
@@ -162,7 +162,7 @@ const MASTER_TABLE: EventRow[] = [
   },
   {
     masterCategory: "Return of Cash (Non-Dividend)",
-    isoCAEV: "REDU",
+    isoCAEV: "CAPD",
     swiftMT564: "NEWM (Other)",
     msci: "Return of Capital",
     spdj: "Return of Capital",
@@ -174,7 +174,7 @@ const MASTER_TABLE: EventRow[] = [
   },
   {
     masterCategory: "IPO / Direct Listing",
-    isoCAEV: "IPOO",
+    isoCAEV: "OTHR",
     swiftMT564: "NEWM (Initial Public Offer)",
     msci: "IPO",
     spdj: "IPO / Direct Listing",
@@ -186,7 +186,7 @@ const MASTER_TABLE: EventRow[] = [
   },
   {
     masterCategory: "Scrip Dividend",
-    isoCAEV: "SCRP",
+    isoCAEV: "DVSC",
     swiftMT564: "NEWM (Scrip Dividend)",
     msci: "Scrip Dividend",
     spdj: "Scrip Dividend",
@@ -198,7 +198,7 @@ const MASTER_TABLE: EventRow[] = [
   },
   {
     masterCategory: "Warrant / Option",
-    isoCAEV: "WARI",
+    isoCAEV: "EXWA",
     swiftMT564: "NEWM (Warrant)",
     msci: "Warrant / Option",
     spdj: "Warrant / Option",
@@ -225,9 +225,9 @@ const MASTER_TABLE: EventRow[] = [
 const CAEV_CODES = [
   { code: "BONU", name: "Bonus Issue", desc: "Shares issued to shareholders at no charge, pro-rata" },
   { code: "CAPG", name: "Capital Gains Distribution", desc: "Fund's distribution of realized capital gains" },
-  { code: "CONS", name: "Consolidation / Reverse Split", desc: "Reduction of number of shares via merging" },
-  { code: "DELI", name: "Delisting", desc: "Removal of security from official exchange" },
-  { code: "DIVT", name: "Dividend", desc: "Periodic distribution from earnings" },
+  { code: "SPLR", name: "Reverse Stock Split / Consolidation", desc: "Reduction in the number of shares; CONS is Consent, not consolidation" },
+  { code: "DLST", name: "Trading Status: Delisted", desc: "Removal of a security from an official exchange" },
+  { code: "DVCA", name: "Cash Dividend", desc: "Cash distribution from earnings; covers ordinary and special cash dividends" },
   { code: "DRIP", name: "Dividend Reinvestment", desc: "Dividend reinvested via purchase of additional shares" },
   { code: "DVOP", name: "Dividend Option", desc: "Shareholder choice between cash or stock dividend" },
   { code: "EXAM", name: "Mandatory Amendment", desc: "Forced change to terms of an event" },
@@ -235,23 +235,23 @@ const CAEV_CODES = [
   { code: "FRCL", name: "Freely Liquidable", desc: "Change in free float classification" },
   { code: "HLDR", name: "Holder Election", desc: "Election event triggered by security holder" },
   { code: "INTR", name: "Interest Payment", desc: "Payment of interest on debt securities" },
-  { code: "IPOO", name: "Initial Public Offering", desc: "First time security offered to public" },
+  { code: "OTHR", name: "Other Event", desc: "Used where ISO defines no specific code, e.g. an IPO or a secondary offering" },
   { code: "LIQU", name: "Liquidation", desc: "Winding up of company, distribution of assets" },
   { code: "MRGR", name: "Merger", desc: "Two entities combine into one" },
   { code: "OVLS", name: "Oversubscription", desc: "Right to purchase additional shares beyond entitlement" },
   { code: "PAYS", name: "Payment", desc: "General payment instruction" },
   { code: "PCAL", name: "Partial Call", desc: "Redemption of part of a security issue" },
-  { code: "REDU", name: "Return of Capital", desc: "Distribution of capital back to shareholders" },
-  { code: "RHDI", name: "Rights Issue", desc: "Right to subscribe for new shares at discount" },
+  { code: "CAPD", name: "Capital Distribution", desc: "Distribution of capital back to shareholders" },
+  { code: "RHTS", name: "Rights Issue / Subscription Rights", desc: "Right to subscribe for new shares; RHDI is the intermediate-securities distribution stage" },
   { code: "SHOP", name: "Stock Purchase", desc: "Open market share repurchase" },
   { code: "SOLI", name: "Solicitation", desc: "Solicitation of proxies or acceptances" },
-  { code: "SPLT", name: "Stock Split", desc: "Division of existing shares into more shares" },
-  { code: "SPIN", name: "Spin-off", desc: "Separation of company business units" },
+  { code: "SPLF", name: "Stock Split / Subdivision", desc: "Division of existing shares into more shares; SPLT is the Deadline to Split DATE qualifier, not an event" },
+  { code: "SOFF", name: "Spin-Off", desc: "Separation of a business unit into a distinct entity" },
   { code: "SUSP", name: "Suspension", desc: "Trading halt or pause" },
   { code: "TEND", name: "Tender Offer", desc: "Public offer to buy shares at premium" },
   { code: "WTRN", name: "Written News", desc: "Mandatory notification of an event" },
-  { code: "BUTF", name: "Mandatory Buyback Offer", desc: "Mandatory buyback offer" },
-  { code: "OFFO", name: "Offer For Sale", desc: "Public sale of shares to market" },
+  { code: "BIDS", name: "Repurchase Offer / Issuer Bid", desc: "Issuer offer to repurchase its own shares" },
+  { code: "BRUP", name: "Bankruptcy", desc: "Insolvency proceedings; OFFO is the Offeror narrative qualifier on field 70a, not an event" },
 ];
 
 const VENDORS = ["MSCI", "S&P DJI", "FTSE Russell", "STOXX", "Solactive", "Morningstar", "VettaFi"];
@@ -482,12 +482,16 @@ export default function IsoTaxonomyPage() {
             description={<>The MT564 Corporate Action Notification is the standard SWIFT message that carries corporate action events across the industry. Sequence A field <span className="font-mono text-accent">22F</span> contains the CAEV (Corporate Action Event) code — the bridge between the wire format and vendor terminology.</>}
           />
           <div className="mt-6 border border-border bg-muted p-3 font-mono text-[11px] leading-loose text-muted-foreground">
-            <div>:20C: Reference</div>
-            <div>:22F:  <span className="text-accent">CAEV — DVCA</span> ← event type code</div>
-            <div>:35B:  ISIN/US1234567890</div>
-            <div>:98C:  EXDT/200101</div>
-            <div>:36B:  ELIG/UNIT/1000</div>
-            <div>:70E:  ADDB/OFFEROR/ACME CORP</div>
+            {/* Real MT564 wire syntax. The previous sample was not parseable: 22F was
+                written as prose, the ex-date used the non-current EXDT qualifier with
+                option C and a six-digit date, and an offeror narrative was placed under
+                70E, which does not carry it. */}
+            <div>:20C::CORP//REFERENCE123</div>
+            <div>:22F::<span className="text-accent">{"CAEV//DVCA"}</span> ← event type code</div>
+            <div>:35B:ISIN US1234567890</div>
+            <div>:98A::<span className="text-accent">XDTE</span>{"//20260929"} ← ex-date</div>
+            <div>:36B::ELIG//UNIT/1000,</div>
+            <div>:70E::ADTX//ORDINARY CASH DIVIDEND</div>
           </div>
         </Surface>
         </SurfaceSection>
