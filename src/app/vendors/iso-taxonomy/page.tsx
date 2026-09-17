@@ -1,18 +1,16 @@
 "use client";
 import { useState } from "react";
 import {
-  FileTextIcon,
-  NetworkIcon,
   SearchIcon,
   ChevronDownIcon,
   InfoIcon,
 } from "lucide-react";
-import Link from "next/link";
 
 import { SurfaceSection } from "@/components/surface-section";
 import { RouteShell } from "@/components/route-shell";
 import { Band } from "@/components/ui/band";
 import { Eyebrow } from "@/components/ui/design-system";
+import { VendorReferenceNav } from "@/components/vendor-reference-nav";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Surface } from "@/components/ui/surface";
 
@@ -283,17 +281,7 @@ export default function IsoTaxonomyPage() {
             title="Corporate action taxonomy"
             description="A universal mapping between ISO 20022 CAEV codes, SWIFT MT564 event types, and vendor-specific terminology used by MSCI, S&P DJI, FTSE Russell, STOXX, Solactive, Morningstar, and VettaFi."
           />
-          <nav aria-label="Vendor reference" className="flex flex-wrap items-center gap-x-6 border-t border-border pt-2">
-            <Link href="/vendors/" className="border-b-2 border-transparent px-1 py-3 text-xs text-muted-foreground transition-colors hover:border-primary hover:text-primary">Event taxonomy</Link>
-            <Link href="/vendors/iso-taxonomy/" aria-current="page" className="flex items-center gap-2 border-b-2 border-primary px-1 py-3 text-xs font-medium text-primary">
-              <NetworkIcon aria-hidden className="h-3.5 w-3.5" />
-              ISO CAEV Taxonomy
-            </Link>
-            <Link href="/vendors/event-extraction/" className="flex items-center gap-2 border-b-2 border-transparent px-1 py-3 text-xs text-muted-foreground transition-colors hover:border-primary hover:text-primary">
-              <FileTextIcon aria-hidden className="h-3.5 w-3.5" />
-              Event Parameters
-            </Link>
-          </nav>
+          <VendorReferenceNav current="iso" />
         </RouteShell>
       </Band>
 

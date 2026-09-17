@@ -3,7 +3,9 @@ import path from "path";
 
 import { RouteShell } from "@/components/route-shell";
 import { Band } from "@/components/ui/band";
+import { SectionHeader } from "@/components/ui/section-header";
 import { Surface } from "@/components/ui/surface";
+import { VendorReferenceNav } from "@/components/vendor-reference-nav";
 
 export default async function EventExtractionPage() {
   const filePath = path.join(
@@ -15,6 +17,18 @@ export default async function EventExtractionPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* This page shipped with no nav at all, so reaching it was a dead end. */}
+      <Band tone="dark">
+        <RouteShell wide className="space-y-8">
+          <SectionHeader
+            eyebrow="Vendor reference"
+            title="Event parameters"
+            description="The fields each vendor publishes per event type, and what the lookup reads from them."
+          />
+          <VendorReferenceNav current="parameters" />
+        </RouteShell>
+      </Band>
+
       <Band className="min-h-screen">
       <main>
         <RouteShell>
