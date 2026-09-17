@@ -210,7 +210,7 @@ const MASTER_TABLE: EventRow[] = [
   },
   {
     masterCategory: "Partial Tender / Buyback",
-    isoCAEV: "OFFO / BUTF",
+    isoCAEV: "BIDS",
     swiftMT564: "NEWM (Buyback)",
     msci: "Partial Tender Offer / Buyback",
     spdj: "Tender Offer / Buyback",

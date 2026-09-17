@@ -120,9 +120,19 @@ for (const code of inSample) {
 
 // 5. And the page must never carry a retired non-event code anywhere, including
 //    its reference catalogue - that is what made it misleading in the first place.
+// Matched as a WORD, not as an exact quoted string. The first version tested
+// `"OFFO"` and so walked straight past isoCAEV: "OFFO / BUTF" on the Partial
+// Tender row -- a bundled value hides every code in it from an exact match.
+// Found by looking at the rendered page, not the source.
+const pageCodeValues = [
+  ...[...isoPage.matchAll(/isoCAEV:\s*"([^"]+)"/g)].map((m) => m[1]),
+  ...[...isoPage.matchAll(/code:\s*"([^"]+)"/g)].map((m) => m[1]),
+];
 for (const [code, why] of NOT_EVENT_CODES) {
-  assert.ok(!new RegExp(`"${code}"`).test(isoPage),
-    `the ISO page still lists "${code}", which is ${why}`);
+  const carrier = pageCodeValues.find((value) =>
+    value.split(/[^A-Z]+/).filter(Boolean).includes(code),
+  );
+  assert.ok(!carrier, `the ISO page still lists "${carrier}" containing ${code}, which is ${why}`);
 }
 
 console.log(
