@@ -4,7 +4,10 @@ import { caevForEventType, daysOut, computeLookupVerdict, deriveVendorGroups, ge
 import { setVendorDefault } from "../src/lib/coverage-settings.ts";
 const storage = (() => { const m=new Map(); return { getItem:k=>m.get(k)??null,setItem:(k,v)=>m.set(k,String(v)),removeItem:k=>m.delete(k) }; })();
 const today=new Date("2026-09-01T12:00:00Z");
-assert.equal(caevForEventType("cash-dividend"), "DVOP");
+// DVCA since 2026-09-17. This line pinned the bug: cash-dividend is badged
+// mandatory, and DVOP is ISO 20022 "Dividend Option", a holder election.
+// check-caev-codes.mjs now enforces the rule behind this single value.
+assert.equal(caevForEventType("cash-dividend"), "DVCA");
 assert.equal(daysOut(new Date("2026-09-03"), today), 2);
 assert.equal(getScopeVendors(storage).length, 7, "unset scope defaults to every vendor");
 setScopeVendors(["msci"], storage);
