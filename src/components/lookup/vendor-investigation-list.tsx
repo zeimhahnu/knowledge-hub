@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { CheckIcon, ClipboardIcon, FileTextIcon, MinusIcon, XIcon } from "lucide-react";
+import { createContext, useContext, useMemo, useState } from "react";
+import { CheckIcon, ClipboardIcon, MinusIcon, XIcon } from "lucide-react";
 
 import { VendorEntailmentPanel } from "@/components/lookup/vendor-entailment-panel";
 import { TimelineGeometry } from "@/components/lookup/coverage-timeline";
@@ -89,9 +89,17 @@ function MarkControl({
   const state = row.confirmation?.state ?? "unchecked";
   const label = state === "confirmed" ? "Supplied" : state === "absent" ? "Absent" : "Unchecked";
   return (
-    <div className="min-w-0 space-y-2">
-      <label className="sr-only" htmlFor={`vendor-check-${row.vendor}`}>
-        Your observation for {vendorLabel(row.vendor)}
+    /* The label was sr-only while Fund context beside it carries a visible one, so
+       the two controls in adjacent columns sat a label's height apart and never
+       lined up. A visible label fixes the alignment and the clarity together: the
+       select read as an unlabelled dropdown. */
+    <div className="min-w-0 space-y-1.5">
+      <label
+        className="grid gap-1 text-sm"
+        htmlFor={`vendor-check-${row.vendor}`}
+      >
+        <span className="font-medium text-foreground">Your check</span>
+        <span className="sr-only">for {vendorLabel(row.vendor)}</span>
       </label>
       <div className="flex min-w-0 flex-wrap items-center gap-2">
         <span
@@ -153,12 +161,29 @@ function variantLabel(variant: MatrixRow["treatments"][number]): string {
   return parts.join(" · ");
 }
 
+/**
+ * Citations used to print in full inside every row -- a whole methodology path,
+ * section number and practitioner attribution wrapped across several lines next
+ * to a one-line treatment. The evidence outweighed the finding it supported.
+ *
+ * The row now carries a numbered marker and the full reference sits once at the
+ * foot of the investigation, so a source cited by three vendors is written once
+ * and each row stays scannable.
+ */
+const CitationIndexContext = createContext<(source: string) => number | null>(() => null);
+
 function Citation({ source }: { source: string }) {
+  const indexOf = useContext(CitationIndexContext);
+  const n = indexOf(source);
+  if (n === null) return null;
   return (
-    <p className="flex min-w-0 items-start gap-1.5 text-xs text-muted-foreground">
-      <FileTextIcon className="mt-0.5 h-3 w-3 shrink-0" aria-hidden />
-      <span className="break-words">Citation: {source}</span>
-    </p>
+    <a
+      href={`#lookup-ref-${n}`}
+      className="text-xs text-muted-foreground underline decoration-border underline-offset-4 transition-colors hover:text-foreground"
+      aria-label={`Source ${n}, jump to references`}
+    >
+      Source {n}
+    </a>
   );
 }
 
@@ -427,6 +452,39 @@ function deductionForNote(
   return "Every applicable vendor supplied the event. No discrepancy.";
 }
 
+/** Turns a raw sourceRef into a link when it is a URL, and plain text otherwise. */
+function ReferenceEntry({ n, source }: { n: number; source: string }) {
+  const url = /^https?:\/\//.test(source) ? source : null;
+  return (
+    <li id={`lookup-ref-${n}`} className="flex min-w-0 gap-2 scroll-mt-24 text-xs leading-relaxed text-muted-foreground">
+      <span className="shrink-0 font-mono text-[0.65rem] text-muted-foreground/80">{n}</span>
+      {url ? (
+        <a href={url} target="_blank" rel="noreferrer noopener" className="min-w-0 break-words underline decoration-border underline-offset-4 transition-colors hover:text-foreground">
+          {source}
+        </a>
+      ) : (
+        <span className="min-w-0 break-words">{source}</span>
+      )}
+    </li>
+  );
+}
+
+function References({ sources }: { sources: string[] }) {
+  if (sources.length === 0) return null;
+  return (
+    <section aria-labelledby="lookup-references" className="border-t border-border px-5 py-6 sm:px-8">
+      <h3 id="lookup-references" className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-muted-foreground">
+        References
+      </h3>
+      <ol className="mt-3 grid gap-2 sm:grid-cols-2">
+        {sources.map((source, i) => (
+          <ReferenceEntry key={source} n={i + 1} source={source} />
+        ))}
+      </ol>
+    </section>
+  );
+}
+
 export function VendorInvestigationList({
   ticker,
   eventName,
@@ -478,7 +536,25 @@ export function VendorInvestigationList({
     [groups],
   );
 
+  // Derived from orderedRows, which is exactly what renders below, so a footnote
+  // can never appear for a row that is not on screen and vice versa.
+  const citedSources = useMemo(() => {
+    const seen: string[] = [];
+    for (const { row } of orderedRows) {
+      for (const treatment of row.treatments) {
+        if (treatment.sourceRef && !seen.includes(treatment.sourceRef)) seen.push(treatment.sourceRef);
+      }
+      if (row.sourceRef && !seen.includes(row.sourceRef)) seen.push(row.sourceRef);
+    }
+    return seen;
+  }, [orderedRows]);
+  const citationIndex = useMemo(() => {
+    const order = new Map(citedSources.map((source, i) => [source, i + 1]));
+    return (source: string) => order.get(source) ?? null;
+  }, [citedSources]);
+
   return (
+    <CitationIndexContext.Provider value={citationIndex}>
     <section className="min-w-0 overflow-hidden border border-border bg-card" aria-labelledby="vendor-investigation-heading">
       {/* The conclusion leads. It used to sit below every row, so the practitioner
           scrolled the whole investigation before learning what it amounted to. */}
@@ -530,6 +606,8 @@ export function VendorInvestigationList({
         </ol>
         <VendorEntailmentPanel results={entailment} />
       </div>
+      <References sources={citedSources} />
     </section>
+    </CitationIndexContext.Provider>
   );
 }
