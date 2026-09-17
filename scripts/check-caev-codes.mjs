@@ -25,6 +25,20 @@ const ELECTIVE_CAEV = new Set(["DVOP", "EXOF", "EXWA", "PRIO", "CONV"]);
 
 const badge = new Map(CANONICAL_EVENTS.map((e) => [e.id, e.badge]));
 
+/**
+ * Codes that are NOT corporate-action event types, mapped to what they really are.
+ * Each of these shipped as a CAEV until 2026-09-17; two of them point at entirely
+ * different MT564 fields, so a feed carrying the real event would never match.
+ */
+const NOT_EVENT_CODES = new Map([
+  ["SPLT", "the 'Deadline to Split' DATE qualifier on field 98a, not an event - splits are SPLF/SPLR"],
+  ["OFFO", "the 'Offeror' NARRATIVE qualifier on field 70a, not an event"],
+  ["SPIN", "not in the current CAEV list - Spin-Off is SOFF"],
+  ["RHDI", "Intermediate Securities Distribution, the distribution stage - a Rights Issue is RHTS"],
+  ["REDU", "not in the current CAEV list - Capital Distribution is CAPD"],
+  ["DELI", "not in the current CAEV list - Bankruptcy is BRUP, Delisted is DLST, Liquidation is LIQU"],
+]);
+
 const seen = [];
 (function walk(node) {
   if (Array.isArray(node)) return node.forEach(walk);
@@ -64,12 +78,26 @@ for (const [eventType, codes] of byEvent) {
   );
 }
 
+// 2b. None of the retired non-event codes may return.
+for (const { caev, eventType } of seen) {
+  const why = NOT_EVENT_CODES.get(caev);
+  assert.ok(!why, `${eventType} uses ${caev}, which is ${why}`);
+}
+
 // 3. The specific regression: cash-dividend is DVCA, and DVCA is reachable.
 assert.equal(
   byEvent.get("cash-dividend")?.values().next().value,
   "DVCA",
   "cash-dividend must be DVCA - it is badged mandatory, and DVOP is an election",
 );
+
+// A special CASH dividend is also DVCA and also mandatory: ISO has no "special"
+// code, and the holder makes no election. "Special" is vendor TREATMENT, a
+// separate axis from whether the holder must act.
+assert.equal(byEvent.get("special-dividend")?.values().next().value, "DVCA",
+  "special-dividend must be DVCA - ISO has no special-dividend code");
+assert.equal(badge.get("special-dividend"), "mandatory",
+  "special-dividend is mandatory: a cash distribution offers the holder no election");
 
 // 4. Every CAEV named in the ISO reference page resolves to a real event, so the
 //    page can never document a code the product does not use.

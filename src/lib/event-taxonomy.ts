@@ -25,7 +25,13 @@ export type CanonicalEventMeta = {
 /** Section order per `SOURCES/index-vendor-methodology.md` §1–§13 */
 export const CANONICAL_EVENTS: readonly CanonicalEventMeta[] = [
   { id: "cash-dividend", name: "Cash Dividend", badge: "mandatory", category: "Equity Income" },
-  { id: "special-dividend", name: "Special Cash Dividend", badge: "voluntary", category: "Equity Income" },
+  // Mandatory, not voluntary. This file defines a voluntary event as one "where
+  // participation depends on a shareholder decision" - a special CASH dividend
+  // offers no election, so the holder decides nothing. What makes it "special" is
+  // vendor TREATMENT (MSCI's 5% threshold, S&P/FTSE classification), which is a
+  // separate axis from whether the holder must act. Every other voluntary event
+  // here - rights issue, offerings, tender - does turn on a real election.
+  { id: "special-dividend", name: "Special Cash Dividend", badge: "mandatory", category: "Equity Income" },
   { id: "stock-dividend", name: "Stock Dividend", badge: "mandatory", category: "Corporate Structure" },
   { id: "bonus-issue", name: "Bonus Issue", badge: "mandatory", category: "Corporate Structure" },
   { id: "stock-split", name: "Stock Split / Consolidation", badge: "mandatory", category: "Corporate Structure" },

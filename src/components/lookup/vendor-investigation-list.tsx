@@ -18,6 +18,7 @@ import {
 import type { VendorEntailment } from "@/lib/vendor-entailment";
 import type { VendorMarkState } from "@/lib/vendor-confirmation";
 import type { FranklinCatalogRecord } from "@/lib/fund-master";
+import { collectCitedSources } from "@/lib/ca-analyst/citations";
 import { vendorLabel, type VendorId } from "@/lib/vendors";
 import { GlossaryLinkedText } from "@/components/glossary-linked-text";
 
@@ -538,16 +539,10 @@ export function VendorInvestigationList({
 
   // Derived from orderedRows, which is exactly what renders below, so a footnote
   // can never appear for a row that is not on screen and vice versa.
-  const citedSources = useMemo(() => {
-    const seen: string[] = [];
-    for (const { row } of orderedRows) {
-      for (const treatment of row.treatments) {
-        if (treatment.sourceRef && !seen.includes(treatment.sourceRef)) seen.push(treatment.sourceRef);
-      }
-      if (row.sourceRef && !seen.includes(row.sourceRef)) seen.push(row.sourceRef);
-    }
-    return seen;
-  }, [orderedRows]);
+  const citedSources = useMemo(
+    () => collectCitedSources(orderedRows.map(({ row }) => row)),
+    [orderedRows],
+  );
   const citationIndex = useMemo(() => {
     const order = new Map(citedSources.map((source, i) => [source, i + 1]));
     return (source: string) => order.get(source) ?? null;

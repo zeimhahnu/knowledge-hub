@@ -83,7 +83,7 @@
     {
       "vendor": "msci",
       "event_type": "special-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "*",
       "conditions": {
         "dividend_size_threshold_pct": 5,
@@ -98,7 +98,7 @@
     {
       "vendor": "msci",
       "event_type": "stock-dividend",
-      "caev": "BONU",
+      "caev": "DVSE",
       "index_type": "*",
       "treatment": "Treated identically to a stock split: PAF padj = pt-1 × A / (A+B); no divisor change; PR index adjusted.",
       "lead_days": null,
@@ -120,7 +120,7 @@
     {
       "vendor": "msci",
       "event_type": "stock-split",
-      "caev": "SPLT",
+      "caev": "SPLF",
       "index_type": "*",
       "treatment": "PAF padj = pt-1 × A / (A+B); divisor unchanged; market cap unchanged.",
       "lead_days": null,
@@ -131,7 +131,7 @@
     {
       "vendor": "msci",
       "event_type": "spin-off",
-      "caev": "SPIN",
+      "caev": "SOFF",
       "index_type": "*",
       "treatment": "Child added as a detached security at the when-issued price when available, else zero, held until a real price is available; parent's value deducted on ex-date.",
       "lead_days": null,
@@ -142,7 +142,7 @@
     {
       "vendor": "msci",
       "event_type": "rights-issue",
-      "caev": "RHDI",
+      "caev": "RHTS",
       "index_type": "*",
       "conditions": {
         "rights_moneyness": "in-the-money"
@@ -156,7 +156,7 @@
     {
       "vendor": "msci",
       "event_type": "rights-issue",
-      "caev": "RHDI",
+      "caev": "RHTS",
       "index_type": "*",
       "conditions": {
         "rights_moneyness": "out-of-the-money"
@@ -170,7 +170,7 @@
     {
       "vendor": "msci",
       "event_type": "secondary-offering",
-      "caev": "OFFO",
+      "caev": "OTHR",
       "index_type": "*",
       "treatment": "Applied (PAF + divisor) when the share-count change meets the size threshold — ≥5% of pre-event NOS for Standard, ≥10% Small Cap, ≥25% Micro Cap — with 2 full business days advance notice; changes <±1% on post-event NOS deferred to the next Index Review.",
       "lead_days": null,
@@ -181,7 +181,7 @@
     {
       "vendor": "msci",
       "event_type": "private-placement",
-      "caev": "OFFO",
+      "caev": "OTHR",
       "index_type": "*",
       "treatment": "New shares counted toward NOS; adjustment applied when the change meets the size threshold (≥5%/10%/25% by cap tier), with a simultaneous primary + private placement sized jointly; changes <±1% on post-event NOS deferred to the next Index Review.",
       "lead_days": null,
@@ -192,7 +192,7 @@
     {
       "vendor": "msci",
       "event_type": "return-of-capital",
-      "caev": "REDU",
+      "caev": "CAPD",
       "index_type": "*",
       "treatment": "Treated as a special dividend: extraordinary (vs dividend policy/history) → PAF applied using the gross amount and reinvested in DTR indexes; regular → treated as a normal cash dividend, reinvested in DTR indexes regardless of size.",
       "lead_days": null,
@@ -225,7 +225,7 @@
     {
       "vendor": "msci",
       "event_type": "bankruptcy",
-      "caev": "DELI",
+      "caev": "BRUP",
       "index_type": "*",
       "treatment": "Deleted as soon as possible on a bankruptcy / protection-from-creditors filing when a return to normal business is unlikely; removed at the last traded price, else an OTC / equivalent market price, else the lowest system price (0.00001), with 2 full business days notice.",
       "lead_days": null,
@@ -269,7 +269,7 @@
     {
       "vendor": "sp",
       "event_type": "special-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "*",
       "treatment": "Treated as a corporate action with price and divisor adjustment: the stock's price is adjusted (reduced) by the payment amount at the opening of the effective date. Classification is qualitative — outside the normal historical payment pattern (e.g. described as \"special\", \"extra\", \"irregular\", or \"return of capital\"); the third consecutive same-timing non-ordinary dividend is reclassified as ordinary (timing, not amount).",
       "lead_days": null,
@@ -280,7 +280,7 @@
     {
       "vendor": "sp",
       "event_type": "stock-dividend",
-      "caev": "BONU",
+      "caev": "DVSE",
       "index_type": "*",
       "treatment": "Treated identically to a stock split: shares increased and price decreased by the same adjustment factor (e.g. a 5% stock dividend is a 1.05-for-1 split). Market capitalization unchanged.",
       "lead_days": null,
@@ -302,7 +302,7 @@
     {
       "vendor": "sp",
       "event_type": "stock-split",
-      "caev": "SPLT",
+      "caev": "SPLF",
       "index_type": "*",
       "treatment": "Shares increased (multiplied) and price decreased (divided) by the same adjustment factor; market capitalization unchanged; no divisor change.",
       "lead_days": null,
@@ -313,7 +313,7 @@
     {
       "vendor": "sp",
       "event_type": "spin-off",
-      "caev": "SPIN",
+      "caev": "SOFF",
       "index_type": "*",
       "treatment": "Spin-off security added to the parent's indices at a zero price at the close of the day before the ex-date, with no divisor adjustment; the parent is not price-adjusted downward. If the spin-off does not trade for 20 consecutive trading days after the ex-date, it may be removed at zero.",
       "lead_days": null,
@@ -324,7 +324,7 @@
     {
       "vendor": "sp",
       "event_type": "rights-issue",
-      "caev": "RHDI",
+      "caev": "RHTS",
       "index_type": "*",
       "conditions": {
         "rights_moneyness": "in-the-money"
@@ -338,7 +338,7 @@
     {
       "vendor": "sp",
       "event_type": "rights-issue",
-      "caev": "RHDI",
+      "caev": "RHTS",
       "index_type": "*",
       "conditions": {
         "rights_moneyness": "out-of-the-money"
@@ -352,7 +352,7 @@
     {
       "vendor": "sp",
       "event_type": "secondary-offering",
-      "caev": "OFFO",
+      "caev": "OTHR",
       "index_type": "*",
       "treatment": "Public offerings (including block sales and spot secondaries) receive accelerated implementation only when both thresholds are met: at least 5% of pre-event shares and at least US$150m (a US$1bn+ event is implemented even below 5%). Otherwise implemented at the next quarterly rebalancing.",
       "lead_days": null,
@@ -363,7 +363,7 @@
     {
       "vendor": "sp",
       "event_type": "private-placement",
-      "caev": "OFFO",
+      "caev": "OTHR",
       "index_type": "*",
       "treatment": "Non-mandatory; certain private placements are reviewed quarterly and implemented at the quarterly rebalancing, not via accelerated implementation.",
       "lead_days": null,
@@ -374,7 +374,7 @@
     {
       "vendor": "sp",
       "event_type": "return-of-capital",
-      "caev": "REDU",
+      "caev": "CAPD",
       "index_type": "*",
       "treatment": "Considered a special dividend (price adjusted down at the opening of the effective date), except when declared in lieu of an ordinary cash dividend and fitting the historical pattern in amount and frequency, in which case it is treated as an ordinary cash dividend.",
       "lead_days": null,
@@ -407,7 +407,7 @@
     {
       "vendor": "sp",
       "event_type": "bankruptcy",
-      "caev": "DELI",
+      "caev": "BRUP",
       "index_type": "*",
       "treatment": "Bankrupt securities are ineligible and removed from all branded indices simultaneously, with a minimum of one day's notice, at the primary-exchange closing price (zero if halted or delisted).",
       "lead_days": null,
@@ -440,7 +440,7 @@
     {
       "vendor": "ftse",
       "event_type": "special-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "price-return",
       "treatment": "Special cash dividends are classified by the company description, not by amount, and the stock price is adjusted to deduct the dividend amount before the open on the ex date. A recurring special dividend paid on more than three consecutive non-extraordinary occasions is reclassified as ordinary on the fourth.",
       "lead_days": 5,
@@ -451,7 +451,7 @@
     {
       "vendor": "ftse",
       "event_type": "special-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "total-return",
       "treatment": "Special cash dividends are excluded from the Total Return index calculation. They are classified by the company description, not by amount; a recurring special dividend paid on more than three consecutive non-extraordinary occasions is reclassified as ordinary on the fourth.",
       "lead_days": 5,
@@ -462,7 +462,7 @@
     {
       "vendor": "ftse",
       "event_type": "special-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "net-total-return",
       "treatment": "Special cash dividends are excluded from the return calculation; where the distribution is at least 10% of cum price and has withholding-tax implications, FTSE Russell applies a compensating negative XD adjustment to net-of-tax indices only. Classification is by company description, not amount.",
       "lead_days": 5,
@@ -473,7 +473,7 @@
     {
       "vendor": "ftse",
       "event_type": "stock-dividend",
-      "caev": "BONU",
+      "caev": "DVSE",
       "index_type": "*",
       "treatment": "Treated as a scrip issue / stock distribution (§4.7): automatic distribution of shares (existing or newly issued) at no charge pro rata to holdings, with a price adjustment factor of shares held before ÷ after; no index divisor adjustment and no change in market capitalisation.",
       "lead_days": 5,
@@ -495,7 +495,7 @@
     {
       "vendor": "ftse",
       "event_type": "stock-split",
-      "caev": "SPLT",
+      "caev": "SPLF",
       "index_type": "*",
       "treatment": "No index divisor adjustment; the price adjustment factor is shares held before ÷ after (e.g. 0.2 for a 1-into-5 split); applied on the ex date with no change in company market capitalisation.",
       "lead_days": 5,
@@ -506,7 +506,7 @@
     {
       "vendor": "ftse",
       "event_type": "spin-off",
-      "caev": "SPIN",
+      "caev": "SOFF",
       "index_type": "*",
       "treatment": "Parent is price-adjusted by way of a capital repayment; the spun-off entity is added to the same indices as the parent on the ex date at an estimated price using the hierarchy: when-issued price, primary-exchange estimate, company valuation, broker estimate, then the terms of the action. If the spin-off has not traded within 20 business days of the ex date and no firm trading date is announced, it is normally deleted at zero with T+2 notice. Withholding-tax obligations ≥10% of share price trigger a compensating negative XD adjustment to net-of-tax indices only.",
       "lead_days": 5,
@@ -517,7 +517,7 @@
     {
       "vendor": "ftse",
       "event_type": "rights-issue",
-      "caev": "RHDI",
+      "caev": "RHTS",
       "index_type": "*",
       "conditions": {
         "rights_moneyness": "in-the-money"
@@ -531,7 +531,7 @@
     {
       "vendor": "ftse",
       "event_type": "rights-issue",
-      "caev": "RHDI",
+      "caev": "RHTS",
       "index_type": "*",
       "conditions": {
         "rights_moneyness": "out-of-the-money"
@@ -545,7 +545,7 @@
     {
       "vendor": "ftse",
       "event_type": "secondary-offering",
-      "caev": "OFFO",
+      "caev": "OTHR",
       "index_type": "*",
       "treatment": "Share and free-float updates from primary and secondary offerings are implemented intra-quarter with at least two days' notice when they meet the materiality threshold — a USD 1bn investable market-cap change, or a 5% index-shares change plus USD 250m — otherwise deferred to the next quarterly review (or the review following discovery if pricing settled more than five business days earlier).",
       "lead_days": 2,
@@ -556,7 +556,7 @@
     {
       "vendor": "ftse",
       "event_type": "private-placement",
-      "caev": "OFFO",
+      "caev": "OTHR",
       "index_type": "*",
       "treatment": "Share and free-float changes from private placements to restricted parties are deferred to the next quarterly review; they do not qualify for the intra-quarter primary/secondary-offering treatment and receive no intra-quarter price or share adjustment.",
       "lead_days": 5,
@@ -567,7 +567,7 @@
     {
       "vendor": "ftse",
       "event_type": "return-of-capital",
-      "caev": "REDU",
+      "caev": "CAPD",
       "index_type": "price-return",
       "treatment": "Capital repayments are generally applied with a price adjustment (capital-repayment PAF = (price − repayment) ÷ price), unless company policy reports regular dividends this way (common in Switzerland), in which case it is treated as an ordinary cash dividend.",
       "lead_days": 5,
@@ -578,7 +578,7 @@
     {
       "vendor": "ftse",
       "event_type": "return-of-capital",
-      "caev": "REDU",
+      "caev": "CAPD",
       "index_type": "total-return",
       "treatment": "Capital repayments are not included in the Total Return index calculation; they generally receive a capital-repayment price adjustment unless company policy reports regular dividends this way (common in Switzerland), in which case they are treated as ordinary cash dividends.",
       "lead_days": 5,
@@ -611,7 +611,7 @@
     {
       "vendor": "ftse",
       "event_type": "bankruptcy",
-      "caev": "DELI",
+      "caev": "BRUP",
       "index_type": "*",
       "treatment": "Deleted when FTSE Russell becomes aware of bankruptcy / protection-from-creditors filing, administration, receivership, insolvency or liquidation, with notice — bankruptcy is an ‘actionable’ event carrying a minimum two-day notice. Removed at the last traded price, or an OTC/ineligible-market price if available, else a nominal 0.0001; re-considered after 12 months as a new issue (Russell US and derived indices re-consider at the next reconstitution).",
       "lead_days": 2,
@@ -634,7 +634,7 @@
       "vendor": "stoxx",
       "index_type": "*",
       "event_type": "special-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "treatment": "Cash distributions outside the regular dividend policy (or defined extraordinary by the company) adjust Gross Return, Net Return, and Price indices; Net Return and Price use padj = pt−1 − Div × (1−withholding tax). STOXX states no numeric special-dividend threshold: classification is qualitative, based on dividend policy or company characterization.",
       "lead_days": null,
       "lead_days_confidence": "absent",
@@ -645,7 +645,7 @@
       "vendor": "stoxx",
       "index_type": "*",
       "event_type": "stock-dividend",
-      "caev": "BONU",
+      "caev": "DVSE",
       "treatment": "An ordinary stock dividend decreases the price by the pre-/post-distribution share ratio and increases shares by the reciprocal ratio for free-float market-cap indices; the divisor is unchanged. Treasury-stock and redeemable-share distributions instead follow regular or special cash-dividend treatment according to classification.",
       "lead_days": null,
       "lead_days_confidence": "absent",
@@ -667,7 +667,7 @@
       "vendor": "stoxx",
       "index_type": "*",
       "event_type": "stock-split",
-      "caev": "SPLT",
+      "caev": "SPLF",
       "treatment": "For a split or reverse split, price is adjusted by A/B and free-float market-cap shares by B/A; the divisor is unchanged.",
       "lead_days": null,
       "lead_days_confidence": "absent",
@@ -678,7 +678,7 @@
       "vendor": "stoxx",
       "index_type": "*",
       "event_type": "spin-off",
-      "caev": "SPIN",
+      "caev": "SOFF",
       "treatment": "The parent price is reduced by the value of spun-off shares. Each spin-off stock is temporarily added to affected indices at an estimated price where eligible-exchange listing, pricing, and reference data are available; a non-qualifying spin-off is deleted when it starts trading. Changes are announced immediately, implemented two trading days later, and effective the following trading day.",
       "lead_days": 2,
       "lead_days_confidence": "stated",
@@ -689,7 +689,7 @@
       "vendor": "stoxx",
       "index_type": "*",
       "event_type": "rights-issue",
-      "caev": "RHDI",
+      "caev": "RHTS",
       "treatment": "Only in-the-money rights are adjusted: the theoretical ex-rights price is applied and shares increase. If the subscription price is unavailable or at/above the prior close, no adjustment is made. A rights issue with B/A ≥200% is highly dilutive and follows the stated underwriting/tradability scenarios.",
       "lead_days": null,
       "lead_days_confidence": "absent",
@@ -700,7 +700,7 @@
       "vendor": "stoxx",
       "index_type": "*",
       "event_type": "secondary-offering",
-      "caev": "OFFO",
+      "caev": "OTHR",
       "treatment": "A share-count change from a corporate action greater than ±10% from one trading day to the next is announced immediately, implemented two trading days later, and effective the following trading day; other applicable changes follow the quarterly underlying-data schedule. Free-float factor changes over ±5 percentage points use the same two-day process.",
       "lead_days": 2,
       "lead_days_confidence": "stated",
@@ -711,7 +711,7 @@
       "vendor": "stoxx",
       "index_type": "*",
       "event_type": "private-placement",
-      "caev": "OFFO",
+      "caev": "OTHR",
       "treatment": "A share-count change from a corporate action greater than ±10% from one trading day to the next is announced immediately, implemented two trading days later, and effective the following trading day; other applicable changes follow the quarterly underlying-data schedule. Free-float factor changes over ±5 percentage points use the same two-day process.",
       "lead_days": 2,
       "lead_days_confidence": "stated",
@@ -722,7 +722,7 @@
       "vendor": "stoxx",
       "index_type": "*",
       "event_type": "return-of-capital",
-      "caev": "REDU",
+      "caev": "CAPD",
       "treatment": "A return of capital with share consolidation is applied as a combination of a regular or special cash dividend and a reverse split. Regular classification uses the regular-dividend return-index treatment plus split treatment for Price indices; special classification applies special-dividend treatment to Price, Gross Return, and Net Return indices plus split treatment.",
       "lead_days": null,
       "lead_days_confidence": "absent",
@@ -755,7 +755,7 @@
       "vendor": "stoxx",
       "index_type": "*",
       "event_type": "bankruptcy",
-      "caev": "DELI",
+      "caev": "BRUP",
       "treatment": "A company that files for bankruptcy is deleted during ongoing bankruptcy proceedings at its primary-market traded price, if available, otherwise at local-currency 0.0000001. Changes are announced immediately, implemented two trading days later, and effective the following trading day.",
       "lead_days": 2,
       "lead_days_confidence": "stated",
@@ -798,7 +798,7 @@
     {
       "vendor": "morningstar",
       "event_type": "special-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "*",
       "conditions": {
         "dividend_size_threshold_pct": 5,
@@ -813,7 +813,7 @@
     {
       "vendor": "morningstar",
       "event_type": "stock-dividend",
-      "caev": "BONU",
+      "caev": "DVSE",
       "index_type": "*",
       "treatment": "Treated as a stock split: index shares increase and price decreases by the stock-dividend ratio, leaving the security’s index market value unchanged. Index-ineligible distributed instruments are not recognized.",
       "lead_days": null,
@@ -835,7 +835,7 @@
     {
       "vendor": "morningstar",
       "event_type": "stock-split",
-      "caev": "SPLT",
+      "caev": "SPLF",
       "index_type": "*",
       "treatment": "Index shares increase and the price decreases by the stock-split ratio, leaving the security’s index market value unchanged; PAF = pre-event total shares outstanding / post-event total shares outstanding.",
       "lead_days": null,
@@ -846,7 +846,7 @@
     {
       "vendor": "morningstar",
       "event_type": "spin-off",
-      "caev": "SPIN",
+      "caev": "SOFF",
       "index_type": "*",
       "treatment": "A newly created spin-off is added at zero price without divisor adjustment and removed with a divisor adjustment after at least two regular trading days. If it has not traded for 40 trading days after ex-date and has no listing information, it may be removed at zero with client notice (60 days for India); publicly listed distributions use a zero-price placeholder.",
       "lead_days": null,
@@ -857,7 +857,7 @@
     {
       "vendor": "morningstar",
       "event_type": "rights-issue",
-      "caev": "RHDI",
+      "caev": "RHTS",
       "index_type": "*",
       "conditions": {
         "rights_moneyness": "in-the-money"
@@ -871,7 +871,7 @@
     {
       "vendor": "morningstar",
       "event_type": "rights-issue",
-      "caev": "RHDI",
+      "caev": "RHTS",
       "index_type": "*",
       "conditions": {
         "rights_moneyness": "out-of-the-money"
@@ -885,7 +885,7 @@
     {
       "vendor": "morningstar",
       "event_type": "secondary-offering",
-      "caev": "OFFO",
+      "caev": "OTHR",
       "index_type": "*",
       "treatment": "Public/secondary offerings are nonmandatory. Material share and corresponding float changes are accelerated weekly when the offering exceeds both USD 150m and 5% of shares, or exceeds USD 1bn even below 5%; otherwise qualifying changes are implemented at quarterly rebalancing. A subscription offer to existing holders follows the rights-offering treatment.",
       "lead_days": null,
@@ -896,7 +896,7 @@
     {
       "vendor": "morningstar",
       "event_type": "private-placement",
-      "caev": "OFFO",
+      "caev": "OTHR",
       "index_type": "*",
       "treatment": "Private placements are nonmandatory; material share and corresponding float changes follow the nonmandatory accelerated weekly policy when they meet its stated thresholds, with non-material qualifying changes implemented at quarterly rebalancing.",
       "lead_days": null,
@@ -907,7 +907,7 @@
     {
       "vendor": "morningstar",
       "event_type": "return-of-capital",
-      "caev": "REDU",
+      "caev": "CAPD",
       "index_type": "*",
       "treatment": "Generally nonrecurring and treated as a special dividend under the special-dividend price-threshold treatment. It is treated as an ordinary cash dividend only when declared in lieu of an ordinary dividend and its amount and frequency fit the historical ordinary-dividend pattern.",
       "lead_days": null,
@@ -940,7 +940,7 @@
     {
       "vendor": "morningstar",
       "event_type": "bankruptcy",
-      "caev": "DELI",
+      "caev": "BRUP",
       "index_type": "*",
       "treatment": "Bankrupt or financially distressed securities are ineligible and removed with a minimum two days’ notice: at the usual/primary-exchange closing price if trading, otherwise zero; for U.S. securities, use OTC/pink-sheet price when available before zero.",
       "lead_days": 2,
@@ -951,7 +951,7 @@
     {
       "vendor": "ftse",
       "event_type": "stock-split",
-      "caev": "SPLT",
+      "caev": "SPLF",
       "index_type": "market-cap-weighted",
       "lead_days": 2,
       "lead_days_confidence": "stated",
