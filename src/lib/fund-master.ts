@@ -6,7 +6,16 @@ export type EvidenceConfidence = "high" | "medium" | "low" | "absent";
 export type FieldConfidence = "stated" | "inferred" | "user-set" | "absent";
 export type CoverageQuality = "complete" | "partial" | "product-specific" | "framework-default";
 export type SourceEvidence = { url: string; publisher: string; retrieved_at: string; source_as_of?: string; fields: string[]; note?: string };
-export type FundMasterRecord = { ticker: string; name: string; isin: string | null; underlying_index: string | null; index_provider: string | null; index_type: IndexType | null; universe: string | null; weighting: string | null; reconstitution_frequency: string | null; inception_date: string | null; source_urls: string[]; source_as_of: string | null; confidence: EvidenceConfidence; field_confidence: Partial<Record<string, FieldConfidence>>; missing_fields: string[]; coverage_quality: CoverageQuality; notes?: string[] };
+/**
+ * A fund that no longer trades. Franklin's sitemap still lists FLRU under
+ * /products/, so placement there does NOT mean live -- its own SAI says it was
+ * delisted from NYSE Arca on 2022-12-27 and is liquidating. A closed fund still
+ * RESOLVES, because its index rules were correct while it existed and a
+ * practitioner may be investigating a historical event; what must not happen is
+ * offering it silently as though it were current.
+ */
+export type FundLifecycle = { status: "closed"; effective: string; reason: string; source_urls: string[] };
+export type FundMasterRecord = { lifecycle?: FundLifecycle; ticker: string; name: string; isin: string | null; underlying_index: string | null; index_provider: string | null; index_type: IndexType | null; universe: string | null; weighting: string | null; reconstitution_frequency: string | null; inception_date: string | null; source_urls: string[]; source_as_of: string | null; confidence: EvidenceConfidence; field_confidence: Partial<Record<string, FieldConfidence>>; missing_fields: string[]; coverage_quality: CoverageQuality; notes?: string[] };
 export type FranklinEtfSnapshot = { schema_version: "1.0"; snapshot_id: string; provider: "Franklin Templeton"; acquired_at: string; source_as_of: string; records: FundMasterRecord[]; acquisition: { requested_sources: string[]; successful_sources: string[]; failed_sources: Array<{url:string;reason:string}>; excluded_sources: Array<{name:string;reason:string}>; record_count:number; count_note:string } };
 export type FranklinCatalogRecord = { url: string; ticker: string; name: string; source_as_of: string | null; retrieved_at: string };
 export type FranklinEtfCatalog = { schema_version: "1.0"; snapshot_id: string; source_url: string; retrieved_at: string; source_as_of: string | null; scope: string; records: FranklinCatalogRecord[] };
@@ -47,5 +56,8 @@ export function resolveFundRules(selectedFundTicker: string | undefined, snapsho
   }
   const fundIndexType = fund.index_type;
   if (!fund.underlying_index || !fund.index_provider || !fundIndexType) return { resolution: { mode: "fund-unresolved", ticker, reason: "missing-index-fields", ruleScope: "2-d", warnings: [`${ticker} is missing an index resolver field: ${fund.missing_fields.join(", ") || "index metadata"}.` ] }, rows: rules };
-  return { resolution: { mode: "fund-resolved", ticker, fund, indexType: fundIndexType, ruleScope: "3-d", warnings: [] }, rows: rules.filter((rule) => ruleIndexTypeMatchesFund(rule.index_type, fundIndexType)) };
+  const lifecycleWarnings = fund.lifecycle?.status === "closed"
+    ? [`${ticker} is closed: ${fund.lifecycle.reason} (effective ${fund.lifecycle.effective}). Rules below applied while it traded.`]
+    : [];
+  return { resolution: { mode: "fund-resolved", ticker, fund, indexType: fundIndexType, ruleScope: "3-d", warnings: lifecycleWarnings }, rows: rules.filter((rule) => ruleIndexTypeMatchesFund(rule.index_type, fundIndexType)) };
 }

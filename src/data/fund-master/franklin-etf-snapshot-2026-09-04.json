@@ -1,969 +1,1668 @@
 {
-  "schema_version":"1.0",
-  "snapshot_id":"franklin-etf-2026-09-04",
-  "provider":"Franklin Templeton",
-  "acquired_at":"2026-09-05T02:00:00Z",
-  "source_as_of":"2026-09-04",
-  "records":[{
-    "ticker":"FLJP",
-    "name":"Franklin FTSE Japan ETF",
-    "isin":null,
-    "underlying_index":"FTSE Japan Capped Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"market-cap-weighted",
-    "universe":"Japanese large- and mid-capitalization stocks",
-    "weighting":"Market capitalization weighted and capped",
-    "reconstitution_frequency":"Quarterly",
-    "inception_date":null,
-    "source_urls":["https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP","https://www.lseg.com/en/ftse-russell/indices/capped"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","isin":"absent","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"absent"},
-    "missing_fields":["isin","inception_date"],
-    "coverage_quality":"complete",
-    "notes":["The reviewed acquisition evidence did not expose ISIN or inception date reliably; those fields remain explicitly missing."]
-  },{
-    "ticker":"FLQS",
-    "name":"Franklin U.S. Small Cap Multifactor Index ETF",
-    "isin":null,
-    "underlying_index":"LibertyQ U.S. Small Cap Equity Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"capped-factor",
-    "universe":"U.S. small-cap equities selected from the Russell 2000 Index",
-    "weighting":"Multifactor weighting anchored to 50% quality, 30% value, 10% momentum, and 10% volatility factors",
-    "reconstitution_frequency":"Semi-annually",
-    "inception_date":null,
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25771/SINGLCLASS/franklin-u-s-small-cap-multifactor-index-etf/FLQS","https://www.franklintempleton.com/forms-literature/download/ETF-P"],
-    "source_as_of":"2026-08-01",
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","underlying_index":"stated","index_provider":"stated","index_type":"inferred","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","isin":"absent","inception_date":"absent"},
-    "missing_fields":["isin","inception_date"],
-    "coverage_quality":"complete",
-    "notes":["Index type is classified as capped-factor because the published LibertyQ methodology combines explicit factor weights rather than a plain market-capitalization weighting."]
-  },{
-    "ticker":"FLCA",
-    "name":"Franklin FTSE Canada ETF",
-    "isin":null,
-    "underlying_index":"FTSE Canada Capped Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"float-adjusted-cap-weighted",
-    "universe":"Canadian large- and mid-capitalization stocks",
-    "weighting":"Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
-    "reconstitution_frequency":"Semiannually",
-    "inception_date":"2017-11-02",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26364/SINGLCLASS/franklin-ftse-canada-etf/FLCA","https://www.franklintempleton.com/forms-literature/download/FLCA-FF","https://www.franklintempleton.com/forms-literature/download/ETF5-P","https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","isin":"absent","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"stated","source_as_of":"absent"},
-    "missing_fields":["isin","source_as_of"],
-    "coverage_quality":"partial",
-    "notes":["The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."]
-  },{
-    "ticker":"FLGB",
-    "name":"Franklin FTSE United Kingdom ETF",
-    "isin":null,
-    "underlying_index":"FTSE UK Capped Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"float-adjusted-cap-weighted",
-    "universe":"United Kingdom large- and mid-capitalization stocks",
-    "weighting":"Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
-    "reconstitution_frequency":"Semiannually",
-    "inception_date":"2017-11-02",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26350/SINGLCLASS/franklin-ftse-united-kingdom-etf/FLGB","https://www.franklintempleton.com/forms-literature/download/FLGB-FF","https://www.franklintempleton.com/forms-literature/download/ETF5-P","https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","isin":"absent","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"stated","source_as_of":"absent"},
-    "missing_fields":["isin","source_as_of"],
-    "coverage_quality":"partial",
-    "notes":["The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."]
-  },{
-    "ticker":"FLGR",
-    "name":"Franklin FTSE Germany ETF",
-    "isin":null,
-    "underlying_index":"FTSE Germany Capped Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"float-adjusted-cap-weighted",
-    "universe":"German large- and mid-capitalization stocks",
-    "weighting":"Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
-    "reconstitution_frequency":"Semiannually",
-    "inception_date":"2017-11-02",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26360/SINGLCLASS/franklin-ftse-germany-etf/FLGR","https://www.franklintempleton.com/forms-literature/download/FLGR-FF","https://www.franklintempleton.com/forms-literature/download/ETF5-P","https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","isin":"absent","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"stated","source_as_of":"absent"},
-    "missing_fields":["isin","source_as_of"],
-    "coverage_quality":"partial",
-    "notes":["The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."]
-  },{
-    "ticker":"FLSW",
-    "name":"Franklin FTSE Switzerland ETF",
-    "isin":null,
-    "underlying_index":"FTSE Switzerland Capped Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"float-adjusted-cap-weighted",
-    "universe":"Swiss large- and mid-capitalization stocks",
-    "weighting":"Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
-    "reconstitution_frequency":"Semiannually",
-    "inception_date":"2018-02-06",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26352/SINGLCLASS/franklin-ftse-switzerland-etf/FLSW","https://www.franklintempleton.com/forms-literature/download/FLSW-FF","https://www.franklintempleton.com/forms-literature/download/ETF5-P","https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","isin":"absent","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"stated","source_as_of":"absent"},
-    "missing_fields":["isin","source_as_of"],
-    "coverage_quality":"partial",
-    "notes":["The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."]
-  },{
-    "ticker":"FLAU",
-    "name":"Franklin FTSE Australia ETF",
-    "isin":null,
-    "underlying_index":"FTSE Australia Capped Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"float-adjusted-cap-weighted",
-    "universe":"Australian large- and mid-capitalization stocks",
-    "weighting":"Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
-    "reconstitution_frequency":"Semiannually",
-    "inception_date":"2017-11-02",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26365/SINGLCLASS/franklin-ftse-australia-etf/FLAU","https://www.franklintempleton.com/forms-literature/download/FLAU-FF","https://www.franklintempleton.com/forms-literature/download/ETF5-P","https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","isin":"absent","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"stated","source_as_of":"absent"},
-    "missing_fields":["isin","source_as_of"],
-    "coverage_quality":"partial",
-    "notes":["The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."]
-  },{
-    "ticker":"FLKR",
-    "name":"Franklin FTSE South Korea ETF",
-    "isin":null,
-    "underlying_index":"FTSE South Korea Capped Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"float-adjusted-cap-weighted",
-    "universe":"South Korean large- and mid-capitalization stocks",
-    "weighting":"Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
-    "reconstitution_frequency":"Semiannually",
-    "inception_date":"2017-11-02",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26353/SINGLCLASS/franklin-ftse-south-korea-etf/FLKR","https://www.franklintempleton.com/forms-literature/download/FLKR-FF","https://www.franklintempleton.com/forms-literature/download/ETF5-P","https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","isin":"absent","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"stated","source_as_of":"absent"},
-    "missing_fields":["isin","source_as_of"],
-    "coverage_quality":"partial",
-    "notes":["The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."]
-  },{
-    "ticker":"FLMX",
-    "name":"Franklin FTSE Mexico ETF",
-    "isin":null,
-    "underlying_index":"FTSE Mexico Capped Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"float-adjusted-cap-weighted",
-    "universe":"Mexican large- and mid-capitalization stocks",
-    "weighting":"Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
-    "reconstitution_frequency":"Semiannually",
-    "inception_date":"2017-11-03",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26354/SINGLCLASS/franklin-ftse-mexico-etf/FLMX","https://www.franklintempleton.com/forms-literature/download/FLMX-FF","https://www.franklintempleton.com/forms-literature/download/ETF5-P","https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","isin":"absent","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"stated","source_as_of":"absent"},
-    "missing_fields":["isin","source_as_of"],
-    "coverage_quality":"partial",
-    "notes":["The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."]
-  },{
-    "ticker":"FLBR",
-    "name":"Franklin FTSE Brazil ETF",
-    "isin":null,
-    "underlying_index":"FTSE Brazil Capped Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"float-adjusted-cap-weighted",
-    "universe":"Brazilian large- and mid-capitalization stocks",
-    "weighting":"Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
-    "reconstitution_frequency":"Semiannually",
-    "inception_date":"2017-11-03",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26363/SINGLCLASS/franklin-ftse-brazil-etf/FLBR","https://www.franklintempleton.com/forms-literature/download/FLBR-FF","https://www.franklintempleton.com/forms-literature/download/ETF5-P","https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","isin":"absent","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"stated","source_as_of":"absent"},
-    "missing_fields":["isin","source_as_of"],
-    "coverage_quality":"partial",
-    "notes":["The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."]
-  },{
-    "ticker":"FLSA",
-    "name":"Franklin FTSE Saudi Arabia ETF",
-    "isin":null,
-    "underlying_index":"FTSE Saudi Arabia Capped Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"float-adjusted-cap-weighted",
-    "universe":"Saudi Arabian large- and mid-capitalization stocks",
-    "weighting":"Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
-    "reconstitution_frequency":"Semiannually",
-    "inception_date":"2018-10-09",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27392/SINGLCLASS/franklin-ftse-saudi-arabia-etf/FLSA","https://www.franklintempleton.com/forms-literature/download/FLSA-FF","https://www.franklintempleton.com/forms-literature/download/ETF5-P","https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","isin":"absent","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"stated","source_as_of":"absent"},
-    "missing_fields":["isin","source_as_of"],
-    "coverage_quality":"partial",
-    "notes":["The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."]
-  },{
-    "ticker":"FLEU",
-    "name":"Franklin FTSE Eurozone ETF",
-    "isin":null,
-    "underlying_index":"FTSE Developed Eurozone Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"float-adjusted-cap-weighted",
-    "universe":"Large- and mid-capitalization stocks from developed Eurozone countries",
-    "weighting":"Free float-adjusted market capitalization weighted",
-    "reconstitution_frequency":"Semiannually",
-    "inception_date":"2017-11-02",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26347/SINGLCLASS/franklin-ftse-eurozone-etf/FLEU","https://www.franklintempleton.com/forms-literature/download/FLEH-FF","https://www.franklintempleton.com/forms-literature/download/ETF5-P","https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"stated","isin":"absent"},
-    "missing_fields":["isin"],
-    "coverage_quality":"complete",
-    "notes":["The fund tracks the FTSE Developed Eurozone Index; the published factsheet labels the index reconstitution frequency semiannually."]
-  },{
-    "ticker":"FLRU",
-    "name":"Franklin FTSE Russia ETF",
-    "isin":null,
-    "underlying_index":"FTSE Russia Capped Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"float-adjusted-cap-weighted",
-    "universe":"Russian large- and mid-capitalization stocks",
-    "weighting":"Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
-    "reconstitution_frequency":null,
-    "inception_date":null,
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26356/SINGLCLASS/franklin-ftse-russia-etf/FLRU","https://www.franklintempleton.com/forms-literature/download/ETF5-P","https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"stated","reconstitution_frequency":"absent","inception_date":"absent","isin":"absent"},
-    "missing_fields":["isin","reconstitution_frequency","inception_date"],
-    "coverage_quality":"partial",
-    "notes":["The reviewed primary evidence confirms the index and methodology, but did not expose a current Franklin factsheet with reconstitution frequency and inception date; those fields remain explicitly missing."]
-  },{
-    "ticker":"FLLA",
-    "name":"Franklin FTSE Latin America ETF",
-    "isin":null,
-    "underlying_index":"FTSE Latin America RIC Capped Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"float-adjusted-cap-weighted",
-    "universe":"Latin American large- and mid-capitalization stocks",
-    "weighting":"Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
-    "reconstitution_frequency":"Semiannually",
-    "inception_date":"2018-10-09",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27393/SINGLCLASS/franklin-ftse-latin-america-etf/FLLA","https://www.franklintempleton.com/forms-literature/download/FLLA-FF","https://www.franklintempleton.com/forms-literature/download/ETF5-P","https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"stated","isin":"absent"},
-    "missing_fields":["isin"],
-    "coverage_quality":"complete",
-    "notes":["The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping."]
-  },{
-    "ticker":"FLQL",
-    "name":"Franklin U.S. Large Cap Multifactor Index ETF",
-    "isin":null,
-    "underlying_index":"LibertyQ U.S. Large Cap Equity Index",
-    "index_provider":"FTSE Russell",
-    "index_type":"capped-factor",
-    "universe":"U.S. large-cap equities selected from the Russell 1000 Index",
-    "weighting":"Multifactor weighting based on benchmark weights and composite factor scores across quality, value, momentum, and low-volatility exposures, subject to minimum and maximum constraints",
-    "reconstitution_frequency":"Quarterly",
-    "inception_date":"2017-04-26",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25773/SINGLCLASS/franklin-u-s-large-cap-multifactor-index-etf/FLQL","https://www.franklintempleton.com/forms-literature/download/ETF-P"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","underlying_index":"stated","index_provider":"stated","index_type":"inferred","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"stated","isin":"absent"},
-    "missing_fields":["isin"],
-    "coverage_quality":"complete",
-    "notes":["Index type is classified as capped-factor because the underlying index applies explicit multifactor selection and minimum/maximum weight constraints rather than plain market-cap weighting."]
-  },{
-    "ticker":"XUDV",
-    "name":"Franklin U.S. Dividend Booster Index ETF",
-    "isin":null,
-    "underlying_index":"VettaFi New Frontier U.S. Dividend Select Index",
-    "index_provider":"VettaFi",
-    "index_type":"capped-factor",
-    "universe":"U.S. large-cap equities represented by the VettaFi U.S. Equity Large-Cap 500 Index",
-    "weighting":"Optimization targeting excess dividend yield relative to the parent index while balancing volatility and concentration constraints",
-    "reconstitution_frequency":"Quarterly",
-    "inception_date":"2025-01-21",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42074/SINGLCLASS/franklin-us-dividend-booster-index-etf/XUDV","https://www.franklintempleton.com/forms-literature/download/42074-FF","https://www.franklintempleton.com/tools-and-resources/lit-preview/42074/SINGLCLASS/franklin-us-dividend-booster-index-etf"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","underlying_index":"stated","index_provider":"stated","index_type":"inferred","universe":"stated","weighting":"stated","reconstitution_frequency":"stated","inception_date":"stated","isin":"absent"},
-    "missing_fields":["isin"],
-    "coverage_quality":"product-specific",
-    "notes":["Index type is classified as capped-factor because the published methodology uses an optimization process with explicit volatility and concentration constraints; the fund page identifies VettaFi as the index provider."]
-  },{
-    "ticker":"XDAT",
-    "name":"Franklin Exponential Data ETF",
-    "isin":null,
-    "underlying_index":null,
-    "index_provider":null,
-    "index_type":"active",
-    "universe":"Companies relevant to the exponential-data investment theme, including companies inside and outside the United States and in developing or emerging markets",
-    "weighting":null,
-    "reconstitution_frequency":null,
-    "inception_date":"2021-01-12",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/30780/SINGLCLASS/franklin-exponential-data-etf/XDAT","https://www.franklintempleton.com/forms-literature/download/XDAT-FF"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","underlying_index":"absent","index_provider":"absent","index_type":"stated","universe":"stated","weighting":"absent","reconstitution_frequency":"absent","inception_date":"stated","isin":"absent"},
-    "missing_fields":["isin","underlying_index","index_provider","weighting","reconstitution_frequency"],
-    "coverage_quality":"product-specific",
-    "notes":["The official fund materials describe XDAT as an active thematic ETF; no underlying index is used."]
-  },{
-    "ticker":"HELX",
-    "name":"Franklin Genomic Advancements ETF",
-    "isin":null,
-    "underlying_index":null,
-    "index_provider":null,
-    "index_type":"active",
-    "universe":"Companies relevant to genomic advancements, including DNA sequencing, gene editing, and personalized medicine",
-    "weighting":null,
-    "reconstitution_frequency":null,
-    "inception_date":"2020-02-25",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29097/SINGLCLASS/franklin-genomic-advancements-etf/HELX","https://www.franklintempleton.com/forms-literature/download/ETF2-SAI"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","underlying_index":"absent","index_provider":"absent","index_type":"stated","universe":"stated","weighting":"absent","reconstitution_frequency":"absent","inception_date":"stated","isin":"absent"},
-    "missing_fields":["isin","underlying_index","index_provider","weighting","reconstitution_frequency"],
-    "coverage_quality":"product-specific",
-    "notes":["The official materials describe HELX as an active thematic ETF; no underlying index is used."]
-  },{
-    "ticker":"SQLV",
-    "name":"Royce Quant Small-Cap Quality Value ETF",
-    "isin":null,
-    "underlying_index":null,
-    "index_provider":null,
-    "index_type":"active",
-    "universe":"U.S.-traded small-capitalization companies meeting proprietary quality and value criteria",
-    "weighting":null,
-    "reconstitution_frequency":null,
-    "inception_date":"2017-07-12",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91662/SINGLCLASS/royce-quant-small-cap-quality-value-etf/SQLV","https://www.franklintempleton.com/forms-literature/download/91662-FF"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","underlying_index":"absent","index_provider":"absent","index_type":"stated","universe":"stated","weighting":"absent","reconstitution_frequency":"absent","inception_date":"stated","isin":"absent"},
-    "missing_fields":["isin","underlying_index","index_provider","weighting","reconstitution_frequency"],
-    "coverage_quality":"product-specific",
-    "notes":["The official factsheet labels SQLV Active and describes a proprietary methodology, not an underlying index. This is recorded as active rather than inventing an index."]
-  },{
-    "ticker":"FLSP",
-    "name":"Franklin Systematic Style Premia ETF",
-    "isin":null,
-    "underlying_index":null,
-    "index_provider":null,
-    "index_type":"active",
-    "universe":"Multi-asset exposures accessed through securities and derivatives across equity, fixed-income, commodity, and currency markets",
-    "weighting":null,
-    "reconstitution_frequency":null,
-    "inception_date":"2019-12-18",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/28388/SINGLCLASS/franklin-systematic-style-premia-etf/FLSP","https://www.franklintempleton.com/forms-literature/download/28388-FF","https://www.franklintempleton.com/forms-literature/download-preview/FLSP-PSUM"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","underlying_index":"absent","index_provider":"absent","index_type":"stated","universe":"stated","weighting":"absent","reconstitution_frequency":"absent","inception_date":"stated","isin":"absent"},
-    "missing_fields":["isin","underlying_index","index_provider","weighting","reconstitution_frequency"],
-    "coverage_quality":"product-specific",
-    "notes":["The official factsheet labels FLSP Active and the summary prospectus says no one index is representative of the portfolio."]
-  },{
-    "ticker":"INCE",
-    "name":"Franklin Income Equity Focus ETF",
-    "isin":null,
-    "underlying_index":null,
-    "index_provider":null,
-    "index_type":"active",
-    "universe":"Equity securities and equity-related instruments, including common stocks, with dividend yields the investment manager believes are attractive",
-    "weighting":null,
-    "reconstitution_frequency":null,
-    "inception_date":"2016-09-20",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21559/SINGLCLASS/franklin-income-equity-focus-etf/INCE","https://www.franklintempleton.com/forms-literature/download/FLLV-FF"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","underlying_index":"absent","index_provider":"absent","index_type":"stated","universe":"stated","weighting":"absent","reconstitution_frequency":"absent","inception_date":"stated","isin":"absent"},
-    "missing_fields":["isin","underlying_index","index_provider","weighting","reconstitution_frequency"],
-    "coverage_quality":"product-specific",
-    "notes":["The official factsheet labels INCE Active; no underlying index is used."]
-  },{
-    "ticker":"YLDE",
-    "name":"Franklin ClearBridge Enhanced Income ETF",
-    "isin":null,
-    "underlying_index":null,
-    "index_provider":null,
-    "index_type":"active",
-    "universe":"Global dividend-paying equity securities, with an options overlay using U.S. large-cap equity index call options",
-    "weighting":null,
-    "reconstitution_frequency":null,
-    "inception_date":"2017-05-22",
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91629/SINGLCLASS/franklin-clearbridge-enhanced-income-etf/YLDE","https://www.franklintempleton.com/forms-literature/download/CDS-FF","https://www.franklintempleton.com/forms-literature/download-preview/91629-PSUM"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","underlying_index":"absent","index_provider":"absent","index_type":"stated","universe":"stated","weighting":"absent","reconstitution_frequency":"absent","inception_date":"stated","isin":"absent"},
-    "missing_fields":["isin","underlying_index","index_provider","weighting","reconstitution_frequency"],
-    "coverage_quality":"product-specific",
-    "notes":["The official factsheet labels YLDE Active and the summary prospectus says no one index is representative of the portfolio."]
-  },{
-    "ticker":"PGRO",
-    "name":"Putnam Focused Large Cap Growth ETF",
-    "isin":null,
-    "underlying_index":null,
-    "index_provider":null,
-    "index_type":"active",
-    "universe":"U.S. large-cap growth companies selected through Putnam's active investment process",
-    "weighting":null,
-    "reconstitution_frequency":null,
-    "inception_date":null,
-    "source_urls":["https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39433/SINGLCLASS/putnam-focused-large-cap-growth-etf/PGRO"],
-    "source_as_of":null,
-    "confidence":"medium",
-    "field_confidence":{"ticker":"stated","name":"stated","underlying_index":"absent","index_provider":"absent","index_type":"stated","universe":"stated","weighting":"absent","reconstitution_frequency":"absent","inception_date":"absent","isin":"absent"},
-    "missing_fields":["isin","underlying_index","index_provider","weighting","reconstitution_frequency","inception_date"],
-    "coverage_quality":"product-specific",
-    "notes":["The official Franklin product page identifies PGRO as an active Putnam ETF; no underlying index or inception date was exposed by the reviewed primary source."]
-  },{
-    "ticker": "FLAX",
-    "name": "Franklin FTSE Asia ex Japan ETF",
-    "isin": null,
-    "underlying_index": "FTSE Asia ex Japan RIC Capped Index",
-    "index_provider": "FTSE Russell",
-    "index_type": "float-adjusted-cap-weighted",
-    "universe": "Asian (excluding Japan) large- and mid-capitalization stocks from developed and emerging countries",
-    "weighting": "Free float-adjusted market-capitalization weighted; security weights are capped to limit over-concentration",
-    "reconstitution_frequency": "Semiannually",
-    "inception_date": "2018-02-06",
-    "source_urls": [
+  "schema_version": "1.0",
+  "snapshot_id": "franklin-etf-2026-09-04",
+  "provider": "Franklin Templeton",
+  "acquired_at": "2026-09-05T02:00:00Z",
+  "source_as_of": "2026-09-04",
+  "records": [
+    {
+      "ticker": "FLJP",
+      "name": "Franklin FTSE Japan ETF",
+      "isin": null,
+      "underlying_index": "FTSE Japan Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "market-cap-weighted",
+      "universe": "Japanese large- and mid-capitalization stocks",
+      "weighting": "Market capitalization weighted and capped",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": null,
+      "source_urls": [
+        "https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP",
+        "https://www.lseg.com/en/ftse-russell/indices/capped"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "inception_date"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "The reviewed acquisition evidence did not expose ISIN or inception date reliably; those fields remain explicitly missing."
+      ]
+    },
+    {
+      "ticker": "FLQS",
+      "name": "Franklin U.S. Small Cap Multifactor Index ETF",
+      "isin": null,
+      "underlying_index": "LibertyQ U.S. Small Cap Equity Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "capped-factor",
+      "universe": "U.S. small-cap equities selected from the Russell 2000 Index",
+      "weighting": "Multifactor weighting anchored to 50% quality, 30% value, 10% momentum, and 10% volatility factors",
+      "reconstitution_frequency": "Semi-annually",
+      "inception_date": null,
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25771/SINGLCLASS/franklin-u-s-small-cap-multifactor-index-etf/FLQS",
+        "https://www.franklintempleton.com/forms-literature/download/ETF-P"
+      ],
+      "source_as_of": "2026-08-01",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "isin": "absent",
+        "inception_date": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "inception_date"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "Index type is classified as capped-factor because the published LibertyQ methodology combines explicit factor weights rather than a plain market-capitalization weighting."
+      ]
+    },
+    {
+      "ticker": "FLCA",
+      "name": "Franklin FTSE Canada ETF",
+      "isin": null,
+      "underlying_index": "FTSE Canada Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Canadian large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2017-11-02",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26364/SINGLCLASS/franklin-ftse-canada-etf/FLCA",
+        "https://www.franklintempleton.com/forms-literature/download/FLCA-FF",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "source_as_of"
+      ],
+      "coverage_quality": "partial",
+      "notes": [
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
+      ]
+    },
+    {
+      "ticker": "FLGB",
+      "name": "Franklin FTSE United Kingdom ETF",
+      "isin": null,
+      "underlying_index": "FTSE UK Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "United Kingdom large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2017-11-02",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26350/SINGLCLASS/franklin-ftse-united-kingdom-etf/FLGB",
+        "https://www.franklintempleton.com/forms-literature/download/FLGB-FF",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "source_as_of"
+      ],
+      "coverage_quality": "partial",
+      "notes": [
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
+      ]
+    },
+    {
+      "ticker": "FLGR",
+      "name": "Franklin FTSE Germany ETF",
+      "isin": null,
+      "underlying_index": "FTSE Germany Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "German large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2017-11-02",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26360/SINGLCLASS/franklin-ftse-germany-etf/FLGR",
+        "https://www.franklintempleton.com/forms-literature/download/FLGR-FF",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "source_as_of"
+      ],
+      "coverage_quality": "partial",
+      "notes": [
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
+      ]
+    },
+    {
+      "ticker": "FLSW",
+      "name": "Franklin FTSE Switzerland ETF",
+      "isin": null,
+      "underlying_index": "FTSE Switzerland Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Swiss large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2018-02-06",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26352/SINGLCLASS/franklin-ftse-switzerland-etf/FLSW",
+        "https://www.franklintempleton.com/forms-literature/download/FLSW-FF",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "source_as_of"
+      ],
+      "coverage_quality": "partial",
+      "notes": [
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
+      ]
+    },
+    {
+      "ticker": "FLAU",
+      "name": "Franklin FTSE Australia ETF",
+      "isin": null,
+      "underlying_index": "FTSE Australia Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Australian large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2017-11-02",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26365/SINGLCLASS/franklin-ftse-australia-etf/FLAU",
+        "https://www.franklintempleton.com/forms-literature/download/FLAU-FF",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "source_as_of"
+      ],
+      "coverage_quality": "partial",
+      "notes": [
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
+      ]
+    },
+    {
+      "ticker": "FLKR",
+      "name": "Franklin FTSE South Korea ETF",
+      "isin": null,
+      "underlying_index": "FTSE South Korea Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "South Korean large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2017-11-02",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26353/SINGLCLASS/franklin-ftse-south-korea-etf/FLKR",
+        "https://www.franklintempleton.com/forms-literature/download/FLKR-FF",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "source_as_of"
+      ],
+      "coverage_quality": "partial",
+      "notes": [
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
+      ]
+    },
+    {
+      "ticker": "FLMX",
+      "name": "Franklin FTSE Mexico ETF",
+      "isin": null,
+      "underlying_index": "FTSE Mexico Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Mexican large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2017-11-03",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26354/SINGLCLASS/franklin-ftse-mexico-etf/FLMX",
+        "https://www.franklintempleton.com/forms-literature/download/FLMX-FF",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "source_as_of"
+      ],
+      "coverage_quality": "partial",
+      "notes": [
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
+      ]
+    },
+    {
+      "ticker": "FLBR",
+      "name": "Franklin FTSE Brazil ETF",
+      "isin": null,
+      "underlying_index": "FTSE Brazil Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Brazilian large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2017-11-03",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26363/SINGLCLASS/franklin-ftse-brazil-etf/FLBR",
+        "https://www.franklintempleton.com/forms-literature/download/FLBR-FF",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "source_as_of"
+      ],
+      "coverage_quality": "partial",
+      "notes": [
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
+      ]
+    },
+    {
+      "ticker": "FLSA",
+      "name": "Franklin FTSE Saudi Arabia ETF",
+      "isin": null,
+      "underlying_index": "FTSE Saudi Arabia Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Saudi Arabian large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2018-10-09",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27392/SINGLCLASS/franklin-ftse-saudi-arabia-etf/FLSA",
+        "https://www.franklintempleton.com/forms-literature/download/FLSA-FF",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "source_as_of"
+      ],
+      "coverage_quality": "partial",
+      "notes": [
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
+      ]
+    },
+    {
+      "ticker": "FLEU",
+      "name": "Franklin FTSE Eurozone ETF",
+      "isin": null,
+      "underlying_index": "FTSE Developed Eurozone Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Large- and mid-capitalization stocks from developed Eurozone countries",
+      "weighting": "Free float-adjusted market capitalization weighted",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2017-11-02",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26347/SINGLCLASS/franklin-ftse-eurozone-etf/FLEU",
+        "https://www.franklintempleton.com/forms-literature/download/FLEH-FF",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "isin": "absent"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "The fund tracks the FTSE Developed Eurozone Index; the published factsheet labels the index reconstitution frequency semiannually."
+      ]
+    },
+    {
+      "ticker": "FLRU",
+      "name": "Franklin FTSE Russia ETF",
+      "isin": null,
+      "underlying_index": "FTSE Russia Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Russian large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
+      "reconstitution_frequency": null,
+      "inception_date": null,
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26356/SINGLCLASS/franklin-ftse-russia-etf/FLRU",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "absent",
+        "inception_date": "absent",
+        "isin": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "reconstitution_frequency",
+        "inception_date"
+      ],
+      "coverage_quality": "partial",
+      "notes": [
+        "The reviewed primary evidence confirms the index and methodology, but did not expose a current Franklin factsheet with reconstitution frequency and inception date; those fields remain explicitly missing."
+      ],
+      "lifecycle": {
+        "status": "closed",
+        "effective": "2022-12-27",
+        "reason": "Delisted from NYSE Arca and liquidating under a plan of liquidation.",
+        "source_urls": [
+          "https://www.franklintempleton.com/forms-literature/download-preview/FLRU-SAI1",
+          "https://www.franklintempleton.com/press-releases/etfs/2022/update-on-franklin-ftse-russia-etf-flru"
+        ]
+      }
+    },
+    {
+      "ticker": "FLLA",
+      "name": "Franklin FTSE Latin America ETF",
+      "isin": null,
+      "underlying_index": "FTSE Latin America RIC Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Latin American large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market capitalization weighted; issuer weights capped quarterly so no single issuer exceeds 25% and issuers above 5% do not cumulatively exceed 50%",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2018-10-09",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27393/SINGLCLASS/franklin-ftse-latin-america-etf/FLLA",
+        "https://www.franklintempleton.com/forms-literature/download/FLLA-FF",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "isin": "absent"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping."
+      ]
+    },
+    {
+      "ticker": "FLQL",
+      "name": "Franklin U.S. Large Cap Multifactor Index ETF",
+      "isin": null,
+      "underlying_index": "LibertyQ U.S. Large Cap Equity Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "capped-factor",
+      "universe": "U.S. large-cap equities selected from the Russell 1000 Index",
+      "weighting": "Multifactor weighting based on benchmark weights and composite factor scores across quality, value, momentum, and low-volatility exposures, subject to minimum and maximum constraints",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2017-04-26",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25773/SINGLCLASS/franklin-u-s-large-cap-multifactor-index-etf/FLQL",
+        "https://www.franklintempleton.com/forms-literature/download/ETF-P"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "isin": "absent"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "Index type is classified as capped-factor because the underlying index applies explicit multifactor selection and minimum/maximum weight constraints rather than plain market-cap weighting."
+      ]
+    },
+    {
+      "ticker": "XUDV",
+      "name": "Franklin U.S. Dividend Booster Index ETF",
+      "isin": null,
+      "underlying_index": "VettaFi New Frontier U.S. Dividend Select Index",
+      "index_provider": "VettaFi",
+      "index_type": "capped-factor",
+      "universe": "U.S. large-cap equities represented by the VettaFi U.S. Equity Large-Cap 500 Index",
+      "weighting": "Optimization targeting excess dividend yield relative to the parent index while balancing volatility and concentration constraints",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2025-01-21",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42074/SINGLCLASS/franklin-us-dividend-booster-index-etf/XUDV",
+        "https://www.franklintempleton.com/forms-literature/download/42074-FF",
+        "https://www.franklintempleton.com/tools-and-resources/lit-preview/42074/SINGLCLASS/franklin-us-dividend-booster-index-etf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "isin": "absent"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "product-specific",
+      "notes": [
+        "Index type is classified as capped-factor because the published methodology uses an optimization process with explicit volatility and concentration constraints; the fund page identifies VettaFi as the index provider."
+      ]
+    },
+    {
+      "ticker": "XDAT",
+      "name": "Franklin Exponential Data ETF",
+      "isin": null,
+      "underlying_index": null,
+      "index_provider": null,
+      "index_type": "active",
+      "universe": "Companies relevant to the exponential-data investment theme, including companies inside and outside the United States and in developing or emerging markets",
+      "weighting": null,
+      "reconstitution_frequency": null,
+      "inception_date": "2021-01-12",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/30780/SINGLCLASS/franklin-exponential-data-etf/XDAT",
+        "https://www.franklintempleton.com/forms-literature/download/XDAT-FF"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "underlying_index": "absent",
+        "index_provider": "absent",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "absent",
+        "reconstitution_frequency": "absent",
+        "inception_date": "stated",
+        "isin": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "underlying_index",
+        "index_provider",
+        "weighting",
+        "reconstitution_frequency"
+      ],
+      "coverage_quality": "product-specific",
+      "notes": [
+        "The official fund materials describe XDAT as an active thematic ETF; no underlying index is used."
+      ]
+    },
+    {
+      "ticker": "HELX",
+      "name": "Franklin Genomic Advancements ETF",
+      "isin": null,
+      "underlying_index": null,
+      "index_provider": null,
+      "index_type": "active",
+      "universe": "Companies relevant to genomic advancements, including DNA sequencing, gene editing, and personalized medicine",
+      "weighting": null,
+      "reconstitution_frequency": null,
+      "inception_date": "2020-02-25",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29097/SINGLCLASS/franklin-genomic-advancements-etf/HELX",
+        "https://www.franklintempleton.com/forms-literature/download/ETF2-SAI"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "underlying_index": "absent",
+        "index_provider": "absent",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "absent",
+        "reconstitution_frequency": "absent",
+        "inception_date": "stated",
+        "isin": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "underlying_index",
+        "index_provider",
+        "weighting",
+        "reconstitution_frequency"
+      ],
+      "coverage_quality": "product-specific",
+      "notes": [
+        "The official materials describe HELX as an active thematic ETF; no underlying index is used."
+      ]
+    },
+    {
+      "ticker": "SQLV",
+      "name": "Royce Quant Small-Cap Quality Value ETF",
+      "isin": null,
+      "underlying_index": null,
+      "index_provider": null,
+      "index_type": "active",
+      "universe": "U.S.-traded small-capitalization companies meeting proprietary quality and value criteria",
+      "weighting": null,
+      "reconstitution_frequency": null,
+      "inception_date": "2017-07-12",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91662/SINGLCLASS/royce-quant-small-cap-quality-value-etf/SQLV",
+        "https://www.franklintempleton.com/forms-literature/download/91662-FF"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "underlying_index": "absent",
+        "index_provider": "absent",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "absent",
+        "reconstitution_frequency": "absent",
+        "inception_date": "stated",
+        "isin": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "underlying_index",
+        "index_provider",
+        "weighting",
+        "reconstitution_frequency"
+      ],
+      "coverage_quality": "product-specific",
+      "notes": [
+        "The official factsheet labels SQLV Active and describes a proprietary methodology, not an underlying index. This is recorded as active rather than inventing an index."
+      ]
+    },
+    {
+      "ticker": "FLSP",
+      "name": "Franklin Systematic Style Premia ETF",
+      "isin": null,
+      "underlying_index": null,
+      "index_provider": null,
+      "index_type": "active",
+      "universe": "Multi-asset exposures accessed through securities and derivatives across equity, fixed-income, commodity, and currency markets",
+      "weighting": null,
+      "reconstitution_frequency": null,
+      "inception_date": "2019-12-18",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/28388/SINGLCLASS/franklin-systematic-style-premia-etf/FLSP",
+        "https://www.franklintempleton.com/forms-literature/download/28388-FF",
+        "https://www.franklintempleton.com/forms-literature/download-preview/FLSP-PSUM"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "underlying_index": "absent",
+        "index_provider": "absent",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "absent",
+        "reconstitution_frequency": "absent",
+        "inception_date": "stated",
+        "isin": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "underlying_index",
+        "index_provider",
+        "weighting",
+        "reconstitution_frequency"
+      ],
+      "coverage_quality": "product-specific",
+      "notes": [
+        "The official factsheet labels FLSP Active and the summary prospectus says no one index is representative of the portfolio."
+      ]
+    },
+    {
+      "ticker": "INCE",
+      "name": "Franklin Income Equity Focus ETF",
+      "isin": null,
+      "underlying_index": null,
+      "index_provider": null,
+      "index_type": "active",
+      "universe": "Equity securities and equity-related instruments, including common stocks, with dividend yields the investment manager believes are attractive",
+      "weighting": null,
+      "reconstitution_frequency": null,
+      "inception_date": "2016-09-20",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21559/SINGLCLASS/franklin-income-equity-focus-etf/INCE",
+        "https://www.franklintempleton.com/forms-literature/download/FLLV-FF"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "underlying_index": "absent",
+        "index_provider": "absent",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "absent",
+        "reconstitution_frequency": "absent",
+        "inception_date": "stated",
+        "isin": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "underlying_index",
+        "index_provider",
+        "weighting",
+        "reconstitution_frequency"
+      ],
+      "coverage_quality": "product-specific",
+      "notes": [
+        "The official factsheet labels INCE Active; no underlying index is used."
+      ]
+    },
+    {
+      "ticker": "YLDE",
+      "name": "Franklin ClearBridge Enhanced Income ETF",
+      "isin": null,
+      "underlying_index": null,
+      "index_provider": null,
+      "index_type": "active",
+      "universe": "Global dividend-paying equity securities, with an options overlay using U.S. large-cap equity index call options",
+      "weighting": null,
+      "reconstitution_frequency": null,
+      "inception_date": "2017-05-22",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91629/SINGLCLASS/franklin-clearbridge-enhanced-income-etf/YLDE",
+        "https://www.franklintempleton.com/forms-literature/download/CDS-FF",
+        "https://www.franklintempleton.com/forms-literature/download-preview/91629-PSUM"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "underlying_index": "absent",
+        "index_provider": "absent",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "absent",
+        "reconstitution_frequency": "absent",
+        "inception_date": "stated",
+        "isin": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "underlying_index",
+        "index_provider",
+        "weighting",
+        "reconstitution_frequency"
+      ],
+      "coverage_quality": "product-specific",
+      "notes": [
+        "The official factsheet labels YLDE Active and the summary prospectus says no one index is representative of the portfolio."
+      ]
+    },
+    {
+      "ticker": "PGRO",
+      "name": "Putnam Focused Large Cap Growth ETF",
+      "isin": null,
+      "underlying_index": null,
+      "index_provider": null,
+      "index_type": "active",
+      "universe": "U.S. large-cap growth companies selected through Putnam's active investment process",
+      "weighting": null,
+      "reconstitution_frequency": null,
+      "inception_date": null,
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39433/SINGLCLASS/putnam-focused-large-cap-growth-etf/PGRO"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "underlying_index": "absent",
+        "index_provider": "absent",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "absent",
+        "reconstitution_frequency": "absent",
+        "inception_date": "absent",
+        "isin": "absent"
+      },
+      "missing_fields": [
+        "isin",
+        "underlying_index",
+        "index_provider",
+        "weighting",
+        "reconstitution_frequency",
+        "inception_date"
+      ],
+      "coverage_quality": "product-specific",
+      "notes": [
+        "The official Franklin product page identifies PGRO as an active Putnam ETF; no underlying index or inception date was exposed by the reviewed primary source."
+      ]
+    },
+    {
+      "ticker": "FLAX",
+      "name": "Franklin FTSE Asia ex Japan ETF",
+      "isin": null,
+      "underlying_index": "FTSE Asia ex Japan RIC Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Asian (excluding Japan) large- and mid-capitalization stocks from developed and emerging countries",
+      "weighting": "Free float-adjusted market-capitalization weighted; security weights are capped to limit over-concentration",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2018-02-06",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26346/SINGLCLASS/franklin-ftse-asia-ex-japan-etf/FLAX",
+        "https://www.franklintempleton.com/forms-literature/download/FLAX-FF",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
+      ]
+    },
+    {
+      "ticker": "FLCH",
+      "name": "Franklin FTSE China ETF",
+      "isin": null,
+      "underlying_index": "FTSE China RIC Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Chinese large- and mid-capitalization stocks represented by H-, B- and A-shares",
+      "weighting": "Free float-adjusted market-capitalization weighted; security weights are capped to limit over-concentration",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2017-11-02",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26362/SINGLCLASS/franklin-ftse-china-etf/FLCH",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
+      ]
+    },
+    {
+      "ticker": "FLEE",
+      "name": "Franklin FTSE Europe ETF",
+      "isin": null,
+      "underlying_index": "FTSE Developed Europe RIC Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Large- and mid-capitalization stocks from developed European countries",
+      "weighting": "Free float-adjusted market-capitalization weighted; security weights are capped to limit over-concentration",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2017-11-02",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26349/SINGLCLASS/franklin-ftse-europe-etf/FLEE",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
+      ]
+    },
+    {
+      "ticker": "FLIN",
+      "name": "Franklin FTSE India ETF",
+      "isin": null,
+      "underlying_index": "FTSE India RIC Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Indian large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market-capitalization weighted; security weights are capped to limit over-concentration",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2018-02-06",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26348/SINGLCLASS/franklin-ftse-india-etf/FLIN",
+        "https://www.franklintempleton.com/forms-literature/download/FLIN-FF",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
+      ]
+    },
+    {
+      "ticker": "FLJH",
+      "name": "Franklin FTSE Japan Hedged ETF",
+      "isin": null,
+      "underlying_index": "FTSE Japan RIC Capped Hedged to USD Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Japanese large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market-capitalization weighted; security weights are capped to limit over-concentration; index return is hedged to USD",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2017-11-02",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26355/SINGLCLASS/franklin-ftse-japan-hedged-etf/FLJH",
+        "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "FLJH is not a copy of FLJP: its underlying index is the currency-hedged FTSE Japan variant. ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
+      ]
+    },
+    {
+      "ticker": "FLTW",
+      "name": "Franklin FTSE Taiwan ETF",
+      "isin": null,
+      "underlying_index": "FTSE Taiwan RIC Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Taiwanese large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market-capitalization weighted; security weights are capped to limit over-concentration",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2017-11-02",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26351/SINGLCLASS/franklin-ftse-taiwan-etf/FLTW",
+        "https://www.franklintempleton.com/forms-literature/download/FLTW-FF",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
+      ]
+    },
+    {
+      "ticker": "DIEM",
+      "name": "Franklin Emerging Market Core Dividend Tilt Index ETF",
+      "isin": null,
+      "underlying_index": "Morningstar Emerging Markets Dividend Enhanced Select Index",
+      "index_provider": "Morningstar, Inc.",
+      "index_type": "capped-factor",
+      "universe": "Large- and mid-capitalization stocks representing the top 85% of float-adjusted market capitalization of emerging equity markets",
+      "weighting": "Optimization seeks higher dividend yield than the parent benchmark while limiting expected tracking error",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2016-06-01",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21413/SINGLCLASS/franklin-emerging-market-core-dividend-tilt-index-etf/DIEM",
+        "https://www.franklintempleton.com/forms-literature/download/DIEM-FF",
+        "https://www.franklintempleton.com/tools-and-resources/lit-preview/21413/SINGLCLASS/franklin-emerging-market-core-dividend-tilt-index-etf"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "The dividend-enhanced optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null."
+      ]
+    },
+    {
+      "ticker": "DIVI",
+      "name": "Franklin International Core Dividend Tilt Index ETF",
+      "isin": null,
+      "underlying_index": "Morningstar Developed Markets ex-North America Dividend Enhanced Select Index",
+      "index_provider": "Morningstar, Inc.",
+      "index_type": "capped-factor",
+      "universe": "Large- and mid-capitalization stocks representing the top 85% of float-adjusted market capitalization of developed equity markets excluding North America",
+      "weighting": "Optimization seeks higher dividend yield than the parent benchmark while limiting expected tracking error",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2016-06-01",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21412/SINGLCLASS/franklin-international-core-dividend-tilt-index-etf/DIVI",
+        "https://www.franklintempleton.com/forms-literature/download/DIVI-FF",
+        "https://indexes.morningstar.com/indexes/details/morningstar-developed-markets-ex-north-america-dividend-enhanced-select-FS0000HNMC"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "The dividend-enhanced optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null."
+      ]
+    },
+    {
+      "ticker": "FLQM",
+      "name": "Franklin U.S. Mid Cap Multifactor Index ETF",
+      "isin": null,
+      "underlying_index": "LibertyQ U.S. Mid Cap Equity Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "capped-factor",
+      "universe": "U.S. mid-capitalization companies selected from the Russell Midcap parent index",
+      "weighting": "Custom factor weighting of 50% quality, 30% value, 10% momentum and 10% low volatility, targeting the top 25% by combined factor score subject to constraints",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2017-04-26",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25772/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FLQM",
+        "https://www.franklintempleton.com/forms-literature/download/FLQM-QCPLT",
+        "https://www.franklintempleton.com/forms-literature/download/ETF-P",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "The explicit multifactor construction is classified as capped-factor rather than market-cap-weighted. ISIN remains null."
+      ]
+    },
+    {
+      "ticker": "LVHD",
+      "name": "Franklin U.S. Low Volatility High Dividend Index ETF",
+      "isin": null,
+      "underlying_index": "Franklin Low Volatility High Dividend Index",
+      "index_provider": "Franklin Templeton Investment Solutions, LLC",
+      "index_type": "capped-factor",
+      "universe": "Profitable U.S. companies selected from the largest 3,000 U.S. stocks in the Solactive U.S. Broad Market Index",
+      "weighting": "Stable-yield composite score adjusts dividend yield for price and earnings volatility; highest-scoring securities are selected subject to 2.5% component, 25% sector and 15% REIT limits",
+      "reconstitution_frequency": "Annually",
+      "inception_date": "2015-12-28",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91415/SINGLCLASS/franklin-u-s-low-volatility-high-dividend-index-etf/LVHD",
+        "https://www.franklintempleton.com/forms-literature/download/91415-FF"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "The proprietary stable-yield score and constraints are classified as capped-factor, not plain market-cap weighting. Components are reconstituted annually and rebalanced quarterly. ISIN remains null."
+      ]
+    },
+    {
+      "ticker": "LVHI",
+      "name": "Franklin International Low Volatility High Dividend Index ETF",
+      "isin": null,
+      "underlying_index": "Franklin International Low Volatility High Dividend Hedged Index",
+      "index_provider": "Franklin Templeton Investment Solutions, LLC",
+      "index_type": "capped-factor",
+      "universe": "Equity securities of developed markets outside the United States with relatively high yield and low price and earnings volatility",
+      "weighting": "Stable-yield composite score adjusts dividend yield for price and earnings volatility and for the implicit cost of currency hedging; weights maximize the score subject to liquidity and concentration constraints",
+      "reconstitution_frequency": "Annually",
+      "inception_date": "2016-07-27",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91481/SINGLCLASS/franklin-international-low-volatility-high-dividend-index-etf/LVHI",
+        "https://www.franklintempleton.com/forms-literature/download/91481-FF",
+        "https://www.franklintempleton.com/forms-literature/download/91481-SI"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "The proprietary stable-yield and currency-hedging methodology is classified as capped-factor, not plain market-cap weighting. Components are reconstituted annually and rebalanced quarterly. ISIN remains null."
+      ]
+    },
+    {
+      "ticker": "UDIV",
+      "name": "Franklin U.S. Core Dividend Tilt Index ETF",
+      "isin": null,
+      "underlying_index": "Morningstar U.S. Dividend Enhanced Select Index",
+      "index_provider": "Morningstar, Inc.",
+      "index_type": "capped-factor",
+      "universe": "U.S. large- and mid-capitalization stocks representing the top 85% of float-adjusted market capitalization of the U.S. equity market",
+      "weighting": "Optimization seeks higher dividend yield than the parent benchmark while limiting expected tracking error",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2016-06-01",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21415/SINGLCLASS/franklin-u-s-core-dividend-tilt-index-etf/UDIV",
+        "https://www.franklintempleton.com/forms-literature/download/UDIV-FF",
+        "https://indexes.morningstar.com/indexes/details/morningstar-us-dividend-enhanced-select-FS0000HNMB"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "The dividend-enhanced optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null."
+      ]
+    },
+    {
+      "ticker": "USPX",
+      "name": "Franklin U.S. Equity Index ETF",
+      "isin": null,
+      "underlying_index": "Morningstar US Target Market Exposure Index",
+      "index_provider": "Morningstar, Inc.",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "U.S. large- and mid-capitalization stocks representing the top 85% of the investable U.S. equity universe by float-adjusted market capitalization",
+      "weighting": "Free float-adjusted market-capitalization weighted",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2016-06-01",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21414/SINGLCLASS/franklin-u-s-equity-index-etf/USPX",
+        "https://www.franklintempleton.com/forms-literature/download/USPX-FF",
+        "https://indexes.morningstar.com/indexes/details/morningstar-us-target-market-exposure-FS0000E3LG?tab=overview"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "USPX follows the methodology researched in task-2026-09-05-ca-hub-uspx-methodology-research. The Morningstar index page describes semiannual reconstitution and quarterly rebalance; the Franklin fund factsheet reports quarterly frequency for the fund benchmark field. ISIN remains null."
+      ]
+    },
+    {
+      "ticker": "XIDV",
+      "name": "Franklin International Dividend Booster Index ETF",
+      "isin": null,
+      "underlying_index": "VettaFi New Frontier International Dividend Select Index",
+      "index_provider": "VettaFi",
+      "index_type": "capped-factor",
+      "universe": "Large- and mid-cap international developed-market equities represented by the VettaFi Developed World ex United States Index parent universe",
+      "weighting": "Optimization seeks excess or multiplied dividend yield relative to the parent index while balancing volatility and concentration risk",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2025-01-21",
+      "source_urls": [
+        "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42138/SINGLCLASS/franklin-international-dividend-booster-index-etf/XIDV",
+        "https://www.franklintempleton.com/forms-literature/download/42138-FF",
+        "https://www.vettafi.com/indexing/index/nfdm"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "The dividend-booster optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null."
+      ]
+    }
+  ],
+  "acquisition": {
+    "requested_sources": [
+      "https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP",
+      "https://www.lseg.com/en/ftse-russell/indices/capped",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25771/SINGLCLASS/franklin-u-s-small-cap-multifactor-index-etf/FLQS",
+      "https://www.franklintempleton.com/forms-literature/download/ETF-P",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26364/SINGLCLASS/franklin-ftse-canada-etf/FLCA",
+      "https://www.franklintempleton.com/forms-literature/download/FLCA-FF",
+      "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+      "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26350/SINGLCLASS/franklin-ftse-united-kingdom-etf/FLGB",
+      "https://www.franklintempleton.com/forms-literature/download/FLGB-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26360/SINGLCLASS/franklin-ftse-germany-etf/FLGR",
+      "https://www.franklintempleton.com/forms-literature/download/FLGR-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26352/SINGLCLASS/franklin-ftse-switzerland-etf/FLSW",
+      "https://www.franklintempleton.com/forms-literature/download/FLSW-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26365/SINGLCLASS/franklin-ftse-australia-etf/FLAU",
+      "https://www.franklintempleton.com/forms-literature/download/FLAU-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26353/SINGLCLASS/franklin-ftse-south-korea-etf/FLKR",
+      "https://www.franklintempleton.com/forms-literature/download/FLKR-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26354/SINGLCLASS/franklin-ftse-mexico-etf/FLMX",
+      "https://www.franklintempleton.com/forms-literature/download/FLMX-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26363/SINGLCLASS/franklin-ftse-brazil-etf/FLBR",
+      "https://www.franklintempleton.com/forms-literature/download/FLBR-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27392/SINGLCLASS/franklin-ftse-saudi-arabia-etf/FLSA",
+      "https://www.franklintempleton.com/forms-literature/download/FLSA-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26347/SINGLCLASS/franklin-ftse-eurozone-etf/FLEU",
+      "https://www.franklintempleton.com/forms-literature/download/FLEH-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26356/SINGLCLASS/franklin-ftse-russia-etf/FLRU",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27393/SINGLCLASS/franklin-ftse-latin-america-etf/FLLA",
+      "https://www.franklintempleton.com/forms-literature/download/FLLA-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25773/SINGLCLASS/franklin-u-s-large-cap-multifactor-index-etf/FLQL",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42074/SINGLCLASS/franklin-us-dividend-booster-index-etf/XUDV",
+      "https://www.franklintempleton.com/forms-literature/download/42074-FF",
+      "https://www.franklintempleton.com/tools-and-resources/lit-preview/42074/SINGLCLASS/franklin-us-dividend-booster-index-etf",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/30780/SINGLCLASS/franklin-exponential-data-etf/XDAT",
+      "https://www.franklintempleton.com/forms-literature/download/XDAT-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29097/SINGLCLASS/franklin-genomic-advancements-etf/HELX",
+      "https://www.franklintempleton.com/forms-literature/download/ETF2-SAI",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91662/SINGLCLASS/royce-quant-small-cap-quality-value-etf/SQLV",
+      "https://www.franklintempleton.com/forms-literature/download/91662-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/28388/SINGLCLASS/franklin-systematic-style-premia-etf/FLSP",
+      "https://www.franklintempleton.com/forms-literature/download/28388-FF",
+      "https://www.franklintempleton.com/forms-literature/download-preview/FLSP-PSUM",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21559/SINGLCLASS/franklin-income-equity-focus-etf/INCE",
+      "https://www.franklintempleton.com/forms-literature/download/FLLV-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91629/SINGLCLASS/franklin-clearbridge-enhanced-income-etf/YLDE",
+      "https://www.franklintempleton.com/forms-literature/download/CDS-FF",
+      "https://www.franklintempleton.com/forms-literature/download-preview/91629-PSUM",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39433/SINGLCLASS/putnam-focused-large-cap-growth-etf/PGRO",
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26346/SINGLCLASS/franklin-ftse-asia-ex-japan-etf/FLAX",
       "https://www.franklintempleton.com/forms-literature/download/FLAX-FF",
-      "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
-    },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
-    ]
-  },
-  {
-    "ticker": "FLCH",
-    "name": "Franklin FTSE China ETF",
-    "isin": null,
-    "underlying_index": "FTSE China RIC Capped Index",
-    "index_provider": "FTSE Russell",
-    "index_type": "float-adjusted-cap-weighted",
-    "universe": "Chinese large- and mid-capitalization stocks represented by H-, B- and A-shares",
-    "weighting": "Free float-adjusted market-capitalization weighted; security weights are capped to limit over-concentration",
-    "reconstitution_frequency": "Semiannually",
-    "inception_date": "2017-11-02",
-    "source_urls": [
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26362/SINGLCLASS/franklin-ftse-china-etf/FLCH",
-      "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
-      "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
-    },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
-    ]
-  },
-  {
-    "ticker": "FLEE",
-    "name": "Franklin FTSE Europe ETF",
-    "isin": null,
-    "underlying_index": "FTSE Developed Europe RIC Capped Index",
-    "index_provider": "FTSE Russell",
-    "index_type": "float-adjusted-cap-weighted",
-    "universe": "Large- and mid-capitalization stocks from developed European countries",
-    "weighting": "Free float-adjusted market-capitalization weighted; security weights are capped to limit over-concentration",
-    "reconstitution_frequency": "Semiannually",
-    "inception_date": "2017-11-02",
-    "source_urls": [
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26349/SINGLCLASS/franklin-ftse-europe-etf/FLEE",
-      "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
-      "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
-    },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
-    ]
-  },
-  {
-    "ticker": "FLIN",
-    "name": "Franklin FTSE India ETF",
-    "isin": null,
-    "underlying_index": "FTSE India RIC Capped Index",
-    "index_provider": "FTSE Russell",
-    "index_type": "float-adjusted-cap-weighted",
-    "universe": "Indian large- and mid-capitalization stocks",
-    "weighting": "Free float-adjusted market-capitalization weighted; security weights are capped to limit over-concentration",
-    "reconstitution_frequency": "Semiannually",
-    "inception_date": "2018-02-06",
-    "source_urls": [
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26348/SINGLCLASS/franklin-ftse-india-etf/FLIN",
       "https://www.franklintempleton.com/forms-literature/download/FLIN-FF",
-      "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
-    },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
-    ]
-  },
-  {
-    "ticker": "FLJH",
-    "name": "Franklin FTSE Japan Hedged ETF",
-    "isin": null,
-    "underlying_index": "FTSE Japan RIC Capped Hedged to USD Index",
-    "index_provider": "FTSE Russell",
-    "index_type": "float-adjusted-cap-weighted",
-    "universe": "Japanese large- and mid-capitalization stocks",
-    "weighting": "Free float-adjusted market-capitalization weighted; security weights are capped to limit over-concentration; index return is hedged to USD",
-    "reconstitution_frequency": "Semiannually",
-    "inception_date": "2017-11-02",
-    "source_urls": [
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26355/SINGLCLASS/franklin-ftse-japan-hedged-etf/FLJH",
-      "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
-      "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
-    },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "FLJH is not a copy of FLJP: its underlying index is the currency-hedged FTSE Japan variant. ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
-    ]
-  },
-  {
-    "ticker": "FLTW",
-    "name": "Franklin FTSE Taiwan ETF",
-    "isin": null,
-    "underlying_index": "FTSE Taiwan RIC Capped Index",
-    "index_provider": "FTSE Russell",
-    "index_type": "float-adjusted-cap-weighted",
-    "universe": "Taiwanese large- and mid-capitalization stocks",
-    "weighting": "Free float-adjusted market-capitalization weighted; security weights are capped to limit over-concentration",
-    "reconstitution_frequency": "Semiannually",
-    "inception_date": "2017-11-02",
-    "source_urls": [
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26351/SINGLCLASS/franklin-ftse-taiwan-etf/FLTW",
       "https://www.franklintempleton.com/forms-literature/download/FLTW-FF",
-      "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
-    },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
-    ]
-  },
-  {
-    "ticker": "DIEM",
-    "name": "Franklin Emerging Market Core Dividend Tilt Index ETF",
-    "isin": null,
-    "underlying_index": "Morningstar Emerging Markets Dividend Enhanced Select Index",
-    "index_provider": "Morningstar, Inc.",
-    "index_type": "capped-factor",
-    "universe": "Large- and mid-capitalization stocks representing the top 85% of float-adjusted market capitalization of emerging equity markets",
-    "weighting": "Optimization seeks higher dividend yield than the parent benchmark while limiting expected tracking error",
-    "reconstitution_frequency": "Quarterly",
-    "inception_date": "2016-06-01",
-    "source_urls": [
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21413/SINGLCLASS/franklin-emerging-market-core-dividend-tilt-index-etf/DIEM",
       "https://www.franklintempleton.com/forms-literature/download/DIEM-FF",
-      "https://www.franklintempleton.com/tools-and-resources/lit-preview/21413/SINGLCLASS/franklin-emerging-market-core-dividend-tilt-index-etf"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
-    },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "The dividend-enhanced optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null."
-    ]
-  },
-  {
-    "ticker": "DIVI",
-    "name": "Franklin International Core Dividend Tilt Index ETF",
-    "isin": null,
-    "underlying_index": "Morningstar Developed Markets ex-North America Dividend Enhanced Select Index",
-    "index_provider": "Morningstar, Inc.",
-    "index_type": "capped-factor",
-    "universe": "Large- and mid-capitalization stocks representing the top 85% of float-adjusted market capitalization of developed equity markets excluding North America",
-    "weighting": "Optimization seeks higher dividend yield than the parent benchmark while limiting expected tracking error",
-    "reconstitution_frequency": "Quarterly",
-    "inception_date": "2016-06-01",
-    "source_urls": [
+      "https://www.franklintempleton.com/tools-and-resources/lit-preview/21413/SINGLCLASS/franklin-emerging-market-core-dividend-tilt-index-etf",
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21412/SINGLCLASS/franklin-international-core-dividend-tilt-index-etf/DIVI",
       "https://www.franklintempleton.com/forms-literature/download/DIVI-FF",
-      "https://indexes.morningstar.com/indexes/details/morningstar-developed-markets-ex-north-america-dividend-enhanced-select-FS0000HNMC"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
-    },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "The dividend-enhanced optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null."
-    ]
-  },
-  {
-    "ticker": "FLQM",
-    "name": "Franklin U.S. Mid Cap Multifactor Index ETF",
-    "isin": null,
-    "underlying_index": "LibertyQ U.S. Mid Cap Equity Index",
-    "index_provider": "FTSE Russell",
-    "index_type": "capped-factor",
-    "universe": "U.S. mid-capitalization companies selected from the Russell Midcap parent index",
-    "weighting": "Custom factor weighting of 50% quality, 30% value, 10% momentum and 10% low volatility, targeting the top 25% by combined factor score subject to constraints",
-    "reconstitution_frequency": "Semiannually",
-    "inception_date": "2017-04-26",
-    "source_urls": [
+      "https://indexes.morningstar.com/indexes/details/morningstar-developed-markets-ex-north-america-dividend-enhanced-select-FS0000HNMC",
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25772/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FLQM",
       "https://www.franklintempleton.com/forms-literature/download/FLQM-QCPLT",
-      "https://www.franklintempleton.com/forms-literature/download/ETF-P",
-      "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
-    },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "The explicit multifactor construction is classified as capped-factor rather than market-cap-weighted. ISIN remains null."
-    ]
-  },
-  {
-    "ticker": "LVHD",
-    "name": "Franklin U.S. Low Volatility High Dividend Index ETF",
-    "isin": null,
-    "underlying_index": "Franklin Low Volatility High Dividend Index",
-    "index_provider": "Franklin Templeton Investment Solutions, LLC",
-    "index_type": "capped-factor",
-    "universe": "Profitable U.S. companies selected from the largest 3,000 U.S. stocks in the Solactive U.S. Broad Market Index",
-    "weighting": "Stable-yield composite score adjusts dividend yield for price and earnings volatility; highest-scoring securities are selected subject to 2.5% component, 25% sector and 15% REIT limits",
-    "reconstitution_frequency": "Annually",
-    "inception_date": "2015-12-28",
-    "source_urls": [
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91415/SINGLCLASS/franklin-u-s-low-volatility-high-dividend-index-etf/LVHD",
-      "https://www.franklintempleton.com/forms-literature/download/91415-FF"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
-    },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "The proprietary stable-yield score and constraints are classified as capped-factor, not plain market-cap weighting. Components are reconstituted annually and rebalanced quarterly. ISIN remains null."
-    ]
-  },
-  {
-    "ticker": "LVHI",
-    "name": "Franklin International Low Volatility High Dividend Index ETF",
-    "isin": null,
-    "underlying_index": "Franklin International Low Volatility High Dividend Hedged Index",
-    "index_provider": "Franklin Templeton Investment Solutions, LLC",
-    "index_type": "capped-factor",
-    "universe": "Equity securities of developed markets outside the United States with relatively high yield and low price and earnings volatility",
-    "weighting": "Stable-yield composite score adjusts dividend yield for price and earnings volatility and for the implicit cost of currency hedging; weights maximize the score subject to liquidity and concentration constraints",
-    "reconstitution_frequency": "Annually",
-    "inception_date": "2016-07-27",
-    "source_urls": [
+      "https://www.franklintempleton.com/forms-literature/download/91415-FF",
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91481/SINGLCLASS/franklin-international-low-volatility-high-dividend-index-etf/LVHI",
       "https://www.franklintempleton.com/forms-literature/download/91481-FF",
-      "https://www.franklintempleton.com/forms-literature/download/91481-SI"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
-    },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "The proprietary stable-yield and currency-hedging methodology is classified as capped-factor, not plain market-cap weighting. Components are reconstituted annually and rebalanced quarterly. ISIN remains null."
-    ]
-  },
-  {
-    "ticker": "UDIV",
-    "name": "Franklin U.S. Core Dividend Tilt Index ETF",
-    "isin": null,
-    "underlying_index": "Morningstar U.S. Dividend Enhanced Select Index",
-    "index_provider": "Morningstar, Inc.",
-    "index_type": "capped-factor",
-    "universe": "U.S. large- and mid-capitalization stocks representing the top 85% of float-adjusted market capitalization of the U.S. equity market",
-    "weighting": "Optimization seeks higher dividend yield than the parent benchmark while limiting expected tracking error",
-    "reconstitution_frequency": "Quarterly",
-    "inception_date": "2016-06-01",
-    "source_urls": [
+      "https://www.franklintempleton.com/forms-literature/download/91481-SI",
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21415/SINGLCLASS/franklin-u-s-core-dividend-tilt-index-etf/UDIV",
       "https://www.franklintempleton.com/forms-literature/download/UDIV-FF",
-      "https://indexes.morningstar.com/indexes/details/morningstar-us-dividend-enhanced-select-FS0000HNMB"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
-    },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "The dividend-enhanced optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null."
-    ]
-  },
-  {
-    "ticker": "USPX",
-    "name": "Franklin U.S. Equity Index ETF",
-    "isin": null,
-    "underlying_index": "Morningstar US Target Market Exposure Index",
-    "index_provider": "Morningstar, Inc.",
-    "index_type": "float-adjusted-cap-weighted",
-    "universe": "U.S. large- and mid-capitalization stocks representing the top 85% of the investable U.S. equity universe by float-adjusted market capitalization",
-    "weighting": "Free float-adjusted market-capitalization weighted",
-    "reconstitution_frequency": "Semiannually",
-    "inception_date": "2016-06-01",
-    "source_urls": [
+      "https://indexes.morningstar.com/indexes/details/morningstar-us-dividend-enhanced-select-FS0000HNMB",
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21414/SINGLCLASS/franklin-u-s-equity-index-etf/USPX",
       "https://www.franklintempleton.com/forms-literature/download/USPX-FF",
-      "https://indexes.morningstar.com/indexes/details/morningstar-us-target-market-exposure-FS0000E3LG?tab=overview"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "stated",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
-    },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "USPX follows the methodology researched in task-2026-09-05-ca-hub-uspx-methodology-research. The Morningstar index page describes semiannual reconstitution and quarterly rebalance; the Franklin fund factsheet reports quarterly frequency for the fund benchmark field. ISIN remains null."
-    ]
-  },
-  {
-    "ticker": "XIDV",
-    "name": "Franklin International Dividend Booster Index ETF",
-    "isin": null,
-    "underlying_index": "VettaFi New Frontier International Dividend Select Index",
-    "index_provider": "VettaFi",
-    "index_type": "capped-factor",
-    "universe": "Large- and mid-cap international developed-market equities represented by the VettaFi Developed World ex United States Index parent universe",
-    "weighting": "Optimization seeks excess or multiplied dividend yield relative to the parent index while balancing volatility and concentration risk",
-    "reconstitution_frequency": "Semiannually",
-    "inception_date": "2025-01-21",
-    "source_urls": [
+      "https://indexes.morningstar.com/indexes/details/morningstar-us-target-market-exposure-FS0000E3LG?tab=overview",
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42138/SINGLCLASS/franklin-international-dividend-booster-index-etf/XIDV",
       "https://www.franklintempleton.com/forms-literature/download/42138-FF",
       "https://www.vettafi.com/indexing/index/nfdm"
     ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
-    },
-    "missing_fields": [
-      "isin"
+    "successful_sources": [
+      "https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP",
+      "https://www.lseg.com/en/ftse-russell/indices/capped",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25771/SINGLCLASS/franklin-u-s-small-cap-multifactor-index-etf/FLQS",
+      "https://www.franklintempleton.com/forms-literature/download/ETF-P",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26364/SINGLCLASS/franklin-ftse-canada-etf/FLCA",
+      "https://www.franklintempleton.com/forms-literature/download/FLCA-FF",
+      "https://www.franklintempleton.com/forms-literature/download/ETF5-P",
+      "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26350/SINGLCLASS/franklin-ftse-united-kingdom-etf/FLGB",
+      "https://www.franklintempleton.com/forms-literature/download/FLGB-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26360/SINGLCLASS/franklin-ftse-germany-etf/FLGR",
+      "https://www.franklintempleton.com/forms-literature/download/FLGR-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26352/SINGLCLASS/franklin-ftse-switzerland-etf/FLSW",
+      "https://www.franklintempleton.com/forms-literature/download/FLSW-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26365/SINGLCLASS/franklin-ftse-australia-etf/FLAU",
+      "https://www.franklintempleton.com/forms-literature/download/FLAU-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26353/SINGLCLASS/franklin-ftse-south-korea-etf/FLKR",
+      "https://www.franklintempleton.com/forms-literature/download/FLKR-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26354/SINGLCLASS/franklin-ftse-mexico-etf/FLMX",
+      "https://www.franklintempleton.com/forms-literature/download/FLMX-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26363/SINGLCLASS/franklin-ftse-brazil-etf/FLBR",
+      "https://www.franklintempleton.com/forms-literature/download/FLBR-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27392/SINGLCLASS/franklin-ftse-saudi-arabia-etf/FLSA",
+      "https://www.franklintempleton.com/forms-literature/download/FLSA-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26347/SINGLCLASS/franklin-ftse-eurozone-etf/FLEU",
+      "https://www.franklintempleton.com/forms-literature/download/FLEH-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26356/SINGLCLASS/franklin-ftse-russia-etf/FLRU",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27393/SINGLCLASS/franklin-ftse-latin-america-etf/FLLA",
+      "https://www.franklintempleton.com/forms-literature/download/FLLA-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25773/SINGLCLASS/franklin-u-s-large-cap-multifactor-index-etf/FLQL",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42074/SINGLCLASS/franklin-us-dividend-booster-index-etf/XUDV",
+      "https://www.franklintempleton.com/forms-literature/download/42074-FF",
+      "https://www.franklintempleton.com/tools-and-resources/lit-preview/42074/SINGLCLASS/franklin-us-dividend-booster-index-etf",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/30780/SINGLCLASS/franklin-exponential-data-etf/XDAT",
+      "https://www.franklintempleton.com/forms-literature/download/XDAT-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29097/SINGLCLASS/franklin-genomic-advancements-etf/HELX",
+      "https://www.franklintempleton.com/forms-literature/download/ETF2-SAI",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91662/SINGLCLASS/royce-quant-small-cap-quality-value-etf/SQLV",
+      "https://www.franklintempleton.com/forms-literature/download/91662-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/28388/SINGLCLASS/franklin-systematic-style-premia-etf/FLSP",
+      "https://www.franklintempleton.com/forms-literature/download/28388-FF",
+      "https://www.franklintempleton.com/forms-literature/download-preview/FLSP-PSUM",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21559/SINGLCLASS/franklin-income-equity-focus-etf/INCE",
+      "https://www.franklintempleton.com/forms-literature/download/FLLV-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91629/SINGLCLASS/franklin-clearbridge-enhanced-income-etf/YLDE",
+      "https://www.franklintempleton.com/forms-literature/download/CDS-FF",
+      "https://www.franklintempleton.com/forms-literature/download-preview/91629-PSUM",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39433/SINGLCLASS/putnam-focused-large-cap-growth-etf/PGRO",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26346/SINGLCLASS/franklin-ftse-asia-ex-japan-etf/FLAX",
+      "https://www.franklintempleton.com/forms-literature/download/FLAX-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26362/SINGLCLASS/franklin-ftse-china-etf/FLCH",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26349/SINGLCLASS/franklin-ftse-europe-etf/FLEE",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26348/SINGLCLASS/franklin-ftse-india-etf/FLIN",
+      "https://www.franklintempleton.com/forms-literature/download/FLIN-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26355/SINGLCLASS/franklin-ftse-japan-hedged-etf/FLJH",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26351/SINGLCLASS/franklin-ftse-taiwan-etf/FLTW",
+      "https://www.franklintempleton.com/forms-literature/download/FLTW-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21413/SINGLCLASS/franklin-emerging-market-core-dividend-tilt-index-etf/DIEM",
+      "https://www.franklintempleton.com/forms-literature/download/DIEM-FF",
+      "https://www.franklintempleton.com/tools-and-resources/lit-preview/21413/SINGLCLASS/franklin-emerging-market-core-dividend-tilt-index-etf",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21412/SINGLCLASS/franklin-international-core-dividend-tilt-index-etf/DIVI",
+      "https://www.franklintempleton.com/forms-literature/download/DIVI-FF",
+      "https://indexes.morningstar.com/indexes/details/morningstar-developed-markets-ex-north-america-dividend-enhanced-select-FS0000HNMC",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25772/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FLQM",
+      "https://www.franklintempleton.com/forms-literature/download/FLQM-QCPLT",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91415/SINGLCLASS/franklin-u-s-low-volatility-high-dividend-index-etf/LVHD",
+      "https://www.franklintempleton.com/forms-literature/download/91415-FF",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91481/SINGLCLASS/franklin-international-low-volatility-high-dividend-index-etf/LVHI",
+      "https://www.franklintempleton.com/forms-literature/download/91481-FF",
+      "https://www.franklintempleton.com/forms-literature/download/91481-SI",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21415/SINGLCLASS/franklin-u-s-core-dividend-tilt-index-etf/UDIV",
+      "https://www.franklintempleton.com/forms-literature/download/UDIV-FF",
+      "https://indexes.morningstar.com/indexes/details/morningstar-us-dividend-enhanced-select-FS0000HNMB",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21414/SINGLCLASS/franklin-u-s-equity-index-etf/USPX",
+      "https://www.franklintempleton.com/forms-literature/download/USPX-FF",
+      "https://indexes.morningstar.com/indexes/details/morningstar-us-target-market-exposure-FS0000E3LG?tab=overview",
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42138/SINGLCLASS/franklin-international-dividend-booster-index-etf/XIDV",
+      "https://www.franklintempleton.com/forms-literature/download/42138-FF",
+      "https://www.vettafi.com/indexing/index/nfdm"
     ],
-    "coverage_quality": "complete",
-    "notes": [
-      "The dividend-booster optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null."
-    ]
+    "failed_sources": [],
+    "excluded_sources": [
+      {
+        "name": "VettaFi",
+        "reason": "Explicitly out of P1b scope."
+      },
+      {
+        "name": "Solactive",
+        "reason": "No product-specific evidence required for the reviewed slice."
+      }
+    ],
+    "record_count": 37,
+    "count_note": "Thirty-seven reviewed Franklin ETF records are shipped as a dated, source-backed table; this slice appends fourteen pure index-tracking equity tickers. Existing active records remain unchanged; fixed income and crypto products are intentionally excluded."
   }
-  ],
-  "acquisition":{"requested_sources":["https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP","https://www.lseg.com/en/ftse-russell/indices/capped","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25771/SINGLCLASS/franklin-u-s-small-cap-multifactor-index-etf/FLQS","https://www.franklintempleton.com/forms-literature/download/ETF-P","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26364/SINGLCLASS/franklin-ftse-canada-etf/FLCA","https://www.franklintempleton.com/forms-literature/download/FLCA-FF","https://www.franklintempleton.com/forms-literature/download/ETF5-P","https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26350/SINGLCLASS/franklin-ftse-united-kingdom-etf/FLGB","https://www.franklintempleton.com/forms-literature/download/FLGB-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26360/SINGLCLASS/franklin-ftse-germany-etf/FLGR","https://www.franklintempleton.com/forms-literature/download/FLGR-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26352/SINGLCLASS/franklin-ftse-switzerland-etf/FLSW","https://www.franklintempleton.com/forms-literature/download/FLSW-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26365/SINGLCLASS/franklin-ftse-australia-etf/FLAU","https://www.franklintempleton.com/forms-literature/download/FLAU-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26353/SINGLCLASS/franklin-ftse-south-korea-etf/FLKR","https://www.franklintempleton.com/forms-literature/download/FLKR-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26354/SINGLCLASS/franklin-ftse-mexico-etf/FLMX","https://www.franklintempleton.com/forms-literature/download/FLMX-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26363/SINGLCLASS/franklin-ftse-brazil-etf/FLBR","https://www.franklintempleton.com/forms-literature/download/FLBR-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27392/SINGLCLASS/franklin-ftse-saudi-arabia-etf/FLSA","https://www.franklintempleton.com/forms-literature/download/FLSA-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26347/SINGLCLASS/franklin-ftse-eurozone-etf/FLEU","https://www.franklintempleton.com/forms-literature/download/FLEH-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26356/SINGLCLASS/franklin-ftse-russia-etf/FLRU","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27393/SINGLCLASS/franklin-ftse-latin-america-etf/FLLA","https://www.franklintempleton.com/forms-literature/download/FLLA-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25773/SINGLCLASS/franklin-u-s-large-cap-multifactor-index-etf/FLQL","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42074/SINGLCLASS/franklin-us-dividend-booster-index-etf/XUDV","https://www.franklintempleton.com/forms-literature/download/42074-FF","https://www.franklintempleton.com/tools-and-resources/lit-preview/42074/SINGLCLASS/franklin-us-dividend-booster-index-etf","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/30780/SINGLCLASS/franklin-exponential-data-etf/XDAT","https://www.franklintempleton.com/forms-literature/download/XDAT-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29097/SINGLCLASS/franklin-genomic-advancements-etf/HELX","https://www.franklintempleton.com/forms-literature/download/ETF2-SAI","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91662/SINGLCLASS/royce-quant-small-cap-quality-value-etf/SQLV","https://www.franklintempleton.com/forms-literature/download/91662-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/28388/SINGLCLASS/franklin-systematic-style-premia-etf/FLSP","https://www.franklintempleton.com/forms-literature/download/28388-FF","https://www.franklintempleton.com/forms-literature/download-preview/FLSP-PSUM","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21559/SINGLCLASS/franklin-income-equity-focus-etf/INCE","https://www.franklintempleton.com/forms-literature/download/FLLV-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91629/SINGLCLASS/franklin-clearbridge-enhanced-income-etf/YLDE","https://www.franklintempleton.com/forms-literature/download/CDS-FF","https://www.franklintempleton.com/forms-literature/download-preview/91629-PSUM","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39433/SINGLCLASS/putnam-focused-large-cap-growth-etf/PGRO","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26346/SINGLCLASS/franklin-ftse-asia-ex-japan-etf/FLAX","https://www.franklintempleton.com/forms-literature/download/FLAX-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26362/SINGLCLASS/franklin-ftse-china-etf/FLCH","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26349/SINGLCLASS/franklin-ftse-europe-etf/FLEE","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26348/SINGLCLASS/franklin-ftse-india-etf/FLIN","https://www.franklintempleton.com/forms-literature/download/FLIN-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26355/SINGLCLASS/franklin-ftse-japan-hedged-etf/FLJH","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26351/SINGLCLASS/franklin-ftse-taiwan-etf/FLTW","https://www.franklintempleton.com/forms-literature/download/FLTW-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21413/SINGLCLASS/franklin-emerging-market-core-dividend-tilt-index-etf/DIEM","https://www.franklintempleton.com/forms-literature/download/DIEM-FF","https://www.franklintempleton.com/tools-and-resources/lit-preview/21413/SINGLCLASS/franklin-emerging-market-core-dividend-tilt-index-etf","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21412/SINGLCLASS/franklin-international-core-dividend-tilt-index-etf/DIVI","https://www.franklintempleton.com/forms-literature/download/DIVI-FF","https://indexes.morningstar.com/indexes/details/morningstar-developed-markets-ex-north-america-dividend-enhanced-select-FS0000HNMC","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25772/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FLQM","https://www.franklintempleton.com/forms-literature/download/FLQM-QCPLT","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91415/SINGLCLASS/franklin-u-s-low-volatility-high-dividend-index-etf/LVHD","https://www.franklintempleton.com/forms-literature/download/91415-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91481/SINGLCLASS/franklin-international-low-volatility-high-dividend-index-etf/LVHI","https://www.franklintempleton.com/forms-literature/download/91481-FF","https://www.franklintempleton.com/forms-literature/download/91481-SI","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21415/SINGLCLASS/franklin-u-s-core-dividend-tilt-index-etf/UDIV","https://www.franklintempleton.com/forms-literature/download/UDIV-FF","https://indexes.morningstar.com/indexes/details/morningstar-us-dividend-enhanced-select-FS0000HNMB","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21414/SINGLCLASS/franklin-u-s-equity-index-etf/USPX","https://www.franklintempleton.com/forms-literature/download/USPX-FF","https://indexes.morningstar.com/indexes/details/morningstar-us-target-market-exposure-FS0000E3LG?tab=overview","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42138/SINGLCLASS/franklin-international-dividend-booster-index-etf/XIDV","https://www.franklintempleton.com/forms-literature/download/42138-FF","https://www.vettafi.com/indexing/index/nfdm"],"successful_sources":["https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP","https://www.lseg.com/en/ftse-russell/indices/capped","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25771/SINGLCLASS/franklin-u-s-small-cap-multifactor-index-etf/FLQS","https://www.franklintempleton.com/forms-literature/download/ETF-P","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26364/SINGLCLASS/franklin-ftse-canada-etf/FLCA","https://www.franklintempleton.com/forms-literature/download/FLCA-FF","https://www.franklintempleton.com/forms-literature/download/ETF5-P","https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26350/SINGLCLASS/franklin-ftse-united-kingdom-etf/FLGB","https://www.franklintempleton.com/forms-literature/download/FLGB-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26360/SINGLCLASS/franklin-ftse-germany-etf/FLGR","https://www.franklintempleton.com/forms-literature/download/FLGR-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26352/SINGLCLASS/franklin-ftse-switzerland-etf/FLSW","https://www.franklintempleton.com/forms-literature/download/FLSW-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26365/SINGLCLASS/franklin-ftse-australia-etf/FLAU","https://www.franklintempleton.com/forms-literature/download/FLAU-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26353/SINGLCLASS/franklin-ftse-south-korea-etf/FLKR","https://www.franklintempleton.com/forms-literature/download/FLKR-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26354/SINGLCLASS/franklin-ftse-mexico-etf/FLMX","https://www.franklintempleton.com/forms-literature/download/FLMX-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26363/SINGLCLASS/franklin-ftse-brazil-etf/FLBR","https://www.franklintempleton.com/forms-literature/download/FLBR-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27392/SINGLCLASS/franklin-ftse-saudi-arabia-etf/FLSA","https://www.franklintempleton.com/forms-literature/download/FLSA-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26347/SINGLCLASS/franklin-ftse-eurozone-etf/FLEU","https://www.franklintempleton.com/forms-literature/download/FLEH-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26356/SINGLCLASS/franklin-ftse-russia-etf/FLRU","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27393/SINGLCLASS/franklin-ftse-latin-america-etf/FLLA","https://www.franklintempleton.com/forms-literature/download/FLLA-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25773/SINGLCLASS/franklin-u-s-large-cap-multifactor-index-etf/FLQL","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42074/SINGLCLASS/franklin-us-dividend-booster-index-etf/XUDV","https://www.franklintempleton.com/forms-literature/download/42074-FF","https://www.franklintempleton.com/tools-and-resources/lit-preview/42074/SINGLCLASS/franklin-us-dividend-booster-index-etf","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/30780/SINGLCLASS/franklin-exponential-data-etf/XDAT","https://www.franklintempleton.com/forms-literature/download/XDAT-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29097/SINGLCLASS/franklin-genomic-advancements-etf/HELX","https://www.franklintempleton.com/forms-literature/download/ETF2-SAI","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91662/SINGLCLASS/royce-quant-small-cap-quality-value-etf/SQLV","https://www.franklintempleton.com/forms-literature/download/91662-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/28388/SINGLCLASS/franklin-systematic-style-premia-etf/FLSP","https://www.franklintempleton.com/forms-literature/download/28388-FF","https://www.franklintempleton.com/forms-literature/download-preview/FLSP-PSUM","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21559/SINGLCLASS/franklin-income-equity-focus-etf/INCE","https://www.franklintempleton.com/forms-literature/download/FLLV-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91629/SINGLCLASS/franklin-clearbridge-enhanced-income-etf/YLDE","https://www.franklintempleton.com/forms-literature/download/CDS-FF","https://www.franklintempleton.com/forms-literature/download-preview/91629-PSUM","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39433/SINGLCLASS/putnam-focused-large-cap-growth-etf/PGRO","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26346/SINGLCLASS/franklin-ftse-asia-ex-japan-etf/FLAX","https://www.franklintempleton.com/forms-literature/download/FLAX-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26362/SINGLCLASS/franklin-ftse-china-etf/FLCH","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26349/SINGLCLASS/franklin-ftse-europe-etf/FLEE","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26348/SINGLCLASS/franklin-ftse-india-etf/FLIN","https://www.franklintempleton.com/forms-literature/download/FLIN-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26355/SINGLCLASS/franklin-ftse-japan-hedged-etf/FLJH","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26351/SINGLCLASS/franklin-ftse-taiwan-etf/FLTW","https://www.franklintempleton.com/forms-literature/download/FLTW-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21413/SINGLCLASS/franklin-emerging-market-core-dividend-tilt-index-etf/DIEM","https://www.franklintempleton.com/forms-literature/download/DIEM-FF","https://www.franklintempleton.com/tools-and-resources/lit-preview/21413/SINGLCLASS/franklin-emerging-market-core-dividend-tilt-index-etf","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21412/SINGLCLASS/franklin-international-core-dividend-tilt-index-etf/DIVI","https://www.franklintempleton.com/forms-literature/download/DIVI-FF","https://indexes.morningstar.com/indexes/details/morningstar-developed-markets-ex-north-america-dividend-enhanced-select-FS0000HNMC","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25772/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FLQM","https://www.franklintempleton.com/forms-literature/download/FLQM-QCPLT","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91415/SINGLCLASS/franklin-u-s-low-volatility-high-dividend-index-etf/LVHD","https://www.franklintempleton.com/forms-literature/download/91415-FF","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91481/SINGLCLASS/franklin-international-low-volatility-high-dividend-index-etf/LVHI","https://www.franklintempleton.com/forms-literature/download/91481-FF","https://www.franklintempleton.com/forms-literature/download/91481-SI","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21415/SINGLCLASS/franklin-u-s-core-dividend-tilt-index-etf/UDIV","https://www.franklintempleton.com/forms-literature/download/UDIV-FF","https://indexes.morningstar.com/indexes/details/morningstar-us-dividend-enhanced-select-FS0000HNMB","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21414/SINGLCLASS/franklin-u-s-equity-index-etf/USPX","https://www.franklintempleton.com/forms-literature/download/USPX-FF","https://indexes.morningstar.com/indexes/details/morningstar-us-target-market-exposure-FS0000E3LG?tab=overview","https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42138/SINGLCLASS/franklin-international-dividend-booster-index-etf/XIDV","https://www.franklintempleton.com/forms-literature/download/42138-FF","https://www.vettafi.com/indexing/index/nfdm"],"failed_sources":[],"excluded_sources":[{"name":"VettaFi","reason":"Explicitly out of P1b scope."},{"name":"Solactive","reason":"No product-specific evidence required for the reviewed slice."}],"record_count":37,"count_note":"Thirty-seven reviewed Franklin ETF records are shipped as a dated, source-backed table; this slice appends fourteen pure index-tracking equity tickers. Existing active records remain unchanged; fixed income and crypto products are intentionally excluded."}
 }

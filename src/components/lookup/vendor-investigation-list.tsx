@@ -299,6 +299,14 @@ function FundSelectionControl({
           {row.fundResolution.fund.underlying_index} · {row.fundResolution.fund.index_provider}
         </p>
       )}
+      {/* A resolved fund's warnings were never rendered, so a CLOSED fund resolved
+          to 3-D and looked exactly like a live one. FLRU was delisted in 2022 and
+          still offered itself as current. */}
+      {row.fundResolution.mode === "fund-resolved" && row.fundResolution.warnings.length > 0 && (
+        <p role="status" className="text-[0.68rem] leading-relaxed text-destructive">
+          {row.fundResolution.warnings[0]}
+        </p>
+      )}
       {row.fundResolution.mode === "cataloged-unreviewed" && (
         <p role="status" className="text-[0.68rem] leading-relaxed text-chart-4">
           {row.fundResolution.warnings[0]}
