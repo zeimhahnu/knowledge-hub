@@ -13,12 +13,26 @@ const sourceUrls = new Set(
 assert.equal(catalog.source_url, "https://www.franklintempleton.com/binaries/content/assets/global/sitemaps/google/en-us_product.xml");
 assert.equal(catalog.records.length, catalog.counts.etf_rows);
 assert.equal(new Set(catalog.records.map((r) => r.ticker)).size, catalog.records.length, "ETF tickers must be unique");
+assert.equal(catalog.schema_version, "2.0");
+assert.deepEqual(catalog.counts.by_region, { us: 81, canada: 24, europe: 33, australia: 9, other: 0 });
+assert.equal(catalog.records.filter((r) => r.region === "us").length, 81);
+assert.equal(catalog.records.filter((r) => r.region === "canada").length, 24);
+assert.equal(catalog.records.filter((r) => r.region === "europe").length, 33);
+assert.equal(catalog.records.filter((r) => r.region === "australia").length, 9);
+assert.equal(catalog.records.some((r) => r.ticker === "FLEM" && r.region === "canada"), true);
+assert.equal(catalog.records.some((r) => r.ticker === "FLUR" && r.region === "canada"), true);
 for (const row of catalog.records) {
-  assert.match(row.url, /\/investments\/options\/exchange-traded-funds\/products\//);
+  assert.match(row.url, /^https:\/\//);
   assert.match(row.ticker, /^[A-Z0-9.-]+$/);
   assert(row.name.length > 0);
   assert.equal(row.source_as_of, null);
-  assert.equal(row.retrieved_at, "2026-09-05");
+  assert.ok(["us", "canada", "europe", "australia", "other"].includes(row.region));
+  if (row.region === "us") {
+    assert.equal(row.retrieved_at, "2026-09-05");
+    assert.match(row.url, /\/investments\/options\/exchange-traded-funds\/products\//);
+  } else {
+    assert.equal(row.retrieved_at, "2026-09-17");
+  }
   assert(sourceUrls.has(row.url), `ETF URL missing from sitemap: ${row.url}`);
 }
 for (const row of catalog.excluded_closed_products) {
@@ -31,7 +45,7 @@ assert.equal(catalog.counts.closed_rows, catalog.excluded_closed_products.length
 // Stronger than membership: the catalog must account for every ETF product URL the
 // sitemap advertises, so a silently dropped fund fails here rather than passing.
 const sitemapEtfs = [...sourceUrls].filter((u) => u.includes("/exchange-traded-funds/products/"));
-assert.equal(sitemapEtfs.length, catalog.records.length, "every sitemap ETF URL must appear in the catalog");
+assert.equal(sitemapEtfs.length, 81, "the US sitemap ETF count must remain stable");
 for (const url of sitemapEtfs) {
   assert(catalog.records.some((r) => r.url === url), `sitemap ETF missing from catalog: ${url}`);
 }

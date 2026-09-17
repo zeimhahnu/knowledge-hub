@@ -1,577 +1,1186 @@
 {
-  "schema_version": "1.0",
-  "snapshot_id": "franklin-us-etf-catalog-2026-09-05",
+  "schema_version": "2.0",
+  "snapshot_id": "franklin-etf-catalog-2026-09-17",
   "source_url": "https://www.franklintempleton.com/binaries/content/assets/global/sitemaps/google/en-us_product.xml",
-  "retrieved_at": "2026-09-05",
+  "retrieved_at": "2026-09-17",
   "source_as_of": null,
-  "scope": "Returned sitemap URLs matching /investments/options/exchange-traded-funds/products/; not asserted to be a complete ETF universe.",
+  "scope": "Franklin Templeton ETF catalog across the reachable US sitemap, Canada ETF suite, Europe/Luxembourg UCITS ETF pages (Ireland-domiciled funds listed in European venues), and Australia active ETF range. US sitemap records remain in original order; non-US records use the official regional product/list sources retrieved on 2026-09-17. This is a regional product catalog, not a claim that every Franklin ETF share class or every country distribution channel is represented.",
   "records": [
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26727/SINGLCLASS/franklin-international-aggregate-bond-etf/FLIA",
       "ticker": "FLIA",
       "name": "franklin-international-aggregate-bond-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48365/SINGLCLASS/franklin-municipal-high-yield-etf/FTMH",
       "ticker": "FTMH",
       "name": "franklin-municipal-high-yield-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26347/SINGLCLASS/franklin-ftse-eurozone-etf/FLEU",
       "ticker": "FLEU",
       "name": "franklin-ftse-eurozone-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48362/SINGLCLASS/franklin-short-term-municipal-income-etf/FTMS",
       "ticker": "FTMS",
       "name": "franklin-short-term-municipal-income-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26356/SINGLCLASS/franklin-ftse-russia-etf/FLRU",
       "ticker": "FLRU",
       "name": "franklin-ftse-russia-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48306/SINGLCLASS/franklin-california-municipal-income-etf/FTCA",
       "ticker": "FTCA",
       "name": "franklin-california-municipal-income-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25771/SINGLCLASS/franklin-u-s-small-cap-multifactor-index-etf/FLQS",
       "ticker": "FLQS",
       "name": "franklin-u-s-small-cap-multifactor-index-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47550/SINGLCLASS/templeton-international-insights-etf/TINS",
       "ticker": "TINS",
       "name": "templeton-international-insights-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/41786/SINGLCLASS/franklin-crypto-index-etf/EZPZ",
       "ticker": "EZPZ",
       "name": "franklin-crypto-index-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/28388/SINGLCLASS/franklin-systematic-style-premia-etf/FLSP",
       "ticker": "FLSP",
       "name": "franklin-systematic-style-premia-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21559/SINGLCLASS/franklin-income-equity-focus-etf/INCE",
       "ticker": "INCE",
       "name": "franklin-income-equity-focus-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91629/SINGLCLASS/franklin-clearbridge-enhanced-income-etf/YLDE",
       "ticker": "YLDE",
       "name": "franklin-clearbridge-enhanced-income-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27393/SINGLCLASS/franklin-ftse-latin-america-etf/FLLA",
       "ticker": "FLLA",
       "name": "franklin-ftse-latin-america-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26353/SINGLCLASS/franklin-ftse-south-korea-etf/FLKR",
       "ticker": "FLKR",
       "name": "franklin-ftse-south-korea-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91662/SINGLCLASS/royce-quant-small-cap-quality-value-etf/SQLV",
       "ticker": "SQLV",
       "name": "royce-quant-small-cap-quality-value-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26728/SINGLCLASS/franklin-senior-loan-etf/FLBL",
       "ticker": "FLBL",
       "name": "franklin-senior-loan-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39433/SINGLCLASS/putnam-focused-large-cap-growth-etf/PGRO",
       "ticker": "PGRO",
       "name": "putnam-focused-large-cap-growth-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21558/SINGLCLASS/franklin-investment-grade-corporate-etf/FLCO",
       "ticker": "FLCO",
       "name": "franklin-investment-grade-corporate-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25773/SINGLCLASS/franklin-u-s-large-cap-multifactor-index-etf/FLQL",
       "ticker": "FLQL",
       "name": "franklin-u-s-large-cap-multifactor-index-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48762/SINGLCLASS/templeton-emerging-markets-debt-etf/TEMD",
       "ticker": "TEMD",
       "name": "templeton-emerging-markets-debt-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26364/SINGLCLASS/franklin-ftse-canada-etf/FLCA",
       "ticker": "FLCA",
       "name": "franklin-ftse-canada-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/28565/SINGLCLASS/franklin-u-s-core-bond-etf/FLCB",
       "ticker": "FLCB",
       "name": "franklin-u-s-core-bond-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29097/SINGLCLASS/franklin-genomic-advancements-etf/HELX",
       "ticker": "HELX",
       "name": "franklin-genomic-advancements-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42074/SINGLCLASS/franklin-us-dividend-booster-index-etf/XUDV",
       "ticker": "XUDV",
       "name": "franklin-us-dividend-booster-index-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/30780/SINGLCLASS/franklin-exponential-data-etf/XDAT",
       "ticker": "XDAT",
       "name": "franklin-exponential-data-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48364/SINGLCLASS/franklin-new-jersey-municipal-income-etf/FTNJ",
       "ticker": "FTNJ",
       "name": "franklin-new-jersey-municipal-income-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48361/SINGLCLASS/franklin-new-york-municipal-income-etf/FTNY",
       "ticker": "FTNY",
       "name": "franklin-new-york-municipal-income-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/27392/SINGLCLASS/franklin-ftse-saudi-arabia-etf/FLSA",
       "ticker": "FLSA",
       "name": "franklin-ftse-saudi-arabia-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39639/SINGLCLASS/franklin-bitcoin-etf/EZBC",
       "ticker": "EZBC",
       "name": "franklin-bitcoin-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29614/SINGLCLASS/franklin-u-s-treasury-bond-etf/FLGV",
       "ticker": "FLGV",
       "name": "franklin-u-s-treasury-bond-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26350/SINGLCLASS/franklin-ftse-united-kingdom-etf/FLGB",
       "ticker": "FLGB",
       "name": "franklin-ftse-united-kingdom-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP",
       "ticker": "FLJP",
       "name": "franklin-ftse-japan-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26363/SINGLCLASS/franklin-ftse-brazil-etf/FLBR",
       "ticker": "FLBR",
       "name": "franklin-ftse-brazil-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39500/SINGLCLASS/putnam-bdc-income-etf/PBDC",
       "ticker": "PBDC",
       "name": "putnam-bdc-income-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26362/SINGLCLASS/franklin-ftse-china-etf/FLCH",
       "ticker": "FLCH",
       "name": "franklin-ftse-china-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91415/SINGLCLASS/franklin-u-s-low-volatility-high-dividend-index-etf/LVHD",
       "ticker": "LVHD",
       "name": "franklin-u-s-low-volatility-high-dividend-index-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21412/SINGLCLASS/franklin-international-core-dividend-tilt-index-etf/DIVI",
       "ticker": "DIVI",
       "name": "franklin-international-core-dividend-tilt-index-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21415/SINGLCLASS/franklin-u-s-core-dividend-tilt-index-etf/UDIV",
       "ticker": "UDIV",
       "name": "franklin-u-s-core-dividend-tilt-index-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91481/SINGLCLASS/franklin-international-low-volatility-high-dividend-index-etf/LVHI",
       "ticker": "LVHI",
       "name": "franklin-international-low-volatility-high-dividend-index-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/91630/SINGLCLASS/clearbridge-large-cap-growth-select-etf/LRGE",
       "ticker": "LRGE",
       "name": "clearbridge-large-cap-growth-select-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/50418/SINGLCLASS/franklin-bsp-clo-etf/YCLO",
       "ticker": "YCLO",
       "name": "franklin-bsp-clo-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29430/SINGLCLASS/franklin-ultra-short-bond-etf/FLUD",
       "ticker": "FLUD",
       "name": "franklin-ultra-short-bond-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26360/SINGLCLASS/franklin-ftse-germany-etf/FLGR",
       "ticker": "FLGR",
       "name": "franklin-ftse-germany-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26365/SINGLCLASS/franklin-ftse-australia-etf/FLAU",
       "ticker": "FLAU",
       "name": "franklin-ftse-australia-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/46894/SINGLCLASS/franklin-multisector-income-etf/MULT",
       "ticker": "MULT",
       "name": "franklin-multisector-income-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26355/SINGLCLASS/franklin-ftse-japan-hedged-etf/FLJH",
       "ticker": "FLJH",
       "name": "franklin-ftse-japan-hedged-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26354/SINGLCLASS/franklin-ftse-mexico-etf/FLMX",
       "ticker": "FLMX",
       "name": "franklin-ftse-mexico-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26348/SINGLCLASS/franklin-ftse-india-etf/FLIN",
       "ticker": "FLIN",
       "name": "franklin-ftse-india-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48373/SINGLCLASS/franklin-minnesota-municipal-income-etf/FTMN",
       "ticker": "FTMN",
       "name": "franklin-minnesota-municipal-income-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29096/SINGLCLASS/franklin-disruptive-commerce-etf/BUYZ",
       "ticker": "BUYZ",
       "name": "franklin-disruptive-commerce-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47318/SINGLCLASS/franklin-xrp-etf/XRPZ",
       "ticker": "XRPZ",
       "name": "franklin-xrp-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21413/SINGLCLASS/franklin-emerging-market-core-dividend-tilt-index-etf/DIEM",
       "ticker": "DIEM",
       "name": "franklin-emerging-market-core-dividend-tilt-index-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/33319/SINGLCLASS/brandywine-global-dynamic-us-large-cap-value-etf/DVAL",
       "ticker": "DVAL",
       "name": "brandywine-global-dynamic-us-large-cap-value-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26352/SINGLCLASS/franklin-ftse-switzerland-etf/FLSW",
       "ticker": "FLSW",
       "name": "franklin-ftse-switzerland-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/25772/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FLQM",
       "ticker": "FLQM",
       "name": "franklin-u-s-mid-cap-multifactor-index-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39499/SINGLCLASS/putnam-emerging-markets-ex-china-etf/PEMX",
       "ticker": "PEMX",
       "name": "putnam-emerging-markets-ex-china-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26175/SINGLCLASS/franklin-dynamic-municipal-bond-etf/FLMI",
       "ticker": "FLMI",
       "name": "franklin-dynamic-municipal-bond-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48375/SINGLCLASS/franklin-pennsylvania-municipal-income-etf/FTPA",
       "ticker": "FTPA",
       "name": "franklin-pennsylvania-municipal-income-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/39434/SINGLCLASS/putnam-focused-large-cap-value-etf/PVAL",
       "ticker": "PVAL",
       "name": "putnam-focused-large-cap-value-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/31714/SINGLCLASS/franklin-responsibly-sourced-gold-etf/FGDL",
       "ticker": "FGDL",
       "name": "franklin-responsibly-sourced-gold-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/40521/SINGLCLASS/franklin-ethereum-etf/EZET",
       "ticker": "EZET",
       "name": "franklin-ethereum-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/36370/SINGLCLASS/franklin-focused-dynamic-growth-etf/FFOG",
       "ticker": "FFOG",
       "name": "franklin-focused-dynamic-growth-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26346/SINGLCLASS/franklin-ftse-asia-ex-japan-etf/FLAX",
       "ticker": "FLAX",
       "name": "franklin-ftse-asia-ex-japan-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26351/SINGLCLASS/franklin-ftse-taiwan-etf/FLTW",
       "ticker": "FLTW",
       "name": "franklin-ftse-taiwan-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48374/SINGLCLASS/franklin-ohio-municipal-income-etf/FTOH",
       "ticker": "FTOH",
       "name": "franklin-ohio-municipal-income-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/50069/SINGLCLASS/franklin-small-cap-enhanced-etf/FSML",
       "ticker": "FSML",
       "name": "franklin-small-cap-enhanced-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26349/SINGLCLASS/franklin-ftse-europe-etf/FLEE",
       "ticker": "FLEE",
       "name": "franklin-ftse-europe-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42138/SINGLCLASS/franklin-international-dividend-booster-index-etf/XIDV",
       "ticker": "XIDV",
       "name": "franklin-international-dividend-booster-index-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29098/SINGLCLASS/franklin-intelligent-machines-etf/IQM",
       "ticker": "IQM",
       "name": "franklin-intelligent-machines-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47315/SINGLCLASS/franklin-solana-etf/SOEZ",
       "ticker": "SOEZ",
       "name": "franklin-solana-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47537/SINGLCLASS/franklin-dividend-growth-etf/FRIZ",
       "ticker": "FRIZ",
       "name": "franklin-dividend-growth-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/36353/SINGLCLASS/western-asset-bond-etf/WABF",
       "ticker": "WABF",
       "name": "western-asset-bond-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/36262/SINGLCLASS/franklin-income-focus-etf/INCM",
       "ticker": "INCM",
       "name": "franklin-income-focus-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48363/SINGLCLASS/franklin-municipal-income-etf/FTMU",
       "ticker": "FTMU",
       "name": "franklin-municipal-income-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47497/SINGLCLASS/putnam-international-stock-etf/PGRI",
       "ticker": "PGRI",
       "name": "putnam-international-stock-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/36405/SINGLCLASS/brandywine-global-u-s-fixed-income-etf/USFI",
       "ticker": "USFI",
       "name": "brandywine-global-u-s-fixed-income-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26176/SINGLCLASS/franklin-municipal-green-bond-etf/FLMB",
       "ticker": "FLMB",
       "name": "franklin-municipal-green-bond-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/18000/SINGLCLASS/franklin-short-duration-u-s-government-etf/FTSD",
       "ticker": "FTSD",
       "name": "franklin-short-duration-u-s-government-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26729/SINGLCLASS/franklin-high-yield-corporate-etf/FLHY",
       "ticker": "FLHY",
       "name": "franklin-high-yield-corporate-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21414/SINGLCLASS/franklin-u-s-equity-index-etf/USPX",
       "ticker": "USPX",
       "name": "franklin-u-s-equity-index-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
     },
     {
       "url": "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48338/SINGLCLASS/franklin-massachusetts-municipal-income-etf/FTMA",
       "ticker": "FTMA",
       "name": "franklin-massachusetts-municipal-income-etf",
       "source_as_of": null,
-      "retrieved_at": "2026-09-05"
+      "retrieved_at": "2026-09-05",
+      "region": "us"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "CBL",
+      "name": "franklin-core-etf-portfolio",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "CNV",
+      "name": "franklin-conservative-income-etf-portfolio",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "EQY",
+      "name": "franklin-all-equity-etf-portfolio",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "FBGO",
+      "name": "franklin-brandywine-global-income-optimiser-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "FCII",
+      "name": "franklin-clearbridge-global-infrastructure-income-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/46942/SINGLCLASS/franklin-u-s-quality-moat-dividend-index-etf/FDIV",
+      "ticker": "FDIV",
+      "name": "franklin-u-s-quality-moat-dividend-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "FGOV",
+      "name": "franklin-canadian-government-bond-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "FHIS",
+      "name": "franklin-canadian-ultra-short-term-bond-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "FLCI",
+      "name": "franklin-canadian-corporate-bond-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "FLAM",
+      "name": "franklin-ftse-u-s-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27742/SINGLCLASS/franklin-ftse-canada-all-cap-index-etf/FLCD",
+      "ticker": "FLCD",
+      "name": "franklin-ftse-canada-all-cap-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "FLCP",
+      "name": "franklin-canadian-core-plus-bond-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/26259/SINGLCLASS/franklin-emerging-markets-equity-index-etf/FLEM",
+      "ticker": "FLEM",
+      "name": "franklin-emerging-markets-equity-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "FLGA",
+      "name": "franklin-global-core-bond-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27741/SINGLCLASS/franklin-ftse-japan-index-etf/FLJA",
+      "ticker": "FLJA",
+      "name": "franklin-ftse-japan-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "FLSD",
+      "name": "franklin-canadian-short-term-bond-fund",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27748/SINGLCLASS/franklin-international-equity-index-etf/FLUR",
+      "ticker": "FLUR",
+      "name": "franklin-international-equity-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/25660/SINGLCLASS/franklin-u-s-large-cap-multifactor-index-etf/FLUS",
+      "ticker": "FLUS",
+      "name": "franklin-u-s-large-cap-multifactor-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "FLVC",
+      "name": "franklin-canadian-low-volatility-high-dividend-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "FLVI",
+      "name": "franklin-international-low-volatility-high-dividend-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "FLVU",
+      "name": "franklin-u-s-low-volatility-high-dividend-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/42055/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FMID",
+      "ticker": "FMID",
+      "name": "franklin-u-s-mid-cap-multifactor-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf",
+      "ticker": "GRO",
+      "name": "franklin-growth-etf-portfolio",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/46943/SINGLCLASS/franklin-ftse-india-index-etf/FID",
+      "ticker": "FID",
+      "name": "franklin-ftse-india-index-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "canada"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/etf",
+      "ticker": "IE00BHZRR253",
+      "name": "franklin-sustainable-euro-green-bond-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/38417/ETA/franklin-sustainable-euro-green-corp-1-5-year-ucits-etf/IE0006K7DEL9",
+      "ticker": "IE0006K7DEL9",
+      "name": "franklin-sustainable-euro-green-corp-1-5-year-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/etf",
+      "ticker": "IE000P0R7WK6",
+      "name": "franklin-sustainable-euro-green-sovereign-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/etf",
+      "ticker": "IE000STIHQB2",
+      "name": "franklin-euro-short-maturity-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/38416/ETD/franklin-euro-ig-corporate-ucits-etf/IE000H0TSO96",
+      "ticker": "IE000H0TSO96",
+      "name": "franklin-euro-ig-corporate-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/27048/SINGLCLASS/franklin-usd-investment-grade-corporate-bond-ucits-etf/IE00BFWXDX52",
+      "ticker": "IE00BFWXDX52",
+      "name": "franklin-usd-investment-grade-corporate-bond-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/48640/SINGLCLASS/franklin-core-us-enhanced-equity-ucits-etf/IE000CZU3JH0",
+      "ticker": "IE000CZU3JH0",
+      "name": "franklin-core-us-enhanced-equity-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/48638/SINGLCLASS/franklin-clearbridge-us-smaller-companies-ucits-etf/IE000XJA2OU4",
+      "ticker": "IE000XJA2OU4",
+      "name": "franklin-clearbridge-us-smaller-companies-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/etf/passive-etfs",
+      "ticker": "FRIN",
+      "name": "franklin-ftse-india-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/etf/passive-etfs",
+      "ticker": "FLRK",
+      "name": "franklin-ftse-korea-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/etf/passive-etfs",
+      "ticker": "FLXT",
+      "name": "franklin-ftse-taiwan-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/41675/SINGLCLASS/franklin-ftse-saudi-arabia-ucits-etf/IE000C7DDDX4",
+      "ticker": "FLXS",
+      "name": "franklin-ftse-saudi-arabia-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/27851/SINGLCLASS/franklin-ftse-brazil-ucits-etf/IE00BHZRQY00",
+      "ticker": "FVUB",
+      "name": "franklin-ftse-brazil-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27852/SINGLCLASS/franklin-ftse-china-ucits-etf/IE00BHZRR147",
+      "ticker": "FRCH",
+      "name": "franklin-ftse-china-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/40163/ETD/franklin-ftse-emerging-markets-ucits-etf/IE000GTF7GF4",
+      "ticker": "IE000GTF7GF4",
+      "name": "franklin-ftse-emerging-markets-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/40164/SINGLCLASS/franklin-ftse-emerging-ex-china-ucits-etf/IE0006D3PGW3",
+      "ticker": "IE0006D3PGW3",
+      "name": "franklin-ftse-emerging-ex-china-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27046/SINGLCLASS/franklin-ftse-asia-ex-china-ex-japan-ucits-etf/IE00BFWXDV39",
+      "ticker": "IE00BFWXDV39",
+      "name": "franklin-ftse-asia-ex-china-ex-japan-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/25800/SINGLCLASS/franklin-em-multi-factor-equity-ucits-etf/IE00BF2B0K52",
+      "ticker": "IE00BF2B0K52",
+      "name": "franklin-em-multi-factor-equity-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/29819/SINGLCLASS/franklin-s-p-500-paris-aligned-climate-ucits-etf/IE00BMDPBZ72",
+      "ticker": "IE00BMDPBZ72",
+      "name": "franklin-s-p-500-paris-aligned-climate-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/41206/SINGLCLASS/franklin-s-p-500-screened-ucits-etf/IE0006FAD976",
+      "ticker": "IE0006FAD976",
+      "name": "franklin-s-p-500-screened-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/25802/SINGLCLASS/franklin-u-s-equity-ucits-etf/IE00BF2B0P08",
+      "ticker": "IE00BF2B0P08",
+      "name": "franklin-u-s-equity-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/41838/ETD/franklin-us-dividend-tilt-ucits-etf/IE000Z4OBQK4",
+      "ticker": "IE000Z4OBQK4",
+      "name": "franklin-us-dividend-tilt-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/46588/ETA/franklin-us-mega-cap-100-ucits-etf/IE0008M1R3N4",
+      "ticker": "IE0008M1R3N4",
+      "name": "franklin-us-mega-cap-100-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/51250/SINGLCLASS/franklin-s-p-500-information-technology-ucits-etf/IE000EQGURT5",
+      "ticker": "IE000EQGURT5",
+      "name": "franklin-s-p-500-information-technology-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/25801/ETA/franklin-european-quality-dividend-ucits-etf/IE000IMGE5W5",
+      "ticker": "IE000IMGE5W5",
+      "name": "franklin-european-quality-dividend-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/25799/ETA/franklin-global-quality-dividend-ucits-etf/IE000ZZJ48Q0",
+      "ticker": "IE000ZZJ48Q0",
+      "name": "franklin-global-quality-dividend-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/40161/SINGLCLASS/franklin-msci-world-catholic-principles-ucits-etf/IE000AZOUN82",
+      "ticker": "IE000AZOUN82",
+      "name": "franklin-msci-world-catholic-principles-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/40162/SINGLCLASS/franklin-ftse-developed-world-ucits-etf/IE000CVOSY02",
+      "ticker": "IE000CVOSY02",
+      "name": "franklin-ftse-developed-world-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/36451/SINGLCLASS/franklin-future-of-food-ucits-etf/IE000ZOKLHY7",
+      "ticker": "IE000ZOKLHY7",
+      "name": "franklin-future-of-food-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/36452/SINGLCLASS/franklin-future-of-health-and-wellness-ucits-etf/IE0003WEWAX4",
+      "ticker": "IE0003WEWAX4",
+      "name": "franklin-future-of-health-and-wellness-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/33308/SINGLCLASS/franklin-ai-metaverse-and-blockchain-ucits-etf/IE000IM4K4K2",
+      "ticker": "IE000IM4K4K2",
+      "name": "franklin-ai-metaverse-and-blockchain-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/29820/SINGLCLASS/franklin-stoxx-europe-600-paris-aligned-climate-ucits-etf/IE00BMDPBY65",
+      "ticker": "IE00BMDPBY65",
+      "name": "franklin-stoxx-europe-600-paris-aligned-climate-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/46790/ETA/franklin-us-treasury-0-1-year-ucits-etf/IE000E02WFD5",
+      "ticker": "IE000E02WFD5",
+      "name": "franklin-us-treasury-0-1-year-ucits-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "europe"
+    },
+    {
+      "url": "https://www.franklintempleton.com.au/our-products/funds-prices-performance/etf/products/91920/SINGLCLASS/betashares-western-asset-australian-bond-active-etf/BNDS",
+      "ticker": "BNDS",
+      "name": "betashares-western-asset-australian-bond-active-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "australia"
+    },
+    {
+      "url": "https://etf.franklintempleton.com/ciih",
+      "ticker": "CIIH",
+      "name": "clearbridge-global-infrastructure-income-fund-hedged-active-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "australia"
+    },
+    {
+      "url": "https://etf.franklintempleton.com/cuiv",
+      "ticker": "CUIV",
+      "name": "clearbridge-global-infrastructure-value-fund-active-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "australia"
+    },
+    {
+      "url": "https://etf.franklintempleton.com/civh",
+      "ticker": "CIVH",
+      "name": "clearbridge-global-infrastructure-value-fund-hedged-active-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "australia"
+    },
+    {
+      "url": "https://etf.franklintempleton.com/r3al",
+      "ticker": "R3AL",
+      "name": "clearbridge-real-income-fund-active-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "australia"
+    },
+    {
+      "url": "https://etf.franklintempleton.com/frar",
+      "ticker": "FRAR",
+      "name": "franklin-australian-absolute-return-bond-fund-active-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "australia"
+    },
+    {
+      "url": "https://etf.franklintempleton.com/frgg",
+      "ticker": "FRGG",
+      "name": "franklin-global-growth-fund-active-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "australia"
+    },
+    {
+      "url": "https://etf.franklintempleton.com/fgse",
+      "ticker": "FGSE",
+      "name": "franklin-global-systematic-equity-fund-active-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "australia"
+    },
+    {
+      "url": "https://etf.franklintempleton.com/feif",
+      "ticker": "FEIF",
+      "name": "western-asset-enhanced-income-fund-active-etf",
+      "source_as_of": null,
+      "retrieved_at": "2026-09-17",
+      "region": "australia"
     }
   ],
   "excluded_closed_products": [
@@ -1299,12 +1908,28 @@
   ],
   "counts": {
     "returned_loc_urls": 1714,
-    "etf_rows": 81,
-    "closed_rows": 103
+    "etf_rows": 147,
+    "closed_rows": 103,
+    "by_region": {
+      "us": 81,
+      "canada": 24,
+      "europe": 33,
+      "australia": 9,
+      "other": 0
+    },
+    "total_records": 147
   },
   "limitations": [
-    "Only URL-derived ticker/name are recorded. ISIN, index, provider, index type, weighting, cadence, inception date, and active/closed status are not inferred.",
-    "Closed entries are segregated and not included in records.",
-    "The sitemap is an official enumerator response, but this artifact makes no completeness claim beyond the returned rows."
+    "Europe regional pages expose some products by fund name and ISIN rather than one universal exchange ticker; those records use the published ISIN as ticker key.",
+    "No separate official Franklin ETF product list was reachable for a region outside US, Canada, Europe/Luxembourg UCITS, or Australia during this retrieval.",
+    "The Australia page lists nine active ETFs; the page notes FRGG changes its ASX trading name to FTPG effective 2026-10-14, but the current ticker remains FRGG at retrieval."
+  ],
+  "source_urls": [
+    "https://www.franklintempleton.com/binaries/content/assets/global/sitemaps/google/en-us_product.xml",
+    "https://www.franklintempleton.ca/en-ca/products/etf",
+    "https://www.franklintempleton.lu/our-funds/etf",
+    "https://www.franklintempleton.lu/our-funds/etf/passive-etfs",
+    "https://www.franklintempleton.com.au/our-products/etfs",
+    "https://www.franklintempleton.com.au/press-releases/franklin-templeton-expands-active-etf-suite-with-global-systematic-equity-and-income-strategies"
   ]
 }
