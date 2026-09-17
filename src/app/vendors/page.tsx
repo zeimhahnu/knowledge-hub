@@ -123,7 +123,11 @@ const EVENTS: EventType[] = [
   {
     id: "special-dividend",
     name: "Special Cash Dividend",
-    badge: "voluntary",
+    // Mandatory: the holder makes no election. "Special" is vendor TREATMENT,
+    // a separate axis from whether the holder must act. Kept in step with
+    // event-taxonomy.ts, which assertVendorEventsMatchCanonical enforces at
+    // RENDER time -- changing one and not the other 500s this page.
+    badge: "mandatory",
     category: "Equity Income",
     summary: "A non-recurring cash distribution from accumulated profits or asset sales — distinct from ordinary dividends.",
     whyAdj: "A special dividend is NOT from normal operations. If not deducted from price, an index tracker holds shares worth less without the adjustment reflected — creating tracking error. The PAF deducts the distribution value on ex-date. Unlike regular dividends, most vendors only adjust the PR index for special dividends if a size or recurrence threshold is met.",

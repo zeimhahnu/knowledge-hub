@@ -94,7 +94,11 @@ function MarkControl({
        the two controls in adjacent columns sat a label's height apart and never
        lined up. A visible label fixes the alignment and the clarity together: the
        select read as an unlabelled dropdown. */
-    <div className="min-w-0 space-y-1.5">
+    /* space-y-1 matches the 4px gap-1 that puts Fund context's input under its
+       label, so both controls start at the same y. flex-nowrap stops the status
+       icon and the select wrapping onto two lines in this narrow column, which
+       was pushing the select 36px below the input even after the labels lined up. */
+    <div className="min-w-0 space-y-1">
       <label
         className="grid gap-1 text-sm"
         htmlFor={`vendor-check-${row.vendor}`}
@@ -102,7 +106,7 @@ function MarkControl({
         <span className="font-medium text-foreground">Your check</span>
         <span className="sr-only">for {vendorLabel(row.vendor)}</span>
       </label>
-      <div className="flex min-w-0 flex-wrap items-center gap-2">
+      <div className="flex min-w-0 flex-nowrap items-center gap-2">
         <span
           className={`inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-[4px] border ${
             state === "confirmed"
