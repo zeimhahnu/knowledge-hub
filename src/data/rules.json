@@ -38,7 +38,7 @@
     {
       "vendor": "msci",
       "event_type": "cash-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "price-return",
       "conditions": {
         "dividend_size_threshold_pct": 5,
@@ -53,7 +53,7 @@
     {
       "vendor": "msci",
       "event_type": "cash-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "total-return",
       "conditions": {
         "dividend_size_threshold_pct": 5,
@@ -68,7 +68,7 @@
     {
       "vendor": "msci",
       "event_type": "cash-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "net-total-return",
       "conditions": {
         "dividend_size_threshold_pct": 5,
@@ -236,7 +236,7 @@
     {
       "vendor": "sp",
       "event_type": "cash-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "price-return",
       "treatment": "An ordinary dividend has no effect on the Price Return index; no price adjustment is made on ex-date (PAF = none).",
       "lead_days": null,
@@ -247,7 +247,7 @@
     {
       "vendor": "sp",
       "event_type": "cash-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "total-return",
       "treatment": "An ordinary dividend affects the Total Return (TR) index; the dividend is reinvested on ex-date.",
       "lead_days": null,
@@ -258,7 +258,7 @@
     {
       "vendor": "sp",
       "event_type": "cash-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "net-total-return",
       "treatment": "An ordinary dividend affects the Net Total Return (NTR) index; the dividend is reinvested on ex-date.",
       "lead_days": null,
@@ -418,7 +418,7 @@
     {
       "vendor": "ftse",
       "event_type": "cash-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "price-return",
       "treatment": "Ordinary cash dividends have no price adjustment or PAF; the Price Return index is unchanged. Cash (and scrip) dividends with a cash option are treated the same as ordinary cash, except Spanish scrip dividends, which follow the scrip-issue treatment (§4.7).",
       "lead_days": 5,
@@ -429,7 +429,7 @@
     {
       "vendor": "ftse",
       "event_type": "cash-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "total-return",
       "treatment": "Ordinary cash dividends are reinvested across the index on the ex date and affect the Total Return index. Cash (and scrip) dividends with a cash option are treated the same as ordinary cash, except Spanish scrip dividends, which follow the scrip-issue treatment (§4.7). Where a dividend is retracted or corrected, a corrective negative adjustment is applied with T+1 notice; an undetermined dividend uses the same-period prior-year amount, or zero if none was paid.",
       "lead_days": 5,
@@ -623,7 +623,7 @@
       "vendor": "stoxx",
       "index_type": "*",
       "event_type": "cash-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "treatment": "Ordinary cash distributions within the regular dividend policy (or defined regular by the company) adjust Gross and Net Return indices, while Price indices are not affected: no price adjustment and no PAF for the Price Return index.",
       "lead_days": null,
       "lead_days_confidence": "absent",
@@ -765,7 +765,7 @@
     {
       "vendor": "morningstar",
       "event_type": "cash-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "price-return",
       "treatment": "No price adjustment for ordinary cash dividends; the Price Return (PR) index is not adjusted (PAF = none).",
       "lead_days": null,
@@ -776,7 +776,7 @@
     {
       "vendor": "morningstar",
       "event_type": "cash-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "total-return",
       "treatment": "Reinvests gross ordinary dividends in the Total Return (TR) index; gross dividends are used in calculating TR index levels.",
       "lead_days": null,
@@ -787,7 +787,7 @@
     {
       "vendor": "morningstar",
       "event_type": "cash-dividend",
-      "caev": "DVOP",
+      "caev": "DVCA",
       "index_type": "net-total-return",
       "treatment": "Reinvests net ordinary dividends in the Net Return (NR) index; net dividends are used in calculating NR index levels after tax.",
       "lead_days": null,
