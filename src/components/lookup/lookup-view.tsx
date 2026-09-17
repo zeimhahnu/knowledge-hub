@@ -439,19 +439,11 @@ function QualifierControls({
         </p>
       </div>
       <div className="flex flex-wrap gap-4">
-        {hasVariants && (
-          <label className="grid gap-1.5 text-sm">
-            <span className="font-medium">Return variant</span>
-            <select
-              value={filters.indexType ?? ""}
-              onChange={(event) => save({ ...filters, indexType: event.target.value || undefined })}
-              className="h-9 rounded-lg border border-border bg-background px-2 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-            >
-              <option value="">All variants</option>
-              {dimensions.indexTypes.map((value) => <option key={value} value={value}>{value}</option>)}
-            </select>
-          </label>
-        )}
+        {/* Return variant was a single page-level control, which implied one variant
+            across every vendor. A fund is chosen per vendor in Fund context, and two
+            vendors can track different return variants of the same fund, so one global
+            answer could only ever be right by accident. The variant now follows the
+            fund selection on the row rather than overriding it from the top. */}
         {conditionKeys.map((key) => (
           <label key={key} className="grid gap-1.5 text-sm">
             <span className="font-medium">
@@ -778,20 +770,8 @@ export function LookupView({
               </SurfaceSection>
             ) : (
               <>
-                {groups && (groups.notYetDue.length > 0 || groups.timingUnassessed.length > 0) && (
-                  <SurfaceSection padding="tight" className="space-y-1">
-                    {groups.notYetDue.length > 0 && (
-                      <p className="text-sm text-muted-foreground">
-                        {groups.notYetDue.length} vendor{groups.notYetDue.length === 1 ? " is" : "s are"} not yet due — the event is outside its forward publication horizon.
-                      </p>
-                    )}
-                    {groups.timingUnassessed.length > 0 && (
-                      <p className="text-sm text-muted-foreground">
-                        Timing unassessed for {groups.timingUnassessed.map((row) => VENDOR_LABELS[row.vendor]).join(", ")} — no documented or local publication horizon.
-                      </p>
-                    )}
-                  </SurfaceSection>
-                )}
+                {/* The not-yet-due / timing-unassessed tallies moved into the closing
+                    note, which now names the cause instead of restating a count. */}
                 <DivergencePanel
                   result={divergence}
                   lateAbsentVendors={lateAbsentVendors}

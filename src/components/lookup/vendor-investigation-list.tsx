@@ -339,17 +339,17 @@ function FindingCopy({
   eventName,
   verdict,
   unchecked,
+  groups,
 }: {
   ticker: string;
   eventName: string;
   verdict: LookupVerdict;
   unchecked: number;
+  groups: { notYetDue: MatrixRow[]; timingUnassessed: MatrixRow[] };
 }) {
   const [copied, setCopied] = useState(false);
-  const qualification = unchecked > 0
-    ? `${unchecked} vendor${unchecked === 1 ? " remains" : "s remain"} unchecked, so this is not a final verdict.`
-    : "All applicable vendors have been checked.";
-  const note = `${ticker} ${eventName}: ${verdictSummaryForNote(verdict)} ${qualification}`;
+  const deduction = deductionForNote(verdict, groups, unchecked);
+  const note = `${ticker} ${eventName}: ${deduction} ${verdictSummaryForNote(verdict)}`;
 
   const copyNote = async () => {
     try {
@@ -362,13 +362,16 @@ function FindingCopy({
   };
 
   return (
-    <section aria-labelledby="what-you-can-say" className="border-t border-border bg-[#f1efe9] px-5 py-8 text-[#151515] sm:px-8">
+    <section aria-labelledby="what-you-can-say" className="border-b border-border bg-[#f1efe9] px-5 py-8 text-[#151515] sm:px-8">
       <div className="mx-auto max-w-6xl">
         <p className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-[#5b5b58]">Closing note</p>
         <div className="mt-3 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-3xl">
             <h2 id="what-you-can-say" className="ca-section-title">What you can say</h2>
-            <p className="mt-3 text-base leading-relaxed text-[#333331]">{note}</p>
+            <p className="mt-3 text-base leading-relaxed text-[#333331]">{deduction}</p>
+            <p className="mt-2 text-sm leading-relaxed text-[#5b5b58]">
+              {ticker} {eventName} · {verdictSummaryForNote(verdict)}
+            </p>
           </div>
           <button
             type="button"
@@ -390,6 +393,38 @@ function verdictSummaryForNote(verdict: LookupVerdict): string {
   const supplied = totals.covered === 1 ? "1 vendor has supplied" : `${totals.covered} vendors have supplied`;
   const absent = totals.missing === 1 ? "1 is past its window without data" : `${totals.missing} are past their windows without data`;
   return `${supplied}; ${absent}.`;
+}
+
+/**
+ * The conclusion the evidence actually supports, and what closed the case.
+ *
+ * The note used to stop at a tally -- "1 supplied; 0 past their windows" -- and
+ * leave the practitioner to draw the inference themselves. It now states the
+ * finding and ends on the cause, so a case closed because the window is still
+ * open ends on "timing issue" rather than reading like an unexplained gap.
+ */
+function deductionForNote(
+  verdict: LookupVerdict,
+  groups: { notYetDue: MatrixRow[]; timingUnassessed: MatrixRow[] },
+  unchecked: number,
+): string {
+  const { totals } = verdict;
+  if (totals.applicable === 0) return "Nothing to conclude until a vendor is in scope.";
+  if (unchecked > 0) {
+    return `${unchecked} vendor${unchecked === 1 ? "" : "s"} still unchecked, so this is not a final verdict.`;
+  }
+  if (totals.missing > 0) {
+    return `Genuine discrepancy: ${totals.missing === 1 ? "1 vendor is" : `${totals.missing} vendors are`} past the publication window with nothing supplied.`;
+  }
+  if (groups.notYetDue.length > 0) {
+    const names = groups.notYetDue.map((row) => vendorLabel(row.vendor)).join(", ");
+    return `No discrepancy is established. ${names} ${groups.notYetDue.length === 1 ? "is" : "are"} still inside the publication window, so the silence is early rather than wrong - timing issue.`;
+  }
+  if (groups.timingUnassessed.length > 0) {
+    const names = groups.timingUnassessed.map((row) => vendorLabel(row.vendor)).join(", ");
+    return `No discrepancy is established, but ${names} publish${groups.timingUnassessed.length === 1 ? "es" : ""} no documented window, so timing could not be assessed.`;
+  }
+  return "Every applicable vendor supplied the event. No discrepancy.";
 }
 
 export function VendorInvestigationList({
@@ -445,6 +480,15 @@ export function VendorInvestigationList({
 
   return (
     <section className="min-w-0 overflow-hidden border border-border bg-card" aria-labelledby="vendor-investigation-heading">
+      {/* The conclusion leads. It used to sit below every row, so the practitioner
+          scrolled the whole investigation before learning what it amounted to. */}
+      <FindingCopy
+        ticker={ticker}
+        eventName={eventName}
+        verdict={verdict}
+        unchecked={verdict.totals.unchecked}
+        groups={groups}
+      />
       <div className="border-b border-border px-5 py-6 sm:px-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -486,12 +530,6 @@ export function VendorInvestigationList({
         </ol>
         <VendorEntailmentPanel results={entailment} />
       </div>
-      <FindingCopy
-        ticker={ticker}
-        eventName={eventName}
-        verdict={verdict}
-        unchecked={verdict.totals.unchecked}
-      />
     </section>
   );
 }
