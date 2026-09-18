@@ -695,6 +695,7 @@ export default function VendorDashboard() {
               className="mb-6"
               eyebrow={<span className="inline-flex items-center gap-2"><Badge variant={active.badge} /><span className="text-xs text-muted-foreground">{active.category}</span></span>}
               title={active.name}
+              titleAs="h2"
               description={<GlossaryText text={active.summary} />}
             />
 

@@ -37,7 +37,7 @@ export function SiteHeader() {
         </div>
         <button
           type="button"
-          className="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:hidden"
+          className="min-h-11 min-w-11 rounded-lg p-2 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:hidden"
           aria-expanded={open}
           aria-controls="mobile-primary-navigation"
           aria-label={open ? "Close navigation menu" : "Open navigation menu"}
@@ -68,7 +68,7 @@ function NavLink({
       href={link.href}
       aria-current={current ? "page" : undefined}
       onClick={onNavigate}
-      className={`rounded-md px-2 py-2 font-medium outline-none transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-ring ${current ? "text-foreground" : "text-muted-foreground"}`}
+      className={`min-h-11 rounded-md px-2 py-2 font-medium outline-none transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-ring ${current ? "text-foreground" : "text-muted-foreground"}`}
     >
       {link.label}
     </Link>

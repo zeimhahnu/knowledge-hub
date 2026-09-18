@@ -285,7 +285,7 @@ function VendorScopeControl({
           type="button"
           onClick={() => onChange([...VENDOR_IDS])}
           disabled={allSelected}
-          className="shrink-0 rounded-lg border border-border px-3 py-1.5 text-sm font-medium text-foreground outline-none transition-colors hover:bg-muted/60 focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+          className="min-h-11 shrink-0 rounded-lg border border-border px-3 py-1.5 text-sm font-medium text-foreground outline-none transition-colors hover:bg-muted/60 focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
         >
           Restore all vendors
         </button>
@@ -302,7 +302,7 @@ function VendorScopeControl({
           return (
             <label
               key={vendor}
-              className={`inline-flex cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium outline-none transition-colors focus-within:ring-2 focus-within:ring-ring ${
+              className={`inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-medium outline-none transition-colors focus-within:ring-2 focus-within:ring-ring ${
                 checked
                   ? "border-primary/40 bg-primary/15 text-primary"
                   : "border-border bg-muted/30 text-muted-foreground hover:bg-muted/60"
@@ -452,7 +452,7 @@ function QualifierControls({
             <select
               value={filters.conditions?.[key] ?? ""}
               onChange={(event) => save({ ...filters, conditions: { ...filters.conditions, [key]: event.target.value || undefined } })}
-              className="h-9 rounded-lg border border-border bg-background px-2 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+              className="min-h-11 rounded-lg border border-border bg-background px-2 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
             >
               <option value="">I don&apos;t know</option>
               {dimensions.conditions[key]!.map((value) => (

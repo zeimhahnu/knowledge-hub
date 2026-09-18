@@ -108,6 +108,8 @@ function VendorCard({
           </label>
           <input
             id={`lead-${vendor}`}
+            name={`lead-${vendor}`}
+            autoComplete="off"
             type="number"
             inputMode="numeric"
             min={0}
@@ -123,7 +125,7 @@ function VendorCard({
                   onChange(withVendorDefault(draft, vendor, days));
               }
             }}
-            className="h-9 w-24 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+            className="min-h-11 w-24 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
           />
           <span className="text-sm text-muted-foreground">days</span>
         </div>
@@ -220,7 +222,7 @@ function VendorCard({
                                 onChange(withOverride(draft, vendor, override.eventType, days));
                             }
                           }}
-                          className="h-8 w-20 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+                          className="min-h-11 w-20 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
                         />
                         <span className="text-sm text-muted-foreground">days</span>
                         <Button
@@ -273,9 +275,11 @@ function AddOverrideForm({
       </label>
       <select
         id={`add-event-${vendor}`}
+        name={`add-event-${vendor}`}
+        autoComplete="off"
         value={eventType}
         onChange={(event) => setEventType(event.target.value)}
-        className="h-8 rounded-lg border border-border bg-background px-2 text-sm text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+        className="min-h-11 rounded-lg border border-border bg-background px-2 text-sm text-foreground outline-none transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
       >
         {availableEvents.map((event) => (
           <option key={event.id} value={event.id}>
@@ -288,14 +292,16 @@ function AddOverrideForm({
       </label>
       <input
         id={`add-days-${vendor}`}
+        name={`add-days-${vendor}`}
+        autoComplete="off"
         type="number"
         inputMode="numeric"
         min={0}
         step={1}
         value={days}
-        placeholder="days"
+        placeholder="days…"
         onChange={(event) => setDays(event.target.value)}
-        className="h-8 w-20 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+        className="min-h-11 w-20 rounded-lg border border-border bg-background px-3 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
       />
       <Button
         type="button"

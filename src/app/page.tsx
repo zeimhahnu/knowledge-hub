@@ -3,7 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRightIcon, CalendarIcon, Trash2Icon } from "lucide-react";
+import { ArrowRightIcon, Trash2Icon } from "lucide-react";
 
 import { SymbolTypeahead } from "@/components/home/symbol-typeahead";
 import { RouteShell } from "@/components/route-shell";
@@ -144,8 +144,7 @@ export default function Home() {
 
                 <Field label="Ex-date" htmlFor="ex-date">
                   <div className="relative">
-                    <CalendarIcon className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
-                    <input id="ex-date" name="exDate" type="date" value={exDate} onChange={(event) => setExDate(event.target.value)} className={fieldControlClassName("ca-date-control ca-control-lead-icon py-2")} />
+                    <input id="ex-date" name="exDate" type="date" autoComplete="off" value={exDate} onChange={(event) => setExDate(event.target.value)} className={fieldControlClassName("ca-date-control py-2")} />
                   </div>
                 </Field>
               </div>

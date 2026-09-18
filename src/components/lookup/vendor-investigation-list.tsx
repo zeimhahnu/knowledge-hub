@@ -125,7 +125,7 @@ function MarkControl({
           onChange={(event) =>
             onMarkChange(row.vendor, event.target.value as VendorMarkState)
           }
-          className="h-8 min-w-0 max-w-full rounded-[4px] border border-border bg-background px-2 text-sm text-foreground outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
+          className="min-h-11 min-w-0 max-w-full rounded-[4px] border border-border bg-background px-2 text-sm text-foreground outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
         >
           <option value="unchecked">Not checked</option>
           <option value="confirmed">Confirmed present</option>
@@ -288,7 +288,7 @@ function FundSelectionControl({
           onChange={(event) => onFundChange(row.vendor, event.target.value.toUpperCase())}
           placeholder="Optional fund ticker"
           aria-describedby={`${listId}-help`}
-          className="h-8 min-w-0 w-full rounded-[4px] border border-border bg-background px-2 text-sm text-foreground outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
+          className="min-h-11 min-w-0 w-full rounded-[4px] border border-border bg-background px-2 text-sm text-foreground outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
         />
       </label>
       <datalist id={listId}>

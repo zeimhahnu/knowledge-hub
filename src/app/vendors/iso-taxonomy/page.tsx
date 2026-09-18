@@ -286,6 +286,7 @@ export default function IsoTaxonomyPage() {
       </Band>
 
       <Band tone="light" className="min-h-screen">
+      <main>
       <RouteShell wide className="space-y-8">
         <SurfaceSection padding="tight" className="space-y-8">
 
@@ -325,7 +326,7 @@ export default function IsoTaxonomyPage() {
                 <button
                   key={f}
                   onClick={() => setSearch(f)}
-                  className="border border-border bg-background px-3 py-1 text-[11px] text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                  className="min-h-11 border border-border bg-background px-3 py-1 text-[11px] text-muted-foreground outline-none transition-colors hover:border-primary hover:text-primary focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   {f}
                 </button>
@@ -341,13 +342,15 @@ export default function IsoTaxonomyPage() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search events, ISO codes, or vendor terms..."
-            className="ca-control ca-control-lead-icon pr-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+            name="taxonomyQuery"
+            autoComplete="off"
+            placeholder="Search events, ISO codes, or vendor terms…"
+            className="ca-control ca-control-lead-icon pr-4 py-3 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           />
           {search && (
             <button
               onClick={() => setSearch("")}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground text-xs"
+              className="absolute right-2 top-1/2 min-h-11 -translate-y-1/2 px-2 text-muted-foreground outline-none hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring text-xs"
             >
               Clear
             </button>
@@ -360,7 +363,11 @@ export default function IsoTaxonomyPage() {
             <Eyebrow>Master mapping table</Eyebrow>
             <span className="text-xs text-muted-foreground">{filtered.length} events</span>
           </div>
-          <div className="hidden overflow-hidden border border-border md:block">
+          {filtered.length === 0 ? (
+            <p className="ca-surface border-dashed p-5 text-sm text-muted-foreground">
+              No events match <span className="font-medium text-foreground">{search}</span>. Try an event name, CAEV code, or vendor term.
+            </p>
+          ) : <div className="hidden overflow-hidden border border-border md:block">
               <table className="w-full table-fixed text-[11px]">
                 <thead>
                   <tr className="border-b border-border bg-muted/50">
@@ -380,12 +387,21 @@ export default function IsoTaxonomyPage() {
                     return (
                       <tr
                         key={i}
-                        className={`cursor-pointer border-b border-border/40 transition-colors ${
+                        className={`cursor-pointer border-b border-border/40 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring ${
                           isHighlighted ? "bg-primary/10" : i % 2 === 0 ? "bg-card" : "bg-muted/5"
                         }`}
+                        tabIndex={0}
+                        role="button"
+                        aria-pressed={isHighlighted}
                         onClick={() =>
                           setSelectedCategory(isHighlighted ? "" : row.masterCategory)
                         }
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault();
+                            setSelectedCategory(isHighlighted ? "" : row.masterCategory);
+                          }
+                        }}
                       >
                         <td className="break-words px-2 py-2 align-top font-medium text-foreground">{row.masterCategory}</td>
                         <td className="px-1.5 py-2 text-center align-top">
@@ -414,7 +430,7 @@ export default function IsoTaxonomyPage() {
                   })}
                 </tbody>
               </table>
-          </div>
+          </div>}
           <div className="grid gap-2 md:hidden">
             {filtered.map((row) => {
               const isHighlighted = selectedCategory === row.masterCategory;
@@ -423,9 +439,10 @@ export default function IsoTaxonomyPage() {
                 ["STOXX", row.stoxx], ["Solactive", row.solactive], ["Morningstar", row.morningstar], ["VettaFi", row.vettafi],
               ] as const;
               return (
-                <Surface
+                <button
+                  type="button"
                   key={row.masterCategory}
-                  className={`cursor-pointer p-3 transition-colors ${isHighlighted ? "border-primary" : "hover:border-primary"}`}
+                  className={`ca-surface w-full cursor-pointer p-3 text-left transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring ${isHighlighted ? "border-primary" : "hover:border-primary"}`}
                   onClick={() => setSelectedCategory(isHighlighted ? "" : row.masterCategory)}
                 >
                   <div className="flex items-start justify-between gap-3">
@@ -441,7 +458,7 @@ export default function IsoTaxonomyPage() {
                       </div>
                     ))}
                   </div>
-                </Surface>
+                </button>
               );
             })}
           </div>
@@ -450,8 +467,9 @@ export default function IsoTaxonomyPage() {
         {/* CAEV Codes */}
         <div>
           <button
+            type="button"
             onClick={() => setShowCAEV(!showCAEV)}
-            className="flex items-center gap-2 mb-4 text-sm font-semibold text-muted-foreground hover:text-foreground transition-colors"
+            className="mb-4 flex min-h-11 items-center gap-2 text-sm font-semibold text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
           >
             <ChevronDownIcon className={`h-4 w-4 transition-transform ${showCAEV ? "rotate-180" : ""}`} />
             All ISO 20022 CAEV Codes
@@ -496,6 +514,7 @@ export default function IsoTaxonomyPage() {
         </Surface>
         </SurfaceSection>
       </RouteShell>
+      </main>
       </Band>
     </div>
   );

@@ -40,7 +40,7 @@ export function VendorReferenceNav({ current }: { current: VendorReferenceSectio
             key={id}
             href={href}
             aria-current={active ? "page" : undefined}
-            className={`flex items-center gap-2 border-b-2 px-1 py-3 text-xs transition-colors ${
+            className={`flex min-h-11 items-center gap-2 border-b-2 px-1 py-3 text-xs outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring ${
               active
                 ? "border-primary font-medium text-primary"
                 : "border-transparent text-muted-foreground hover:border-primary hover:text-primary"

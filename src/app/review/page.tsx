@@ -71,6 +71,11 @@ export default function ReviewPage() {
               </Surface>
             ))}
           </div>
+          {!files.some((file) => file.status === "proposed") && !message && (
+            <Surface className="mt-8 border-dashed p-5 text-sm text-muted-foreground">
+              No methodology proposals are waiting for review.
+            </Surface>
+          )}
           <p className="mt-8 text-sm"><Link className="font-medium text-primary underline-offset-4 hover:underline" href="/upload">Back to methodology upload</Link></p>
         </div>
       </RouteShell>

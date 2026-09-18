@@ -106,7 +106,7 @@ export function SymbolTypeahead({ value, onChange }: SymbolTypeaheadProps) {
         onFocus={() => value.trim() && setIsOpen(true)}
         onBlur={() => window.setTimeout(() => setIsOpen(false), 150)}
         onKeyDown={handleKeyDown}
-        placeholder="e.g. AAPL or Tesco"
+        placeholder="e.g. AAPL or Tesco…"
         autoCapitalize="characters"
         autoComplete="off"
         maxLength={40}
@@ -137,7 +137,7 @@ export function SymbolTypeahead({ value, onChange }: SymbolTypeaheadProps) {
                     type="button"
                     onMouseDown={(event) => event.preventDefault()}
                     onClick={() => selectSuggestion(suggestion)}
-                    className={`flex w-full items-baseline gap-2 rounded-lg px-3 py-2 text-left text-sm transition-colors ${index === activeIndex ? "bg-muted" : "hover:bg-muted/70"}`}
+                    className={`flex min-h-11 w-full items-baseline gap-2 rounded-lg px-3 py-2 text-left text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring ${index === activeIndex ? "bg-muted" : "hover:bg-muted/70"}`}
                   >
                     <span className="font-semibold">{suggestion.symbol}</span>
                     <span className="min-w-0 flex-1 truncate text-muted-foreground">— {suggestion.name}</span>

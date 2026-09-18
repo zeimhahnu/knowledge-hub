@@ -55,6 +55,8 @@ export function GlossaryList({ entries }: { entries: readonly GEntry[] }) {
           />
           <input
             type="text"
+            name="glossaryQuery"
+            autoComplete="off"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Find a term, or search the definitions"
@@ -66,7 +68,7 @@ export function GlossaryList({ entries }: { entries: readonly GEntry[] }) {
             <button
               type="button"
               onClick={() => setQuery("")}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-xs text-muted-foreground transition-colors hover:text-foreground"
+              className="absolute right-2 top-1/2 min-h-11 -translate-y-1/2 px-2 text-xs text-muted-foreground outline-none transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring"
             >
               Clear
             </button>
