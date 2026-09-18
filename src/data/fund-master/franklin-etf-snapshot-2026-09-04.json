@@ -2094,6 +2094,606 @@
     "notes": [
       "The explicit four-factor construction is classified as capped-factor rather than plain market-cap weighting. The fund facts state semiannual index restructuring and that NR returns include income net of tax withholding when dividends are paid; no withholding rate is inferred. ISIN remains null."
     ]
+  },
+  {
+    "ticker": "GRO",
+    "name": "Franklin Growth ETF Portfolio",
+    "isin": null,
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "Diversified mix of exchange-traded funds investing in Canadian, U.S. and international fixed-income and equity securities",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2019-02-20",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/942f7d51-4081-4cef-b708-c6ad230e364f/Factsheet-FranklinGrowthETFPortfolio-SeriesO-CAD-27815-O-FF-CA-en-CA.PDF",
+      "https://www.franklintempleton.ca/download/en-ca/flyer/fe4193b5-d943-4403-8f2b-8dac6fbba9fc/Snapshot-FranklinMulti-AssetETFPortfolios-27813-27814-27815-40883-CA-en-ca.pdf"
+    ],
+    "source_as_of": "2026-08-31",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin",
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "GRO is an actively managed multi-asset ETF portfolio with a custom blended benchmark, not a single underlying index; the benchmark is not promoted as an index constituent methodology."
+    ]
+  },
+  {
+    "ticker": "FID",
+    "name": "Franklin FTSE India Index ETF",
+    "isin": null,
+    "underlying_index": "FTSE India RIC Capped Index",
+    "index_provider": "FTSE Russell",
+    "index_type": "float-adjusted-cap-weighted",
+    "universe": "Indian mid- and large-capitalization stocks",
+    "weighting": "Free float-adjusted market-capitalization weighted with FTSE RIC capping; no single constituent exceeds the published capped-index limits",
+    "reconstitution_frequency": "Quarterly",
+    "inception_date": "2025-08-14",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/46943/SINGLCLASS/franklin-ftse-india-index-etf/FID",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/501f49a2-d74c-48df-892e-c81094323919/Factsheet-FranklinFTSEIndiaIndexETF-46943-ENFF-CA-en-CA.PDF",
+      "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf"
+    ],
+    "source_as_of": "2026-07-31",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "inferred",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "stated",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin"
+    ],
+    "coverage_quality": "complete",
+    "notes": [
+      "The Canadian fund seeks to replicate the U.S.-listed Franklin FTSE India ETF and its FTSE India RIC Capped Index; the RIC cap is a weighting constraint, not a tax classification."
+    ]
+  },
+  {
+    "ticker": "IE0006K7DEL9",
+    "name": "Franklin Sustainable Euro Green Corp 1-5 Year UCITS ETF",
+    "isin": "IE0006K7DEL9",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "European corporate green bonds, primarily denominated in European currencies, with short-to-mid duration below five years",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2023-10-31",
+    "source_urls": [
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/38417/ETA/franklin-sustainable-euro-green-corp-1-5-year-ucits-etf/IE0006K7DEL9",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/26932d71-10ca-4399-a7d9-087eda302c01/Factsheet-FranklinSustainableEuroGreenCorp1-5YearUCITSETF-(Acc)-38417-ETA-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/download/en-lu/key-information-document/501a082f-fc17-4b70-aceb-af7129ce91b2/PRIIPSEU_IE0006K7DEL9_en_LU.pdf"
+    ],
+    "source_as_of": "2026-08-31",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The Franklin factsheet and KID identify Bloomberg Euro Corporate Green Bond 1-5 Year Index as a performance comparator only and state that the fund is actively managed; no underlying index is promoted."
+    ]
+  },
+  {
+    "ticker": "IE000P0R7WK6",
+    "name": "Franklin Sustainable Euro Green Sovereign UCITS ETF",
+    "isin": "IE000P0R7WK6",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "Euro-denominated or EUR-hedged green bonds from developed-market governmental issuers, sub-sovereigns, supranationals and government agencies",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": null,
+    "source_urls": [
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/38418/ETA/franklin-sustainable-euro-green-sovereign-ucits-etf/IE000P0R7WK6",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/b0fb3979-3622-4029-89ac-215f7f4f0034/Factsheet-FranklinSustainableEuroGreenSovereignUCITSETF-(Acc)-38418-ETA-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/download/en-lu/kid/70bc25d7-75a4-4a6c-8633-3c212889c86e/PRIIPSEU_IE000P0R7WK6_en_LU.pdf"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "absent",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "inception_date",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The Franklin KID identifies Bloomberg Global Government EUR Green Bond Index as a benchmark used for performance comparison only and states that the fund is actively managed; no underlying index is promoted."
+    ]
+  },
+  {
+    "ticker": "IE000STIHQB2",
+    "name": "Franklin Euro Short Maturity UCITS ETF",
+    "isin": "IE000STIHQB2",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "Euro-denominated short-term investment-grade corporate and government bonds",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2018-06-25",
+    "source_urls": [
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27049/ETA/franklin-euro-short-maturity-ucits-etf/IE000STIHQB2",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/878f2f03-9538-4b1d-8f90-0d2577d873cd/Factsheet-FranklinEuroShortMaturityUCITSETF-(Acc)-27049-ETA-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/download/en-lu/kid/3161e79c-e2b9-48b9-bf8c-5ebb9c1d8f38/PRIIPSEU_IE00BFWXDY69_en_LU.pdf"
+    ],
+    "source_as_of": "2026-08-31",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The factsheet and KID identify ICE BofA 0-1 Year Euro Broad Market Index as a comparator only and state that the fund is actively managed; no underlying index is promoted."
+    ]
+  },
+  {
+    "ticker": "IE000CZU3JH0",
+    "name": "Franklin Core US Enhanced Equity UCITS ETF",
+    "isin": "IE000CZU3JH0",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "U.S. equity securities, predominantly common stocks of U.S.-domiciled or U.S.-focused companies, with ESG screens and an enhanced active process",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": null,
+    "source_urls": [
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/48640/SINGLCLASS/franklin-core-us-enhanced-equity-ucits-etf/IE000CZU3JH0",
+      "https://www.franklintempleton.lu/download/en-lu/key-information-document/d82f2ef8-8fcc-4214-a364-88fe7de91ab2/PRIIPSEU_IE000CZU3JH0_en_LU.pdf",
+      "https://www.franklintempleton.lu/download/en-lu/prospectus/a4dc5279-8176-417b-bcc9-ba26962314b1/FTIF-prospectus-en.pdf"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "absent",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "inception_date",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The prospectus identifies S&P 500 as a comparison benchmark for an actively managed fund; it is not treated as an underlying index."
+    ]
+  },
+  {
+    "ticker": "IE000XJA2OU4",
+    "name": "Franklin ClearBridge US Smaller Companies UCITS ETF",
+    "isin": "IE000XJA2OU4",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "U.S. smaller-company equities selected through ClearBridge's active investment process",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": null,
+    "source_urls": [
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/48638/SINGLCLASS/franklin-clearbridge-us-smaller-companies-ucits-etf/IE000XJA2OU4",
+      "https://www.franklintempleton.lu/our-funds/etf",
+      "https://www.franklintempleton.lu/download/en-lu/prospectus/a4dc5279-8176-417b-bcc9-ba26962314b1/FTIF-prospectus-en.pdf"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "absent",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "inception_date",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "Franklin's European ETF list places this fund in the active ETF range; no underlying index was exposed by the reviewed official product evidence."
+    ]
+  },
+  {
+    "ticker": "FRIN",
+    "name": "Franklin FTSE India UCITS ETF",
+    "isin": "IE00BHZRQZ17",
+    "underlying_index": "FTSE India 30/18 Capped Index",
+    "index_provider": "FTSE Russell",
+    "index_type": "float-adjusted-cap-weighted",
+    "universe": "Indian large- and mid-capitalization stocks",
+    "weighting": "Free float-adjusted market-capitalization weighted; the largest constituent is capped at 30% and all other constituents at 18%",
+    "reconstitution_frequency": "Quarterly",
+    "inception_date": "2019-06-25",
+    "source_urls": [
+      "https://www.franklintempleton.lu/our-funds/etf/passive-etfs",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27853/SINGLCLASS/franklin-ftse-india-ucits-etf/IE00BHZRQZ17",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/b9bc8ae7-6430-4d3f-ae28-2749d7ed39af/Factsheet-FranklinFTSEIndiaUCITSETF-27853-FF-LU-en-GB.PDF",
+      "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf"
+    ],
+    "source_as_of": "2026-06-30",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "stated",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [],
+    "coverage_quality": "complete",
+    "notes": [
+      "The factsheet identifies the FTSE India 30/18 Capped Index (Net Return) benchmark; Net Returns include income net of tax withholding when dividends are paid. No withholding rate is inferred."
+    ]
+  },
+  {
+    "ticker": "FLRK",
+    "name": "Franklin FTSE Korea UCITS ETF",
+    "isin": "IE00BHZRR030",
+    "underlying_index": "FTSE Korea 30/18 Capped Index",
+    "index_provider": "FTSE Russell",
+    "index_type": "float-adjusted-cap-weighted",
+    "universe": "South Korean large- and mid-capitalization stocks",
+    "weighting": "Free float-adjusted market-capitalization weighted; the largest constituent is capped at 30% and all other constituents at 18%",
+    "reconstitution_frequency": "Quarterly",
+    "inception_date": "2019-06-04",
+    "source_urls": [
+      "https://www.franklintempleton.lu/our-funds/etf/passive-etfs",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27854/SINGLCLASS/franklin-ftse-korea-ucits-etf/IE00BHZRR030",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/0d7f33d5-7e52-45a4-80a7-ed60326c5a57/Factsheet-FranklinFTSEKoreaUCITSETF-27854-FF-LU-en-GB.PDF",
+      "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf"
+    ],
+    "source_as_of": "2026-04-30",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "stated",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [],
+    "coverage_quality": "complete",
+    "notes": [
+      "The factsheet identifies the FTSE Korea 30/18 Capped Index-NR benchmark; the NR return variant includes income net of tax withholding when dividends are paid. No withholding rate is inferred."
+    ]
+  },
+  {
+    "ticker": "FLXT",
+    "name": "Franklin FTSE Taiwan UCITS ETF",
+    "isin": "IE000CM02H85",
+    "underlying_index": "FTSE Taiwan 30/18 Capped Index",
+    "index_provider": "FTSE Russell",
+    "index_type": "float-adjusted-cap-weighted",
+    "universe": "Taiwanese large- and mid-capitalization stocks",
+    "weighting": "Free float-adjusted market-capitalization weighted; the largest constituent is capped at 30% and all other constituents at 18%",
+    "reconstitution_frequency": "Quarterly",
+    "inception_date": "2022-03-21",
+    "source_urls": [
+      "https://www.franklintempleton.lu/our-funds/etf/passive-etfs",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/32637/SINGLCLASS/franklin-ftse-taiwan-ucits-etf/IE000CM02H85",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/eb9830d5-371c-424d-94a8-88064a474b55/Factsheet-FranklinFTSETaiwanUCITSETF-32637-FF-LU-en-GB.PDF",
+      "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf"
+    ],
+    "source_as_of": "2026-06-30",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "stated",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [],
+    "coverage_quality": "complete",
+    "notes": [
+      "The factsheet identifies the FTSE Taiwan 30/18 Capped Net Tax Index benchmark; this is a net-tax return variant. No withholding rate is inferred."
+    ]
+  },
+  {
+    "ticker": "FLXS",
+    "name": "Franklin FTSE Saudi Arabia UCITS ETF",
+    "isin": "IE000C7DDDX4",
+    "underlying_index": "FTSE Saudi Arabia 30/18 Capped Index",
+    "index_provider": "FTSE Russell",
+    "index_type": "float-adjusted-cap-weighted",
+    "universe": "Saudi Arabian large- and mid-capitalization stocks",
+    "weighting": "Free float-adjusted market-capitalization weighted; the largest constituent is capped at 30% and all other constituents at 18%",
+    "reconstitution_frequency": "Quarterly",
+    "inception_date": "2024-10-28",
+    "source_urls": [
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/41675/SINGLCLASS/franklin-ftse-saudi-arabia-ucits-etf/IE000C7DDDX4",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/c908a68a-c27c-40b7-bc54-0231dba03f9c/Factsheet-FranklinFTSESaudiArabiaUCITSETF-41675-FF-LU-en-GB.PDF",
+      "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf"
+    ],
+    "source_as_of": "2026-07-31",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "stated",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [],
+    "coverage_quality": "complete",
+    "notes": [
+      "The factsheet identifies the FTSE Saudi Arabia 30/18 Capped Index-NR benchmark; the NR return variant includes income net of tax withholding when dividends are paid. No withholding rate is inferred."
+    ]
+  },
+  {
+    "ticker": "FVUB",
+    "name": "Franklin FTSE Brazil UCITS ETF",
+    "isin": "IE00BHZRQY00",
+    "underlying_index": "FTSE Brazil 30/18 Capped Index",
+    "index_provider": "FTSE Russell",
+    "index_type": "float-adjusted-cap-weighted",
+    "universe": "Brazilian large- and mid-capitalization stocks",
+    "weighting": "Free float-adjusted market-capitalization weighted; the largest constituent is capped at 30% and all other constituents at 18%",
+    "reconstitution_frequency": "Quarterly",
+    "inception_date": "2019-06-04",
+    "source_urls": [
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/27851/SINGLCLASS/franklin-ftse-brazil-ucits-etf/IE00BHZRQY00",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/c7ca75d5-b753-4d4f-932c-40093e2e8eba/Factsheet-FranklinFTSEBrazilUCITSETF-27851-FF-GB-en-GB.PDF",
+      "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "stated",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "source_as_of"
+    ],
+    "coverage_quality": "complete",
+    "notes": [
+      "The reviewed Franklin factsheet uses the FTSE Brazil 30/18 Capped Index-NR benchmark; the NR return variant includes income net of tax withholding when dividends are paid. No withholding rate is inferred."
+    ]
+  },
+  {
+    "ticker": "FRCH",
+    "name": "Franklin FTSE China UCITS ETF",
+    "isin": "IE00BHZRR147",
+    "underlying_index": "FTSE China 30/18 Capped Index",
+    "index_provider": "FTSE Russell",
+    "index_type": "float-adjusted-cap-weighted",
+    "universe": "Chinese large- and mid-capitalization stocks, including eligible A-, B-, H-, P-, red-, S- and N-shares",
+    "weighting": "Free float-adjusted market-capitalization weighted; the largest constituent is capped at 30% and all other constituents at 18%",
+    "reconstitution_frequency": "Quarterly",
+    "inception_date": "2019-06-04",
+    "source_urls": [
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27852/SINGLCLASS/franklin-ftse-china-ucits-etf/IE00BHZRR147",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/ab21f2c0-da81-4b7f-a7e9-b70b80e23e8a/Factsheet-FranklinFTSEChinaUCITSETF-27852-FF-LU-en-GB.PDF",
+      "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf"
+    ],
+    "source_as_of": "2026-03-31",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "stated",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [],
+    "coverage_quality": "complete",
+    "notes": [
+      "The factsheet identifies the FTSE China 30/18 Capped Index-NR benchmark; the NR return variant includes income net of tax withholding when dividends are paid. No withholding rate is inferred."
+    ]
+  },
+  {
+    "ticker": "IE000GTF7GF4",
+    "name": "Franklin FTSE Emerging Markets UCITS ETF",
+    "isin": "IE000GTF7GF4",
+    "underlying_index": "FTSE Emerging Index",
+    "index_provider": "FTSE Russell",
+    "index_type": "float-adjusted-cap-weighted",
+    "universe": "Large- and mid-capitalization stocks in emerging-market countries globally",
+    "weighting": "Free float-adjusted market-capitalization weighted",
+    "reconstitution_frequency": "Quarterly",
+    "inception_date": "2024-10-22",
+    "source_urls": [
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/40163/ETD/franklin-ftse-emerging-markets-ucits-etf/IE000GTF7GF4",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/7b35dbc1-9970-417d-9181-549b9c4e2661/Factsheet-FranklinFTSEEmergingMarketsUCITSETF-(Dis)-40163-ETD-02-FF-LU-en-GB.PDF",
+      "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf"
+    ],
+    "source_as_of": "2026-06-30",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "stated",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [],
+    "coverage_quality": "complete",
+    "notes": [
+      "The factsheet identifies the FTSE Emerging Index-NR benchmark; Net Returns include income net of tax withholding when dividends are paid. No withholding rate is inferred."
+    ]
+  },
+  {
+    "ticker": "IE0006D3PGW3",
+    "name": "Franklin FTSE Emerging ex China UCITS ETF",
+    "isin": "IE0006D3PGW3",
+    "underlying_index": "FTSE Emerging ex China Index",
+    "index_provider": "FTSE Russell",
+    "index_type": "float-adjusted-cap-weighted",
+    "universe": "Large- and mid-capitalization stocks in emerging-market countries globally, excluding China",
+    "weighting": "Free float-adjusted market-capitalization weighted",
+    "reconstitution_frequency": "Quarterly",
+    "inception_date": "2024-10-22",
+    "source_urls": [
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/40164/SINGLCLASS/franklin-ftse-emerging-ex-china-ucits-etf/IE0006D3PGW3",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/28c71c13-69a2-4dfe-97ba-e0f07434688e/Factsheet-FranklinFTSEEmergingexChinaUCITSETF-40164-FF-GB-en-GB.PDF",
+      "https://www.lseg.com/en/insights/ftse-russell/whats-behind-growing-investor-demand-for-emerging-markets-ex-china",
+      "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf"
+    ],
+    "source_as_of": "2026-03-31",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "stated",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [],
+    "coverage_quality": "complete",
+    "notes": [
+      "The factsheet identifies the FTSE Emerging ex China Index-NR benchmark; Net Returns include income net of tax withholding when dividends are paid. No withholding rate is inferred."
+    ]
   }
   ],
   "acquisition": {
@@ -2212,7 +2812,45 @@
       "https://www.franklintempleton.ca/download/en-ca/factsheet/bedb66d5-67e0-413d-8b20-d7421a6d927f/Factsheet-FranklinUSLowVolatilityHighDividendIndexETF-40065-FF-CA-en-CA.PDF",
       "https://www.solactive.com/index/DE000SLA1GV4",
       "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/42055/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FMID",
-      "https://www.franklintempleton.ca/download/en-ca/factsheet/5dadc813-508e-4671-90fd-d350f82e89f3/Factsheet-FranklinUSMidCapMultifactorIndexETF-42055-ENFF-CA-en-CA.PDF"
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/5dadc813-508e-4671-90fd-d350f82e89f3/Factsheet-FranklinUSMidCapMultifactorIndexETF-42055-ENFF-CA-en-CA.PDF",
+      "https://www.franklintempleton.ca/en-ca/products/etf",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/942f7d51-4081-4cef-b708-c6ad230e364f/Factsheet-FranklinGrowthETFPortfolio-SeriesO-CAD-27815-O-FF-CA-en-CA.PDF",
+      "https://www.franklintempleton.ca/download/en-ca/flyer/fe4193b5-d943-4403-8f2b-8dac6fbba9fc/Snapshot-FranklinMulti-AssetETFPortfolios-27813-27814-27815-40883-CA-en-ca.pdf",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/46943/SINGLCLASS/franklin-ftse-india-index-etf/FID",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/501f49a2-d74c-48df-892e-c81094323919/Factsheet-FranklinFTSEIndiaIndexETF-46943-ENFF-CA-en-CA.PDF",
+      "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/38417/ETA/franklin-sustainable-euro-green-corp-1-5-year-ucits-etf/IE0006K7DEL9",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/26932d71-10ca-4399-a7d9-087eda302c01/Factsheet-FranklinSustainableEuroGreenCorp1-5YearUCITSETF-(Acc)-38417-ETA-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/download/en-lu/key-information-document/501a082f-fc17-4b70-aceb-af7129ce91b2/PRIIPSEU_IE0006K7DEL9_en_LU.pdf",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/38418/ETA/franklin-sustainable-euro-green-sovereign-ucits-etf/IE000P0R7WK6",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/b0fb3979-3622-4029-89ac-215f7f4f0034/Factsheet-FranklinSustainableEuroGreenSovereignUCITSETF-(Acc)-38418-ETA-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/download/en-lu/kid/70bc25d7-75a4-4a6c-8633-3c212889c86e/PRIIPSEU_IE000P0R7WK6_en_LU.pdf",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27049/ETA/franklin-euro-short-maturity-ucits-etf/IE000STIHQB2",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/878f2f03-9538-4b1d-8f90-0d2577d873cd/Factsheet-FranklinEuroShortMaturityUCITSETF-(Acc)-27049-ETA-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/download/en-lu/kid/3161e79c-e2b9-48b9-bf8c-5ebb9c1d8f38/PRIIPSEU_IE00BFWXDY69_en_LU.pdf",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/48640/SINGLCLASS/franklin-core-us-enhanced-equity-ucits-etf/IE000CZU3JH0",
+      "https://www.franklintempleton.lu/download/en-lu/key-information-document/d82f2ef8-8fcc-4214-a364-88fe7de91ab2/PRIIPSEU_IE000CZU3JH0_en_LU.pdf",
+      "https://www.franklintempleton.lu/download/en-lu/prospectus/a4dc5279-8176-417b-bcc9-ba26962314b1/FTIF-prospectus-en.pdf",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/48638/SINGLCLASS/franklin-clearbridge-us-smaller-companies-ucits-etf/IE000XJA2OU4",
+      "https://www.franklintempleton.lu/our-funds/etf",
+      "https://www.franklintempleton.lu/our-funds/etf/passive-etfs",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27853/SINGLCLASS/franklin-ftse-india-ucits-etf/IE00BHZRQZ17",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/b9bc8ae7-6430-4d3f-ae28-2749d7ed39af/Factsheet-FranklinFTSEIndiaUCITSETF-27853-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27854/SINGLCLASS/franklin-ftse-korea-ucits-etf/IE00BHZRR030",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/0d7f33d5-7e52-45a4-80a7-ed60326c5a57/Factsheet-FranklinFTSEKoreaUCITSETF-27854-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/32637/SINGLCLASS/franklin-ftse-taiwan-ucits-etf/IE000CM02H85",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/eb9830d5-371c-424d-94a8-88064a474b55/Factsheet-FranklinFTSETaiwanUCITSETF-32637-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/41675/SINGLCLASS/franklin-ftse-saudi-arabia-ucits-etf/IE000C7DDDX4",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/c908a68a-c27c-40b7-bc54-0231dba03f9c/Factsheet-FranklinFTSESaudiArabiaUCITSETF-41675-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/27851/SINGLCLASS/franklin-ftse-brazil-ucits-etf/IE00BHZRQY00",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/c7ca75d5-b753-4d4f-932c-40093e2e8eba/Factsheet-FranklinFTSEBrazilUCITSETF-27851-FF-GB-en-GB.PDF",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27852/SINGLCLASS/franklin-ftse-china-ucits-etf/IE00BHZRR147",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/ab21f2c0-da81-4b7f-a7e9-b70b80e23e8a/Factsheet-FranklinFTSEChinaUCITSETF-27852-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/40163/ETD/franklin-ftse-emerging-markets-ucits-etf/IE000GTF7GF4",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/7b35dbc1-9970-417d-9181-549b9c4e2661/Factsheet-FranklinFTSEEmergingMarketsUCITSETF-(Dis)-40163-ETD-02-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/40164/SINGLCLASS/franklin-ftse-emerging-ex-china-ucits-etf/IE0006D3PGW3",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/28c71c13-69a2-4dfe-97ba-e0f07434688e/Factsheet-FranklinFTSEEmergingexChinaUCITSETF-40164-FF-GB-en-GB.PDF",
+      "https://www.lseg.com/en/insights/ftse-russell/whats-behind-growing-investor-demand-for-emerging-markets-ex-china"
     ],
     "successful_sources": [
       "https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP",
@@ -2329,7 +2967,45 @@
       "https://www.franklintempleton.ca/download/en-ca/factsheet/bedb66d5-67e0-413d-8b20-d7421a6d927f/Factsheet-FranklinUSLowVolatilityHighDividendIndexETF-40065-FF-CA-en-CA.PDF",
       "https://www.solactive.com/index/DE000SLA1GV4",
       "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/42055/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FMID",
-      "https://www.franklintempleton.ca/download/en-ca/factsheet/5dadc813-508e-4671-90fd-d350f82e89f3/Factsheet-FranklinUSMidCapMultifactorIndexETF-42055-ENFF-CA-en-CA.PDF"
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/5dadc813-508e-4671-90fd-d350f82e89f3/Factsheet-FranklinUSMidCapMultifactorIndexETF-42055-ENFF-CA-en-CA.PDF",
+      "https://www.franklintempleton.ca/en-ca/products/etf",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/942f7d51-4081-4cef-b708-c6ad230e364f/Factsheet-FranklinGrowthETFPortfolio-SeriesO-CAD-27815-O-FF-CA-en-CA.PDF",
+      "https://www.franklintempleton.ca/download/en-ca/flyer/fe4193b5-d943-4403-8f2b-8dac6fbba9fc/Snapshot-FranklinMulti-AssetETFPortfolios-27813-27814-27815-40883-CA-en-ca.pdf",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/46943/SINGLCLASS/franklin-ftse-india-index-etf/FID",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/501f49a2-d74c-48df-892e-c81094323919/Factsheet-FranklinFTSEIndiaIndexETF-46943-ENFF-CA-en-CA.PDF",
+      "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/38417/ETA/franklin-sustainable-euro-green-corp-1-5-year-ucits-etf/IE0006K7DEL9",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/26932d71-10ca-4399-a7d9-087eda302c01/Factsheet-FranklinSustainableEuroGreenCorp1-5YearUCITSETF-(Acc)-38417-ETA-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/download/en-lu/key-information-document/501a082f-fc17-4b70-aceb-af7129ce91b2/PRIIPSEU_IE0006K7DEL9_en_LU.pdf",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/38418/ETA/franklin-sustainable-euro-green-sovereign-ucits-etf/IE000P0R7WK6",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/b0fb3979-3622-4029-89ac-215f7f4f0034/Factsheet-FranklinSustainableEuroGreenSovereignUCITSETF-(Acc)-38418-ETA-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/download/en-lu/kid/70bc25d7-75a4-4a6c-8633-3c212889c86e/PRIIPSEU_IE000P0R7WK6_en_LU.pdf",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27049/ETA/franklin-euro-short-maturity-ucits-etf/IE000STIHQB2",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/878f2f03-9538-4b1d-8f90-0d2577d873cd/Factsheet-FranklinEuroShortMaturityUCITSETF-(Acc)-27049-ETA-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/download/en-lu/kid/3161e79c-e2b9-48b9-bf8c-5ebb9c1d8f38/PRIIPSEU_IE00BFWXDY69_en_LU.pdf",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/48640/SINGLCLASS/franklin-core-us-enhanced-equity-ucits-etf/IE000CZU3JH0",
+      "https://www.franklintempleton.lu/download/en-lu/key-information-document/d82f2ef8-8fcc-4214-a364-88fe7de91ab2/PRIIPSEU_IE000CZU3JH0_en_LU.pdf",
+      "https://www.franklintempleton.lu/download/en-lu/prospectus/a4dc5279-8176-417b-bcc9-ba26962314b1/FTIF-prospectus-en.pdf",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/48638/SINGLCLASS/franklin-clearbridge-us-smaller-companies-ucits-etf/IE000XJA2OU4",
+      "https://www.franklintempleton.lu/our-funds/etf",
+      "https://www.franklintempleton.lu/our-funds/etf/passive-etfs",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27853/SINGLCLASS/franklin-ftse-india-ucits-etf/IE00BHZRQZ17",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/b9bc8ae7-6430-4d3f-ae28-2749d7ed39af/Factsheet-FranklinFTSEIndiaUCITSETF-27853-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27854/SINGLCLASS/franklin-ftse-korea-ucits-etf/IE00BHZRR030",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/0d7f33d5-7e52-45a4-80a7-ed60326c5a57/Factsheet-FranklinFTSEKoreaUCITSETF-27854-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/32637/SINGLCLASS/franklin-ftse-taiwan-ucits-etf/IE000CM02H85",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/eb9830d5-371c-424d-94a8-88064a474b55/Factsheet-FranklinFTSETaiwanUCITSETF-32637-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/41675/SINGLCLASS/franklin-ftse-saudi-arabia-ucits-etf/IE000C7DDDX4",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/c908a68a-c27c-40b7-bc54-0231dba03f9c/Factsheet-FranklinFTSESaudiArabiaUCITSETF-41675-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/27851/SINGLCLASS/franklin-ftse-brazil-ucits-etf/IE00BHZRQY00",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/c7ca75d5-b753-4d4f-932c-40093e2e8eba/Factsheet-FranklinFTSEBrazilUCITSETF-27851-FF-GB-en-GB.PDF",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27852/SINGLCLASS/franklin-ftse-china-ucits-etf/IE00BHZRR147",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/ab21f2c0-da81-4b7f-a7e9-b70b80e23e8a/Factsheet-FranklinFTSEChinaUCITSETF-27852-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/40163/ETD/franklin-ftse-emerging-markets-ucits-etf/IE000GTF7GF4",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/7b35dbc1-9970-417d-9181-549b9c4e2661/Factsheet-FranklinFTSEEmergingMarketsUCITSETF-(Dis)-40163-ETD-02-FF-LU-en-GB.PDF",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/40164/SINGLCLASS/franklin-ftse-emerging-ex-china-ucits-etf/IE0006D3PGW3",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/28c71c13-69a2-4dfe-97ba-e0f07434688e/Factsheet-FranklinFTSEEmergingexChinaUCITSETF-40164-FF-GB-en-GB.PDF",
+      "https://www.lseg.com/en/insights/ftse-russell/whats-behind-growing-investor-demand-for-emerging-markets-ex-china"
     ],
     "failed_sources": [],
     "excluded_sources": [
@@ -2338,7 +3014,7 @@
         "reason": "Explicitly out of P1b scope."
       }
     ],
-    "record_count": 52,
-    "count_note": "Fifty-two reviewed Franklin ETF records are shipped as a dated, source-backed table; this slice appends fifteen Canada-domiciled ETF records, including active portfolios and the Solactive-tracking Canada ETFs. Existing records remain unchanged."
+    "record_count": 67,
+    "count_note": "Sixty-seven reviewed Franklin ETF records are shipped as a dated, source-backed table; this slice appends fifteen Canada/Europe records, including active fixed-income/equity products and FTSE Russell index-tracking ETFs. Existing records remain unchanged."
   }
 }
