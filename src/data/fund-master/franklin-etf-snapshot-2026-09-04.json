@@ -3905,6 +3905,639 @@
     "notes": [
       "US-domiciled alternatives ETF backed by physical gold. This is not an equity index; thematic-custom records the benchmark-linked commodity exposure without pretending that gold has equity constituent weighting."
     ]
+  },
+  {
+    "ticker": "FFOG",
+    "name": "Franklin Focused Dynamic Growth ETF",
+    "isin": "US35473P4211",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "Predominantly equity securities of companies that the investment manager believes offer compelling growth opportunities, selected using growth, management and strategic-positioning factors",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2016-04-13",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/36370/SINGLCLASS/franklin-focused-dynamic-growth-etf/FFOG",
+      "https://www.franklintempleton.com/forms-literature/download/36370-FF"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The official factsheet labels FFOG Active and identifies Russell 1000 Growth as a benchmark, not an underlying index; the fund is actively managed."
+    ]
+  },
+  {
+    "ticker": "FSML",
+    "name": "Franklin Small Cap Enhanced ETF",
+    "isin": "US35473P3221",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "Small-capitalization equity securities within the Russell 2000 Index universe, selected through a proprietary multi-factor process with specialist-manager conviction inputs",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2025-12-09",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/50069/SINGLCLASS/franklin-small-cap-enhanced-etf/FSML",
+      "https://www.franklintempleton.com/forms-literature/download/50069-FF",
+      "https://www.franklintempleton.com/press-releases/news-room/2025/franklin-templeton-launches-the-franklin-small-cap-enhanced-etf-fsml"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The official factsheet and launch release label FSML actively managed; Russell 2000 is the investible universe/benchmark context, not an underlying index tracked by the fund."
+    ]
+  },
+  {
+    "ticker": "IQM",
+    "name": "Franklin Intelligent Machines ETF",
+    "isin": "US35473P5127",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "Equity securities inside and outside the United States, including developing and emerging markets, of companies relevant to the intelligent-machines theme",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2020-02-25",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29098/SINGLCLASS/franklin-intelligent-machines-etf/IQM",
+      "https://www.franklintempleton.com/forms-literature/download/IQM-FF"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The official product page and factsheet label IQM Active; Russell 3000 is a benchmark, not an underlying index."
+    ]
+  },
+  {
+    "ticker": "FRIZ",
+    "name": "Franklin Dividend Growth ETF",
+    "isin": "US35473P3635",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "Primarily U.S.-based financially sound companies that the manager believes can generate consistent dividend increases",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2025-08-28",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47537/SINGLCLASS/franklin-dividend-growth-etf/FRIZ",
+      "https://www.franklintempleton.com/forms-literature/download/FRIZ-FF",
+      "https://www.franklintempleton.com/press-releases/news-room/2025/franklin-templeton-launches-franklin-dividend-growth-etf-friz"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The official factsheet labels FRIZ Active and identifies NASDAQ US Broad Dividend Achievers Index as a benchmark, not an underlying index."
+    ]
+  },
+  {
+    "ticker": "INCM",
+    "name": "Franklin Income Focus ETF",
+    "isin": "US35473P4393",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "Diversified portfolio of debt and equity securities managed through multi-asset income allocation, tactical positioning, fundamental research and risk management",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2023-06-06",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/36262/SINGLCLASS/franklin-income-focus-etf/INCM",
+      "https://www.franklintempleton.com/forms-literature/download/36262-FF"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The official factsheet labels INCM Active and shows a blended benchmark; that benchmark is not an underlying index, so the resolver uses the active fallback."
+    ]
+  },
+  {
+    "ticker": "PGRI",
+    "name": "Putnam International Stock ETF",
+    "isin": "US35473P3304",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "Non-U.S. large- and midsize-capitalization companies across developed and emerging markets with structural competitive advantages and attractive end markets",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2025-10-21",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47497/SINGLCLASS/putnam-international-stock-etf/PGRI",
+      "https://www.franklintempleton.com/forms-literature/download/47497-FF"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The official factsheet labels PGRI Active and identifies MSCI All Country World ex-US Growth Index-NR as a benchmark, not an underlying index."
+    ]
+  },
+  {
+    "ticker": "FTSD",
+    "name": "Franklin Short Duration U.S. Government ETF",
+    "isin": "US3535061085",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "fixed-income",
+    "universe": "U.S. government, agency and instrumentalities debt securities, with an estimated average portfolio duration of three years or less",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2013-11-04",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/18000/SINGLCLASS/franklin-short-duration-u-s-government-etf/FTSD",
+      "https://www.franklintempleton.com/forms-literature/download/FTSD-FF"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The official factsheet labels FTSD Active and Fixed Income. Bloomberg US Government (1-3 Year) Index is a performance benchmark, not an underlying index; this record is fixed-income rather than equity-index resolved."
+    ]
+  },
+  {
+    "ticker": "FLIA",
+    "name": "Franklin International Aggregate Bond ETF",
+    "isin": "US35473P6117",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "fixed-income",
+    "universe": "Global investment-grade debt, including treasury, government-related, corporate and securitized fixed-rate bonds issued outside the United States; foreign-currency exposure is substantially hedged to USD",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2018-05-30",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26727/SINGLCLASS/franklin-international-aggregate-bond-etf/FLIA",
+      "https://www.franklintempleton.com/forms-literature/download/FLIA-FF"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The official factsheet labels FLIA Active and Fixed Income. Linked Bloomberg Global Aggregate ex-USD Index Hedged USD and Bloomberg Global Aggregate ex-USD Index are performance benchmarks, not underlying indexes."
+    ]
+  },
+  {
+    "ticker": "FTMH",
+    "name": "Franklin Municipal High Yield ETF",
+    "isin": "US7467297898",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "fixed-income",
+    "universe": "Higher-yielding, lower-rated municipal bonds from many states and market sectors",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "1985-09-09",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48365/SINGLCLASS/franklin-municipal-high-yield-etf/FTMH",
+      "https://www.franklintempleton.com/forms-literature/download/48365-FF"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The official factsheet labels FTMH Active and Fixed Income. Bloomberg Municipal Bond Index is a benchmark; no underlying index is used."
+    ]
+  },
+  {
+    "ticker": "FTMS",
+    "name": "Franklin Short-Term Municipal Income ETF",
+    "isin": "US7467297302",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "fixed-income",
+    "universe": "Primarily investment-grade municipal bonds with maturities of three years or less from many states and market sectors",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2013-03-18",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48362/SINGLCLASS/franklin-short-term-municipal-income-etf/FTMS",
+      "https://www.franklintempleton.com/forms-literature/download/48362-FF"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The official factsheet labels FTMS Active and Fixed Income. Bloomberg Municipal Bond Index is a performance benchmark, not an underlying index; the 2013 inception date reflects the predecessor strategy adopted at the 2025 reorganization."
+    ]
+  },
+  {
+    "ticker": "FTCA",
+    "name": "Franklin California Municipal Income ETF",
+    "isin": "US7467298391",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "fixed-income",
+    "universe": "Investment-grade California municipal bonds with intermediate- to long-term maturities",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "1983-04-29",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48306/SINGLCLASS/franklin-california-municipal-income-etf/FTCA",
+      "https://www.franklintempleton.com/forms-literature/download/48306-FF"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The official factsheet labels FTCA Active and Fixed Income. Bloomberg Municipal Bond Index is a benchmark, not an underlying index; the 1983 inception date reflects the predecessor strategy adopted at the 2025 reorganization."
+    ]
+  },
+  {
+    "ticker": "EZPZ",
+    "name": "Franklin Crypto Index ETF",
+    "isin": "US35349C1099",
+    "underlying_index": "CF Institutional Digital Asset Index - US - Settlement Price",
+    "index_provider": "CF Benchmarks",
+    "index_type": "thematic-custom",
+    "universe": "Liquid digital assets eligible under the CF Institutional Digital Asset Index rules",
+    "weighting": "Free float-adjusted market capitalization weighted; the fund invests in digital assets in approximately the same weights as the underlying index",
+    "reconstitution_frequency": null,
+    "inception_date": "2025-02-20",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/41786/SINGLCLASS/franklin-crypto-index-etf/EZPZ",
+      "https://www.franklintempleton.com/forms-literature/download/41786-FF",
+      "https://www.cfbenchmarks.com/data/indices/IDAX"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "inferred",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "This is a digital-asset index ETF rather than an equity fund. The Franklin page and CF Benchmarks methodology describe free-float-adjusted market-capitalization weighting; thematic-custom keeps the crypto exposure out of equity corporate-action rules."
+    ]
+  },
+  {
+    "ticker": "FLBL",
+    "name": "Franklin Senior Loan ETF",
+    "isin": null,
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "fixed-income",
+    "universe": "Income-producing senior floating-rate corporate loans and related senior-loan exposure issued by U.S. and non-U.S. entities",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2018-05-30",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26728/SINGLCLASS/franklin-senior-loan-etf/FLBL",
+      "https://www.franklintempleton.com/forms-literature/download/FLBL-QCPLT",
+      "https://www.franklintempleton.com/forms-literature/download/ETF2-SAI"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "isin",
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The official SAI describes FLBL as an actively managed senior-loan fund. Morningstar LSTA US Leveraged Loan 100 Index and Bloomberg US Aggregate Index are benchmarks, not underlying indexes; FLBL is classified fixed-income."
+    ]
+  },
+  {
+    "ticker": "FLCO",
+    "name": "Franklin Investment Grade Corporate ETF",
+    "isin": "US35473P6034",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "fixed-income",
+    "universe": "Investment-grade, U.S.-dollar-denominated corporate debt securities issued by U.S. and foreign companies, of any maturity or duration",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2016-10-03",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21558/SINGLCLASS/franklin-investment-grade-corporate-etf/FLCO",
+      "https://www.franklintempleton.com/forms-literature/download/FLCO-FF"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The official factsheet labels FLCO Active and Fixed Income. Bloomberg US Corporate - Investment Grade Index is a benchmark, not an underlying index."
+    ]
+  },
+  {
+    "ticker": "TEMD",
+    "name": "Templeton Emerging Markets Debt ETF",
+    "isin": "US35473P3148",
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "fixed-income",
+    "universe": "Emerging-markets debt across U.S.-dollar and local-currency exposures, with active currency-risk management",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2026-01-20",
+    "source_urls": [
+      "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48762/SINGLCLASS/templeton-emerging-markets-debt-etf/TEMD",
+      "https://www.franklintempleton.com/forms-literature/download/48762-FF",
+      "https://www.franklintempleton.com/press-releases/news-room/2026/franklin-templeton-launches-templeton-emerging-markets-debt-etf-temd"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "stated",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency",
+      "source_as_of"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "The official product evidence and launch release describe TEMD as actively managed emerging-markets debt exposure; no underlying index is used, so it is classified fixed-income rather than index-resolved."
+    ]
   }
   ],
   "acquisition":{
@@ -4121,7 +4754,42 @@
     "https://www.franklintempleton.com/forms-literature/download/39434-FFAD",
     "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/31714/SINGLCLASS/franklin-responsibly-sourced-gold-etf/FGDL",
     "https://www.franklintempleton.com/forms-literature/download/31714-FF",
-    "https://www.lbma.org.uk/prices-and-data/lbma-gold-price"
+    "https://www.lbma.org.uk/prices-and-data/lbma-gold-price",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/36370/SINGLCLASS/franklin-focused-dynamic-growth-etf/FFOG",
+    "https://www.franklintempleton.com/forms-literature/download/36370-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/50069/SINGLCLASS/franklin-small-cap-enhanced-etf/FSML",
+    "https://www.franklintempleton.com/forms-literature/download/50069-FF",
+    "https://www.franklintempleton.com/press-releases/news-room/2025/franklin-templeton-launches-the-franklin-small-cap-enhanced-etf-fsml",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29098/SINGLCLASS/franklin-intelligent-machines-etf/IQM",
+    "https://www.franklintempleton.com/forms-literature/download/IQM-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47537/SINGLCLASS/franklin-dividend-growth-etf/FRIZ",
+    "https://www.franklintempleton.com/forms-literature/download/FRIZ-FF",
+    "https://www.franklintempleton.com/press-releases/news-room/2025/franklin-templeton-launches-franklin-dividend-growth-etf-friz",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/36262/SINGLCLASS/franklin-income-focus-etf/INCM",
+    "https://www.franklintempleton.com/forms-literature/download/36262-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47497/SINGLCLASS/putnam-international-stock-etf/PGRI",
+    "https://www.franklintempleton.com/forms-literature/download/47497-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/18000/SINGLCLASS/franklin-short-duration-u-s-government-etf/FTSD",
+    "https://www.franklintempleton.com/forms-literature/download/FTSD-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26727/SINGLCLASS/franklin-international-aggregate-bond-etf/FLIA",
+    "https://www.franklintempleton.com/forms-literature/download/FLIA-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48365/SINGLCLASS/franklin-municipal-high-yield-etf/FTMH",
+    "https://www.franklintempleton.com/forms-literature/download/48365-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48362/SINGLCLASS/franklin-short-term-municipal-income-etf/FTMS",
+    "https://www.franklintempleton.com/forms-literature/download/48362-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48306/SINGLCLASS/franklin-california-municipal-income-etf/FTCA",
+    "https://www.franklintempleton.com/forms-literature/download/48306-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/41786/SINGLCLASS/franklin-crypto-index-etf/EZPZ",
+    "https://www.franklintempleton.com/forms-literature/download/41786-FF",
+    "https://www.cfbenchmarks.com/data/indices/IDAX",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26728/SINGLCLASS/franklin-senior-loan-etf/FLBL",
+    "https://www.franklintempleton.com/forms-literature/download/FLBL-QCPLT",
+    "https://www.franklintempleton.com/forms-literature/download/ETF2-SAI",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21558/SINGLCLASS/franklin-investment-grade-corporate-etf/FLCO",
+    "https://www.franklintempleton.com/forms-literature/download/FLCO-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48762/SINGLCLASS/templeton-emerging-markets-debt-etf/TEMD",
+    "https://www.franklintempleton.com/forms-literature/download/48762-FF",
+    "https://www.franklintempleton.com/press-releases/news-room/2026/franklin-templeton-launches-templeton-emerging-markets-debt-etf-temd"
   ],
   "successful_sources": [
     "https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP",
@@ -4336,7 +5004,42 @@
     "https://www.franklintempleton.com/forms-literature/download/39434-FFAD",
     "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/31714/SINGLCLASS/franklin-responsibly-sourced-gold-etf/FGDL",
     "https://www.franklintempleton.com/forms-literature/download/31714-FF",
-    "https://www.lbma.org.uk/prices-and-data/lbma-gold-price"
+    "https://www.lbma.org.uk/prices-and-data/lbma-gold-price",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/36370/SINGLCLASS/franklin-focused-dynamic-growth-etf/FFOG",
+    "https://www.franklintempleton.com/forms-literature/download/36370-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/50069/SINGLCLASS/franklin-small-cap-enhanced-etf/FSML",
+    "https://www.franklintempleton.com/forms-literature/download/50069-FF",
+    "https://www.franklintempleton.com/press-releases/news-room/2025/franklin-templeton-launches-the-franklin-small-cap-enhanced-etf-fsml",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/29098/SINGLCLASS/franklin-intelligent-machines-etf/IQM",
+    "https://www.franklintempleton.com/forms-literature/download/IQM-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47537/SINGLCLASS/franklin-dividend-growth-etf/FRIZ",
+    "https://www.franklintempleton.com/forms-literature/download/FRIZ-FF",
+    "https://www.franklintempleton.com/press-releases/news-room/2025/franklin-templeton-launches-franklin-dividend-growth-etf-friz",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/36262/SINGLCLASS/franklin-income-focus-etf/INCM",
+    "https://www.franklintempleton.com/forms-literature/download/36262-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/47497/SINGLCLASS/putnam-international-stock-etf/PGRI",
+    "https://www.franklintempleton.com/forms-literature/download/47497-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/18000/SINGLCLASS/franklin-short-duration-u-s-government-etf/FTSD",
+    "https://www.franklintempleton.com/forms-literature/download/FTSD-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26727/SINGLCLASS/franklin-international-aggregate-bond-etf/FLIA",
+    "https://www.franklintempleton.com/forms-literature/download/FLIA-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48365/SINGLCLASS/franklin-municipal-high-yield-etf/FTMH",
+    "https://www.franklintempleton.com/forms-literature/download/48365-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48362/SINGLCLASS/franklin-short-term-municipal-income-etf/FTMS",
+    "https://www.franklintempleton.com/forms-literature/download/48362-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48306/SINGLCLASS/franklin-california-municipal-income-etf/FTCA",
+    "https://www.franklintempleton.com/forms-literature/download/48306-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/41786/SINGLCLASS/franklin-crypto-index-etf/EZPZ",
+    "https://www.franklintempleton.com/forms-literature/download/41786-FF",
+    "https://www.cfbenchmarks.com/data/indices/IDAX",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/26728/SINGLCLASS/franklin-senior-loan-etf/FLBL",
+    "https://www.franklintempleton.com/forms-literature/download/FLBL-QCPLT",
+    "https://www.franklintempleton.com/forms-literature/download/ETF2-SAI",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/21558/SINGLCLASS/franklin-investment-grade-corporate-etf/FLCO",
+    "https://www.franklintempleton.com/forms-literature/download/FLCO-FF",
+    "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/48762/SINGLCLASS/templeton-emerging-markets-debt-etf/TEMD",
+    "https://www.franklintempleton.com/forms-literature/download/48762-FF",
+    "https://www.franklintempleton.com/press-releases/news-room/2026/franklin-templeton-launches-templeton-emerging-markets-debt-etf-temd"
   ],
   "failed_sources": [],
   "excluded_sources": [
@@ -4345,7 +5048,7 @@
       "reason": "Explicitly out of P1b scope."
     }
   ],
-  "record_count": 97,
-  "count_note": "Ninety-seven reviewed Franklin ETF records are shipped as a dated, source-backed table; this slice appends the 15 dispatched Europe, Australia and US products while preserving all earlier records in order."
+  "record_count": 112,
+  "count_note": "One hundred twelve reviewed Franklin ETF records are shipped as a dated, source-backed table; this slice appends the 15 dispatched US products while preserving all earlier records in order."
 }
 }

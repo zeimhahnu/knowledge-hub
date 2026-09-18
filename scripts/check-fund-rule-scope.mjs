@@ -65,7 +65,7 @@ assert.equal(differentTypes[0].verdict, "indeterminate", "different resolved ind
 console.log("  ok  different per-vendor index types do not cross-judge treatments");
 
 const unresolved = resolveFundRules("FLIA", franklinSnapshot, perVendorRules);
-assert.equal(unresolved.resolution.mode, "cataloged-unreviewed");
+assert.equal(unresolved.resolution.mode, "fund-unresolved");
 const unresolvedEntailment = computeEntailment({
   eventType: "special-dividend",
   absent: ["msci"],
@@ -75,5 +75,5 @@ const unresolvedEntailment = computeEntailment({
 });
 assert.equal(unresolvedEntailment[0].scope, "2-d");
 assert.equal(unresolvedEntailment[0].verdict, "indeterminate", "unresolved fund must stay at 2-D scope");
-console.log("  ok  cataloged-unreviewed fund remains unresolved at 2-D scope");
+console.log("  ok  fund with missing index fields remains unresolved at 2-D scope");
 console.log("fund rule scoping OK");

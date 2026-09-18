@@ -20,11 +20,11 @@ assert.equal(fljp.resolution.ruleScope, "3-d");
 // Asserting ["ftse"] encoded the pre-0f222dc filter that made 3-D worse than 2-D.
 assert.deepEqual(fljp.rows.map((row) => row.vendor), ["ftse", "msci"]);
 
-const cataloged = resolveFundRules("FLIA", franklinSnapshot, rules);
-assert.equal(cataloged.resolution.mode, "cataloged-unreviewed");
-assert.equal(cataloged.resolution.ruleScope, "2-d");
-assert.equal(cataloged.rows, rules, "cataloged-unreviewed keeps P0 rows");
-assert.match(cataloged.resolution.warnings[0], /metadata has not been reviewed/);
+const unresolved = resolveFundRules("FLIA", franklinSnapshot, rules);
+assert.equal(unresolved.resolution.mode, "fund-unresolved");
+assert.equal(unresolved.resolution.ruleScope, "2-d");
+assert.equal(unresolved.rows, rules, "missing index fields keep P0 rows");
+assert.match(unresolved.resolution.warnings[0], /missing an index resolver field/);
 
 const noFund = resolveFundRules(undefined, franklinSnapshot, rules);
 assert.equal(noFund.resolution.mode, "p0-compat");
@@ -40,5 +40,5 @@ const verdictInput = {
 };
 const verdict = computeLookupVerdict({ ...verdictInput, fundTicker: "FLIA" });
 const p0Verdict = computeLookupVerdict(verdictInput);
-assert.equal(verdict.rows[0].treatment, p0Verdict.rows[0].treatment, "cataloged-unreviewed lookup retains 2-D P0 treatment");
-console.log(`catalog selector check passed: ${catalog.length} active rows; FLJP 3-D; cataloged fallback; closed exclusion; unset P0`);
+assert.equal(verdict.rows[0].treatment, p0Verdict.rows[0].treatment, "fund-unresolved lookup retains 2-D P0 treatment");
+console.log(`catalog selector check passed: ${catalog.length} active rows; FLJP 3-D; unresolved fallback; closed exclusion; unset P0`);
