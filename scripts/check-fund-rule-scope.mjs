@@ -64,6 +64,16 @@ const differentTypes = computeEntailment({
 assert.equal(differentTypes[0].verdict, "indeterminate", "different resolved index types must not be compared");
 console.log("  ok  different per-vendor index types do not cross-judge treatments");
 
+// Preserve cataloged-unreviewed coverage after later slices review SOEZ.
+const unreviewedSnapshot = {
+  ...franklinSnapshot,
+  records: franklinSnapshot.records.filter((record) => record.ticker !== "SOEZ"),
+};
+const cataloged = resolveFundRules("SOEZ", unreviewedSnapshot, perVendorRules);
+assert.equal(cataloged.resolution.mode, "cataloged-unreviewed");
+assert.equal(cataloged.resolution.ruleScope, "2-d");
+assert.equal(cataloged.rows, perVendorRules, "cataloged-unreviewed keeps P0 rows");
+
 const unresolved = resolveFundRules("FLIA", franklinSnapshot, perVendorRules);
 assert.equal(unresolved.resolution.mode, "fund-unresolved");
 const unresolvedEntailment = computeEntailment({

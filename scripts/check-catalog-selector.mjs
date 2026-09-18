@@ -20,6 +20,19 @@ assert.equal(fljp.resolution.ruleScope, "3-d");
 // Asserting ["ftse"] encoded the pre-0f222dc filter that made 3-D worse than 2-D.
 assert.deepEqual(fljp.rows.map((row) => row.vendor), ["ftse", "msci"]);
 
+// Keep this resolver mode covered even after a later slice enriches SOEZ:
+// the catalog still contains it, while this fixture deliberately represents
+// the pre-review snapshot seen by a cataloged-but-unreviewed lookup.
+const unreviewedSnapshot = {
+  ...franklinSnapshot,
+  records: franklinSnapshot.records.filter((row) => row.ticker !== "SOEZ"),
+};
+const cataloged = resolveFundRules("SOEZ", unreviewedSnapshot, rules);
+assert.equal(cataloged.resolution.mode, "cataloged-unreviewed");
+assert.equal(cataloged.resolution.ruleScope, "2-d");
+assert.equal(cataloged.rows, rules, "cataloged-unreviewed keeps P0 rows");
+assert.match(cataloged.resolution.warnings[0], /metadata has not been reviewed/);
+
 const unresolved = resolveFundRules("FLIA", franklinSnapshot, rules);
 assert.equal(unresolved.resolution.mode, "fund-unresolved");
 assert.equal(unresolved.resolution.ruleScope, "2-d");
