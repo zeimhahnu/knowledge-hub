@@ -1486,7 +1486,615 @@
       "notes": [
         "The dividend-booster optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null."
       ]
-    }
+    },
+  {
+    "ticker": "CBL",
+    "name": "Franklin Core ETF Portfolio",
+    "isin": null,
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "Canadian, U.S. and international fixed-income and equity securities through exchange-traded funds",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2024-06-05",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27814/ET1/franklin-core-etf-portfolio/CBL",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/67621767-9497-48fa-8c2a-e74ae4cbfa2d/Factsheet-FranklinCoreETFPortfolio-ETFSeries-CAD-27814-ET1-ENFF-CA-en-CA.PDF"
+    ],
+    "source_as_of": "2026-08-31",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin",
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "CBL is a multi-asset ETF portfolio with a custom blended benchmark, not a single underlying index; the benchmark is not promoted as an index constituent methodology."
+    ]
+  },
+  {
+    "ticker": "EQY",
+    "name": "Franklin All-Equity ETF Portfolio",
+    "isin": null,
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "Canadian, U.S. and international equity securities through exchange-traded funds",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2024-06-05",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/40883/ET1/franklin-all-equity-etf-portfolio/EQY",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/9f3f1db7-f92b-489e-8e55-ce61472596a9/Factsheet-FranklinAll-EquityETFPortfolio-ETFSeries-CAD-40883-ET1-ENFF-CA-en-CA.PDF"
+    ],
+    "source_as_of": "2026-08-31",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin",
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "EQY is an actively managed all-equity ETF portfolio with a custom blended benchmark, not a single underlying index."
+    ]
+  },
+  {
+    "ticker": "FBGO",
+    "name": "Franklin Brandywine Global Income Optimiser Fund",
+    "isin": null,
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "Global fixed-income securities across sovereign debt, investment-grade and high-yield credit, duration, currencies and structured credit",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2021-06-29",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/4681/ET1/franklin-brandywine-global-income-optimiser-fund/FBGO",
+      "https://www.franklintempleton.ca/download/en-ca/flyer/446a12ea-3a61-4c98-9200-338afd3e8516/franklin-brandywine-global-sustainable-income-optimiser-fund-inv-flyer-en-ca.pdf"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "isin",
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "FBGO is an actively managed global multi-sector fixed-income ETF; no underlying index is used."
+    ]
+  },
+  {
+    "ticker": "FCII",
+    "name": "Franklin ClearBridge Global Infrastructure Income Fund",
+    "isin": null,
+    "underlying_index": null,
+    "index_provider": null,
+    "index_type": "active",
+    "universe": "Global listed equity of sustainable issuers in the infrastructure business",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2021-06-29",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/31605/ET1/franklin-clearbridge-global-infrastructure-income-fund/FCII",
+      "https://www.franklintempleton.ca/download/en-ca/flyer/405e87aa-7a5f-4a7d-8078-b82a4f7afc85/franklin-clearbridge-sustainable-global-infrastructure-income-fund-inv-flyer-en-ca.pdf"
+    ],
+    "source_as_of": null,
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "absent",
+      "index_provider": "absent",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "absent"
+    },
+    "missing_fields": [
+      "isin",
+      "underlying_index",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "product-specific",
+    "notes": [
+      "FCII is an actively managed global infrastructure equity ETF; a linked benchmark appears in fund reporting but is not treated as an underlying index."
+    ]
+  },
+  {
+    "ticker": "FDIV",
+    "name": "Franklin U.S. Quality Moat Dividend Index ETF",
+    "isin": null,
+    "underlying_index": "Morningstar US Dividend Opportunity Index",
+    "index_provider": "Morningstar",
+    "index_type": "capped-factor",
+    "universe": "U.S. large- and mid-capitalization dividend stocks with durable competitive advantages, strong growth and high-quality characteristics",
+    "weighting": "Systematic, rules-based selection based on the Morningstar US Target Market Exposure Index, targeting dividend stocks with durable competitive advantages, strong growth and high quality",
+    "reconstitution_frequency": null,
+    "inception_date": "2025-08-14",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/46942/SINGLCLASS/franklin-u-s-quality-moat-dividend-index-etf/FDIV",
+      "https://www.franklintempleton.ca/download/en-ca/fund-facts/65205036-797f-4101-a93c-c8e538099cfc/FundFacts-Franklin-U.S.-Quality-Moat-Dividend-Index-ETF-46942-SINGLCLASS-CA-en-CA.pdf",
+      "https://indexes.morningstar.com/docs/overview/morningstar-us-dividend-opportunity-index-overview"
+    ],
+    "source_as_of": "2025-07-25",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "inferred",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "complete",
+    "notes": [
+      "The moat, dividend and quality selection is classified as capped-factor rather than plain market-cap weighting. Reconstitution frequency was not exposed by the reviewed primary evidence; ISIN remains null."
+    ]
+  },
+  {
+    "ticker": "FLAM",
+    "name": "Franklin FTSE U.S. Index ETF",
+    "isin": null,
+    "underlying_index": "FTSE USA Index",
+    "index_provider": "FTSE Russell",
+    "index_type": "market-cap-weighted",
+    "universe": "U.S. large- and mid-capitalization issuers",
+    "weighting": "Market-capitalization weighted",
+    "reconstitution_frequency": null,
+    "inception_date": "2019-02-20",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27749/SINGLCLASS/franklin-ftse-u-s-index-etf/FLAM",
+      "https://www.franklintempleton.ca/download/en-ca/fund-facts/23338025-d302-4339-a191-12f88b2617ad/FundFacts-Franklin-FTSE-U.S.-Index-ETF-27749-SINGLCLASS-CA-en-CA.pdf",
+      "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+    ],
+    "source_as_of": "2026-05-15",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "complete",
+    "notes": [
+      "The reviewed fund facts state market-capitalization weighting; reconstitution frequency was not explicitly exposed. ISIN remains null."
+    ]
+  },
+  {
+    "ticker": "FLCD",
+    "name": "Franklin FTSE Canada All Cap Index ETF",
+    "isin": null,
+    "underlying_index": "FTSE Canada All Cap Domestic Index",
+    "index_provider": "FTSE Russell",
+    "index_type": "market-cap-weighted",
+    "universe": "Canadian large-, mid- and small-capitalization issuers",
+    "weighting": "Market-capitalization weighted; FTSE Russell calculates investability weights without applying foreign-ownership restrictions to each constituent",
+    "reconstitution_frequency": null,
+    "inception_date": "2019-02-20",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27742/SINGLCLASS/franklin-ftse-canada-all-cap-index-etf/FLCD",
+      "https://www.franklintempleton.ca/download/en-ca/fund-facts/0b6f57d2-c4f2-4d03-a085-782cee7edcdf/FundFacts-Franklin-FTSE-Canada-All-Cap-Index-ETF-27742-SINGLCLASS-CA-en-CA.pdf",
+      "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+    ],
+    "source_as_of": "2025-03-31",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "complete",
+    "notes": [
+      "The reviewed fund facts state market-capitalization weighting; reconstitution frequency was not explicitly exposed. ISIN remains null."
+    ]
+  },
+  {
+    "ticker": "FLEM",
+    "name": "Franklin Emerging Markets Equity Index ETF",
+    "isin": null,
+    "underlying_index": "Solactive GBS Emerging Markets Large & Mid Cap CAD Index",
+    "index_provider": "Solactive AG",
+    "index_type": "float-adjusted-cap-weighted",
+    "universe": "Emerging-market large- and mid-capitalization stocks covering approximately the largest 85% of free-float market capitalization",
+    "weighting": "Free-float market-capitalization weighted; net total return in CAD",
+    "reconstitution_frequency": null,
+    "inception_date": "2018-01-29",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/26259/SINGLCLASS/franklin-emerging-markets-equity-index-etf/FLEM",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/97b37913-d5ef-4ac2-bd64-0a2550e1541c/Factsheet-FranklinEmergingMarketsEquityIndexETF-26259-FF-CA-en-CA.pdf",
+      "https://www.solactive.com/index/DE000SLA8DU8"
+    ],
+    "source_as_of": "2026-06-30",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "inferred",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "complete",
+    "notes": [
+      "The Solactive page describes free-float market-cap weighting and CAD net-total-return treatment. The Franklin factsheet states that NR returns include income net of tax withholding when dividends are paid; no withholding rate is inferred. ISIN remains null."
+    ]
+  },
+  {
+    "ticker": "FLJA",
+    "name": "Franklin FTSE Japan Index ETF",
+    "isin": null,
+    "underlying_index": "FTSE Japan Index",
+    "index_provider": "FTSE Russell",
+    "index_type": "market-cap-weighted",
+    "universe": "Japanese large- and mid-capitalization companies that are constituents of the FTSE All-World Index",
+    "weighting": "Market-capitalization weighted",
+    "reconstitution_frequency": null,
+    "inception_date": "2019-02-20",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27741/SINGLCLASS/franklin-ftse-japan-index-etf/FLJA",
+      "https://www.franklintempleton.ca/download/en-ca/fund-facts/0fb52cf3-9753-4b43-8855-334d4626fa08/FundFacts-Franklin-FTSE-Japan-Index-ETF-27741-SINGLCLASS-CA-en-CA.pdf",
+      "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+    ],
+    "source_as_of": "2025-05-15",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "stated",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "complete",
+    "notes": [
+      "The reviewed fund facts state market-capitalization weighting; reconstitution frequency was not explicitly exposed. ISIN remains null."
+    ]
+  },
+  {
+    "ticker": "FLUR",
+    "name": "Franklin International Equity Index ETF",
+    "isin": null,
+    "underlying_index": "Solactive GBS Developed Markets ex North America Large & Mid Cap CAD Index",
+    "index_provider": "Solactive AG",
+    "index_type": "float-adjusted-cap-weighted",
+    "universe": "Developed-market large- and mid-capitalization issuers outside North America covering approximately the largest 85% of free-float market capitalization",
+    "weighting": "Free-float market-capitalization weighted; net total return in CAD",
+    "reconstitution_frequency": null,
+    "inception_date": "2019-02-20",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27748/SINGLCLASS/franklin-international-equity-index-etf/FLUR",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/7efeb244-bbce-4d09-a26b-c5e8eacb2b7f/Factsheet-FranklinInternationalEquityIndexETF-27748-FF-CA-en-CA.PDF",
+      "https://www.solactive.com/index/DE000SLA5AN5"
+    ],
+    "source_as_of": "2026-06-30",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "inferred",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "complete",
+    "notes": [
+      "The Solactive page describes free-float market-cap weighting and CAD net-total-return treatment. The Franklin factsheet states that NR returns include income net of tax withholding when dividends are paid; no withholding rate is inferred. ISIN remains null."
+    ]
+  },
+  {
+    "ticker": "FLUS",
+    "name": "Franklin U.S. Large Cap Multifactor Index ETF",
+    "isin": null,
+    "underlying_index": "LibertyQ U.S. Large Cap Equity Index",
+    "index_provider": "FTSE Russell",
+    "index_type": "capped-factor",
+    "universe": "U.S. large-capitalization equity securities selected from the Russell 1000 Index",
+    "weighting": "Rules-based multifactor selection using quality, value, momentum and low volatility factors",
+    "reconstitution_frequency": "Quarterly",
+    "inception_date": "2017-06-05",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/25660/SINGLCLASS/franklin-u-s-large-cap-multifactor-index-etf/FLUS",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/e5d836a7-5c07-4b22-ac81-4bd969f260cc/Factsheet-FranklinUSLargeCapMultifactorIndexETF-25660-ENFF-CA-en-CA.PDF",
+      "https://www.franklintempleton.com/forms-literature/download/ETF-P"
+    ],
+    "source_as_of": "2026-06-30",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "inferred",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "stated",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin"
+    ],
+    "coverage_quality": "complete",
+    "notes": [
+      "The explicit four-factor construction is classified as capped-factor rather than plain market-cap weighting. The factsheet states that NR returns include income net of tax withholding when dividends are paid; no withholding rate is inferred. ISIN remains null."
+    ]
+  },
+  {
+    "ticker": "FLVC",
+    "name": "Franklin Canadian Low Volatility High Dividend Index ETF",
+    "isin": null,
+    "underlying_index": "Franklin Canadian Low Volatility High Dividend Index",
+    "index_provider": null,
+    "index_type": "capped-factor",
+    "universe": "Canadian companies across a wide range of market capitalizations",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2024-03-28",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/40063/SINGLCLASS/franklin-canadian-low-volatility-high-dividend-index-etf/FLVC",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/ffcb9c82-79f2-41f1-a411-7899feb59030/Factsheet-FranklinCanadianLowVolatilityHighDividendIndexETF-40063-ENFF-CA-en-CA.PDF",
+      "https://www.franklintempleton.ca/en-ca/press-releases/03-28-2024-franklin-templeton-canada-introduces-a-suite-of-low-volatility-and-high-dividend-etfs-for-canadian-investors"
+    ],
+    "source_as_of": "2026-02-28",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "stated",
+      "index_provider": "absent",
+      "index_type": "inferred",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin",
+      "index_provider",
+      "weighting",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "partial",
+    "notes": [
+      "The low-volatility/high-dividend construction is classified as capped-factor. The reviewed Canadian primary evidence did not expose a named index provider, full weighting method or reconstitution frequency. The fund facts state foreign withholding tax is not applicable; no rate is inferred. ISIN remains null."
+    ]
+  },
+  {
+    "ticker": "FLVI",
+    "name": "Franklin International Low Volatility High Dividend Index ETF",
+    "isin": null,
+    "underlying_index": "Franklin International ex North America Low Volatility High Dividend CAD Index",
+    "index_provider": "Solactive AG",
+    "index_type": "capped-factor",
+    "universe": "Developed markets outside North America represented by the MSCI EAFE IMI Index",
+    "weighting": null,
+    "reconstitution_frequency": null,
+    "inception_date": "2024-03-28",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/40064/SINGLCLASS/franklin-international-low-volatility-high-dividend-index-etf/FLVI",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/0f97eb0d-cea4-4660-9754-6f8f2b84c16e/Factsheet-FranklinInternationalLowVolatilityHighDividendIndexETF-40064-FF-CA-en-CA.PDF",
+      "https://www.solactive.com/index/DE000SLA19C0"
+    ],
+    "source_as_of": "2026-08-31",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "inferred",
+      "universe": "stated",
+      "weighting": "absent",
+      "reconstitution_frequency": "absent",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin",
+      "weighting",
+      "reconstitution_frequency"
+    ],
+    "coverage_quality": "partial",
+    "notes": [
+      "The low-volatility/high-dividend construction is classified as capped-factor. The Franklin factsheet names Solactive AG as provider but the reviewed evidence did not expose the full weighting method or reconstitution frequency. ISIN remains null."
+    ]
+  },
+  {
+    "ticker": "FLVU",
+    "name": "Franklin U.S. Low Volatility High Dividend Index ETF",
+    "isin": null,
+    "underlying_index": "Franklin Low Volatility High Dividend CAD Index",
+    "index_provider": "Solactive AG",
+    "index_type": "capped-factor",
+    "universe": "U.S. companies across a wide range of market capitalizations with relatively high dividend yields and lower price and earnings volatility in CAD currency",
+    "weighting": "High-dividend and low-volatility selection with profitability/earnings support; the index is reconstituted annually and rebalanced quarterly",
+    "reconstitution_frequency": "Annually",
+    "inception_date": "2024-03-28",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/40065/SINGLCLASS/franklin-u-s-low-volatility-high-dividend-index-etf/FLVU",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/bedb66d5-67e0-413d-8b20-d7421a6d927f/Factsheet-FranklinUSLowVolatilityHighDividendIndexETF-40065-FF-CA-en-CA.PDF",
+      "https://www.solactive.com/index/DE000SLA1GV4"
+    ],
+    "source_as_of": "2026-06-30",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "inferred",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "stated",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin"
+    ],
+    "coverage_quality": "complete",
+    "notes": [
+      "The low-volatility/high-dividend construction is classified as capped-factor. The fund facts state the index is reconstituted annually and rebalanced quarterly. ISIN remains null."
+    ]
+  },
+  {
+    "ticker": "FMID",
+    "name": "Franklin U.S. Mid Cap Multifactor Index ETF",
+    "isin": null,
+    "underlying_index": "LibertyQ U.S. Mid Cap Equity Index",
+    "index_provider": "FTSE Russell",
+    "index_type": "capped-factor",
+    "universe": "U.S. mid-capitalization equity securities selected from the Russell Midcap Index",
+    "weighting": "Rules-based multifactor selection using quality, value, momentum and low volatility factors",
+    "reconstitution_frequency": "Semiannually",
+    "inception_date": "2025-01-30",
+    "source_urls": [
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/42055/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FMID",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/5dadc813-508e-4671-90fd-d350f82e89f3/Factsheet-FranklinUSMidCapMultifactorIndexETF-42055-ENFF-CA-en-CA.PDF",
+      "https://www.franklintempleton.com/forms-literature/download/ETF-P"
+    ],
+    "source_as_of": "2026-06-30",
+    "confidence": "medium",
+    "field_confidence": {
+      "ticker": "stated",
+      "name": "stated",
+      "isin": "absent",
+      "underlying_index": "stated",
+      "index_provider": "stated",
+      "index_type": "inferred",
+      "universe": "stated",
+      "weighting": "stated",
+      "reconstitution_frequency": "stated",
+      "inception_date": "stated",
+      "source_as_of": "stated"
+    },
+    "missing_fields": [
+      "isin"
+    ],
+    "coverage_quality": "complete",
+    "notes": [
+      "The explicit four-factor construction is classified as capped-factor rather than plain market-cap weighting. The fund facts state semiannual index restructuring and that NR returns include income net of tax withholding when dividends are paid; no withholding rate is inferred. ISIN remains null."
+    ]
+  }
   ],
   "acquisition": {
     "requested_sources": [
@@ -1568,7 +2176,43 @@
       "https://indexes.morningstar.com/indexes/details/morningstar-us-target-market-exposure-FS0000E3LG?tab=overview",
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42138/SINGLCLASS/franklin-international-dividend-booster-index-etf/XIDV",
       "https://www.franklintempleton.com/forms-literature/download/42138-FF",
-      "https://www.vettafi.com/indexing/index/nfdm"
+      "https://www.vettafi.com/indexing/index/nfdm",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27814/ET1/franklin-core-etf-portfolio/CBL",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/67621767-9497-48fa-8c2a-e74ae4cbfa2d/Factsheet-FranklinCoreETFPortfolio-ETFSeries-CAD-27814-ET1-ENFF-CA-en-CA.PDF",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/40883/ET1/franklin-all-equity-etf-portfolio/EQY",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/9f3f1db7-f92b-489e-8e55-ce61472596a9/Factsheet-FranklinAll-EquityETFPortfolio-ETFSeries-CAD-40883-ET1-ENFF-CA-en-CA.PDF",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/4681/ET1/franklin-brandywine-global-income-optimiser-fund/FBGO",
+      "https://www.franklintempleton.ca/download/en-ca/flyer/446a12ea-3a61-4c98-9200-338afd3e8516/franklin-brandywine-global-sustainable-income-optimiser-fund-inv-flyer-en-ca.pdf",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/31605/ET1/franklin-clearbridge-global-infrastructure-income-fund/FCII",
+      "https://www.franklintempleton.ca/download/en-ca/flyer/405e87aa-7a5f-4a7d-8078-b82a4f7afc85/franklin-clearbridge-sustainable-global-infrastructure-income-fund-inv-flyer-en-ca.pdf",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/46942/SINGLCLASS/franklin-u-s-quality-moat-dividend-index-etf/FDIV",
+      "https://www.franklintempleton.ca/download/en-ca/fund-facts/65205036-797f-4101-a93c-c8e538099cfc/FundFacts-Franklin-U.S.-Quality-Moat-Dividend-Index-ETF-46942-SINGLCLASS-CA-en-CA.pdf",
+      "https://indexes.morningstar.com/docs/overview/morningstar-us-dividend-opportunity-index-overview",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27749/SINGLCLASS/franklin-ftse-u-s-index-etf/FLAM",
+      "https://www.franklintempleton.ca/download/en-ca/fund-facts/23338025-d302-4339-a191-12f88b2617ad/FundFacts-Franklin-FTSE-U.S.-Index-ETF-27749-SINGLCLASS-CA-en-CA.pdf",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27742/SINGLCLASS/franklin-ftse-canada-all-cap-index-etf/FLCD",
+      "https://www.franklintempleton.ca/download/en-ca/fund-facts/0b6f57d2-c4f2-4d03-a085-782cee7edcdf/FundFacts-Franklin-FTSE-Canada-All-Cap-Index-ETF-27742-SINGLCLASS-CA-en-CA.pdf",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/26259/SINGLCLASS/franklin-emerging-markets-equity-index-etf/FLEM",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/97b37913-d5ef-4ac2-bd64-0a2550e1541c/Factsheet-FranklinEmergingMarketsEquityIndexETF-26259-FF-CA-en-CA.pdf",
+      "https://www.solactive.com/index/DE000SLA8DU8",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27741/SINGLCLASS/franklin-ftse-japan-index-etf/FLJA",
+      "https://www.franklintempleton.ca/download/en-ca/fund-facts/0fb52cf3-9753-4b43-8855-334d4626fa08/FundFacts-Franklin-FTSE-Japan-Index-ETF-27741-SINGLCLASS-CA-en-CA.pdf",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27748/SINGLCLASS/franklin-international-equity-index-etf/FLUR",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/7efeb244-bbce-4d09-a26b-c5e8eacb2b7f/Factsheet-FranklinInternationalEquityIndexETF-27748-FF-CA-en-CA.PDF",
+      "https://www.solactive.com/index/DE000SLA5AN5",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/25660/SINGLCLASS/franklin-u-s-large-cap-multifactor-index-etf/FLUS",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/e5d836a7-5c07-4b22-ac81-4bd969f260cc/Factsheet-FranklinUSLargeCapMultifactorIndexETF-25660-ENFF-CA-en-CA.PDF",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/40063/SINGLCLASS/franklin-canadian-low-volatility-high-dividend-index-etf/FLVC",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/ffcb9c82-79f2-41f1-a411-7899feb59030/Factsheet-FranklinCanadianLowVolatilityHighDividendIndexETF-40063-ENFF-CA-en-CA.PDF",
+      "https://www.franklintempleton.ca/en-ca/press-releases/03-28-2024-franklin-templeton-canada-introduces-a-suite-of-low-volatility-and-high-dividend-etfs-for-canadian-investors",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/40064/SINGLCLASS/franklin-international-low-volatility-high-dividend-index-etf/FLVI",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/0f97eb0d-cea4-4660-9754-6f8f2b84c16e/Factsheet-FranklinInternationalLowVolatilityHighDividendIndexETF-40064-FF-CA-en-CA.PDF",
+      "https://www.solactive.com/index/DE000SLA19C0",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/40065/SINGLCLASS/franklin-u-s-low-volatility-high-dividend-index-etf/FLVU",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/bedb66d5-67e0-413d-8b20-d7421a6d927f/Factsheet-FranklinUSLowVolatilityHighDividendIndexETF-40065-FF-CA-en-CA.PDF",
+      "https://www.solactive.com/index/DE000SLA1GV4",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/42055/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FMID",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/5dadc813-508e-4671-90fd-d350f82e89f3/Factsheet-FranklinUSMidCapMultifactorIndexETF-42055-ENFF-CA-en-CA.PDF"
     ],
     "successful_sources": [
       "https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP",
@@ -1649,20 +2293,52 @@
       "https://indexes.morningstar.com/indexes/details/morningstar-us-target-market-exposure-FS0000E3LG?tab=overview",
       "https://www.franklintempleton.com/investments/options/exchange-traded-funds/products/42138/SINGLCLASS/franklin-international-dividend-booster-index-etf/XIDV",
       "https://www.franklintempleton.com/forms-literature/download/42138-FF",
-      "https://www.vettafi.com/indexing/index/nfdm"
+      "https://www.vettafi.com/indexing/index/nfdm",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27814/ET1/franklin-core-etf-portfolio/CBL",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/67621767-9497-48fa-8c2a-e74ae4cbfa2d/Factsheet-FranklinCoreETFPortfolio-ETFSeries-CAD-27814-ET1-ENFF-CA-en-CA.PDF",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/40883/ET1/franklin-all-equity-etf-portfolio/EQY",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/9f3f1db7-f92b-489e-8e55-ce61472596a9/Factsheet-FranklinAll-EquityETFPortfolio-ETFSeries-CAD-40883-ET1-ENFF-CA-en-CA.PDF",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/4681/ET1/franklin-brandywine-global-income-optimiser-fund/FBGO",
+      "https://www.franklintempleton.ca/download/en-ca/flyer/446a12ea-3a61-4c98-9200-338afd3e8516/franklin-brandywine-global-sustainable-income-optimiser-fund-inv-flyer-en-ca.pdf",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/31605/ET1/franklin-clearbridge-global-infrastructure-income-fund/FCII",
+      "https://www.franklintempleton.ca/download/en-ca/flyer/405e87aa-7a5f-4a7d-8078-b82a4f7afc85/franklin-clearbridge-sustainable-global-infrastructure-income-fund-inv-flyer-en-ca.pdf",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/46942/SINGLCLASS/franklin-u-s-quality-moat-dividend-index-etf/FDIV",
+      "https://www.franklintempleton.ca/download/en-ca/fund-facts/65205036-797f-4101-a93c-c8e538099cfc/FundFacts-Franklin-U.S.-Quality-Moat-Dividend-Index-ETF-46942-SINGLCLASS-CA-en-CA.pdf",
+      "https://indexes.morningstar.com/docs/overview/morningstar-us-dividend-opportunity-index-overview",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27749/SINGLCLASS/franklin-ftse-u-s-index-etf/FLAM",
+      "https://www.franklintempleton.ca/download/en-ca/fund-facts/23338025-d302-4339-a191-12f88b2617ad/FundFacts-Franklin-FTSE-U.S.-Index-ETF-27749-SINGLCLASS-CA-en-CA.pdf",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27742/SINGLCLASS/franklin-ftse-canada-all-cap-index-etf/FLCD",
+      "https://www.franklintempleton.ca/download/en-ca/fund-facts/0b6f57d2-c4f2-4d03-a085-782cee7edcdf/FundFacts-Franklin-FTSE-Canada-All-Cap-Index-ETF-27742-SINGLCLASS-CA-en-CA.pdf",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/26259/SINGLCLASS/franklin-emerging-markets-equity-index-etf/FLEM",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/97b37913-d5ef-4ac2-bd64-0a2550e1541c/Factsheet-FranklinEmergingMarketsEquityIndexETF-26259-FF-CA-en-CA.pdf",
+      "https://www.solactive.com/index/DE000SLA8DU8",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27741/SINGLCLASS/franklin-ftse-japan-index-etf/FLJA",
+      "https://www.franklintempleton.ca/download/en-ca/fund-facts/0fb52cf3-9753-4b43-8855-334d4626fa08/FundFacts-Franklin-FTSE-Japan-Index-ETF-27741-SINGLCLASS-CA-en-CA.pdf",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27748/SINGLCLASS/franklin-international-equity-index-etf/FLUR",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/7efeb244-bbce-4d09-a26b-c5e8eacb2b7f/Factsheet-FranklinInternationalEquityIndexETF-27748-FF-CA-en-CA.PDF",
+      "https://www.solactive.com/index/DE000SLA5AN5",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/25660/SINGLCLASS/franklin-u-s-large-cap-multifactor-index-etf/FLUS",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/e5d836a7-5c07-4b22-ac81-4bd969f260cc/Factsheet-FranklinUSLargeCapMultifactorIndexETF-25660-ENFF-CA-en-CA.PDF",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/40063/SINGLCLASS/franklin-canadian-low-volatility-high-dividend-index-etf/FLVC",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/ffcb9c82-79f2-41f1-a411-7899feb59030/Factsheet-FranklinCanadianLowVolatilityHighDividendIndexETF-40063-ENFF-CA-en-CA.PDF",
+      "https://www.franklintempleton.ca/en-ca/press-releases/03-28-2024-franklin-templeton-canada-introduces-a-suite-of-low-volatility-and-high-dividend-etfs-for-canadian-investors",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/40064/SINGLCLASS/franklin-international-low-volatility-high-dividend-index-etf/FLVI",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/0f97eb0d-cea4-4660-9754-6f8f2b84c16e/Factsheet-FranklinInternationalLowVolatilityHighDividendIndexETF-40064-FF-CA-en-CA.PDF",
+      "https://www.solactive.com/index/DE000SLA19C0",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/40065/SINGLCLASS/franklin-u-s-low-volatility-high-dividend-index-etf/FLVU",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/bedb66d5-67e0-413d-8b20-d7421a6d927f/Factsheet-FranklinUSLowVolatilityHighDividendIndexETF-40065-FF-CA-en-CA.PDF",
+      "https://www.solactive.com/index/DE000SLA1GV4",
+      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/42055/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FMID",
+      "https://www.franklintempleton.ca/download/en-ca/factsheet/5dadc813-508e-4671-90fd-d350f82e89f3/Factsheet-FranklinUSMidCapMultifactorIndexETF-42055-ENFF-CA-en-CA.PDF"
     ],
     "failed_sources": [],
     "excluded_sources": [
       {
         "name": "VettaFi",
         "reason": "Explicitly out of P1b scope."
-      },
-      {
-        "name": "Solactive",
-        "reason": "No product-specific evidence required for the reviewed slice."
       }
     ],
-    "record_count": 37,
-    "count_note": "Thirty-seven reviewed Franklin ETF records are shipped as a dated, source-backed table; this slice appends fourteen pure index-tracking equity tickers. Existing active records remain unchanged; fixed income and crypto products are intentionally excluded."
+    "record_count": 52,
+    "count_note": "Fifty-two reviewed Franklin ETF records are shipped as a dated, source-backed table; this slice appends fifteen Canada-domiciled ETF records, including active portfolios and the Solactive-tracking Canada ETFs. Existing records remain unchanged."
   }
 }
