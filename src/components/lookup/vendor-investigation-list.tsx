@@ -258,6 +258,14 @@ function PublicationWindow({
   );
 }
 
+const REGION_LABELS: Record<string, string> = {
+  us: "US",
+  canada: "Canada",
+  europe: "UCITS",
+  australia: "Australia",
+  other: "Other",
+};
+
 function FundSelectionControl({
   row,
   catalogRecords,
@@ -284,8 +292,16 @@ function FundSelectionControl({
         />
       </label>
       <datalist id={listId}>
+        {/* Region is on the label because the catalog now spans 147 funds across four
+            domiciles, and domicile is not cosmetic here: withholding on dividends
+            differs by it, which is exactly what the NTR return variant captures. Two
+            funds tracking one index can need different treatment. */}
         {catalogRecords.map((fund) => (
-          <option key={fund.ticker} value={fund.ticker} label={fund.name.replaceAll("-", " ")} />
+          <option
+            key={fund.ticker}
+            value={fund.ticker}
+            label={`${fund.name.replaceAll("-", " ")} · ${REGION_LABELS[fund.region] ?? fund.region}`}
+          />
         ))}
       </datalist>
       <p id={`${listId}-help`} className="text-xs leading-relaxed text-muted-foreground">
@@ -308,9 +324,14 @@ function FundSelectionControl({
         </p>
       )}
       {row.fundResolution.mode === "cataloged-unreviewed" && (
-        <p role="status" className="text-[0.68rem] leading-relaxed text-chart-4">
-          {row.fundResolution.warnings[0]}
-        </p>
+        <>
+          <p className="text-[0.68rem] leading-relaxed text-muted-foreground">
+            {REGION_LABELS[row.fundResolution.catalog.region] ?? row.fundResolution.catalog.region} domicile
+          </p>
+          <p role="status" className="text-[0.68rem] leading-relaxed text-chart-4">
+            {row.fundResolution.warnings[0]}
+          </p>
+        </>
       )}
     </div>
   );
