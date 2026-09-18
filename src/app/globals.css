@@ -269,10 +269,12 @@
 .ca-control::placeholder { color: var(--meta-copy); }
 .ca-control:focus-visible { border-color: var(--ring); box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 35%, transparent); }
 .ca-date-control { padding-right: 48px; }
-/* Leading-icon search fields. .ca-control sets padding: 12px 16px, which beats a
-   Tailwind pl-11 utility, so every "ca-control pl-11" search box rendered its icon
-   on top of the placeholder. Same shape as .ca-date-control above. */
-.ca-search-control { padding-left: 44px; }
+/* Any control with a LEADING icon. .ca-control sets padding: 12px 16px, which beats
+   a Tailwind pl-11 utility, so every "ca-control pl-11" field rendered its icon on
+   top of the placeholder -- the two searches AND the ex-date picker on the home
+   page, where the calendar glyph sat over "dd/mm/yyyy". Same shape as
+   .ca-date-control above, which solves the trailing-icon case. */
+.ca-control-lead-icon { padding-left: 44px; }
 .ca-field-error { color: var(--destructive); font-size: 0.8125rem; line-height: 1.5; }
 .ca-data-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; align-items: center; border-top: 1px solid var(--border); padding-block: 16px; }
 .ca-status { display: inline-flex; align-items: center; gap: 8px; color: var(--foreground); font-size: 0.8125rem; font-weight: 550; }

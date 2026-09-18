@@ -342,7 +342,7 @@ export default function IsoTaxonomyPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search events, ISO codes, or vendor terms..."
-            className="ca-control ca-search-control pr-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+            className="ca-control ca-control-lead-icon pr-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           />
           {search && (
             <button

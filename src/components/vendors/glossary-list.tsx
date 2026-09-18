@@ -60,7 +60,7 @@ export function GlossaryList({ entries }: { entries: readonly GEntry[] }) {
             placeholder="Find a term, or search the definitions"
             aria-label="Filter glossary terms"
             aria-describedby="glossary-count"
-            className="ca-control ca-search-control py-3 pr-20 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+            className="ca-control ca-control-lead-icon py-3 pr-20 text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
           />
           {query && (
             <button
