@@ -7,10 +7,10 @@ const snapshot = JSON.parse(await readFile("src/data/fund-master/franklin-etf-sn
 // (agents/goop/memory/audit/...-raw.json) that was never tracked in git, so this
 // gate passed only inside one agent's working tree and failed everywhere else.
 const raw = { sources: snapshot.acquisition.successful_sources.map((url) => ({ url })) };
-assert.equal(snapshot.schema_version, "1.0"); assert.match(snapshot.snapshot_id, /^franklin-etf-\d{4}-\d{2}-\d{2}$/); assert.equal(snapshot.records.length, 82); assert.equal(snapshot.acquisition.record_count, 82);
+assert.equal(snapshot.schema_version, "1.0"); assert.match(snapshot.snapshot_id, /^franklin-etf-\d{4}-\d{2}-\d{2}$/); assert.equal(snapshot.records.length, 97); assert.equal(snapshot.acquisition.record_count, 97);
 const urls = new Set(raw.sources.map((s) => s.url)); const tickers = new Set();
 for (const fund of snapshot.records) { assert.match(fund.ticker, /^[A-Z0-9.\-^=]+$/); assert(!tickers.has(fund.ticker)); tickers.add(fund.ticker); for (const url of fund.source_urls) { assert.match(url, /^https:\/\//); assert(urls.has(url), `source missing from raw audit: ${url}`); } for (const field of ["ticker","name","isin","underlying_index","index_provider","index_type","universe","weighting","reconstitution_frequency","inception_date"]) { if (fund[field] === null) assert(fund.missing_fields.includes(field)); } assert.notEqual(fund.ticker, "VETTAFI"); }
-assert.equal(snapshot.records.some((r) => r.index_provider === "Solactive AG"), true); assert.equal(snapshot.records.some((r) => r.ticker === "FLJP"), true); assert.deepEqual(new Set(["IE00BFWXDV39","IE00BF2B0K52","IE00BMDPBZ72","IE0006FAD976","IE00BF2B0P08","IE000Z4OBQK4","IE0008M1R3N4","IE000EQGURT5","IE000IMGE5W5","IE000ZZJ48Q0","IE000AZOUN82","IE000CVOSY02","IE000ZOKLHY7","IE0003WEWAX4","IE000IM4K4K2"]), new Set(snapshot.records.slice(-15).map((r) => r.ticker)));
+assert.equal(snapshot.records.some((r) => r.index_provider === "Solactive AG"), true); assert.equal(snapshot.records.some((r) => r.ticker === "FLJP"), true); assert.deepEqual(new Set(["IE00BMDPBY65","CIIH","CUIV","CIVH","R3AL","FRGG","FGSE","FEIF","TINS","LRGE","BUYZ","DVAL","PEMX","PVAL","FGDL"]), new Set(snapshot.records.slice(-15).map((r) => r.ticker)));
 assert.equal(new Set(snapshot.records.map((r) => r.index_type)).size, 5, "reviewed table must exercise five index types");
 const { franklinSnapshot, resolveFundRules } = await import("../src/lib/fund-master.ts");
 const rules = [{ vendor: "ftse", event_type: "cash-dividend", index_type: "market-cap-weighted" }];
