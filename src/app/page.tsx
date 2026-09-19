@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRightIcon, Trash2Icon } from "lucide-react";
 
-import { SymbolTypeahead } from "@/components/home/symbol-typeahead";
 import { RouteShell } from "@/components/route-shell";
 import { Band } from "@/components/ui/band";
 import { Field, fieldControlClassName } from "@/components/ui/field";
@@ -132,7 +131,18 @@ export default function Home() {
             <form onSubmit={handleSubmit} noValidate>
               <div className="grid gap-4 md:grid-cols-2">
                 <Field className="md:col-span-2" label="Ticker symbol" htmlFor="ticker" hint="Use the listed security&apos;s ticker, not its fund or index symbol.">
-                  <SymbolTypeahead value={ticker} onChange={setTicker} />
+                  <input
+                    id="ticker"
+                    name="ticker"
+                    type="text"
+                    value={ticker}
+                    onChange={(event) => setTicker(event.target.value.toUpperCase())}
+                    placeholder="e.g. AAPL or TESCO"
+                    autoCapitalize="characters"
+                    autoComplete="off"
+                    maxLength={15}
+                    className={fieldControlClassName("font-mono uppercase")}
+                  />
                 </Field>
 
                 <Field label="Event type" htmlFor="event-type">
