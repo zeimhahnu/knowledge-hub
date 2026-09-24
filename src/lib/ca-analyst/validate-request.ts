@@ -22,6 +22,43 @@ function validDate(value: unknown) {
   return !Number.isNaN(date.valueOf()) && date.toISOString().slice(0, 10) === value;
 }
 
+const plainObject = (value: unknown): value is Record<string, unknown> =>
+  Boolean(value) && typeof value === "object" && !Array.isArray(value);
+
+// The M4-M6 fields mirror ca-analyst-service/src/contracts.ts. All optional.
+function validDeferral(value: unknown) {
+  if (value === undefined) return true;
+  return plainObject(value) && ownKeys(value, ["timing", "reviewDate", "finding"]) &&
+    ["threshold-gated", "at-review"].includes(String(value.timing)) &&
+    (value.reviewDate === null || validDate(value.reviewDate)) && boundedString(value.finding, 400);
+}
+
+function validPolicy(value: unknown) {
+  if (value === undefined) return true;
+  return plainObject(value) && ownKeys(value, ["treatment", "sourceRef"]) &&
+    boundedString(value.treatment, 600) && boundedString(value.sourceRef, 500);
+}
+
+function validQualifiers(value: unknown) {
+  if (value === undefined) return true;
+  if (!plainObject(value) || !ownKeys(value, ["dividendYieldPct", "conditions"])) return false;
+  const pct = value.dividendYieldPct;
+  if (pct !== undefined && (typeof pct !== "number" || !Number.isFinite(pct) || pct < 0 || pct > 100)) return false;
+  if (value.conditions === undefined) return true;
+  if (!plainObject(value.conditions)) return false;
+  const entries = Object.entries(value.conditions);
+  return entries.length <= 8 && entries.every(([key, v]) => boundedString(key, 64) && boundedString(v, 64));
+}
+
+function validDividendChecks(value: unknown) {
+  if (value === undefined) return true;
+  return Array.isArray(value) && value.length <= 7 && value.every((check) =>
+    plainObject(check) && ownKeys(check, ["vendor", "thresholdPct", "classifiedAs", "conflicts"]) &&
+    typeof check.vendor === "string" && VENDORS.has(check.vendor) &&
+    typeof check.thresholdPct === "number" && Number.isFinite(check.thresholdPct) &&
+    ["special", "ordinary"].includes(String(check.classifiedAs)) && typeof check.conflicts === "boolean");
+}
+
 function validRequest(value: unknown): value is Record<string, unknown> {
   if (!value || typeof value !== "object" || Array.isArray(value)) return false;
   const request = value as Record<string, unknown>;
@@ -30,13 +67,14 @@ function validRequest(value: unknown): value is Record<string, unknown> {
   const lookup = request.lookup;
   if (!lookup || typeof lookup !== "object" || Array.isArray(lookup)) return false;
   const l = lookup as Record<string, unknown>;
-  if (!ownKeys(l, ["ticker", "eventType", "exDate", "selectedVendors", "matrixRows", "news", "entailment"]) ||
+  if (!ownKeys(l, ["ticker", "eventType", "exDate", "selectedVendors", "matrixRows", "news", "entailment", "company", "qualifiers", "dividendChecks"]) ||
       !boundedString(l.ticker, 15) || !boundedString(l.eventType, 64) || !validDate(l.exDate)) return false;
   if (!Array.isArray(l.selectedVendors) || l.selectedVendors.length > 7 || l.selectedVendors.some((v) => typeof v !== "string" || !VENDORS.has(v))) return false;
   if (!Array.isArray(l.matrixRows) || l.matrixRows.length > 7 || l.matrixRows.some((row) => {
     if (!row || typeof row !== "object" || Array.isArray(row)) return true;
     const r = row as Record<string, unknown>;
-    return !ownKeys(r, ["vendor", "state", "provenance", "ruleRefs", "rules"]) || typeof r.vendor !== "string" || !VENDORS.has(r.vendor) ||
+    return !ownKeys(r, ["vendor", "state", "provenance", "ruleRefs", "rules", "deferral", "uncoveredPolicy"]) || typeof r.vendor !== "string" || !VENDORS.has(r.vendor) ||
+      !validDeferral(r.deferral) || !validPolicy(r.uncoveredPolicy) ||
       typeof r.state !== "string" || !STATES.has(r.state) || typeof r.provenance !== "string" || !PROVENANCE.has(r.provenance) ||
       !Array.isArray(r.ruleRefs) || r.ruleRefs.length > 8 || r.ruleRefs.some((ref) => !boundedString(ref, 500)) ||
       !Array.isArray(r.rules) || r.rules.length > 8 || r.rules.some((rule) => {
@@ -57,6 +95,7 @@ function validRequest(value: unknown): value is Record<string, unknown> {
           typeof evidence.confidence !== "string" || !RULE_CONFIDENCE.has(evidence.confidence);
       });
   })) return false;
+  if ((l.company !== undefined && !boundedString(l.company, 120)) || !validQualifiers(l.qualifiers) || !validDividendChecks(l.dividendChecks)) return false;
   const selectedVendors = l.selectedVendors as string[];
   const rows = l.matrixRows as Array<Record<string, unknown>>;
   if (new Set(selectedVendors).size !== selectedVendors.length || new Set(rows.map((row) => row.vendor)).size !== rows.length ||

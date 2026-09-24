@@ -2,11 +2,14 @@ import type { NewsValidationResult } from "../news-validation.ts";
 import type { LookupVerdict, MatrixRow } from "../lookup-verdict.ts";
 import { VENDOR_IDS, type VendorId } from "../vendors.ts";
 import type { VendorEntailment } from "../vendor-entailment.ts";
+import type { LookupFilters } from "../lookup-verdict.ts";
+import { classifyDividend } from "../dividend-check.ts";
 import type {
   AnalystEntailment,
   AnalystLookupContext,
   AnalystMatrixRow,
   AnalystNewsContext,
+  AnalystQualifiers,
   AnalystRuleEvidence,
 } from "./types.ts";
 
@@ -16,6 +19,7 @@ const MAX_RULE_REFS = 8;
 const MAX_SOURCES = 8;
 const MAX_ENTAILMENT = 7;
 const MAX_REASON = 600;
+const MAX_CONDITIONS = 8;
 
 function cleanText(value: string, max: number): string {
   return value
@@ -106,6 +110,21 @@ function entailmentContext(results: readonly VendorEntailment[], selected: Reado
     }));
 }
 
+/** Only answered qualifiers travel; an empty object would claim "asked, answered nothing". */
+function qualifiersContext(filters: LookupFilters | undefined): AnalystQualifiers | null {
+  const conditions = Object.entries(filters?.conditions ?? {})
+    .filter((entry): entry is [string, string] => typeof entry[1] === "string" && entry[1].length > 0)
+    .slice(0, MAX_CONDITIONS)
+    .map(([key, value]) => [cleanText(key, 64), cleanText(value, 64)]);
+  const yieldPct = filters?.dividendYieldPct;
+  const hasYield = typeof yieldPct === "number" && Number.isFinite(yieldPct) && yieldPct >= 0 && yieldPct <= 100;
+  if (!conditions.length && !hasYield) return null;
+  return {
+    ...(hasYield ? { dividendYieldPct: yieldPct } : {}),
+    ...(conditions.length ? { conditions: Object.fromEntries(conditions) } : {}),
+  };
+}
+
 /** Build the bounded P1a wire context from the lookup already on screen. */
 export function buildAnalystLookupContext({
   ticker,
@@ -115,6 +134,8 @@ export function buildAnalystLookupContext({
   verdict,
   news,
   entailment,
+  company,
+  filters,
 }: {
   ticker: string;
   eventType: string;
@@ -123,9 +144,16 @@ export function buildAnalystLookupContext({
   verdict: LookupVerdict;
   news: NewsValidationResult;
   entailment?: readonly VendorEntailment[];
+  company?: string | null;
+  filters?: LookupFilters;
 }): AnalystLookupContext {
   const selected = [...new Set(selectedVendors.filter(isVendor))].slice(0, MAX_VENDORS);
   const selectedSet = new Set(selected);
+  const qualifiers = qualifiersContext(filters);
+  const dividendChecks = qualifiers?.dividendYieldPct === undefined
+    ? []
+    : classifyDividend(eventType, qualifiers.dividendYieldPct).filter((check) => selectedSet.has(check.vendor));
+  const companyName = company ? cleanText(company, 120) : "";
   return {
     ticker: cleanText(ticker, 15).toUpperCase(),
     eventType: cleanText(eventType, 64),
@@ -140,6 +168,15 @@ export function buildAnalystLookupContext({
         provenance: provenance(row, news),
         ruleRefs: sourceRefs(row),
         rules: ruleEvidence(row),
+        ...(row.deferral ? { deferral: {
+          timing: row.deferral.timing,
+          reviewDate: row.deferral.reviewDate,
+          finding: cleanText(row.deferral.finding, 400),
+        } } : {}),
+        ...(row.uncoveredPolicy ? { uncoveredPolicy: {
+          treatment: cleanText(row.uncoveredPolicy.treatment, MAX_REASON),
+          sourceRef: cleanText(row.uncoveredPolicy.sourceRef, 500),
+        } } : {}),
       })),
     news: newsContext(news),
     // Omitted entirely when absent: the wire contract makes entailment optional,
@@ -147,5 +184,8 @@ export function buildAnalystLookupContext({
     ...(entailment && entailment.length
       ? { entailment: entailmentContext(entailment, selectedSet) }
       : {}),
+    ...(companyName ? { company: companyName } : {}),
+    ...(qualifiers ? { qualifiers } : {}),
+    ...(dividendChecks.length ? { dividendChecks } : {}),
   };
 }

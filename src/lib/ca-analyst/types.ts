@@ -33,6 +33,10 @@ export type AnalystMatrixRow = {
   provenance: "measured" | "news-confirmed" | "inferred" | "no-rule";
   ruleRefs: string[];
   rules: AnalystRuleEvidence[];
+  /** Hub-computed: the vendor carries the change to its next review (plan-coac-1.0 M6). */
+  deferral?: { timing: "threshold-gated" | "at-review"; reviewDate: string | null; finding: string };
+  /** The vendor's stated fallback when no row covers the event. */
+  uncoveredPolicy?: { treatment: string; sourceRef: string };
 };
 
 export type AnalystRuleEvidence = {
@@ -69,6 +73,23 @@ export type AnalystLookupContext = {
   matrixRows: AnalystMatrixRow[];
   news: AnalystNewsContext;
   entailment?: AnalystEntailment[];
+  company?: string;
+  /** The operator's answers on the lookup page; absent when none was given. */
+  qualifiers?: AnalystQualifiers;
+  /** Hub-computed size classification of the yield per vendor with a numeric boundary (M4). */
+  dividendChecks?: AnalystDividendCheck[];
+};
+
+export type AnalystQualifiers = {
+  dividendYieldPct?: number;
+  conditions?: Record<string, string>;
+};
+
+export type AnalystDividendCheck = {
+  vendor: string;
+  thresholdPct: number;
+  classifiedAs: "special" | "ordinary";
+  conflicts: boolean;
 };
 
 export type AnalystTurnRequest = {

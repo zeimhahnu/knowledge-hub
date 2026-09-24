@@ -668,9 +668,11 @@ export function LookupView({
             // Computed above and rendered on screen; before 2026-09-16 it stopped
             // at the UI and the model re-derived the same verdict from rule text.
             entailment,
+            company,
+            filters,
           })
         : null,
-    [caAnalystEnabled, verdict, newsResult, scope, ticker, eventType, exDate, entailment],
+    [caAnalystEnabled, verdict, newsResult, scope, ticker, eventType, exDate, entailment, company, filters],
   );
   const handleNewsResult = useCallback(
     (result: NewsValidationResult) => {
