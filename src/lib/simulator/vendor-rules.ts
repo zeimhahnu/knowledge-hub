@@ -405,55 +405,56 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
   // ─── §8 Secondary Offering ─────────────────────────────────────────────────
   "secondary-offering": {
     msci: {
-      rule: "Immediate if ≥5% of issued shares; else accumulated to QIR",
+      rule: "Event-time update at ≥5% / 10% / 25% by cap tier",
       trigger: "threshold-size",
       thresholdPct: 5,
       reason:
-        "MSCI uses a single 5% size threshold — below 5% the change is deferred to the next quarterly index review regardless of dollar value.",
-      citation: "§8",
+        "MSCI applies secondary offerings and block sales at the event with two full business days advance notice when the change meets the Standard, Small Cap, or Micro Cap threshold; smaller changes are deferred to the next Index Review.",
+      citation: "MSCI Corporate Events §4.1–§4.2",
     },
     sp: {
       rule: "BOTH ≥5% of shares AND ≥USD 150M required",
       trigger: "threshold-size",
       thresholdPct: 5,
       reason:
-        "S&P DJI uses a dual gate: both 5% of issued shares AND a USD 150M floor must be met, so a 5% offering on a small-cap can still slip through to QIR.",
-      citation: "§8",
+        "S&P DJI uses a dual gate for public offerings, including block sales and spot secondaries: both 5% of pre-event shares and a USD 150M floor must be met, unless the event is at least USD 1B.",
+      citation: "S&P Equity Indices Policies §Non-Mandatory Share and IWF Updates",
     },
     ftse: {
-      rule: ">1% cumulative per quarter; extraordinary events immediate",
+      rule: "Intra-quarter at US$1bn or 5% + US$250m",
       trigger: "threshold-size",
-      thresholdPct: 1,
+      thresholdPct: 5,
       reason:
-        "FTSE uses the lowest threshold (1% cumulative per quarter) so it tends to surface secondary offerings earlier than MSCI or S&P, but most are still deferred to QIR.",
-      citation: "§8",
+        "FTSE uses the same two materiality routes for secondary offerings and block sales: a US$1bn investable market-cap change, or 5% index shares plus US$250m. Qualifying previously restricted shares can change free float intra-quarter; smaller or late-discovered events go to the quarterly review.",
+      citation: "FTSE Russell CA Guide §5.2",
     },
     stoxx: {
-      rule: "DIVISOR-only adjustment; ±10% extraordinary triggers immediate",
+      rule: "Intra-quarter at ±10% shares or ±5pp free float",
       trigger: "threshold-size",
       thresholdPct: 10,
       reason:
-        "STOXX is the unique outlier: there is NO PR price adjustment for secondary offerings — only the divisor is adjusted, and only ±10% changes are extraordinary (immediate). Below ±10% goes to the next quarterly review.",
-      citation: "§8",
+        "STOXX applies the same extraordinary-adjustment thresholds to secondary offerings as to other share/free-float changes: at least ±10% free-float-adjusted shares or ±5 percentage points in the free-float factor; otherwise the quarterly underlying-data schedule applies.",
+      citation: "STOXX Calculation Guide §8.2",
     },
     solactive: {
       rule: "No dedicated secondary-offering rule; framework discretion",
       trigger: "completion-gate",
       reason:
-        "Solactive v1.20 does not publish a dedicated secondary-offering treatment; it permits default/discretionary handling for undescribed or exceptional actions, with product Guidelines taking precedence.",
+        "Solactive v1.20 does not publish a dedicated secondary-offering treatment; its generic corporate-actions framework and product Guidelines govern uncovered cases.",
       citation: "Solactive Equity Index Methodology v1.20 §2.1 (p.12)",
     },
     morningstar: {
       rule: "Materiality assessment — no fixed % stated",
-      trigger: "completion-gate",
+      trigger: "threshold-size",
       reason:
-        "Morningstar makes a materiality call without a published numeric threshold, so its publication timing for the same offering can differ from MSCI/S&P.",
-      citation: "§8",
+        "Morningstar treats secondary offerings as nonmandatory and uses a materiality assessment; the methodology publishes no quantitative threshold, so below-materiality changes are deferred to scheduled rebalance.",
+      citation: "Morningstar CA Methodology §Nonmandatory Corporate Action Methodology (p.37)",
     },
     vettafi: {
-      rule: "Rebalance for share-count changes",
-      trigger: "completion-gate",
-      reason: "VettaFi groups Share Offerings with Tenders and Buybacks and implements share-count changes at rebalancing; the policy does not state a >5% share-count trigger.",
+      rule: "Scheduled rebalancing only",
+      trigger: "scheduled-review",
+      reason:
+        "VettaFi groups share offerings with tenders and buybacks and implements share-count changes at rebalancing; the policy states no accelerated path regardless of size.",
       citation: "VettaFi Index Maintenance Policy v1.1.8 §4 (p.2)",
     },
   },
@@ -714,9 +715,56 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
   },
 };
 
-// ponytail: primary offerings share each vendor's offerings rule until plan-coac-1.0 G6
-// splits them, matching the inferred primary-offering rows in rules.json.
-VENDOR_RULES["primary-offering"] = VENDOR_RULES["secondary-offering"];
+// Primary offerings have their own sourced timing semantics; they are not an
+// alias for secondary offerings because FTSE defers primary free-float changes.
+VENDOR_RULES["primary-offering"] = {
+  msci: {
+    rule: "Close of first trading day at ≥5% / 10% / 25% by cap tier",
+    trigger: "threshold-size",
+    thresholdPct: 5,
+    reason: "MSCI implements qualifying primary offerings and debt-to-equity swaps at the close of the first trading day of the new shares; smaller changes are deferred to the next Index Review.",
+    citation: "MSCI Corporate Events §4.1–§4.2",
+  },
+  sp: {
+    rule: "Accelerated at ≥5% + US$150M, or ≥US$1B",
+    trigger: "threshold-size",
+    thresholdPct: 5,
+    reason: "S&P DJI accelerates public-offering share issuance when both the 5% share and US$150M thresholds are met, or when the event is at least US$1B; otherwise it waits for quarterly rebalancing.",
+    citation: "S&P Equity Indices Policies §Non-Mandatory Share and IWF Updates",
+  },
+  ftse: {
+    rule: "Shares intra-quarter; free float at quarterly review",
+    trigger: "threshold-size",
+    thresholdPct: 5,
+    reason: "FTSE applies its US$1bn or 5% + US$250m materiality routes to primary share-count updates, but a primary offering does not move free float intra-quarter.",
+    citation: "FTSE Russell CA Guide §5.2",
+  },
+  stoxx: {
+    rule: "Intra-quarter at ±10% shares or ±5pp free float",
+    trigger: "threshold-size",
+    thresholdPct: 10,
+    reason: "STOXX applies its extraordinary share/free-float thresholds to primary offerings; smaller changes follow the quarterly underlying-data schedule.",
+    citation: "STOXX Calculation Guide §8.2",
+  },
+  morningstar: {
+    rule: "Materiality assessment — no fixed % stated",
+    trigger: "threshold-size",
+    reason: "Morningstar covers primary offerings as public offerings under its nonmandatory policy and publishes no quantitative materiality threshold; below materiality is deferred to scheduled rebalance.",
+    citation: "Morningstar CA Methodology §Corporate Action Category (p.5); §Nonmandatory Corporate Action Methodology (p.37)",
+  },
+  solactive: {
+    rule: "No dedicated primary-offering rule; framework discretion",
+    trigger: "no-coverage",
+    reason: "Solactive v1.20 does not publish a dedicated primary-offering treatment; its generic corporate-actions framework and product Guidelines govern uncovered cases.",
+    citation: "Solactive Equity Index Methodology v1.20 §2.1 (p.12)",
+  },
+  vettafi: {
+    rule: "Scheduled rebalancing only",
+    trigger: "scheduled-review",
+    reason: "VettaFi groups share offerings with tenders and buybacks and implements share-count changes at rebalancing; the policy states no accelerated path regardless of size.",
+    citation: "VettaFi Index Maintenance Policy v1.1.8 §4 (p.2)",
+  },
+};
 
 const NOT_NAMED: VendorRule = {
   rule: "Not named in the methodology",

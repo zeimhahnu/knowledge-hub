@@ -175,27 +175,26 @@
       "event_type": "primary-offering",
       "caev": "OTHR",
       "index_type": "*",
-      "treatment": "Applied (PAF + divisor) when the share-count change meets the size threshold — ≥5% of pre-event NOS for Standard, ≥10% Small Cap, ≥25% Micro Cap — with 2 full business days advance notice; changes <±1% on post-event NOS deferred to the next Index Review.",
+      "treatment": "Primary offerings and debt-to-equity swaps meeting the size threshold are implemented at the close of the first trading day of the new shares. The threshold is ≥5% of pre-event NOS for Standard, ≥10% for Small Cap, or ≥25% for Micro Cap; changes below ±1% of post-event NOS are deferred to the next Index Review.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/index-vendor-methodology.md §8 (Secondary Offering); msci-corporate-events-methodology-2026.pdf §4.1, §4.2",
-      "confidence": "inferred",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §4.1–§4.2 (Primary Offerings and Debt-to-Equity Swaps)",
+      "confidence": "stated",
       "timing": "threshold-gated",
-      "deferral_condition": "Below the size threshold (5% of pre-event NOS Standard, 10% Small Cap, 25% Micro Cap)",
-      "mapping_note": "Seeded from this vendor's offerings rule, which states one treatment for primary and secondary offerings together; pending the per-vendor primary/secondary split (plan-coac-1.0 G6)."
+      "deferral_condition": "Below the 5%/10%/25% cap-tier size threshold, or below ±1% of post-event NOS."
     },
     {
       "vendor": "msci",
       "event_type": "secondary-offering",
       "caev": "OTHR",
       "index_type": "*",
-      "treatment": "Applied (PAF + divisor) when the share-count change meets the size threshold — ≥5% of pre-event NOS for Standard, ≥10% Small Cap, ≥25% Micro Cap — with 2 full business days advance notice; changes <±1% on post-event NOS deferred to the next Index Review.",
+      "treatment": "Secondary offerings and block sales meeting the size threshold are implemented at the time of the event with 2 full business days advance notice. The threshold is ≥5% of pre-event NOS for Standard, ≥10% for Small Cap, or ≥25% for Micro Cap; changes below ±1% of post-event NOS are deferred to the next Index Review.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/index-vendor-methodology.md §8 (Secondary Offering); msci-corporate-events-methodology-2026.pdf §4.1, §4.2",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §4.1–§4.2 (Secondary Offerings)",
       "confidence": "stated",
       "timing": "threshold-gated",
-      "deferral_condition": "Below the size threshold (5% of pre-event NOS Standard, 10% Small Cap, 25% Micro Cap)"
+      "deferral_condition": "Below the 5%/10%/25% cap-tier size threshold, or below ±1% of post-event NOS."
     },
     {
       "vendor": "msci",
@@ -490,27 +489,26 @@
       "event_type": "primary-offering",
       "caev": "OTHR",
       "index_type": "*",
-      "treatment": "Public offerings (including block sales and spot secondaries) receive accelerated implementation only when both thresholds are met: at least 5% of pre-event shares and at least US$150m (a US$1bn+ event is implemented even below 5%). Otherwise implemented at the next quarterly rebalancing.",
+      "treatment": "Share issuance from a public offering receives accelerated implementation when both thresholds are met: at least 5% of pre-event shares and at least US$150m; a US$1bn+ event is implemented even below 5%. Otherwise it is implemented at the next quarterly rebalancing.",
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Non-Mandatory Share and IWF Updates (Accelerated Implementation)",
-      "confidence": "inferred",
+      "confidence": "stated",
       "timing": "threshold-gated",
-      "deferral_condition": "Below 5% of pre-event shares or US$150M (and under US$1B)",
-      "mapping_note": "Seeded from this vendor's offerings rule, which states one treatment for primary and secondary offerings together; pending the per-vendor primary/secondary split (plan-coac-1.0 G6)."
+      "deferral_condition": "Below 5% of pre-event shares or US$150M, and under US$1B."
     },
     {
       "vendor": "sp",
       "event_type": "secondary-offering",
       "caev": "OTHR",
       "index_type": "*",
-      "treatment": "Public offerings (including block sales and spot secondaries) receive accelerated implementation only when both thresholds are met: at least 5% of pre-event shares and at least US$150m (a US$1bn+ event is implemented even below 5%). Otherwise implemented at the next quarterly rebalancing.",
+      "treatment": "Public offerings including block sales and spot secondaries receive accelerated implementation when both thresholds are met: at least 5% of pre-event shares and at least US$150m; a US$1bn+ event is implemented even below 5%. Otherwise they are implemented at the next quarterly rebalancing.",
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Non-Mandatory Share and IWF Updates (Accelerated Implementation)",
       "confidence": "stated",
       "timing": "threshold-gated",
-      "deferral_condition": "Below 5% of pre-event shares or US$150M (and under US$1B)"
+      "deferral_condition": "Below 5% of pre-event shares or US$150M, and under US$1B."
     },
     {
       "vendor": "sp",
@@ -771,27 +769,26 @@
       "event_type": "primary-offering",
       "caev": "OTHR",
       "index_type": "*",
-      "treatment": "Share and free-float updates from primary and secondary offerings are implemented intra-quarter with at least two days' notice when they meet the materiality threshold — a USD 1bn investable market-cap change, or a 5% index-shares change plus USD 250m — otherwise deferred to the next quarterly review (or the review following discovery if pricing settled more than five business days earlier).",
+      "treatment": "Primary offerings meeting either materiality route — a US$1bn investable market-cap change, or a 5% index-shares change plus US$250m — receive an intra-quarter share-count update with at least two days’ notice. A primary offering does not move free float intra-quarter; that change is deferred to the next quarterly review.",
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §5.2 (Intra-quarter updates); §2.1.5 (Timing of corporate actions and events)",
-      "confidence": "inferred",
+      "confidence": "stated",
       "timing": "threshold-gated",
-      "deferral_condition": "Below US$1bn investable market cap change and below 5% index shares + US$250m, or found more than 5 business days after pricing",
-      "mapping_note": "Seeded from this vendor's offerings rule, which states one treatment for primary and secondary offerings together; pending the per-vendor primary/secondary split (plan-coac-1.0 G6)."
+      "deferral_condition": "Below the US$1bn investable market-cap route and below the 5% index-shares + US$250m route; free-float changes from primary offerings are deferred to the next quarterly review; or the event is found more than 5 business days after pricing."
     },
     {
       "vendor": "ftse",
       "event_type": "secondary-offering",
       "caev": "OTHR",
       "index_type": "*",
-      "treatment": "Share and free-float updates from primary and secondary offerings are implemented intra-quarter with at least two days' notice when they meet the materiality threshold — a USD 1bn investable market-cap change, or a 5% index-shares change plus USD 250m — otherwise deferred to the next quarterly review (or the review following discovery if pricing settled more than five business days earlier).",
+      "treatment": "Secondary offerings and block sales meeting either materiality route — a US$1bn investable market-cap change, or a 5% index-shares change plus US$250m — receive intra-quarter share and free-float updates with at least two days’ notice when the sold shares were previously restricted. Otherwise they are deferred to the next quarterly review; discovery more than 5 business days after pricing also defers the change.",
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §5.2 (Intra-quarter updates); §2.1.5 (Timing of corporate actions and events)",
       "confidence": "stated",
       "timing": "threshold-gated",
-      "deferral_condition": "Below US$1bn investable market cap change and below 5% index shares + US$250m, or found more than 5 business days after pricing"
+      "deferral_condition": "Below the US$1bn investable market-cap route and below the 5% index-shares + US$250m route, or found more than 5 business days after pricing."
     },
     {
       "vendor": "ftse",
@@ -1054,30 +1051,29 @@
     },
     {
       "vendor": "stoxx",
-      "index_type": "*",
       "event_type": "primary-offering",
       "caev": "OTHR",
-      "treatment": "A share-count change from a corporate action greater than ±10% from one trading day to the next is announced immediately, implemented two trading days later, and effective the following trading day; other applicable changes follow the quarterly underlying-data schedule. Free-float factor changes over ±5 percentage points use the same two-day process.",
-      "lead_days": 2,
-      "lead_days_confidence": "stated",
-      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.2 (Free Float Factors and Share Adjustments)",
-      "confidence": "inferred",
-      "timing": "threshold-gated",
-      "deferral_condition": "Free-float-adjusted share change below +/-10%",
-      "mapping_note": "Seeded from this vendor's offerings rule, which states one treatment for primary and secondary offerings together; pending the per-vendor primary/secondary split (plan-coac-1.0 G6)."
-    },
-    {
-      "vendor": "stoxx",
       "index_type": "*",
-      "event_type": "secondary-offering",
-      "caev": "OTHR",
-      "treatment": "A share-count change from a corporate action greater than ±10% from one trading day to the next is announced immediately, implemented two trading days later, and effective the following trading day; other applicable changes follow the quarterly underlying-data schedule. Free-float factor changes over ±5 percentage points use the same two-day process.",
+      "treatment": "A primary offering that changes free-float-adjusted shares by at least ±10%, or changes the free-float factor by at least ±5 percentage points, is announced immediately, implemented two trading days later, and effective the following trading day; other applicable changes follow the quarterly underlying-data schedule.",
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.2 (Free Float Factors and Share Adjustments)",
       "confidence": "stated",
       "timing": "threshold-gated",
-      "deferral_condition": "Free-float-adjusted share change below +/-10%"
+      "deferral_condition": "Free-float-adjusted share change below ±10% and free-float factor change below ±5 percentage points."
+    },
+    {
+      "vendor": "stoxx",
+      "event_type": "secondary-offering",
+      "caev": "OTHR",
+      "index_type": "*",
+      "treatment": "A secondary offering or block sale that changes free-float-adjusted shares by at least ±10%, or changes the free-float factor by at least ±5 percentage points, is announced immediately, implemented two trading days later, and effective the following trading day; other applicable changes follow the quarterly underlying-data schedule.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.2 (Free Float Factors and Share Adjustments)",
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "Free-float-adjusted share change below ±10% and free-float factor change below ±5 percentage points."
     },
     {
       "vendor": "stoxx",
@@ -1406,27 +1402,26 @@
       "event_type": "primary-offering",
       "caev": "OTHR",
       "index_type": "*",
-      "treatment": "Public/secondary offerings are nonmandatory. Material share and corresponding float changes are accelerated weekly when the offering exceeds both USD 150m and 5% of shares, or exceeds USD 1bn even below 5%; otherwise qualifying changes are implemented at quarterly rebalancing. A subscription offer to existing holders follows the rights-offering treatment.",
+      "treatment": "Primary offerings are covered as public offerings under Morningstar’s nonmandatory corporate-action policy and are governed by a materiality assessment; changes below materiality are deferred to the scheduled quarterly rebalance. The methodology publishes no quantitative threshold.",
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Corporate Action Category (p. 5); §Subscription Offer (p. 22); §Nonmandatory Corporate Action Methodology (p. 37)",
-      "confidence": "inferred",
+      "confidence": "stated",
       "timing": "threshold-gated",
-      "deferral_condition": "Below USD 150m and 5% of shares (and below USD 1bn)",
-      "mapping_note": "Seeded from this vendor's offerings rule, which states one treatment for primary and secondary offerings together; pending the per-vendor primary/secondary split (plan-coac-1.0 G6)."
+      "deferral_condition": "Below Morningstar’s materiality threshold; no quantitative threshold is published."
     },
     {
       "vendor": "morningstar",
       "event_type": "secondary-offering",
       "caev": "OTHR",
       "index_type": "*",
-      "treatment": "Public/secondary offerings are nonmandatory. Material share and corresponding float changes are accelerated weekly when the offering exceeds both USD 150m and 5% of shares, or exceeds USD 1bn even below 5%; otherwise qualifying changes are implemented at quarterly rebalancing. A subscription offer to existing holders follows the rights-offering treatment.",
+      "treatment": "Secondary offerings are nonmandatory and governed by Morningstar’s materiality assessment; changes below materiality are deferred to the scheduled quarterly rebalance. The methodology publishes no quantitative threshold.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Corporate Action Category (p. 5); §Subscription Offer (p. 22); §Nonmandatory Corporate Action Methodology (p. 37)",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Corporate Action Category (p. 5); §Nonmandatory Corporate Action Methodology (p. 37)",
       "confidence": "stated",
       "timing": "threshold-gated",
-      "deferral_condition": "Below USD 150m and 5% of shares (and below USD 1bn)"
+      "deferral_condition": "Below Morningstar’s materiality threshold; no quantitative threshold is published."
     },
     {
       "vendor": "morningstar",
@@ -1689,7 +1684,7 @@
       "treatment": null,
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1 Corporate Actions (p.12; no dedicated secondary-offering treatment published)",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1 Corporate Actions (p.12; no dedicated primary-offering treatment published)",
       "confidence": "absent",
       "coverage": "framework-default"
     },
@@ -1986,27 +1981,27 @@
       "vendor": "vettafi",
       "event_type": "primary-offering",
       "index_type": "*",
-      "treatment": "Mapped from the policy's broad Share Offerings treatment: share offerings that change shares outstanding are implemented at the rebalancing. The policy does not state a >5% share-count trigger; its >5% figure belongs to weight-smoothing, not this event rule.",
+      "treatment": "Primary share offerings that change shares outstanding are implemented only at the scheduled rebalancing; the policy states no accelerated path regardless of size.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §4 Share Offerings, Tenders, and Share Buy-Backs; §II.5 Multi-Constraint Capped Weight Smoothing Process (pp.2,7)",
-      "confidence": "inferred",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §4 Share Offerings, Tenders, and Share Buy-Backs (p.2)",
+      "confidence": "stated",
       "coverage": "framework-default",
-      "mapping_note": "App event secondary-offering is a defensible mapping of the policy's broad Share Offerings term; no separate secondary-offering formula is published.",
-      "timing": "at-review"
+      "timing": "at-review",
+      "deferral_condition": "Always deferred to the next scheduled rebalancing; no accelerated path is stated."
     },
     {
       "vendor": "vettafi",
       "event_type": "secondary-offering",
       "index_type": "*",
-      "treatment": "Mapped from the policy's broad Share Offerings treatment: share offerings that change shares outstanding are implemented at the rebalancing. The policy does not state a >5% share-count trigger; its >5% figure belongs to weight-smoothing, not this event rule.",
+      "treatment": "Secondary offerings and block sales that change shares outstanding are implemented only at the scheduled rebalancing; the policy states no accelerated path regardless of size.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §4 Share Offerings, Tenders, and Share Buy-Backs; §II.5 Multi-Constraint Capped Weight Smoothing Process (pp.2,7)",
-      "confidence": "inferred",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §4 Share Offerings, Tenders, and Share Buy-Backs (p.2)",
+      "confidence": "stated",
       "coverage": "framework-default",
-      "mapping_note": "App event secondary-offering is a defensible mapping of the policy's broad Share Offerings term; no separate secondary-offering formula is published.",
-      "timing": "at-review"
+      "timing": "at-review",
+      "deferral_condition": "Always deferred to the next scheduled rebalancing; no accelerated path is stated."
     },
     {
       "vendor": "vettafi",
