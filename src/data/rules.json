@@ -2383,6 +2383,82 @@
         "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §5 Changes to shares outstanding and free float (p.25)",
         "note": "Flagship FTSE GEIS-style quarterly updates are after the close on the third Friday; the Russell US June reconstitution exception is the last Friday of June."
       },
+      "index_calendars": [
+        {
+          "indexes": [
+            "FTSE Asia ex Japan RIC Capped Index",
+            "FTSE Australia RIC Capped Index",
+            "FTSE Brazil RIC Capped Index",
+            "FTSE Canada RIC Capped Index",
+            "FTSE China RIC Capped Index",
+            "FTSE Developed Europe RIC Capped Index",
+            "FTSE Germany RIC Capped Index",
+            "FTSE India RIC Capped Index",
+            "FTSE Japan RIC Capped Hedged to USD Index",
+            "FTSE Japan RIC Capped Index",
+            "FTSE Latin America RIC Capped Index",
+            "FTSE Mexico RIC Capped Index",
+            "FTSE Russia RIC Capped Net Tax Index",
+            "FTSE Saudi Arabia RIC Capped Index",
+            "FTSE South Korea RIC Capped Index",
+            "FTSE Switzerland RIC Capped Net Tax Index",
+            "FTSE Taiwan RIC Capped Index",
+            "FTSE UK RIC Capped Index",
+            "FTSE Brazil 30/18 Capped Index",
+            "FTSE China 30/18 Capped Index",
+            "FTSE India 30/18 Capped Index",
+            "FTSE Korea 30/18 Capped Index",
+            "FTSE Saudi Arabia 30/18 Capped Index",
+            "FTSE Taiwan 30/18 Capped Index"
+          ],
+          "frequency": "quarterly",
+          "months": [
+            3,
+            6,
+            9,
+            12
+          ],
+          "effective": "third-friday",
+          "source_ref": "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/policy-documents/capping-methodology-guide.pdf §4.1.1; Appendix A, FTSE Global RIC Capped and 30/18 Capped (pp.20, 24, 29)",
+          "note": "The capping guide makes the effective date the Monday after the third Friday; the calendar stores the third-Friday close. RIC Capped and 30/18 constituent/region reviews can be semi-annual in March and September, but the quarterly capping/share-and-float cycle is the landing date for a deferred share or float change."
+        },
+        {
+          "indexes": [
+            "FTSE Canada All Cap Domestic Index",
+            "FTSE Developed Eurozone Index",
+            "FTSE Developed Index",
+            "FTSE Emerging Index",
+            "FTSE Emerging ex China Index",
+            "FTSE Japan Index",
+            "FTSE USA Index"
+          ],
+          "frequency": "quarterly",
+          "months": [
+            3,
+            6,
+            9,
+            12
+          ],
+          "effective": "third-friday",
+          "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §5–§5.1 (p.25); https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf §§6.4.1, 7.2.1 (pp.14, 17)",
+          "note": "The corporate-actions guide says shares and free float are reviewed quarterly and implemented after the close on the third Friday. GEIS ground rules separately state semi-annual March/September constituent reviews; this entry deliberately records the quarterly share/float update cycle, not the constituent reconstitution frequency."
+        },
+        {
+          "indexes": [
+            "Linked FTSE Asia ex Japan ex China Index"
+          ],
+          "frequency": "quarterly",
+          "months": [
+            3,
+            6,
+            9,
+            12
+          ],
+          "effective": "third-friday",
+          "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §5–§5.1 (p.25); https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf §§6.4.1, 7.2.1 (pp.14, 17); Franklin Templeton product page, Benchmark(s) and Type (benchmark link effective 1 Dec 2023)",
+          "note": "Franklin states that the linked benchmark uses FTSE Asia ex Japan ex China from 1 December 2023; the FTSE GEIS rules provide the parent regional review context. The quarterly FTSE share/float cycle is used for deferred changes, while the parent constituent review is semi-annual."
+        }
+      ],
       "uncovered_event_policy": {
         "treatment": "FTSE Russell reserves the right to determine the most appropriate implementation method for a corporate event not covered by the guide or one of a complex nature, and decides whether and when an index adjustment is made.",
         "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §1.1 Purpose of the guide (p.3)",
