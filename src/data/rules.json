@@ -51,7 +51,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.4 (Special Cash Dividends)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -66,7 +67,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.4 (Special Cash Dividends)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -81,7 +83,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.4 (Special Cash Dividends)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -96,7 +99,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.4 (Special Cash Dividend)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -107,7 +111,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/index-vendor-methodology.md §3 (Stock Dividend)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -118,7 +123,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/index-vendor-methodology.md §4 (Bonus Issue)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -129,7 +135,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/index-vendor-methodology.md §5 (Stock Split / Consolidation)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -140,7 +147,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/index-vendor-methodology.md §6 (Spin-off / Demerger)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -154,7 +162,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.6.1.1–§3.6.1.2, §3.6.3.1–§3.6.3.2, Appendix I (Rights Issue PAF formulas)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -168,7 +177,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §3.6.1.2 (Rights for new underlying shares, premium to market price)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -205,7 +215,9 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/index-vendor-methodology.md §9 (Private Placement); msci-corporate-events-methodology-2026.pdf §4.2",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "Below the 5%/10%/25% cap-tier size threshold, or below ±1% on post-event NOS."
     },
     {
       "vendor": "msci",
@@ -227,7 +239,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/index-vendor-methodology.md §10 (Return of Capital); msci-corporate-events-methodology-2026.pdf §3.3",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -255,7 +268,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.1, §2.3 (Mergers & Acquisitions)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -270,7 +284,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.1, §2.3 (Mergers & Acquisitions)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -285,7 +300,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.1, §2.3 (Mergers & Acquisitions)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -300,7 +316,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.1, §2.3 (Mergers & Acquisitions)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -315,7 +332,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.1, §2.3 (Mergers & Acquisitions)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -330,7 +348,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.1, §2.3 (Mergers & Acquisitions)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -344,7 +363,9 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.1, §2.3 (Mergers & Acquisitions)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "Below the 5%/10%/25% Standard/Small/Micro Cap threshold; an unlisted target acquisition is always deferred to the next Index Review."
     },
     {
       "vendor": "msci",
@@ -355,7 +376,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/index-vendor-methodology.md §12 (Tender Offers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "msci",
@@ -366,7 +388,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/index-vendor-methodology.md §13 (Bankruptcy / Delisting); msci-corporate-events-methodology-2026.pdf §5.3",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -377,7 +400,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Dividends (Ordinary Dividend)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -388,7 +412,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Dividends (Ordinary Dividend)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -399,7 +424,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Dividends (Ordinary Dividend)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -410,7 +436,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Dividends (Special Dividends)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -421,7 +448,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Stock Split and Consolidation (Stock Dividend)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -432,7 +460,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Stock Split and Consolidation (Bonus Issue)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -443,7 +472,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Stock Split and Consolidation (Stock Split)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -454,7 +484,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Spin-Offs",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -468,7 +499,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Rights Offerings; §S&P DJI’s Calculation of Rights Offerings, Step 1–2",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -482,7 +514,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §S&P DJI’s Calculation of Rights Offerings, Step 1–2",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "at-review"
     },
     {
       "vendor": "sp",
@@ -519,7 +552,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Non-Mandatory Share and IWF Updates (Quarterly Implementation)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "at-review"
     },
     {
       "vendor": "sp",
@@ -542,7 +576,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Dividends (Return of Capital)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -569,7 +604,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Mergers & Acquisitions (pp.5–6)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -584,7 +620,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Mergers & Acquisitions (pp.5–6)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -599,7 +636,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Mergers & Acquisitions (pp.5–6)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -613,7 +651,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Mergers & Acquisitions (pp.5–6)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "at-review"
     },
     {
       "vendor": "sp",
@@ -624,7 +663,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Tendered Shares",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -635,7 +675,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Bankruptcies",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -646,7 +687,8 @@
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends); §4.3 (Unknown and optional ordinary dividends and corrections); §4.8.1 (Cash dividends table)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -657,7 +699,8 @@
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends); §4.3 (Unknown and optional ordinary dividends and corrections); §4.8.1 (Cash dividends table)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -668,7 +711,8 @@
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.4 (Special dividends – tax adjustments)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -679,7 +723,8 @@
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.4 (Special dividends – tax adjustments)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -690,7 +735,8 @@
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.4 (Special dividends – tax adjustments)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -701,7 +747,8 @@
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.7 (Scrip issues & stock distributions)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -712,7 +759,8 @@
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.7 (Scrip issues & stock distributions)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -723,7 +771,8 @@
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.1 (Splits (sub-division)/reverse splits (consolidation))",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -734,7 +783,8 @@
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.14 (Spin-offs (including demergers))",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -748,7 +798,8 @@
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.9 (Rights issues/entitlement offers); §4.9.3 (Highly dilutive rights issues); §4.9.9 (Rights issue summary)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -762,7 +813,8 @@
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.9 (Rights issues/entitlement offers); §4.9.9 (Rights issue summary)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "at-review"
     },
     {
       "vendor": "ftse",
@@ -799,7 +851,8 @@
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §5 (Changes to shares outstanding and free float), note 5",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "at-review"
     },
     {
       "vendor": "ftse",
@@ -821,7 +874,8 @@
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.8.1 (Capital repayment table)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -844,7 +898,8 @@
       "lead_days": 5,
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.8.1 (Capital repayment table)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -859,7 +914,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10–§4.11 (Mergers and takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -874,7 +930,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10–§4.11 (Mergers and takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -889,7 +946,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10–§4.11 (Mergers and takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -904,7 +962,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10–§4.11 (Mergers and takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -919,7 +978,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10–§4.11 (Mergers and takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -934,7 +994,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10–§4.11 (Mergers and takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -948,7 +1009,9 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10–§4.11 (Mergers and takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "If the acquired company is not a member of the FTSE Russell Universe, the change is deferred to the next quarterly review."
     },
     {
       "vendor": "ftse",
@@ -959,7 +1022,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.11 (Target company deletion); §4.12 (Target company free float change)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -970,7 +1034,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.17 (Deletions); §2.1.5 (minimum two-day notice for bankruptcy)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -981,7 +1046,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.1 (Cash Dividend)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -992,7 +1058,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.2 (Special Cash Dividend)",
-      "confidence": "absent"
+      "confidence": "absent",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1003,7 +1070,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.5 (Stock Dividend)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1014,7 +1082,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.5.1 (Ordinary Stock Dividend)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1025,7 +1094,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.3 (Split and Reverse Split); §8.2 (immediate share-change implementation)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1036,7 +1106,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.8 (Spin-Off); §8.4 (Spin-Offs)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1047,7 +1118,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.4 (Rights Offering); §8.1.4.1–§8.1.4.2",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1084,7 +1156,9 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.2 (Free Float Factors and Share Adjustments)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "Share-count change at or below ±10% from one trading day to the next, and free-float factor change at or below ±5 percentage points; the change follows the quarterly underlying-data schedule."
     },
     {
       "vendor": "stoxx",
@@ -1106,7 +1180,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.6 (Return of Capital and Share Consolidation)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1133,7 +1208,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1148,7 +1224,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1163,7 +1240,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1178,7 +1256,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1193,7 +1272,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1208,7 +1288,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1223,7 +1304,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1238,7 +1320,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1253,7 +1336,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1264,7 +1348,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3.1–§8.3.2 (Mergers and Takeovers)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1275,7 +1360,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.6.3 (Bankruptcy)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "morningstar",
@@ -1550,7 +1636,8 @@
         "https://www.lseg.com/en/ftse-russell/indices/capped"
       ],
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.1 (Splits)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
