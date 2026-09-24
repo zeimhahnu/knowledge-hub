@@ -5226,6 +5226,421 @@
       ],
       "return_variant": "net-total-return",
       "index_nature": "factor"
+    },
+    {
+      "ticker": "FLXI",
+      "name": "Franklin FTSE India UCITS ETF",
+      "isin": "IE00BHZRQZ17",
+      "underlying_index": "FTSE India 30/18 Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Indian medium- and large-capitalization stocks",
+      "weighting": "Free-float-adjusted market-capitalization weighted with 30/18 issuer capping",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2019-06-25",
+      "source_urls": [
+        "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27853/SINGLCLASS/franklin-ftse-india-ucits-etf/IE00BHZRQZ17",
+        "https://www.franklintempleton.lu/download/en-lu/factsheet/b9bc8ae7-6430-4d3f-ae28-2749d7ed39af/Factsheet-FranklinFTSEIndiaUCITSETF-27853-FF-LU-en-GB.PDF",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2025-12-31",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview and Benchmark(s) and Type (pp. 2, 4) identify the ISIN, inception date, quarterly reconstitution, FTSE India 30/18 Capped Index-NR and FTSE Russell/LSE Group."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
+    },
+    {
+      "ticker": "FLXJ",
+      "name": "Franklin FTSE Japan UCITS ETF",
+      "isin": "IE000D0T0BO1",
+      "underlying_index": "FTSE Japan Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "market-cap-weighted",
+      "universe": "Japanese medium- and large-capitalization companies",
+      "weighting": "Free-float-adjusted market-capitalization weighted",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2024-07-29",
+      "source_urls": [
+        "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/41221/ETA/franklin-ftse-japan-ucits-etf/IE000D0T0BO1",
+        "https://www.franklintempletonoffshore.com/download/en-os/factsheet/270e6474-ffca-4401-94e3-cad4c8a5dad0/Factsheet-FranklinFTSEJapanUCITSETF-(Acc)-41221-ETA-FF-NRC-en-OS.PDF",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview and Benchmark(s) and Type (pp. 3, 6) identify the ISIN, inception date, quarterly reconstitution, FTSE Japan Index-NR and FTSE Russell/LSE Group."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "broad-market"
+    },
+    {
+      "ticker": "FLXK",
+      "name": "Franklin FTSE Korea UCITS ETF",
+      "isin": "IE00BHZRR030",
+      "underlying_index": "FTSE Korea 30/18 Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Korean medium- and large-capitalization stocks",
+      "weighting": "Free-float-adjusted market-capitalization weighted with 30/18 issuer capping",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2019-06-04",
+      "source_urls": [
+        "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27854/SINGLCLASS/franklin-ftse-korea-ucits-etf/IE00BHZRR030",
+        "https://www.franklintempleton.co.uk/download/en-gb/factsheet/57ed538b-cb12-48b6-8afa-818fa1ffc604/Factsheet-FranklinFTSEKoreaUCITSETF-27854-FF-GB-en-GB.PDF",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2025-12-31",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview and Benchmark(s) and Type (pp. 2, 4) identify the ISIN, inception date, quarterly reconstitution, FTSE Korea 30/18 Capped Index-NR and FTSE Russell/LSE Group."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
+    },
+    {
+      "ticker": "FLXP",
+      "name": "Franklin STOXX Europe 600 Paris Aligned Climate UCITS ETF",
+      "isin": "IE00BMDPBY65",
+      "underlying_index": "STOXX Europe 600 PAB Index",
+      "index_provider": "STOXX Ltd.",
+      "index_type": "capped-factor",
+      "universe": "European large- and mid-capitalization companies aligned to Paris-aligned benchmark climate objectives",
+      "weighting": "Climate-constrained STOXX Europe 600 weighting with Paris-aligned benchmark and issuer/sector constraints",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2020-07-29",
+      "source_urls": [
+        "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/29820/SINGLCLASS/franklin-stoxx-europe-600-paris-aligned-climate-ucits-etf/IE00BMDPBY65",
+        "https://www.franklintempleton.co.uk/download/en-gb/factsheet/f1c19709-7386-498e-bf96-3e8792a260a1/Factsheet-FranklinSTOXXEurope600ParisAlignedClimateUCITSETF-29820-FF-GB-en-GB.PDF",
+        "https://stoxx.com/index/sxxppab/"
+      ],
+      "source_as_of": "2026-02-28",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview and Benchmark(s) and Type (pp. 2, 5) identify the ISIN, inception date, quarterly reconstitution and STOXX Europe 600 PAB Index-NR; the STOXX page identifies the provider and climate weighting."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "esg-climate"
+    },
+    {
+      "ticker": "FLXU",
+      "name": "Franklin U.S. Equity UCITS ETF",
+      "isin": "IE00BF2B0P08",
+      "underlying_index": "LibertyQ US Large Cap Equity Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "capped-factor",
+      "universe": "U.S. medium- and large-capitalization companies selected from the Russell 1000 universe",
+      "weighting": "Rules-based quality, value and momentum factor selection with custom factor weighting; full replication follows the underlying index",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2017-09-06",
+      "source_urls": [
+        "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/25802/SINGLCLASS/franklin-u-s-equity-ucits-etf/IE00BF2B0P08",
+        "https://www.franklintempleton.co.uk/download/en-gb/factsheet/8f611a8a-a5c3-49be-989d-a3adb169005e/Factsheet-FranklinUSEquityUCITSETF-25802-FF-GB-en-GB.PDF",
+        "https://www.lseg.com/en/ftse-russell/indices/libertyq"
+      ],
+      "source_as_of": "2026-07-31",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview and Benchmark(s) and Type (p. 3) identify the ISIN, inception date, quarterly reconstitution and LibertyQ US Large Cap Equity Index-NR; the FTSE Russell LibertyQ page documents factor construction."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "factor"
+    },
+    {
+      "ticker": "FLXX",
+      "name": "Franklin Global Quality Dividend UCITS ETF",
+      "isin": "IE00BF2B0M76",
+      "underlying_index": "LibertyQ Global Dividend Index",
+      "index_provider": "MSCI Inc.",
+      "index_type": "capped-factor",
+      "universe": "Global developed- and emerging-market medium- and large-capitalization companies with high and persistent dividend income",
+      "weighting": "Rules-based dividend and quality selection with benchmark-like constituent weights; full replication follows the underlying index",
+      "reconstitution_frequency": "Semi-Annual",
+      "inception_date": "2017-09-06",
+      "source_urls": [
+        "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/25799/ETD/franklin-global-quality-dividend-ucits-etf/IE00BF2B0M76",
+        "https://www.franklintempleton.co.uk/download/en-gb/factsheet/8f88c0fe-3ca6-473a-86e2-e10535348896/Factsheet-FranklinGlobalQualityDividendUCITSETF-(Dis)-25799-ETD-FF-GB-en-GB.PDF"
+      ],
+      "source_as_of": "2026-04-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview and Benchmark(s) and Type (pp. 3, 6) identify LibertyQ Global Dividend Index-NR, semi-annual reconstitution and the MSCI/LibertyQ provider disclosure. Index nature: dividend."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "dividend"
+    },
+    {
+      "ticker": "FOFD",
+      "name": "Franklin Future of Food UCITS ETF",
+      "isin": "IE000ZOKLHY7",
+      "underlying_index": "Solactive Sustainable Food Index",
+      "index_provider": "Solactive AG",
+      "index_type": "thematic-custom",
+      "universe": "Developed-market companies involved in sustainable food, agriculture machinery, smart farming, packaging, water technology and related food-system innovation",
+      "weighting": "Full replication holds the index securities in a similar proportion to their benchmark weighting",
+      "reconstitution_frequency": "Semi-Annual",
+      "inception_date": "2023-07-05",
+      "source_urls": [
+        "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/36451/SINGLCLASS/franklin-future-of-food-ucits-etf/IE000ZOKLHY7",
+        "https://www.franklintempleton.co.uk/download/en-gb/factsheet/1ebd08e7-8873-4ca8-a177-cd1638dedce3/Factsheet-FranklinFutureOfFoodUCITSETF-36451-FF-GB-en-GB.PDF",
+        "https://www.solactive.com/index/DE000SL0H9U5"
+      ],
+      "source_as_of": "2026-04-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Investment Overview, Fund Overview and Benchmark(s) and Type (pp. 1, 3, 6) identify the ISIN, inception date, semi-annual reconstitution, Solactive Sustainable Food Index-NR and Solactive AG. Index nature: thematic."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "thematic"
+    },
+    {
+      "ticker": "FOHW",
+      "name": "Franklin Future of Health and Wellness UCITS ETF",
+      "isin": "IE0003WEWAX4",
+      "underlying_index": "Solactive Sustainable Health and Wellness Index",
+      "index_provider": "Solactive AG",
+      "index_type": "thematic-custom",
+      "universe": "Developed-market companies delivering sustainable health and wellness products and services, including healthcare technology and access-to-care enablers",
+      "weighting": "Full replication holds the index securities in a similar proportion to their benchmark weighting",
+      "reconstitution_frequency": "Semi-Annual",
+      "inception_date": "2023-07-05",
+      "source_urls": [
+        "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/36452/SINGLCLASS/franklin-future-of-health-and-wellness-ucits-etf/IE0003WEWAX4",
+        "https://www.franklintempleton.lu/download/en-lu/factsheet/6249cf33-b831-4f30-9f7f-d9f06493559c/Factsheet-FranklinFutureOfHealthAndWellnessUCITSETF-36452-FF-LU-en-GB.PDF",
+        "https://www.solactive.com/index/DE000SL0H9X9"
+      ],
+      "source_as_of": "2026-08-31",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview, Benchmark(s) and Type and Methodology (p. 2) identify the ISIN, inception date, semi-annual reconstitution, Solactive Sustainable Health and Wellness Index-NR and Solactive AG. Index nature: thematic."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "thematic"
+    },
+    {
+      "ticker": "FSPJ",
+      "name": "Franklin S&P Japan TOPIX Screened UCITS ETF",
+      "isin": "IE000EW6F1G9",
+      "underlying_index": "S&P/TOPIX 150 Guarded Index",
+      "index_provider": "S&P Dow Jones Indices LLC",
+      "index_type": "capped-factor",
+      "universe": "Eligible Japanese large-cap companies from the S&P/TOPIX 150 after ESG and carbon screens",
+      "weighting": "Guarded-index ESG and carbon-screened weighting designed to maintain low tracking error to the parent index; full replication follows the benchmark",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": null,
+      "source_urls": [
+        "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/41205/SINGLCLASS/franklin-s-p-japan-topix-screened-ucits-etf/IE000EW6F1G9",
+        "https://www.franklintempletonme.com/download/gem/DISCLOSURE/77c3060d-916e-4e88-8847-5eb19d3d7485/ETF-disclosure-global-en.pdf",
+        "https://www.spglobal.com/spdji/en/indices/sustainability/sp-topix-150-guarded-index",
+        "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-guarded-indices.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "absent",
+        "source_as_of": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [
+        "inception_date",
+        "source_as_of"
+      ],
+      "coverage_quality": "partial",
+      "notes": [
+        "Franklin product/disclosure pages identify the fund and S&P/TOPIX 150 Guarded Index; the S&P index page and Guarded Indices methodology document the ESG/carbon selection and weighting. Inception date and dated source were not reliably exposed, so they remain absent. Index nature: esg-climate."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "esg-climate"
+    },
+    {
+      "ticker": "FSPU",
+      "name": "Franklin S&P 500 Screened UCITS ETF",
+      "isin": "IE0006FAD976",
+      "underlying_index": "S&P 500 Guarded Index",
+      "index_provider": "S&P Dow Jones Indices LLC",
+      "index_type": "capped-factor",
+      "universe": "Eligible U.S. large-cap companies from the S&P 500 after ESG and carbon screens",
+      "weighting": "Guarded-index ESG and carbon-screened weighting designed to maintain low tracking error to the parent index; full replication follows the benchmark",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2025-04-15",
+      "source_urls": [
+        "https://www.franklintempleton.ie/our-funds/price-and-performance-etfs/products/41206/SINGLCLASS/franklin-s-p-500-screened-ucits-etf/IE0006FAD976",
+        "https://www.franklintempleton.ch/download/en-ch/key-information-document/f5e8de9e-563e-4b63-be53-bdb0de142876/PRIIPSEU_IE0006FAD976_en_CH.pdf",
+        "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-guarded-indices.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [
+        "source_as_of"
+      ],
+      "coverage_quality": "partial",
+      "notes": [
+        "Franklin product/KID identify the ISIN, 15 April 2025 inception date and S&P 500 Guarded Index-NR; the S&P Guarded Indices methodology provides the screened ESG/carbon construction. Dated source remains absent. Index nature: esg-climate."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "esg-climate"
     }
   ],
   "acquisition":{
@@ -5556,7 +5971,34 @@
     "https://www.betashares.com.au/fund/australian-bond-fund",
     "https://etf.franklintempleton.com/frar",
     "https://www.franklintempleton.com.au/download/en-au/factsheet/d9ae485b-522b-45b2-a7e5-a2d53d734405/Factsheet-FranklinAustralianAbsoluteReturnBondFund-ClassA-19414-W-FF-AU-en-AU.PDF",
-    "https://www.franklintempleton.com.au/our-products/funds-prices-performance/managed-funds/products/19414/W/franklin-australian-absolute-return-bond-fund/FRT0027AU"
+    "https://www.franklintempleton.com.au/our-products/funds-prices-performance/managed-funds/products/19414/W/franklin-australian-absolute-return-bond-fund/FRT0027AU",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27853/SINGLCLASS/franklin-ftse-india-ucits-etf/IE00BHZRQZ17",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/b9bc8ae7-6430-4d3f-ae28-2749d7ed39af/Factsheet-FranklinFTSEIndiaUCITSETF-27853-FF-LU-en-GB.PDF",
+      "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/41221/ETA/franklin-ftse-japan-ucits-etf/IE000D0T0BO1",
+      "https://www.franklintempletonoffshore.com/download/en-os/factsheet/270e6474-ffca-4401-94e3-cad4c8a5dad0/Factsheet-FranklinFTSEJapanUCITSETF-(Acc)-41221-ETA-FF-NRC-en-OS.PDF",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27854/SINGLCLASS/franklin-ftse-korea-ucits-etf/IE00BHZRR030",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/57ed538b-cb12-48b6-8afa-818fa1ffc604/Factsheet-FranklinFTSEKoreaUCITSETF-27854-FF-GB-en-GB.PDF",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/29820/SINGLCLASS/franklin-stoxx-europe-600-paris-aligned-climate-ucits-etf/IE00BMDPBY65",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/f1c19709-7386-498e-bf96-3e8792a260a1/Factsheet-FranklinSTOXXEurope600ParisAlignedClimateUCITSETF-29820-FF-GB-en-GB.PDF",
+      "https://stoxx.com/index/sxxppab/",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/25802/SINGLCLASS/franklin-u-s-equity-ucits-etf/IE00BF2B0P08",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/8f611a8a-a5c3-49be-989d-a3adb169005e/Factsheet-FranklinUSEquityUCITSETF-25802-FF-GB-en-GB.PDF",
+      "https://www.lseg.com/en/ftse-russell/indices/libertyq",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/25799/ETD/franklin-global-quality-dividend-ucits-etf/IE00BF2B0M76",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/8f88c0fe-3ca6-473a-86e2-e10535348896/Factsheet-FranklinGlobalQualityDividendUCITSETF-(Dis)-25799-ETD-FF-GB-en-GB.PDF",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/36451/SINGLCLASS/franklin-future-of-food-ucits-etf/IE000ZOKLHY7",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/1ebd08e7-8873-4ca8-a177-cd1638dedce3/Factsheet-FranklinFutureOfFoodUCITSETF-36451-FF-GB-en-GB.PDF",
+      "https://www.solactive.com/index/DE000SL0H9U5",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/36452/SINGLCLASS/franklin-future-of-health-and-wellness-ucits-etf/IE0003WEWAX4",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/6249cf33-b831-4f30-9f7f-d9f06493559c/Factsheet-FranklinFutureOfHealthAndWellnessUCITSETF-36452-FF-LU-en-GB.PDF",
+      "https://www.solactive.com/index/DE000SL0H9X9",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/41205/SINGLCLASS/franklin-s-p-japan-topix-screened-ucits-etf/IE000EW6F1G9",
+      "https://www.franklintempletonme.com/download/gem/DISCLOSURE/77c3060d-916e-4e88-8847-5eb19d3d7485/ETF-disclosure-global-en.pdf",
+      "https://www.spglobal.com/spdji/en/indices/sustainability/sp-topix-150-guarded-index",
+      "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-guarded-indices.pdf",
+      "https://www.franklintempleton.ie/our-funds/price-and-performance-etfs/products/41206/SINGLCLASS/franklin-s-p-500-screened-ucits-etf/IE0006FAD976",
+      "https://www.franklintempleton.ch/download/en-ch/key-information-document/f5e8de9e-563e-4b63-be53-bdb0de142876/PRIIPSEU_IE0006FAD976_en_CH.pdf"
   ],
   "successful_sources": [
     "https://www.franklintempleton.com/tools-and-resources/lit-preview/26357/SINGLCLASS/franklin-ftse-japan-etf/FLJP",
@@ -5895,7 +6337,34 @@
     "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/25801/ETD/franklin-european-quality-dividend-ucits-etf/IE00BF2B0L69",
     "https://www.franklintempleton.co.uk/download/en-gb/factsheet/8c5bcad6-ff47-4a62-a989-6aa94759d97a/Factsheet-FranklinEuropeanQualityDividendUCITSETF-(Acc)-25801-ETA-FF-GB-en-GB.PDF",
     "https://www.msci.com/indexes/index/709646/msci-libertyq-emerging-markets-index",
-    "https://www.msci.com/indexes/documents/methodology/2_MSCI_LibertyQ_Emerging_Markets_Index_Methodology_20210819.pdf"
+    "https://www.msci.com/indexes/documents/methodology/2_MSCI_LibertyQ_Emerging_Markets_Index_Methodology_20210819.pdf",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27853/SINGLCLASS/franklin-ftse-india-ucits-etf/IE00BHZRQZ17",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/b9bc8ae7-6430-4d3f-ae28-2749d7ed39af/Factsheet-FranklinFTSEIndiaUCITSETF-27853-FF-LU-en-GB.PDF",
+      "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/41221/ETA/franklin-ftse-japan-ucits-etf/IE000D0T0BO1",
+      "https://www.franklintempletonoffshore.com/download/en-os/factsheet/270e6474-ffca-4401-94e3-cad4c8a5dad0/Factsheet-FranklinFTSEJapanUCITSETF-(Acc)-41221-ETA-FF-NRC-en-OS.PDF",
+      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27854/SINGLCLASS/franklin-ftse-korea-ucits-etf/IE00BHZRR030",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/57ed538b-cb12-48b6-8afa-818fa1ffc604/Factsheet-FranklinFTSEKoreaUCITSETF-27854-FF-GB-en-GB.PDF",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/29820/SINGLCLASS/franklin-stoxx-europe-600-paris-aligned-climate-ucits-etf/IE00BMDPBY65",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/f1c19709-7386-498e-bf96-3e8792a260a1/Factsheet-FranklinSTOXXEurope600ParisAlignedClimateUCITSETF-29820-FF-GB-en-GB.PDF",
+      "https://stoxx.com/index/sxxppab/",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/25802/SINGLCLASS/franklin-u-s-equity-ucits-etf/IE00BF2B0P08",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/8f611a8a-a5c3-49be-989d-a3adb169005e/Factsheet-FranklinUSEquityUCITSETF-25802-FF-GB-en-GB.PDF",
+      "https://www.lseg.com/en/ftse-russell/indices/libertyq",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/25799/ETD/franklin-global-quality-dividend-ucits-etf/IE00BF2B0M76",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/8f88c0fe-3ca6-473a-86e2-e10535348896/Factsheet-FranklinGlobalQualityDividendUCITSETF-(Dis)-25799-ETD-FF-GB-en-GB.PDF",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/36451/SINGLCLASS/franklin-future-of-food-ucits-etf/IE000ZOKLHY7",
+      "https://www.franklintempleton.co.uk/download/en-gb/factsheet/1ebd08e7-8873-4ca8-a177-cd1638dedce3/Factsheet-FranklinFutureOfFoodUCITSETF-36451-FF-GB-en-GB.PDF",
+      "https://www.solactive.com/index/DE000SL0H9U5",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/36452/SINGLCLASS/franklin-future-of-health-and-wellness-ucits-etf/IE0003WEWAX4",
+      "https://www.franklintempleton.lu/download/en-lu/factsheet/6249cf33-b831-4f30-9f7f-d9f06493559c/Factsheet-FranklinFutureOfHealthAndWellnessUCITSETF-36452-FF-LU-en-GB.PDF",
+      "https://www.solactive.com/index/DE000SL0H9X9",
+      "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/41205/SINGLCLASS/franklin-s-p-japan-topix-screened-ucits-etf/IE000EW6F1G9",
+      "https://www.franklintempletonme.com/download/gem/DISCLOSURE/77c3060d-916e-4e88-8847-5eb19d3d7485/ETF-disclosure-global-en.pdf",
+      "https://www.spglobal.com/spdji/en/indices/sustainability/sp-topix-150-guarded-index",
+      "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-guarded-indices.pdf",
+      "https://www.franklintempleton.ie/our-funds/price-and-performance-etfs/products/41206/SINGLCLASS/franklin-s-p-500-screened-ucits-etf/IE0006FAD976",
+      "https://www.franklintempleton.ch/download/en-ch/key-information-document/f5e8de9e-563e-4b63-be53-bdb0de142876/PRIIPSEU_IE0006FAD976_en_CH.pdf"
   ],
   "failed_sources": [],
   "excluded_sources": [
@@ -5904,7 +6373,7 @@
       "reason": "Explicitly out of P1b scope."
     }
   ],
-  "record_count": 157,
-  "count_note": "One hundred fifty-seven reviewed Franklin ETF records are shipped as a dated, source-backed table; this slice appends ten targeted UCITS products while preserving all earlier records in order."
+  "record_count": 167,
+  "count_note": "One hundred sixty-seven reviewed Franklin ETF records are shipped as a dated, source-backed table; this slice appends ten targeted UCITS products while preserving all earlier records in order."
 }
 }
