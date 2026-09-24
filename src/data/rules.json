@@ -2331,32 +2331,116 @@
   "vendor_profiles": [
     {
       "vendor": "msci",
-      "review_calendar": null,
-      "uncovered_event_policy": null
+      "review_calendar": {
+        "frequency": "quarterly",
+        "months": [
+          2,
+          5,
+          8,
+          11
+        ],
+        "effective": "last-business-day",
+        "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §4.4 Index Review Treatment (p.59); MSCI GIMI quarterly review calendar",
+        "note": "Flagship GIMI cadence: February and August QIRs; May and November SIRs. Product-specific index methodologies can differ."
+      },
+      "uncovered_event_policy": {
+        "treatment": "For corporate events not described in the methodology, combinations of event types, and other exceptional cases, MSCI determines the most appropriate implementation method and announces it before the changes become effective.",
+        "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §1 Introduction (p.6)",
+        "confidence": "stated"
+      }
     },
     {
       "vendor": "sp",
-      "review_calendar": null,
-      "uncovered_event_policy": null
+      "review_calendar": {
+        "frequency": "quarterly",
+        "months": [
+          3,
+          6,
+          9,
+          12
+        ],
+        "effective": "third-friday",
+        "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Non-Material Share/IWF Changes—Quarterly Implementation and Rebalancing Guidelines (pp.15–16)",
+        "note": "The quarterly share/IWF cycle is effective after the close of the third Friday of the third month in each calendar quarter."
+      },
+      "uncovered_event_policy": {
+        "treatment": "The Index Committee may use discretion to accelerate or delay deletions, apply exceptions for market disruption or data gaps, determine notice periods and effective dates, and may choose not to recognize an event when an ineligible security cannot be valued.",
+        "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Additions and Deletions (p.5); §Warrants, Options, Partly Paid Shares, Convertible Bonds, Contingent Value Rights, and Other Ineligible Securities & Share Types (p.12)",
+        "confidence": "stated"
+      }
     },
     {
       "vendor": "ftse",
-      "review_calendar": null,
-      "uncovered_event_policy": null
+      "review_calendar": {
+        "frequency": "quarterly",
+        "months": [
+          3,
+          6,
+          9,
+          12
+        ],
+        "effective": "third-friday",
+        "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §5 Changes to shares outstanding and free float (p.25)",
+        "note": "Flagship FTSE GEIS-style quarterly updates are after the close on the third Friday; the Russell US June reconstitution exception is the last Friday of June."
+      },
+      "uncovered_event_policy": {
+        "treatment": "FTSE Russell reserves the right to determine the most appropriate implementation method for a corporate event not covered by the guide or one of a complex nature, and decides whether and when an index adjustment is made.",
+        "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §1.1 Purpose of the guide (p.3)",
+        "confidence": "stated"
+      }
     },
     {
       "vendor": "stoxx",
-      "review_calendar": null,
-      "uncovered_event_policy": null
+      "review_calendar": {
+        "frequency": "quarterly",
+        "months": [
+          3,
+          6,
+          9,
+          12
+        ],
+        "effective": "third-friday",
+        "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §5.7 Index Review Lists (p.12)",
+        "note": "Default implementation is after the close of the third Friday; index-specific guides may instead specify another date, commonly the next trading day at open."
+      },
+      "uncovered_event_policy": {
+        "treatment": "For issues arising while maintaining the methodology, STOXX Committee(s) may exercise documented discretion to preserve an accurate, reliable, representative, and replicable index, considering the event, market access, available alternatives, public information, and feasibility.",
+        "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §9.1 Exercise of Discretion (p.30)",
+        "confidence": "stated"
+      }
     },
     {
       "vendor": "morningstar",
-      "review_calendar": null,
-      "uncovered_event_policy": null
+      "review_calendar": {
+        "frequency": "quarterly",
+        "months": [
+          3,
+          6,
+          9,
+          12
+        ],
+        "effective": "first-business-day",
+        "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Annual and Quarterly Review Process (p.40)",
+        "note": "The source names June annual and March/September/December quarterly reconstitution/rebalance cycles and supplies cutoffs, but leaves the exact effective day to the applicable index rulebook; first-business-day is the normalized flagship profile convention."
+      },
+      "uncovered_event_policy": {
+        "treatment": "Morningstar seeks to apply the stated method, but the relevant Index Methodology Committee may adopt an alternative approach for market, supervisory, legal, financial, or tax reasons and reports nonstandard processing to the Index Oversight Committee.",
+        "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Exceptions (p.41)",
+        "confidence": "stated"
+      }
     },
     {
       "vendor": "solactive",
-      "review_calendar": null,
+      "review_calendar": {
+        "frequency": "semi-annual",
+        "months": [
+          3,
+          9
+        ],
+        "effective": "third-friday",
+        "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §1.1 Index Specifications (p.4); §6 Definitions (p.15)",
+        "note": "Representative GPR Global 100 equity guideline: semi-annual rebalance on the third Friday of March and September. Solactive index guidelines are product-specific."
+      },
       "uncovered_event_policy": {
         "treatment": "Solactive may apply discretion to decide the most appropriate implementation method for corporate actions the methodology does not describe, including actions that significantly decrease a company's market capitalisation or where a strict application would conflict with the index objective or jeopardise replicability.",
         "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1 Corporate Actions (p.12)",
@@ -2365,8 +2449,23 @@
     },
     {
       "vendor": "vettafi",
-      "review_calendar": null,
-      "uncovered_event_policy": null
+      "review_calendar": {
+        "frequency": "quarterly",
+        "months": [
+          3,
+          6,
+          9,
+          12
+        ],
+        "effective": "third-friday",
+        "source_ref": "VENDORS/vettafi.md §Rebalancing Schedule; SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf §I Index Maintenance (p.1)",
+        "note": "Flagship quarterly reconstitution/rebalance occurs on the third Friday of the last month of each calendar quarter; individual index rulebooks can vary."
+      },
+      "uncovered_event_policy": {
+        "treatment": "The policy names its covered maintenance categories but does not specify a treatment for an event outside them; it expressly reserves Committee expert judgment for extreme financial distress and allows retention after a bankruptcy review.",
+        "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf §I Index Maintenance and §§12.2–12.3 (pp.1, 4)",
+        "confidence": "inferred"
+      }
     }
   ]
 }

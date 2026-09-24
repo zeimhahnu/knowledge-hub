@@ -48,6 +48,11 @@ for (const eventType of EVENT_TYPES) {
   //    This is the orphan bug: a ruleless row must not contribute.
   const renderable = new Set();
   for (const row of verdict.rows) {
+    if (row.deferral?.reviewSource) renderable.add(row.deferral.reviewSource);
+    // TimingAndPolicy renders an uncovered-event policy alongside either a
+    // stated rule or a silent row; keep the reachability assertion aligned
+    // with collectCitedSources and the real component.
+    if (row.uncoveredPolicy?.sourceRef) renderable.add(row.uncoveredPolicy.sourceRef);
     if (!row.rulePresent) continue;
     for (const t of row.treatments) if (t.sourceRef) renderable.add(t.sourceRef);
     if (row.sourceRef) renderable.add(row.sourceRef);
