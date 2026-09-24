@@ -24,6 +24,8 @@ assert.equal(unsourced?.timing, "at-review");
 assert.match(unsourced?.finding ?? "", /^Deferred: /);
 const gated = deferralFor("msci", [{ timing: "threshold-gated", deferral_condition: "below 1% of shares" }], day("2026-10-01"));
 assert.match(gated?.finding ?? "", /when: below 1% of shares\.$/);
+const quoted = deferralFor("msci", [{ timing: "threshold-gated", deferral_condition: "below 1% of shares." }], day("2026-10-01"));
+assert.match(quoted?.finding ?? "", /when: below 1% of shares\.$/, "a quoted full stop must not double");
 console.log("  ok  deferralFor: on-event, at-review, threshold-gated");
 
 // Dividend yield cross-check: MSCI's boundary is 5% of the share price.

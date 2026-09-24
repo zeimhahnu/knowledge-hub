@@ -81,7 +81,8 @@ export function deferralFor(vendor: string, rows: readonly TimingFields[], event
     return { timing: "at-review", condition: null, reviewDate, reviewSource: calendar?.source_ref ?? null,
       finding: `Deferred: not applied on the event date, but at ${lands}.` };
   }
-  const condition = row.deferral_condition ?? null;
+  // The rules quote the vendor, full stop included; the finding adds its own.
+  const condition = row.deferral_condition?.trim().replace(/\.+$/, "") || null;
   return { timing: "threshold-gated", condition, reviewDate, reviewSource: calendar?.source_ref ?? null,
     finding: `Applied intra-quarter only above the size test; deferred to ${lands}${condition ? ` when: ${condition}` : ""}.` };
 }
