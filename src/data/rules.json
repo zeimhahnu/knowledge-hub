@@ -2411,18 +2411,7 @@
     },
     {
       "vendor": "morningstar",
-      "review_calendar": {
-        "frequency": "quarterly",
-        "months": [
-          3,
-          6,
-          9,
-          12
-        ],
-        "effective": "first-business-day",
-        "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Annual and Quarterly Review Process (p.40)",
-        "note": "The source names June annual and March/September/December quarterly reconstitution/rebalance cycles and supplies cutoffs, but leaves the exact effective day to the applicable index rulebook; first-business-day is the normalized flagship profile convention."
-      },
+      "review_calendar": null,
       "uncovered_event_policy": {
         "treatment": "Morningstar seeks to apply the stated method, but the relevant Index Methodology Committee may adopt an alternative approach for market, supervisory, legal, financial, or tax reasons and reports nonstandard processing to the Index Oversight Committee.",
         "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Exceptions (p.41)",
@@ -2431,16 +2420,7 @@
     },
     {
       "vendor": "solactive",
-      "review_calendar": {
-        "frequency": "semi-annual",
-        "months": [
-          3,
-          9
-        ],
-        "effective": "third-friday",
-        "source_ref": "SOURCES/solactive-gpr-global-100-2026.pdf §1.1 Index Specifications (p.4); §6 Definitions (p.15)",
-        "note": "Representative GPR Global 100 equity guideline: semi-annual rebalance on the third Friday of March and September. Solactive index guidelines are product-specific."
-      },
+      "review_calendar": null,
       "uncovered_event_policy": {
         "treatment": "Solactive may apply discretion to decide the most appropriate implementation method for corporate actions the methodology does not describe, including actions that significantly decrease a company's market capitalisation or where a strict application would conflict with the index objective or jeopardise replicability.",
         "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1 Corporate Actions (p.12)",
