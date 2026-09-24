@@ -1372,7 +1372,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mandatory Corporate Action Methodology — Ordinary Dividend (p. 6)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "morningstar",
@@ -1383,7 +1384,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mandatory Corporate Action Methodology — Ordinary Dividend (p. 6)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "morningstar",
@@ -1394,7 +1396,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mandatory Corporate Action Methodology — Ordinary Dividend (p. 6)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "morningstar",
@@ -1409,7 +1412,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Special Dividend (pp. 12–13)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "morningstar",
@@ -1420,7 +1424,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Stock Dividend (p. 14)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "morningstar",
@@ -1431,7 +1436,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Bonus Issue (p. 15)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "morningstar",
@@ -1442,7 +1448,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Stock Split (pp. 17–18)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "morningstar",
@@ -1453,7 +1460,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Spinoff (p. 22)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "morningstar",
@@ -1467,7 +1475,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Rights Offering (Issue) (pp. 19–20)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "morningstar",
@@ -1481,7 +1490,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Rights Offering (Issue) (pp. 19–20)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "morningstar",
@@ -1518,7 +1528,9 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Corporate Action Category (p. 5); §Nonmandatory Corporate Action Methodology (p. 37)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "Does not meet either accelerated threshold: offering over USD 150 million with share change over 5%, or offering over USD 1 billion; non-material changes are implemented at quarterly rebalancing."
     },
     {
       "vendor": "morningstar",
@@ -1540,7 +1552,8 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Return of Capital (pp. 13–14)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "morningstar",
@@ -1551,7 +1564,9 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Nonmandatory Corporate Action Methodology — Dutch Auctions/Buyback of Shares/Self-tender Offer Buybacks (p.37)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "Does not meet either accelerated threshold: offering over USD 150 million with share change over 5%, or offering over USD 1 billion; non-material changes are implemented at quarterly rebalancing."
     },
     {
       "vendor": "morningstar",
@@ -1565,7 +1580,9 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mergers and Acquisitions (pp.28–29)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "The share/IWF change is de minimis, or the constituent acquires a private company or a company outside Morningstar-maintained indexes; the change is implemented at the next quarterly rebalancing."
     },
     {
       "vendor": "morningstar",
@@ -1579,7 +1596,9 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mergers and Acquisitions (pp.28–29)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "The share/IWF change is de minimis, or the constituent acquires a private company or a company outside Morningstar-maintained indexes; the change is implemented at the next quarterly rebalancing."
     },
     {
       "vendor": "morningstar",
@@ -1593,7 +1612,9 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mergers and Acquisitions (pp.28–29)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "The share/IWF change is de minimis, or the constituent acquires a private company or a company outside Morningstar-maintained indexes; the change is implemented at the next quarterly rebalancing."
     },
     {
       "vendor": "morningstar",
@@ -1604,7 +1625,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Tender Offer (p. 29)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "morningstar",
@@ -1615,7 +1637,8 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Bankruptcy and Financial Distress (p. 35)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -1648,7 +1671,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1 Dividends (p.13)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1659,7 +1683,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1 Dividends (p.13)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1670,7 +1695,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1 Dividends (p.13)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1681,7 +1707,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1 Dividends (p.13)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1692,7 +1719,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1 Dividends (p.13)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1703,7 +1731,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1 Dividends (p.13)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1714,7 +1743,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.2 Stock Dividend; §2.1.2.1 Stock Dividend Adjustment (pp.19–20)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1726,7 +1756,8 @@
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.2 Stock Dividend; §2.1.2.1 Stock Dividend Adjustment (pp.19–20)",
       "confidence": "inferred",
       "coverage": "framework-default",
-      "mapping_note": "App event bonus-issue is mapped to the methodology's stock-dividend treatment because both describe a pro-rata additional-share distribution; no separate Bonus Issue section is published."
+      "mapping_note": "App event bonus-issue is mapped to the methodology's stock-dividend treatment because both describe a pro-rata additional-share distribution; no separate Bonus Issue section is published.",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1737,7 +1768,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.3 Stock Split (pp.20–21)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1748,7 +1780,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.6 Spin-off; §2.1.6.1–§2.1.6.3 (pp.24–26)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1762,7 +1795,8 @@
       "coverage": "framework-default",
       "conditions": {
         "rights_moneyness": "in-the-money"
-      }
+      },
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1817,7 +1851,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1.3.7 Return of Capital (p.16)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1845,7 +1880,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.7.1 Mergers & Acquisition Adjustment (p.27)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1860,7 +1896,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.7.1 Mergers & Acquisition Adjustment (p.27)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1875,7 +1912,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.7.1 Mergers & Acquisition Adjustment (p.27)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1889,7 +1927,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.7.1 Mergers & Acquisition Adjustment (p.27)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1901,7 +1940,8 @@
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.7 Mergers & Acquisitions; §2.1.7.2 Timing of Adjustment (pp.26–32)",
       "confidence": "inferred",
       "coverage": "framework-default",
-      "mapping_note": "App event tender-offer is mapped to the methodology's takeover-offer branch in M&A; Solactive does not publish a separate Tender Offer section in this framework."
+      "mapping_note": "App event tender-offer is mapped to the methodology's takeover-offer branch in M&A; Solactive does not publish a separate Tender Offer section in this framework.",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1912,7 +1952,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.8 Delisting; §2.1.10 Bankruptcy / Insolvency / Liquidation; §2.1.10.1–§2.1.10.2 (pp.33,35–36)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -1923,7 +1964,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §9 Regular Cash Dividends (p.3)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -1934,7 +1976,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §8 Treatment of Distributions; §9 Regular Cash Dividends; §II.1 Index Formula (pp.3,5)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -1945,7 +1988,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §9 Regular Cash Dividends; §II.1 Index Formula (pp.3,5)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -1956,7 +2000,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §11.1 Market Cap weighted indexes (p.4)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -1967,7 +2012,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §11.2 Non-Market Cap weighted indexes (p.4)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -1978,7 +2024,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §6 Stock Splits and Stock Dividends; §III.6 Stock Dividend (pp.2,8–9)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -1990,7 +2037,8 @@
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §6 Stock Splits and Stock Dividends; §III.6 Stock Dividend (pp.2,8–9)",
       "confidence": "inferred",
       "coverage": "framework-default",
-      "mapping_note": "App event bonus-issue is mapped to the policy's stock-dividend branch because VettaFi does not publish a separate Bonus Issue section."
+      "mapping_note": "App event bonus-issue is mapped to the policy's stock-dividend branch because VettaFi does not publish a separate Bonus Issue section.",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -2001,7 +2049,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §6 Stock Splits and Stock Dividends; §7 Reverse Stock Splits; §III.4 Split and Reverse Split (pp.2–3,8)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -2012,7 +2061,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §3.1 Market Cap weighted indexes (p.2)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -2023,7 +2073,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §3.2 Non-Market Cap weighted indexes (p.2)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -2037,7 +2088,8 @@
       "coverage": "framework-default",
       "conditions": {
         "rights_moneyness": "in-the-money"
-      }
+      },
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -2051,7 +2103,8 @@
       "coverage": "framework-default",
       "conditions": {
         "rights_moneyness": "in-the-money"
-      }
+      },
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -2148,7 +2201,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §2.1–§2.2 (p.1; Appendix p.14)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -2163,7 +2217,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §2.1–§2.2 (p.1; Appendix p.14)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -2178,7 +2233,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §2.1–§2.2 (p.1; Appendix p.14)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -2192,7 +2248,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §2.1–§2.2 (p.1; Appendix p.14)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "vettafi",
@@ -2204,7 +2261,9 @@
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §4 Share Offerings, Tenders, and Share Buy-Backs (p.2)",
       "confidence": "inferred",
       "coverage": "framework-default",
-      "mapping_note": "App event tender-offer is mapped to the policy's explicit Tenders grouping; only the broad rebalancing treatment is stated."
+      "mapping_note": "App event tender-offer is mapped to the policy's explicit Tenders grouping; only the broad rebalancing treatment is stated.",
+      "timing": "at-review",
+      "deferral_condition": "Always deferred to the next scheduled rebalancing; no accelerated path is stated."
     },
     {
       "vendor": "vettafi",
@@ -2215,7 +2274,8 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §12 Removal of Stocks Due to Delisting, Bankruptcy or Extreme Financial Distress; §13 Pricing of Stocks in Extreme Financial Distress (pp.4)",
       "confidence": "stated",
-      "coverage": "framework-default"
+      "coverage": "framework-default",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
