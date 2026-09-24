@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BookOpenIcon, FileTextIcon, LayersIcon, NetworkIcon } from "lucide-react";
+import { BookOpenIcon, CalendarIcon, FileTextIcon, LayersIcon, NetworkIcon } from "lucide-react";
 
 /**
  * One nav for every vendor-reference page.
@@ -13,7 +13,7 @@ import { BookOpenIcon, FileTextIcon, LayersIcon, NetworkIcon } from "lucide-reac
  * Every section is a real route here, so each one is linkable, survives a
  * refresh, and is reachable from all the others.
  */
-export type VendorReferenceSection = "taxonomy" | "iso" | "parameters" | "glossary";
+export type VendorReferenceSection = "taxonomy" | "iso" | "parameters" | "calendars" | "glossary";
 
 const SECTIONS: Array<{
   id: VendorReferenceSection;
@@ -24,6 +24,7 @@ const SECTIONS: Array<{
   { id: "taxonomy", href: "/vendors/", label: "Event taxonomy", Icon: LayersIcon },
   { id: "iso", href: "/vendors/iso-taxonomy/", label: "ISO CAEV Taxonomy", Icon: NetworkIcon },
   { id: "parameters", href: "/vendors/event-extraction/", label: "Event Parameters", Icon: FileTextIcon },
+  { id: "calendars", href: "/vendors/review-calendars/", label: "Review calendars", Icon: CalendarIcon },
   { id: "glossary", href: "/vendors/glossary/", label: "Glossary", Icon: BookOpenIcon },
 ];
 

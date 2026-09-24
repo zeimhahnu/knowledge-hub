@@ -484,7 +484,8 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
     );
     const policy = uncoveredPolicyFor(vendor);
     const extras = {
-      deferral: deferralFor(vendor, selectedRules as { timing?: string; deferral_condition?: string }[], exDate),
+      deferral: deferralFor(vendor, selectedRules as { timing?: string; deferral_condition?: string }[], exDate,
+        fundRules.resolution.mode === "fund-resolved" ? fundRules.resolution.fund.underlying_index : null),
       // Silent means no stated row for the event at all, not rows the user's answers filtered out.
       uncoveredPolicy: policy && !allRules.some((row) => row.treatment !== null && row.confidence !== "absent") ? { treatment: policy.treatment, sourceRef: policy.source_ref } : null,
     };

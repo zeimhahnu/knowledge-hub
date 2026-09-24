@@ -161,9 +161,26 @@
             "properties": {
               "frequency": {"enum": ["quarterly", "semi-annual", "annual"]},
               "months": {"type": "array", "items": {"type": "integer", "minimum": 1, "maximum": 12}, "minItems": 1, "uniqueItems": true},
-              "effective": {"enum": ["third-friday", "last-business-day", "first-business-day"], "description": "Day in each review month the review takes effect, after close."},
+              "effective": {"type": "string", "pattern": "^(first|second|third|fourth|last)-(monday|tuesday|wednesday|thursday|friday|business-day)$", "description": "Day in each review month the review takes effect, after close: e.g. third-friday, last-business-day, first-wednesday."},
               "source_ref": {"type": "string", "minLength": 1},
               "note": {"type": "string"}
+            }
+          },
+          "index_calendars": {
+            "type": "array",
+            "description": "Per-index calendars: the QIR/rebalance at which a deferred share or float change lands for that index, where its own rulebook sets one. indexes are exact fund-master underlying_index names; an index with no entry falls back to review_calendar.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["indexes", "frequency", "months", "effective", "source_ref"],
+              "properties": {
+                "indexes": {"type": "array", "items": {"type": "string", "minLength": 1}, "minItems": 1, "uniqueItems": true},
+                "frequency": {"enum": ["quarterly", "semi-annual", "annual"]},
+                "months": {"type": "array", "items": {"type": "integer", "minimum": 1, "maximum": 12}, "minItems": 1, "uniqueItems": true},
+                "effective": {"type": "string", "pattern": "^(first|second|third|fourth|last)-(monday|tuesday|wednesday|thursday|friday|business-day)$", "description": "Day in each review month the review takes effect, after close: e.g. third-friday, last-business-day, first-wednesday."},
+                "source_ref": {"type": "string", "minLength": 1},
+                "note": {"type": "string"}
+              }
             }
           },
           "uncovered_event_policy": {

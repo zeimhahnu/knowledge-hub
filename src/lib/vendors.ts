@@ -21,6 +21,17 @@ export const VENDOR_LABELS: Record<VendorId, string> = {
   vettafi: "VettaFi",
 };
 
+/** Fund-master `index_provider` spellings, one per vendor (check-fund-master holds them to one). */
+export const PROVIDER_VENDOR: Record<string, VendorId> = {
+  MSCI: "msci",
+  "S&P Dow Jones Indices": "sp",
+  "FTSE Russell": "ftse",
+  STOXX: "stoxx",
+  "Solactive AG": "solactive",
+  Morningstar: "morningstar",
+  VettaFi: "vettafi",
+};
+
 export function vendorLabel(id: VendorId): string {
   return VENDOR_LABELS[id];
 }
