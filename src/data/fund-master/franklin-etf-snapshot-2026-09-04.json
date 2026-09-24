@@ -85,7 +85,7 @@
       "ticker": "FLCA",
       "name": "Franklin FTSE Canada ETF",
       "isin": null,
-      "underlying_index": "FTSE Canada Capped Index",
+      "underlying_index": "FTSE Canada RIC Capped Index",
       "index_provider": "FTSE Russell",
       "index_type": "float-adjusted-cap-weighted",
       "universe": "Canadian large- and mid-capitalization stocks",
@@ -111,7 +111,9 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "absent"
+        "source_as_of": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin",
@@ -119,8 +121,12 @@
       ],
       "coverage_quality": "partial",
       "notes": [
-        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
-      ]
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources.",
+        "Return variant: benchmark line identifies NR/net total return; recorded from the cited source.",
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLGB",
@@ -249,7 +255,7 @@
       "ticker": "FLAU",
       "name": "Franklin FTSE Australia ETF",
       "isin": null,
-      "underlying_index": "FTSE Australia Capped Index",
+      "underlying_index": "FTSE Australia RIC Capped Index",
       "index_provider": "FTSE Russell",
       "index_type": "float-adjusted-cap-weighted",
       "universe": "Australian large- and mid-capitalization stocks",
@@ -275,7 +281,9 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "absent"
+        "source_as_of": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin",
@@ -283,8 +291,12 @@
       ],
       "coverage_quality": "partial",
       "notes": [
-        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
-      ]
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources.",
+        "Return variant: benchmark line identifies NR/net total return; recorded from the cited source.",
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLKR",
@@ -372,7 +384,7 @@
       "ticker": "FLBR",
       "name": "Franklin FTSE Brazil ETF",
       "isin": null,
-      "underlying_index": "FTSE Brazil Capped Index",
+      "underlying_index": "FTSE Brazil RIC Capped Index",
       "index_provider": "FTSE Russell",
       "index_type": "float-adjusted-cap-weighted",
       "universe": "Brazilian large- and mid-capitalization stocks",
@@ -398,7 +410,9 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "absent"
+        "source_as_of": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin",
@@ -406,8 +420,12 @@
       ],
       "coverage_quality": "partial",
       "notes": [
-        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
-      ]
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources.",
+        "Return variant: benchmark line identifies NR/net total return; recorded from the cited source.",
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLSA",
@@ -970,15 +988,21 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "stated"
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
-      ]
+        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field.",
+        "Return variant: benchmark line identifies NR/net total return; recorded from the cited source.",
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLCH",
@@ -1009,15 +1033,21 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "stated"
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
-      ]
+        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field.",
+        "Return variant: benchmark line identifies NR/net total return; recorded from the cited source.",
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLEE",
@@ -1048,15 +1078,21 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "stated"
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
-      ]
+        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field.",
+        "Return variant: benchmark line identifies NR/net total return; recorded from the cited source.",
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLIN",
@@ -1179,7 +1215,7 @@
       "ticker": "DIEM",
       "name": "Franklin Emerging Market Core Dividend Tilt Index ETF",
       "isin": null,
-      "underlying_index": "Morningstar Emerging Markets Dividend Enhanced Select Index",
+      "underlying_index": "Linked Morningstar Emerging Markets Dividend Enhanced Select Index",
       "index_provider": "Morningstar, Inc.",
       "index_type": "capped-factor",
       "universe": "Large- and mid-capitalization stocks representing the top 85% of float-adjusted market capitalization of emerging equity markets",
@@ -1204,15 +1240,21 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "stated"
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "The dividend-enhanced optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null."
-      ]
+        "The dividend-enhanced optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null.",
+        "Return variant: benchmark line identifies NR/net total return; recorded from the cited source.",
+        "Index nature: dividend; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "dividend"
     },
     {
       "ticker": "DIVI",
@@ -1243,15 +1285,21 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "stated"
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "The dividend-enhanced optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null."
-      ]
+        "The dividend-enhanced optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null.",
+        "Return variant: benchmark line identifies NR/net total return; recorded from the cited source.",
+        "Index nature: dividend; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "dividend"
     },
     {
       "ticker": "FLQM",
@@ -1684,7 +1732,9 @@
       "weighting": "stated",
       "reconstitution_frequency": "absent",
       "inception_date": "stated",
-      "source_as_of": "stated"
+      "source_as_of": "stated",
+      "return_variant": "stated",
+      "index_nature": "inferred"
     },
     "missing_fields": [
       "isin",
@@ -1692,8 +1742,12 @@
     ],
     "coverage_quality": "complete",
     "notes": [
-      "The moat, dividend and quality selection is classified as capped-factor rather than plain market-cap weighting. Reconstitution frequency was not exposed by the reviewed primary evidence; ISIN remains null."
-    ]
+      "The moat, dividend and quality selection is classified as capped-factor rather than plain market-cap weighting. Reconstitution frequency was not exposed by the reviewed primary evidence; ISIN remains null.",
+      "Return variant: benchmark line identifies NR/net total return; recorded from the cited source.",
+      "Index nature: dividend; classification follows the plan precedence and the cited benchmark methodology."
+    ],
+    "return_variant": "net-total-return",
+    "index_nature": "dividend"
   },
   {
     "ticker": "FLAM",
@@ -1724,16 +1778,23 @@
       "weighting": "stated",
       "reconstitution_frequency": "absent",
       "inception_date": "stated",
-      "source_as_of": "stated"
+      "source_as_of": "stated",
+      "return_variant": "absent",
+      "index_nature": "inferred"
     },
     "missing_fields": [
       "isin",
-      "reconstitution_frequency"
+      "reconstitution_frequency",
+      "return_variant"
     ],
     "coverage_quality": "complete",
     "notes": [
-      "The reviewed fund facts state market-capitalization weighting; reconstitution frequency was not explicitly exposed. ISIN remains null."
-    ]
+      "The reviewed fund facts state market-capitalization weighting; reconstitution frequency was not explicitly exposed. ISIN remains null.",
+      "Return variant: the benchmark line names no single price, total, gross-total, or net-total return series; retained null.",
+      "Index nature: broad-market; classification follows the plan precedence and the cited benchmark methodology."
+    ],
+    "return_variant": null,
+    "index_nature": "broad-market"
   },
   {
     "ticker": "FLCD",
@@ -1764,16 +1825,23 @@
       "weighting": "stated",
       "reconstitution_frequency": "absent",
       "inception_date": "stated",
-      "source_as_of": "stated"
+      "source_as_of": "stated",
+      "return_variant": "absent",
+      "index_nature": "inferred"
     },
     "missing_fields": [
       "isin",
-      "reconstitution_frequency"
+      "reconstitution_frequency",
+      "return_variant"
     ],
     "coverage_quality": "complete",
     "notes": [
-      "The reviewed fund facts state market-capitalization weighting; reconstitution frequency was not explicitly exposed. ISIN remains null."
-    ]
+      "The reviewed fund facts state market-capitalization weighting; reconstitution frequency was not explicitly exposed. ISIN remains null.",
+      "Return variant: the benchmark line names no single price, total, gross-total, or net-total return series; retained null.",
+      "Index nature: broad-market; classification follows the plan precedence and the cited benchmark methodology."
+    ],
+    "return_variant": null,
+    "index_nature": "broad-market"
   },
   {
     "ticker": "FLEM",
@@ -1804,7 +1872,9 @@
       "weighting": "stated",
       "reconstitution_frequency": "absent",
       "inception_date": "stated",
-      "source_as_of": "stated"
+      "source_as_of": "stated",
+      "return_variant": "stated",
+      "index_nature": "inferred"
     },
     "missing_fields": [
       "isin",
@@ -1812,8 +1882,12 @@
     ],
     "coverage_quality": "complete",
     "notes": [
-      "The Solactive page describes free-float market-cap weighting and CAD net-total-return treatment. The Franklin factsheet states that NR returns include income net of tax withholding when dividends are paid; no withholding rate is inferred. ISIN remains null."
-    ]
+      "The Solactive page describes free-float market-cap weighting and CAD net-total-return treatment. The Franklin factsheet states that NR returns include income net of tax withholding when dividends are paid; no withholding rate is inferred. ISIN remains null.",
+      "Return variant: benchmark line identifies NR/net total return; recorded from the cited source.",
+      "Index nature: broad-market; classification follows the plan precedence and the cited benchmark methodology."
+    ],
+    "return_variant": "net-total-return",
+    "index_nature": "broad-market"
   },
   {
     "ticker": "FLJA",
@@ -2167,15 +2241,21 @@
       "weighting": "stated",
       "reconstitution_frequency": "stated",
       "inception_date": "stated",
-      "source_as_of": "stated"
+      "source_as_of": "stated",
+      "return_variant": "stated",
+      "index_nature": "inferred"
     },
     "missing_fields": [
       "isin"
     ],
     "coverage_quality": "complete",
     "notes": [
-      "The Canadian fund seeks to replicate the U.S.-listed Franklin FTSE India ETF and its FTSE India RIC Capped Index; the RIC cap is a weighting constraint, not a tax classification."
-    ]
+      "The Canadian fund seeks to replicate the U.S.-listed Franklin FTSE India ETF and its FTSE India RIC Capped Index; the RIC cap is a weighting constraint, not a tax classification.",
+      "Return variant: benchmark line identifies NR/net total return; recorded from the cited source.",
+      "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+    ],
+    "return_variant": "net-total-return",
+    "index_nature": "capped"
   },
   {
     "ticker": "IE0006K7DEL9",
