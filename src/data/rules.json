@@ -2470,19 +2470,6 @@
         },
         {
           "indexes": [
-            "S&P World Guarded Index"
-          ],
-          "frequency": "semi-annual",
-          "months": [
-            3,
-            9
-          ],
-          "effective": "third-friday",
-          "source_ref": "SOURCES/methodology-sp-guarded-indices.pdf §Index Rebalancing; Franklin S&P World Screened UCITS ETF factsheet Fund Information and Benchmark(s) and Type (p.2)",
-          "note": "The World Guarded methodology/fund benchmark disclosure specifies semi-annual reconstitution; the March and September effective dates use S&P DJI’s third-Friday implementation convention."
-        },
-        {
-          "indexes": [
             "S&P 500 PAB ESG Index"
           ],
           "frequency": "quarterly",
