@@ -248,10 +248,103 @@
       "event_type": "merger",
       "caev": "MRGR",
       "index_type": "*",
-      "treatment": "Target deleted when the deal is unconditional (no fixed % threshold), at last traded price; acquirer share-count change triggers adjustment at 5%/10%/25% by Standard/Small/Micro cap tier.",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "cash"
+      },
+      "treatment": "Target deleted at close of the last trading day of the acquired or merged entity. For cash consideration, the deletion price is calculated from the cash deal terms; acquirer share-count changes are implemented with the merger.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/index-vendor-methodology.md §11 (Mergers & Acquisitions); msci-corporate-events-methodology-2026.pdf §5.3",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.1, §2.3 (Mergers & Acquisitions)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "target-only",
+        "consideration": "cash"
+      },
+      "treatment": "A non-index acquirer acquiring an index constituent: the target is deleted at close of its last trading day and the deletion price is calculated from the cash deal terms; the non-index acquirer is generally considered for immediate inclusion.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.1, §2.3 (Mergers & Acquisitions)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "stock"
+      },
+      "treatment": "Target deleted at close of the last trading day of the acquired or merged entity. For stock consideration, the deletion price is calculated from the acquirer market price and stock exchange terms; acquirer share-count changes are implemented with the merger.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.1, §2.3 (Mergers & Acquisitions)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "target-only",
+        "consideration": "stock"
+      },
+      "treatment": "A non-index acquirer acquiring an index constituent: the target is deleted at close of its last trading day and the deletion price is calculated from the acquirer market price and stock exchange terms; the non-index acquirer is generally considered for immediate inclusion.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.1, §2.3 (Mergers & Acquisitions)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "cash-and-stock"
+      },
+      "treatment": "Target deleted at close of the last trading day of the acquired or merged entity. For cash-and-stock consideration, the deletion price is calculated from the cash and stock terms using the acquirer market price; acquirer share-count changes are implemented with the merger.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.1, §2.3 (Mergers & Acquisitions)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "target-only",
+        "consideration": "cash-and-stock"
+      },
+      "treatment": "A non-index acquirer acquiring an index constituent: the target is deleted at close of its last trading day and the deletion price is calculated from the cash and stock terms using the acquirer market price; the non-index acquirer is generally considered for immediate inclusion.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.1, §2.3 (Mergers & Acquisitions)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "acquirer-only"
+      },
+      "treatment": "A constituent acquirer acquiring a listed non-index constituent has its NOS/FIF change implemented at the event when it meets the 5%/10%/25% Standard/Small/Micro Cap threshold; below the threshold it is deferred to the next Index Review. An unlisted target acquisition is always deferred to the next Index Review.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.1, §2.3 (Mergers & Acquisitions)",
       "confidence": "stated"
     },
     {
@@ -470,10 +563,58 @@
       "event_type": "merger",
       "caev": "MRGR",
       "index_type": "*",
-      "treatment": "Target deleted on or around the expected delisting or last-trading date, with no minimum threshold for the acquirer's share/IWF change; deletion price is the closing price, or for cash consideration the lower of market close and deal price, for stock consideration a synthetically derived price from the deal ratio. Acquisitions of private/non-index companies are implemented at the next quarterly rebalancing.",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "cash"
+      },
+      "treatment": "For a constituent acquiring a constituent, the target is deleted on or around the expected delisting or last-trading date; the deletion price uses the lower of the market close and deal price, and the acquirer share/IWF change is implemented to coincide with the deletion with no minimum threshold.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Mergers & Acquisitions",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Mergers & Acquisitions (pp.5–6)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "stock"
+      },
+      "treatment": "For a constituent acquiring a constituent, the target is deleted on or around the expected delisting or last-trading date; the deletion price uses a synthetic price derived from the deal ratio, and the acquirer share/IWF change is implemented to coincide with the deletion with no minimum threshold.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Mergers & Acquisitions (pp.5–6)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "cash-and-stock"
+      },
+      "treatment": "For a constituent acquiring a constituent, the target is deleted on or around the expected delisting or last-trading date; the deletion price uses a synthetic price derived from the cash and stock deal terms, and the acquirer share/IWF change is implemented to coincide with the deletion with no minimum threshold.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Mergers & Acquisitions (pp.5–6)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "acquirer-only"
+      },
+      "treatment": "A constituent acquiring a privately held company or a company outside all S&P DJI-maintained indices has its M&A share/IWF change implemented at the next quarterly rebalancing.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Mergers & Acquisitions (pp.5–6)",
       "confidence": "stated"
     },
     {
@@ -713,10 +854,103 @@
       "event_type": "merger",
       "caev": "MRGR",
       "index_type": "*",
-      "treatment": "Target is deleted at the last traded price and the acquirer's shares increased per the offer terms once the transaction is deemed final, with a minimum two days' notice; where trading in the target has halted, a synthetic price based on the offer terms is used. For mergers involving elections, FTSE Russell generally waits for the election results before implementing.",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "cash"
+      },
+      "treatment": "When both parties are constituents, the acquirer is added to the target's indices at the combined weight if eligible, using the cash offer terms and market prices; the target is deleted at the last traded or synthetic offer-terms price with the published notice period.",
       "lead_days": 2,
       "lead_days_confidence": "stated",
-      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10.2 (Merger between index constituents for stock); §2.1.5 (minimum two-day notice for stock and cash mergers)",
+      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10–§4.11 (Mergers and takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "target-only",
+        "consideration": "cash"
+      },
+      "treatment": "When the target is the only constituent, the target is deleted using the cash offer terms; no acquirer share addition is required for cash consideration.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10–§4.11 (Mergers and takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "stock"
+      },
+      "treatment": "When both parties are constituents, the acquirer is added to the target's indices at the combined weight if eligible, using the stock offer terms and market prices; the target is deleted at the last traded or synthetic offer-terms price with the published notice period.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10–§4.11 (Mergers and takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "target-only",
+        "consideration": "stock"
+      },
+      "treatment": "When the target is the only constituent, the non-constituent acquirer is included in the target's index at the effective date using the stock offer terms; the target is deleted using the offer terms.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10–§4.11 (Mergers and takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "cash-and-stock"
+      },
+      "treatment": "When both parties are constituents, the acquirer is added to the target's indices at the combined weight if eligible, using the combined cash and stock offer terms and market prices; the target is deleted at the last traded or synthetic offer-terms price with the published notice period.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10–§4.11 (Mergers and takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "target-only",
+        "consideration": "cash-and-stock"
+      },
+      "treatment": "When the target is the only constituent, the non-constituent acquirer is included in the target's index at the effective date using the combined cash and stock offer terms; the target is deleted using the offer terms.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10–§4.11 (Mergers and takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "acquirer-only"
+      },
+      "treatment": "When the acquirer is the only constituent, its shares are updated only if the acquired company is a member of the FTSE Russell Universe; otherwise the change is deferred to the next quarterly review.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.10–§4.11 (Mergers and takeovers)",
       "confidence": "stated"
     },
     {
@@ -892,13 +1126,137 @@
     },
     {
       "vendor": "stoxx",
-      "index_type": "*",
       "event_type": "merger",
       "caev": "MRGR",
-      "treatment": "A merger or takeover deletes the target once event conditions are fulfilled and at least 85% is acquired through the tender offer or remaining target free float is below 10%. Changes are announced immediately, implemented two trading days later, and effective the following trading day; use last traded price or an acquisition-terms artificial price if not trading.",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "cash"
+      },
+      "treatment": "The merger/takeover rule applies because both parties are components. The target deletion price for cash consideration is the deal cash amount; the surviving security replaces the applicable component slot if it qualifies. Changes are announced immediately, implemented two trading days later, and effective the following trading day.",
       "lead_days": 2,
       "lead_days_confidence": "stated",
-      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3.2 (Target Company – Deletion)",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "stock"
+      },
+      "treatment": "The merger/takeover rule applies because both parties are components. The target deletion price for stock consideration is the acquirer closing price multiplied by the stock term; the surviving security replaces the applicable component slot if it qualifies. Changes are announced immediately, implemented two trading days later, and effective the following trading day.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "cash-and-stock"
+      },
+      "treatment": "The merger/takeover rule applies because both parties are components. The target deletion price for cash-and-stock consideration is the cash term plus the acquirer closing price multiplied by the stock term; the surviving security replaces the applicable component slot if it qualifies. Changes are announced immediately, implemented two trading days later, and effective the following trading day.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "target-only",
+        "consideration": "cash"
+      },
+      "treatment": "The merger/takeover rule applies because the target is the component and the acquirer is not. The target deletion price for cash consideration is the deal cash amount; the surviving security replaces the applicable component slot if it qualifies. Changes are announced immediately, implemented two trading days later, and effective the following trading day.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "target-only",
+        "consideration": "stock"
+      },
+      "treatment": "The merger/takeover rule applies because the target is the component and the acquirer is not. The target deletion price for stock consideration is the acquirer closing price multiplied by the stock term; the surviving security replaces the applicable component slot if it qualifies. Changes are announced immediately, implemented two trading days later, and effective the following trading day.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "target-only",
+        "consideration": "cash-and-stock"
+      },
+      "treatment": "The merger/takeover rule applies because the target is the component and the acquirer is not. The target deletion price for cash-and-stock consideration is the cash term plus the acquirer closing price multiplied by the stock term; the surviving security replaces the applicable component slot if it qualifies. Changes are announced immediately, implemented two trading days later, and effective the following trading day.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "acquirer-only",
+        "consideration": "cash"
+      },
+      "treatment": "The merger/takeover rule applies because the acquirer is the component and the target is not. The target deletion price for cash consideration is the deal cash amount; the surviving security replaces the applicable component slot if it qualifies. Changes are announced immediately, implemented two trading days later, and effective the following trading day.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "acquirer-only",
+        "consideration": "stock"
+      },
+      "treatment": "The merger/takeover rule applies because the acquirer is the component and the target is not. The target deletion price for stock consideration is the acquirer closing price multiplied by the stock term; the surviving security replaces the applicable component slot if it qualifies. Changes are announced immediately, implemented two trading days later, and effective the following trading day.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "acquirer-only",
+        "consideration": "cash-and-stock"
+      },
+      "treatment": "The merger/takeover rule applies because the acquirer is the component and the target is not. The target deletion price for cash-and-stock consideration is the cash term plus the acquirer closing price multiplied by the stock term; the surviving security replaces the applicable component slot if it qualifies. Changes are announced immediately, implemented two trading days later, and effective the following trading day.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.3 (Mergers and Takeovers)",
       "confidence": "stated"
     },
     {
@@ -1119,10 +1477,41 @@
       "event_type": "merger",
       "caev": "MRGR",
       "index_type": "*",
-      "treatment": "The target is generally deleted from all indexes on or around delisting (or earlier once it can no longer be acquired). Acquirer share/free-float changes depend on cash versus stock terms; if the target is halted, removal uses the cash tender price or derived stock deal price.",
+      "conditions": {
+        "consideration": "cash"
+      },
+      "treatment": "For a cash takeover, the target is generally deleted on or around delisting (or earlier when it can no longer be acquired), using the tender offer price; acquirer share/free-float changes follow the cash terms.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mergers and Acquisitions (pp. 28–29)",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mergers and Acquisitions (pp.28–29)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "consideration": "stock"
+      },
+      "treatment": "For a stock takeover, the target is generally deleted on or around delisting (or earlier when it can no longer be acquired), using a derived deal price; acquirer share/free-float changes follow the stock terms.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mergers and Acquisitions (pp.28–29)",
+      "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "merger",
+      "caev": "MRGR",
+      "index_type": "*",
+      "conditions": {
+        "consideration": "cash-and-stock"
+      },
+      "treatment": "For a mixed cash-and-stock takeover, the target is generally deleted on or around delisting (or earlier when it can no longer be acquired), using a derived deal price from the mixed terms; acquirer share/free-float changes follow those terms.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Mergers and Acquisitions (pp.28–29)",
       "confidence": "stated"
     },
     {
@@ -1365,10 +1754,58 @@
       "vendor": "solactive",
       "event_type": "merger",
       "index_type": "*",
-      "treatment": "Under the general Solactive framework, the target is removed on the effective date. For an index-component acquirer, cash terms redistribute the target weight pro rata, stock terms increase the surviving shares, and mixed terms split those treatments; for a non-component acquirer, the target weight is redistributed for all listed terms. An Index Guideline supersedes this framework when it differs, so this is not universal product coverage.",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "cash"
+      },
+      "treatment": "For a merger between index components, the target is removed on the effective date and cash consideration is redistributed pro rata across the index.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.7 Mergers & Acquisitions; §2.1.7.1 Mergers & Acquisition Adjustment (pp.26–27)",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.7.1 Mergers & Acquisition Adjustment (p.27)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "merger",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "stock"
+      },
+      "treatment": "For a merger between index components, the target is removed on the effective date and the surviving component shares are increased according to the stock terms.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.7.1 Mergers & Acquisition Adjustment (p.27)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "merger",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "cash-and-stock"
+      },
+      "treatment": "For a merger between index components, the target is removed on the effective date; the cash portion is redistributed pro rata and the stock portion increases the surviving component shares.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.7.1 Mergers & Acquisition Adjustment (p.27)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "merger",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "target-only"
+      },
+      "treatment": "For a non-component acquirer acquiring a component, the target is removed on the effective date and its weight is redistributed for cash, stock, and mixed listed terms. An Index Guideline supersedes this general framework when it differs.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.7.1 Mergers & Acquisition Adjustment (p.27)",
       "confidence": "stated",
       "coverage": "framework-default"
     },
@@ -1620,10 +2057,58 @@
       "vendor": "vettafi",
       "event_type": "merger",
       "index_type": "*",
-      "treatment": "Merger treatment is index-specific, not universal: Approach 1.0 transfers weight to a surviving component, Approach 2.0 redistributes it to remaining constituents, and Approach 3.0 depends on cash/stock terms. Approaches 1.0/2.0 are defaults by weighting; Approach 3.0 applies to listed indexes in the Appendix. A product methodology is required to resolve the applicable approach.",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "cash"
+      },
+      "treatment": "Merger treatment is index-specific, not universal. The applicable product methodology is required to resolve the approach. For a merger between component stocks, default Approach 1.0 transfers weight to the surviving stock in market-cap-weighted indexes; default Approach 2.0 redistributes weight to remaining constituents in non-market-cap-weighted indexes. Where an Appendix-listed index uses Approach 3.0, all-cash consideration is redistributed proportionally.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §2 Mergers/Takeovers; §2.1 Between component stocks; Appendix — Indexes not employing default merger approaches (pp.1,14)",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §2.1–§2.2 (p.1; Appendix p.14)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "merger",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "stock"
+      },
+      "treatment": "Merger treatment is index-specific, not universal. The applicable product methodology is required to resolve the approach. For a merger between component stocks, default Approach 1.0 transfers weight to the surviving stock in market-cap-weighted indexes; default Approach 2.0 redistributes weight to remaining constituents in non-market-cap-weighted indexes. Where an Appendix-listed index uses Approach 3.0, all-stock consideration transfers weight to the surviving stock.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §2.1–§2.2 (p.1; Appendix p.14)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "merger",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "both",
+        "consideration": "cash-and-stock"
+      },
+      "treatment": "Merger treatment is index-specific, not universal. The applicable product methodology is required to resolve the approach. For a merger between component stocks, default Approach 1.0 transfers weight to the surviving stock in market-cap-weighted indexes; default Approach 2.0 redistributes weight to remaining constituents in non-market-cap-weighted indexes. Where an Appendix-listed index uses Approach 3.0, mixed consideration splits the treatment according to the cash/stock mix.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §2.1–§2.2 (p.1; Appendix p.14)",
+      "confidence": "stated",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "merger",
+      "index_type": "*",
+      "conditions": {
+        "index_membership": "target-only"
+      },
+      "treatment": "For a merger involving a non-component acquirer, weight is removed from the index and redistributed proportionally to the remaining constituents regardless of whether consideration is cash, stock, or mixed. The applicable product methodology is required to determine the final approach.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §2.1–§2.2 (p.1; Appendix p.14)",
       "confidence": "stated",
       "coverage": "framework-default"
     },
