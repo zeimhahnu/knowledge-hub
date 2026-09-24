@@ -239,11 +239,11 @@
       "return_variant": "net-total-return",
       "index_nature": "capped"
     },
-    {
+        {
       "ticker": "FLSW",
       "name": "Franklin FTSE Switzerland ETF",
       "isin": null,
-      "underlying_index": "FTSE Switzerland Capped Index",
+      "underlying_index": "FTSE Switzerland RIC Capped Net Tax Index",
       "index_provider": "FTSE Russell",
       "index_type": "float-adjusted-cap-weighted",
       "universe": "Swiss large- and mid-capitalization stocks",
@@ -269,7 +269,9 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "absent"
+        "source_as_of": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin",
@@ -277,8 +279,11 @@
       ],
       "coverage_quality": "partial",
       "notes": [
-        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
-      ]
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources.",
+        "Return variant: benchmark line identifies FTSE Switzerland Capped Index-NR and the document defines NR as income net of tax withholding. Index nature: capped; index type remains float-adjusted-cap-weighted."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLAU",
@@ -470,11 +475,11 @@
       "return_variant": "net-total-return",
       "index_nature": "capped"
     },
-    {
+        {
       "ticker": "FLSA",
       "name": "Franklin FTSE Saudi Arabia ETF",
       "isin": null,
-      "underlying_index": "FTSE Saudi Arabia Capped Index",
+      "underlying_index": "FTSE Saudi Arabia RIC Capped Index",
       "index_provider": "FTSE Russell",
       "index_type": "float-adjusted-cap-weighted",
       "universe": "Saudi Arabian large- and mid-capitalization stocks",
@@ -500,7 +505,9 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "absent"
+        "source_as_of": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin",
@@ -508,8 +515,11 @@
       ],
       "coverage_quality": "partial",
       "notes": [
-        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
-      ]
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources.",
+        "Return variant: benchmark line identifies FTSE Saudi Arabia Capped Index-NR. Index nature: capped; index type remains float-adjusted-cap-weighted because the methodology is market-cap weighted with security caps."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLEU",
@@ -556,11 +566,11 @@
       "return_variant": "net-total-return",
       "index_nature": "broad-market"
     },
-    {
+        {
       "ticker": "FLRU",
       "name": "Franklin FTSE Russia ETF",
       "isin": null,
-      "underlying_index": "FTSE Russia Capped Index",
+      "underlying_index": "FTSE Russia RIC Capped Net Tax Index",
       "index_provider": "FTSE Russell",
       "index_type": "float-adjusted-cap-weighted",
       "universe": "Russian large- and mid-capitalization stocks",
@@ -584,7 +594,9 @@
         "weighting": "stated",
         "reconstitution_frequency": "absent",
         "inception_date": "absent",
-        "isin": "absent"
+        "isin": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin",
@@ -593,7 +605,8 @@
       ],
       "coverage_quality": "partial",
       "notes": [
-        "The reviewed primary evidence confirms the index and methodology, but did not expose a current Franklin factsheet with reconstitution frequency and inception date; those fields remain explicitly missing."
+        "The reviewed primary evidence confirms the index and methodology, but did not expose a current Franklin factsheet with reconstitution frequency and inception date; those fields remain explicitly missing.",
+        "Return variant: closed-fund performance document names FTSE Russia RIC Capped Index-NR; recorded as net total return. Index nature: capped; index type remains float-adjusted-cap-weighted after review of the FTSE methodology."
       ],
       "lifecycle": {
         "status": "closed",
@@ -603,7 +616,9 @@
           "https://www.franklintempleton.com/forms-literature/download-preview/FLRU-SAI1",
           "https://www.franklintempleton.com/press-releases/etfs/2022/update-on-franklin-ftse-russia-etf-flru"
         ]
-      }
+      },
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLLA",
@@ -694,7 +709,7 @@
       "return_variant": null,
       "index_nature": "factor"
     },
-    {
+        {
       "ticker": "XUDV",
       "name": "Franklin U.S. Dividend Booster Index ETF",
       "isin": null,
@@ -722,15 +737,21 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "isin": "absent"
+        "isin": "absent",
+        "return_variant": "absent",
+        "index_nature": "inferred"
       },
       "missing_fields": [
-        "isin"
+        "isin",
+        "return_variant"
       ],
       "coverage_quality": "product-specific",
       "notes": [
-        "Index type is classified as capped-factor because the published methodology uses an optimization process with explicit volatility and concentration constraints; the fund page identifies VettaFi as the index provider."
-      ]
+        "Index type is classified as capped-factor because the published methodology uses an optimization process with explicit volatility and concentration constraints; the fund page identifies VettaFi as the index provider.",
+        "Return variant: null because the factsheet names the VettaFi New Frontier U.S. Dividend Select Index but does not name a single allowed benchmark return series; Market Price Return/NAV Returns are fund presentation labels. Index nature: dividend; the optimizer seeks excess or multiplied dividend yield. Index type remains capped-factor."
+      ],
+      "return_variant": null,
+      "index_nature": "dividend"
     },
     {
       "ticker": "XDAT",
@@ -1246,7 +1267,7 @@
       "return_variant": "net-total-return",
       "index_nature": "capped"
     },
-    {
+        {
       "ticker": "FLTW",
       "name": "Franklin FTSE Taiwan ETF",
       "isin": null,
@@ -1275,15 +1296,20 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "stated"
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
-      ]
+        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field.",
+        "Return variant: benchmark is FTSE Taiwan 30/18 Capped Net Tax Index and the document defines NR as income net of tax withholding. Index nature: capped; index type remains float-adjusted-cap-weighted."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "DIEM",
@@ -1499,7 +1525,7 @@
         "The proprietary stable-yield and currency-hedging methodology is classified as capped-factor, not plain market-cap weighting. Components are reconstituted annually and rebalanced quarterly. ISIN remains null."
       ]
     },
-    {
+        {
       "ticker": "UDIV",
       "name": "Franklin U.S. Core Dividend Tilt Index ETF",
       "isin": null,
@@ -1528,17 +1554,23 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "stated"
+        "source_as_of": "stated",
+        "return_variant": "absent",
+        "index_nature": "inferred"
       },
       "missing_fields": [
-        "isin"
+        "isin",
+        "return_variant"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "The dividend-enhanced optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null."
-      ]
+        "The dividend-enhanced optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null.",
+        "Return variant: null because the current benchmark line names the Linked Morningstar U.S. Dividend Enhanced Select Index without a single allowed return-series suffix; the historical pre-2022 linked component is not used to infer the current variant. Index nature: dividend; the optimizer targets higher dividend yield than the parent benchmark. Index type remains capped-factor."
+      ],
+      "return_variant": null,
+      "index_nature": "dividend"
     },
-    {
+        {
       "ticker": "USPX",
       "name": "Franklin U.S. Equity Index ETF",
       "isin": null,
@@ -1567,17 +1599,23 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "stated"
+        "source_as_of": "stated",
+        "return_variant": "absent",
+        "index_nature": "inferred"
       },
       "missing_fields": [
-        "isin"
+        "isin",
+        "return_variant"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "USPX follows the methodology researched in task-2026-09-05-ca-hub-uspx-methodology-research. The Morningstar index page describes semiannual reconstitution and quarterly rebalance; the Franklin fund factsheet reports quarterly frequency for the fund benchmark field. ISIN remains null."
-      ]
+        "USPX follows the methodology researched in task-2026-09-05-ca-hub-uspx-methodology-research. The Morningstar index page describes semiannual reconstitution and quarterly rebalance; the Franklin fund factsheet reports quarterly frequency for the fund benchmark field. ISIN remains null.",
+        "Return variant: null because the current benchmark line names the Linked Morningstar US Target Market Exposure Index without a single allowed return-series suffix; the historical pre-2022 linked component is not used to infer the current variant. Index nature: broad-market; it covers the top 85% of the U.S. equity market by float-adjusted capitalization. Index type remains float-adjusted-cap-weighted."
+      ],
+      "return_variant": null,
+      "index_nature": "broad-market"
     },
-    {
+        {
       "ticker": "XIDV",
       "name": "Franklin International Dividend Booster Index ETF",
       "isin": null,
@@ -1606,15 +1644,21 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "stated"
+        "source_as_of": "stated",
+        "return_variant": "absent",
+        "index_nature": "inferred"
       },
       "missing_fields": [
-        "isin"
+        "isin",
+        "return_variant"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "The dividend-booster optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null."
-      ]
+        "The dividend-booster optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null.",
+        "Return variant: null because the factsheet names the VettaFi New Frontier International Dividend Select Index but does not name a single allowed benchmark return series; Market Price Return/NAV Returns are fund presentation labels. Index nature: dividend; the optimizer seeks excess or multiplied dividend yield. Index type remains capped-factor."
+      ],
+      "return_variant": null,
+      "index_nature": "dividend"
     },
   {
     "ticker": "CBL",
@@ -2017,85 +2061,95 @@
     "return_variant": null,
     "index_nature": "broad-market"
   },
-  {
-    "ticker": "FLUR",
-    "name": "Franklin International Equity Index ETF",
-    "isin": null,
-    "underlying_index": "Solactive GBS Developed Markets ex North America Large & Mid Cap CAD Index",
-    "index_provider": "Solactive AG",
-    "index_type": "float-adjusted-cap-weighted",
-    "universe": "Developed-market large- and mid-capitalization issuers outside North America covering approximately the largest 85% of free-float market capitalization",
-    "weighting": "Free-float market-capitalization weighted; net total return in CAD",
-    "reconstitution_frequency": null,
-    "inception_date": "2019-02-20",
-    "source_urls": [
-      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27748/SINGLCLASS/franklin-international-equity-index-etf/FLUR",
-      "https://www.franklintempleton.ca/download/en-ca/factsheet/7efeb244-bbce-4d09-a26b-c5e8eacb2b7f/Factsheet-FranklinInternationalEquityIndexETF-27748-FF-CA-en-CA.PDF",
-      "https://www.solactive.com/index/DE000SLA5AN5"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "absent",
-      "inception_date": "stated",
-      "source_as_of": "stated"
+      {
+      "ticker": "FLUR",
+      "name": "Franklin International Equity Index ETF",
+      "isin": null,
+      "underlying_index": "Solactive GBS Developed Markets ex North America Large & Mid Cap CAD Index",
+      "index_provider": "Solactive AG",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Developed-market large- and mid-capitalization issuers outside North America covering approximately the largest 85% of free-float market capitalization",
+      "weighting": "Free-float market-capitalization weighted; net total return in CAD",
+      "reconstitution_frequency": null,
+      "inception_date": "2019-02-20",
+      "source_urls": [
+        "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/27748/SINGLCLASS/franklin-international-equity-index-etf/FLUR",
+        "https://www.franklintempleton.ca/download/en-ca/factsheet/7efeb244-bbce-4d09-a26b-c5e8eacb2b7f/Factsheet-FranklinInternationalEquityIndexETF-27748-FF-CA-en-CA.PDF",
+        "https://www.solactive.com/index/DE000SLA5AN5"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "absent",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [
+        "isin",
+        "reconstitution_frequency"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "The Solactive page describes free-float market-cap weighting and CAD net-total-return treatment. The Franklin factsheet states that NR returns include income net of tax withholding when dividends are paid; no withholding rate is inferred. ISIN remains null.",
+        "Return variant: benchmark line identifies Solactive GBS Developed Markets ex North America Large & Mid Cap CAD Index-NR. Index nature: broad-market; the Solactive index is free-float market-cap weighted without a cap/factor/dividend overlay. Alex’s targeted CSV label is wrong: Franklin’s Canadian product page and factsheet identify this as Franklin International Equity Index ETF tracking the Solactive index, not a Franklin FTSE Europe ex U.K. ETF."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "broad-market"
     },
-    "missing_fields": [
-      "isin",
-      "reconstitution_frequency"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "The Solactive page describes free-float market-cap weighting and CAD net-total-return treatment. The Franklin factsheet states that NR returns include income net of tax withholding when dividends are paid; no withholding rate is inferred. ISIN remains null."
-    ]
-  },
-  {
-    "ticker": "FLUS",
-    "name": "Franklin U.S. Large Cap Multifactor Index ETF",
-    "isin": null,
-    "underlying_index": "LibertyQ U.S. Large Cap Equity Index",
-    "index_provider": "FTSE Russell",
-    "index_type": "capped-factor",
-    "universe": "U.S. large-capitalization equity securities selected from the Russell 1000 Index",
-    "weighting": "Rules-based multifactor selection using quality, value, momentum and low volatility factors",
-    "reconstitution_frequency": "Quarterly",
-    "inception_date": "2017-06-05",
-    "source_urls": [
-      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/25660/SINGLCLASS/franklin-u-s-large-cap-multifactor-index-etf/FLUS",
-      "https://www.franklintempleton.ca/download/en-ca/factsheet/e5d836a7-5c07-4b22-ac81-4bd969f260cc/Factsheet-FranklinUSLargeCapMultifactorIndexETF-25660-ENFF-CA-en-CA.PDF",
-      "https://www.franklintempleton.com/forms-literature/download/ETF-P"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
+      {
+      "ticker": "FLUS",
+      "name": "Franklin U.S. Large Cap Multifactor Index ETF",
+      "isin": null,
+      "underlying_index": "LibertyQ U.S. Large Cap Equity Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "capped-factor",
+      "universe": "U.S. large-capitalization equity securities selected from the Russell 1000 Index",
+      "weighting": "Rules-based multifactor selection using quality, value, momentum and low volatility factors",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2017-06-05",
+      "source_urls": [
+        "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/25660/SINGLCLASS/franklin-u-s-large-cap-multifactor-index-etf/FLUS",
+        "https://www.franklintempleton.ca/download/en-ca/factsheet/e5d836a7-5c07-4b22-ac81-4bd969f260cc/Factsheet-FranklinUSLargeCapMultifactorIndexETF-25660-ENFF-CA-en-CA.PDF",
+        "https://www.franklintempleton.com/forms-literature/download/ETF-P"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "The explicit four-factor construction is classified as capped-factor rather than plain market-cap weighting. The factsheet states that NR returns include income net of tax withholding when dividends are paid; no withholding rate is inferred. ISIN remains null.",
+        "Return variant: the benchmark presentation identifies an NR series. Index nature: factor; the LibertyQ methodology uses quality, value, momentum and low-volatility factors. Index type remains capped-factor."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "factor"
     },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "The explicit four-factor construction is classified as capped-factor rather than plain market-cap weighting. The factsheet states that NR returns include income net of tax withholding when dividends are paid; no withholding rate is inferred. ISIN remains null."
-    ]
-  },
   {
     "ticker": "FLVC",
     "name": "Franklin Canadian Low Volatility High Dividend Index ETF",
@@ -2218,45 +2272,50 @@
       "The low-volatility/high-dividend construction is classified as capped-factor. The fund facts state the index is reconstituted annually and rebalanced quarterly. ISIN remains null."
     ]
   },
-  {
-    "ticker": "FMID",
-    "name": "Franklin U.S. Mid Cap Multifactor Index ETF",
-    "isin": null,
-    "underlying_index": "LibertyQ U.S. Mid Cap Equity Index",
-    "index_provider": "FTSE Russell",
-    "index_type": "capped-factor",
-    "universe": "U.S. mid-capitalization equity securities selected from the Russell Midcap Index",
-    "weighting": "Rules-based multifactor selection using quality, value, momentum and low volatility factors",
-    "reconstitution_frequency": "Semiannually",
-    "inception_date": "2025-01-30",
-    "source_urls": [
-      "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/42055/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FMID",
-      "https://www.franklintempleton.ca/download/en-ca/factsheet/5dadc813-508e-4671-90fd-d350f82e89f3/Factsheet-FranklinUSMidCapMultifactorIndexETF-42055-ENFF-CA-en-CA.PDF",
-      "https://www.franklintempleton.com/forms-literature/download/ETF-P"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "absent",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "inferred",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
+      {
+      "ticker": "FMID",
+      "name": "Franklin U.S. Mid Cap Multifactor Index ETF",
+      "isin": null,
+      "underlying_index": "LibertyQ U.S. Mid Cap Equity Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "capped-factor",
+      "universe": "U.S. mid-capitalization equity securities selected from the Russell Midcap Index",
+      "weighting": "Rules-based multifactor selection using quality, value, momentum and low volatility factors",
+      "reconstitution_frequency": "Semiannually",
+      "inception_date": "2025-01-30",
+      "source_urls": [
+        "https://www.franklintempleton.ca/en-ca/products/etf/price-and-performance/products/42055/SINGLCLASS/franklin-u-s-mid-cap-multifactor-index-etf/FMID",
+        "https://www.franklintempleton.ca/download/en-ca/factsheet/5dadc813-508e-4671-90fd-d350f82e89f3/Factsheet-FranklinUSMidCapMultifactorIndexETF-42055-ENFF-CA-en-CA.PDF",
+        "https://www.franklintempleton.com/forms-literature/download/ETF-P"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "absent",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [
+        "isin"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "The explicit four-factor construction is classified as capped-factor rather than plain market-cap weighting. The fund facts state semiannual index restructuring and that NR returns include income net of tax withholding when dividends are paid; no withholding rate is inferred. ISIN remains null.",
+        "Return variant: fund facts identify the benchmark’s NR presentation. Index nature: factor; the LibertyQ methodology uses quality, value, momentum and low-volatility factors. Index type remains capped-factor."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "factor"
     },
-    "missing_fields": [
-      "isin"
-    ],
-    "coverage_quality": "complete",
-    "notes": [
-      "The explicit four-factor construction is classified as capped-factor rather than plain market-cap weighting. The fund facts state semiannual index restructuring and that NR returns include income net of tax withholding when dividends are paid; no withholding rate is inferred. ISIN remains null."
-    ]
-  },
   {
     "ticker": "GRO",
     "name": "Franklin Growth ETF Portfolio",
@@ -2637,81 +2696,91 @@
       "The factsheet identifies the FTSE Korea 30/18 Capped Index-NR benchmark; the NR return variant includes income net of tax withholding when dividends are paid. No withholding rate is inferred."
     ]
   },
-  {
-    "ticker": "FLXT",
-    "name": "Franklin FTSE Taiwan UCITS ETF",
-    "isin": "IE000CM02H85",
-    "underlying_index": "FTSE Taiwan 30/18 Capped Index",
-    "index_provider": "FTSE Russell",
-    "index_type": "float-adjusted-cap-weighted",
-    "universe": "Taiwanese large- and mid-capitalization stocks",
-    "weighting": "Free float-adjusted market-capitalization weighted; the largest constituent is capped at 30% and all other constituents at 18%",
-    "reconstitution_frequency": "Quarterly",
-    "inception_date": "2022-03-21",
-    "source_urls": [
-      "https://www.franklintempleton.lu/our-funds/etf/passive-etfs",
-      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/32637/SINGLCLASS/franklin-ftse-taiwan-ucits-etf/IE000CM02H85",
-      "https://www.franklintempleton.lu/download/en-lu/factsheet/eb9830d5-371c-424d-94a8-88064a474b55/Factsheet-FranklinFTSETaiwanUCITSETF-32637-FF-LU-en-GB.PDF",
-      "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf"
-    ],
-    "source_as_of": "2026-06-30",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "stated",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "stated",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
+      {
+      "ticker": "FLXT",
+      "name": "Franklin FTSE Taiwan UCITS ETF",
+      "isin": "IE000CM02H85",
+      "underlying_index": "FTSE Taiwan 30/18 Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Taiwanese large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market-capitalization weighted; the largest constituent is capped at 30% and all other constituents at 18%",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2022-03-21",
+      "source_urls": [
+        "https://www.franklintempleton.lu/our-funds/etf/passive-etfs",
+        "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/32637/SINGLCLASS/franklin-ftse-taiwan-ucits-etf/IE000CM02H85",
+        "https://www.franklintempleton.lu/download/en-lu/factsheet/eb9830d5-371c-424d-94a8-88064a474b55/Factsheet-FranklinFTSETaiwanUCITSETF-32637-FF-LU-en-GB.PDF",
+        "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "The factsheet identifies the FTSE Taiwan 30/18 Capped Net Tax Index benchmark; this is a net-tax return variant. No withholding rate is inferred.",
+        "Return variant: factsheet identifies the FTSE Taiwan 30/18 Capped Net Tax Index and defines NR as income net of tax withholding. Index nature: capped; index type remains float-adjusted-cap-weighted."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
-    "missing_fields": [],
-    "coverage_quality": "complete",
-    "notes": [
-      "The factsheet identifies the FTSE Taiwan 30/18 Capped Net Tax Index benchmark; this is a net-tax return variant. No withholding rate is inferred."
-    ]
-  },
-  {
-    "ticker": "FLXS",
-    "name": "Franklin FTSE Saudi Arabia UCITS ETF",
-    "isin": "IE000C7DDDX4",
-    "underlying_index": "FTSE Saudi Arabia 30/18 Capped Index",
-    "index_provider": "FTSE Russell",
-    "index_type": "float-adjusted-cap-weighted",
-    "universe": "Saudi Arabian large- and mid-capitalization stocks",
-    "weighting": "Free float-adjusted market-capitalization weighted; the largest constituent is capped at 30% and all other constituents at 18%",
-    "reconstitution_frequency": "Quarterly",
-    "inception_date": "2024-10-28",
-    "source_urls": [
-      "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/41675/SINGLCLASS/franklin-ftse-saudi-arabia-ucits-etf/IE000C7DDDX4",
-      "https://www.franklintempleton.lu/download/en-lu/factsheet/c908a68a-c27c-40b7-bc54-0231dba03f9c/Factsheet-FranklinFTSESaudiArabiaUCITSETF-41675-FF-LU-en-GB.PDF",
-      "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf"
-    ],
-    "source_as_of": "2026-07-31",
-    "confidence": "medium",
-    "field_confidence": {
-      "ticker": "stated",
-      "name": "stated",
-      "isin": "stated",
-      "underlying_index": "stated",
-      "index_provider": "stated",
-      "index_type": "stated",
-      "universe": "stated",
-      "weighting": "stated",
-      "reconstitution_frequency": "stated",
-      "inception_date": "stated",
-      "source_as_of": "stated"
+      {
+      "ticker": "FLXS",
+      "name": "Franklin FTSE Saudi Arabia UCITS ETF",
+      "isin": "IE000C7DDDX4",
+      "underlying_index": "FTSE Saudi Arabia 30/18 Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Saudi Arabian large- and mid-capitalization stocks",
+      "weighting": "Free float-adjusted market-capitalization weighted; the largest constituent is capped at 30% and all other constituents at 18%",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2024-10-28",
+      "source_urls": [
+        "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/41675/SINGLCLASS/franklin-ftse-saudi-arabia-ucits-etf/IE000C7DDDX4",
+        "https://www.franklintempleton.lu/download/en-lu/factsheet/c908a68a-c27c-40b7-bc54-0231dba03f9c/Factsheet-FranklinFTSESaudiArabiaUCITSETF-41675-FF-LU-en-GB.PDF",
+        "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/ftse-global-equity-index-series-ground-rules.pdf"
+      ],
+      "source_as_of": "2026-07-31",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "stated",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "The factsheet identifies the FTSE Saudi Arabia 30/18 Capped Index-NR benchmark; the NR return variant includes income net of tax withholding when dividends are paid. No withholding rate is inferred.",
+        "Return variant: factsheet identifies the FTSE Saudi Arabia 30/18 Capped Index-NR and defines NR as income net of tax withholding. Index nature: capped; index type remains float-adjusted-cap-weighted."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
-    "missing_fields": [],
-    "coverage_quality": "complete",
-    "notes": [
-      "The factsheet identifies the FTSE Saudi Arabia 30/18 Capped Index-NR benchmark; the NR return variant includes income net of tax withholding when dividends are paid. No withholding rate is inferred."
-    ]
-  },
   {
     "ticker": "FVUB",
     "name": "Franklin FTSE Brazil UCITS ETF",
