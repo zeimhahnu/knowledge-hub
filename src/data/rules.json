@@ -2648,6 +2648,62 @@
     {
       "vendor": "solactive",
       "review_calendar": null,
+      "index_calendars": [
+        {
+          "indexes": [
+            "Solactive Global Metaverse Innovation Index"
+          ],
+          "frequency": "semi-annual",
+          "months": [
+            6,
+            12
+          ],
+          "effective": "second-monday",
+          "source_ref": "https://www.solactive.com/downloads/Guideline-Solactive-SMETAIV.pdf §6 Definitions (pp.16–17); §3.1 Ordinary Rebalance (p.10)",
+          "note": "The guideline makes the ordinary rebalance effective after close on the second Monday in June and December; if not a trading day, the next trading day is used."
+        },
+        {
+          "indexes": [
+            "Solactive Sustainable Food Index"
+          ],
+          "frequency": "semi-annual",
+          "months": [
+            3,
+            9
+          ],
+          "effective": "second-monday",
+          "source_ref": "https://www.solactive.com/downloads/Guideline-Solactive-SOLSUFO.pdf §6 Definitions (pp.17–18); §3.1 Ordinary Rebalance (p.11)",
+          "note": "The ordinary rebalance/share implementation is the second Monday in March and September; the separate June/December Adjustment Day is for ESG/weighting review breaches, not the ordinary share/float landing cycle."
+        },
+        {
+          "indexes": [
+            "Solactive Sustainable Health and Wellness Index"
+          ],
+          "frequency": "semi-annual",
+          "months": [
+            3,
+            9
+          ],
+          "effective": "second-monday",
+          "source_ref": "https://www.solactive.com/downloads/Guideline-Solactive-SOLSUH.pdf §6 Definitions (pp.17–18); §3.1 Ordinary Rebalance (p.11)",
+          "note": "The guideline makes the ordinary rebalance effective after close on the second Monday in March and September; if not a trading day, the next trading day is used."
+        },
+        {
+          "indexes": [
+            "Solactive US Mega Cap 100 Select Index"
+          ],
+          "frequency": "quarterly",
+          "months": [
+            2,
+            5,
+            8,
+            11
+          ],
+          "effective": "first-wednesday",
+          "source_ref": "https://www.solactive.com/downloads/Guideline-Solactive-SUSM100.pdf §6 Definitions (p.15); §3.1 Ordinary Rebalance (p.8)",
+          "note": "The guideline makes the ordinary rebalance effective after close on the first Wednesday in February, May, August and November; if not an eligible GBS rebalance day, the next eligible day is used."
+        }
+      ],
       "uncovered_event_policy": {
         "treatment": "Solactive may apply discretion to decide the most appropriate implementation method for corporate actions the methodology does not describe, including actions that significantly decrease a company's market capitalisation or where a strict application would conflict with the index objective or jeopardise replicability.",
         "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1 Corporate Actions (p.12)",
