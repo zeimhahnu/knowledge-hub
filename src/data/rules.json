@@ -235,11 +235,13 @@
       "event_type": "share-buyback",
       "caev": "BIDS",
       "index_type": "*",
-      "treatment": null,
+      "treatment": "For share buy-backs carried out by means of an offer, MSCI applies fixed-price partial-tender treatment with PAF = 1 on the offer ex-date (or the first business day after the offer when no ex-date is available); Dutch auctions receive no PAF because the offer price is unknown before the offer. After final results are announced, share-count/FIF/DIF changes are implemented with two full business days' notice when results meet the 5%/10%/25% size thresholds. Progressive open-market buybacks are implemented at a regularly scheduled Index Review. MSCI assumes pro-rata participation for the post-event free-float calculation unless public information shows otherwise.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "No buyback rule extracted yet (plan-coac-1.0 G8).",
-      "confidence": "absent"
+      "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §2.4.1–§2.4.3 (pp.14–15); §2.6.2 (p.17)",
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "Results below the 5%/10%/25% pre-event share thresholds, changes below ±1% on a post-event basis, or progressive open-market buybacks; these are implemented at the next regularly scheduled Index Review."
     },
     {
       "vendor": "msci",
@@ -433,11 +435,12 @@
       "event_type": "forward-sale-agreement",
       "caev": "OTHR",
       "index_type": "*",
-      "treatment": null,
+      "treatment": "Forward sales agreements in the U.S. are ineligible for accelerated implementation; share updates resulting from settlement are updated at a future quarterly rebalancing.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "Not named in this vendor's corpus documents; the uncovered-event policy in vendor_profiles applies (plan-coac-1.0 G5).",
-      "confidence": "absent"
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Non-Mandatory Share and IWF Updates — Market Specific Accelerated Implementation Rules, U.S. and Canada (p.15)",
+      "confidence": "stated",
+      "timing": "at-review"
     },
     {
       "vendor": "sp",
@@ -455,11 +458,12 @@
       "event_type": "share-buyback",
       "caev": "BIDS",
       "index_type": "*",
-      "treatment": null,
+      "treatment": "Dutch auctions, self-tender offer buybacks, and split-off exchange offers are non-mandatory but eligible for accelerated implementation regardless of size once final results are publicly announced and verified by S&P DJI.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "No buyback rule extracted yet (plan-coac-1.0 G8).",
-      "confidence": "absent"
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Non-Mandatory Share and IWF Updates — Dutch Auctions, Self-tender offer buybacks, and Split-off exchange offers (p.14)",
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "sp",
@@ -686,11 +690,12 @@
       "event_type": "share-buyback",
       "caev": "BIDS",
       "index_type": "*",
-      "treatment": null,
+      "treatment": "A compulsory partial tender/buyback at a set ratio and price reduces shares in issue and recalculates the adjusted price from post-tender market capitalisation. A compulsory full share buyback deletes the security at the last traded price, or at the redemption price if trading has halted at implementation.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "No buyback rule extracted yet (plan-coac-1.0 G8).",
-      "confidence": "absent"
+      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §4.8 (pp.11–12)",
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "ftse",
@@ -878,11 +883,12 @@
       "event_type": "share-buyback",
       "caev": "BIDS",
       "index_type": "*",
-      "treatment": null,
+      "treatment": "A repurchase of shares or self-tender offer is treated as a corporate action on its effective date. For a specific-price repurchase, STOXX uses that price in the calculation; for a percentage-of-shares repurchase, the effective number of shares is adjusted accordingly. The index divisor decreases.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "No buyback rule extracted yet (plan-coac-1.0 G8).",
-      "confidence": "absent"
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.7 Repurchase of Shares/Self-Tender (p.22)",
+      "confidence": "stated",
+      "timing": "on-event"
     },
     {
       "vendor": "stoxx",
@@ -1102,11 +1108,11 @@
       "event_type": "share-buyback",
       "caev": "BIDS",
       "index_type": "*",
-      "treatment": null,
+      "treatment": "Dutch Auctions, buyback of shares, and self-tender offer buybacks are classified as nonmandatory corporate actions. The methodology does not state a buyback-specific threshold or treatment mechanics beyond that classification.",
       "lead_days": null,
       "lead_days_confidence": "absent",
-      "source_ref": "No buyback rule extracted yet (plan-coac-1.0 G8).",
-      "confidence": "absent"
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Nonmandatory Corporate Action Methodology — Dutch Auctions/Buyback of Shares/Self-tender Offer Buybacks (p.37)",
+      "confidence": "stated"
     },
     {
       "vendor": "morningstar",
