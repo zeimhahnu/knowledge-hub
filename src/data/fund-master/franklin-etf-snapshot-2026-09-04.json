@@ -4811,7 +4811,422 @@
 {"ticker":"IE00BFWXDX52","name":"Franklin USD Investment Grade Corporate Bond UCITS ETF","isin":"IE00BFWXDX52","underlying_index":null,"index_provider":null,"index_type":"fixed-income","universe":"U.S.-dollar-denominated investment-grade corporate debt securities across the USD bond market, seeking income and some capital preservation","weighting":null,"reconstitution_frequency":null,"inception_date":"2018-06-25","source_urls":["https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/27048/SINGLCLASS/franklin-usd-investment-grade-corporate-bond-ucits-etf/IE00BFWXDX52","https://www.franklintempleton.lu/download/en-lu/factsheet/8db046c3-9124-4020-ba03-8f68415bc4f0/Factsheet-FranklinUSDInvestmentGradeCorporateBondUCITSETF-27048-FF-LU-en-GB.PDF"],"source_as_of":null,"confidence":"medium","field_confidence":{"ticker":"stated","name":"stated","isin":"stated","underlying_index":"absent","index_provider":"absent","index_type":"stated","universe":"stated","weighting":"absent","reconstitution_frequency":"absent","inception_date":"stated","source_as_of":"absent"},"missing_fields":["underlying_index","index_provider","weighting","reconstitution_frequency","source_as_of"],"coverage_quality":"product-specific","notes":["The fund is actively managed; Bloomberg US Corporate - Investment Grade Index is identified as a performance comparator, not an underlying index. The factsheet states domicile Ireland and does not state a withholding-tax rate or a separate net-total-return variant."]},
 {"ticker":"IE000E02WFD5","name":"Franklin US Treasury 0-1 Year UCITS ETF","isin":"IE000E02WFD5","underlying_index":"Bloomberg US Short Treasury Index","index_provider":"Bloomberg","index_type":"fixed-income","universe":"U.S. Treasury bills, notes and bonds with at least one month and less than one year to maturity","weighting":null,"reconstitution_frequency":"Monthly","inception_date":"2025-07-01","source_urls":["https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/46790/ETA/franklin-us-treasury-0-1-year-ucits-etf/IE000E02WFD5","https://www.franklintempleton.co.uk/download/en-gb/factsheet/d6dd5a92-1cd4-4fba-bba7-353b65111188/Factsheet-FranklinUSTreasury0-1YearUCITSETF-USD(Acc)-46790-ETA-FF-GB-en-GB.PDF","https://www.bloomberg.com/professional/products/indices/quote/LT12TRUU:IND","https://assets.bbhub.io/professional/sites/10/00077.pdf"],"source_as_of":null,"confidence":"medium","field_confidence":{"ticker":"stated","name":"stated","isin":"stated","underlying_index":"stated","index_provider":"stated","index_type":"stated","universe":"stated","weighting":"absent","reconstitution_frequency":"stated","inception_date":"stated","source_as_of":"absent"},"missing_fields":["weighting","source_as_of"],"coverage_quality":"product-specific","notes":["The fund is passively managed and seeks to replicate the Bloomberg US Short Treasury Index using optimised physical replication. The index measures U.S. Treasury bills, notes and bonds under one year to maturity; the reviewed evidence does not state a weighting field suitable for the fund-master schema. The factsheet states domicile Ireland and does not state a withholding-tax rate or a separate net-total-return variant."]},
 {"ticker":"BNDS","name":"Betashares Western Asset Australian Bond Active ETF","isin":null,"underlying_index":null,"index_provider":null,"index_type":"fixed-income","universe":"Actively managed, diversified portfolio of Australian bonds and other approved fixed-income securities, including government, semi-government, corporate, mortgage-backed and asset-backed securities","weighting":null,"reconstitution_frequency":null,"inception_date":"2018-11-07","source_urls":["https://www.franklintempleton.com.au/our-products/funds-prices-performance/etf/products/91920/SINGLCLASS/betashares-western-asset-australian-bond-active-etf/BNDS","https://www.franklintempleton.com.au/download/en-au/PRODUCT-DISCLOSURE-STATEMENTS/6fe5b869-bc74-437b-ae88-df9129cc72b2/product-disclosure-statement-betashares-lm-wa-australian-bond-au-en.pdf","https://www.betashares.com.au/fund/australian-bond-fund"],"source_as_of":null,"confidence":"medium","field_confidence":{"ticker":"stated","name":"stated","isin":"absent","underlying_index":"absent","index_provider":"absent","index_type":"stated","universe":"stated","weighting":"absent","reconstitution_frequency":"absent","inception_date":"stated","source_as_of":"absent"},"missing_fields":["isin","underlying_index","index_provider","weighting","reconstitution_frequency","source_as_of"],"coverage_quality":"product-specific","notes":["The fund is actively managed and aims to outperform the Bloomberg AusBond Composite 0+yr Index; that benchmark is not an underlying tracked index. The PDS states that the fund commenced operations on 7 November 2018 and gives portfolio-range guidelines, not an index weighting methodology. The fund is Australia-domiciled; the reviewed evidence does not state a withholding-tax rate or a separate net-total-return variant."]},
-{"ticker":"FRAR","name":"Franklin Australian Absolute Return Bond Fund","isin":null,"underlying_index":null,"index_provider":null,"index_type":"fixed-income","universe":"Diversified portfolio of Australian and global fixed-income securities managed for defensive and stable Australian-dollar-hedged returns","weighting":null,"reconstitution_frequency":null,"inception_date":"2014-12-22","source_urls":["https://etf.franklintempleton.com/frar","https://www.franklintempleton.com.au/download/en-au/factsheet/d9ae485b-522b-45b2-a7e5-a2d53d734405/Factsheet-FranklinAustralianAbsoluteReturnBondFund-ClassA-19414-W-FF-AU-en-AU.PDF","https://www.franklintempleton.com.au/our-products/funds-prices-performance/managed-funds/products/19414/W/franklin-australian-absolute-return-bond-fund/FRT0027AU"],"source_as_of":null,"confidence":"medium","field_confidence":{"ticker":"stated","name":"stated","isin":"absent","underlying_index":"absent","index_provider":"absent","index_type":"stated","universe":"stated","weighting":"absent","reconstitution_frequency":"absent","inception_date":"stated","source_as_of":"absent"},"missing_fields":["isin","underlying_index","index_provider","weighting","reconstitution_frequency","source_as_of"],"coverage_quality":"product-specific","notes":["The fund is actively managed; Bloomberg AusBond Bank Bill Index is a performance comparator, not an underlying index. The factsheet states that performance returns are net of fees and assume reinvestment of distributions, but does not state a withholding-tax rate or a separate net-total-return variant. The fund is Australia-domiciled."]}
+{"ticker":"FRAR","name":"Franklin Australian Absolute Return Bond Fund","isin":null,"underlying_index":null,"index_provider":null,"index_type":"fixed-income","universe":"Diversified portfolio of Australian and global fixed-income securities managed for defensive and stable Australian-dollar-hedged returns","weighting":null,"reconstitution_frequency":null,"inception_date":"2014-12-22","source_urls":["https://etf.franklintempleton.com/frar","https://www.franklintempleton.com.au/download/en-au/factsheet/d9ae485b-522b-45b2-a7e5-a2d53d734405/Factsheet-FranklinAustralianAbsoluteReturnBondFund-ClassA-19414-W-FF-AU-en-AU.PDF","https://www.franklintempleton.com.au/our-products/funds-prices-performance/managed-funds/products/19414/W/franklin-australian-absolute-return-bond-fund/FRT0027AU"],"source_as_of":null,"confidence":"medium","field_confidence":{"ticker":"stated","name":"stated","isin":"absent","underlying_index":"absent","index_provider":"absent","index_type":"stated","universe":"stated","weighting":"absent","reconstitution_frequency":"absent","inception_date":"stated","source_as_of":"absent"},"missing_fields":["isin","underlying_index","index_provider","weighting","reconstitution_frequency","source_as_of"],"coverage_quality":"product-specific","notes":["The fund is actively managed; Bloomberg AusBond Bank Bill Index is a performance comparator, not an underlying index. The factsheet states that performance returns are net of fees and assume reinvestment of distributions, but does not state a withholding-tax rate or a separate net-total-return variant. The fund is Australia-domiciled."]},
+    {
+      "ticker": "DWLD",
+      "name": "Franklin FTSE Developed World UCITS ETF",
+      "isin": "IE000CVOSY02",
+      "underlying_index": "FTSE Developed Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "market-cap-weighted",
+      "universe": "Developed-market medium- and large-capitalization companies globally",
+      "weighting": "Free-float-adjusted market-capitalization weighted; full replication holds index securities in proportions similar to their benchmark weights",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2024-06-24",
+      "source_urls": [
+        "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/40162/SINGLCLASS/franklin-ftse-developed-world-ucits-etf/IE000CVOSY02",
+        "https://www.franklintempleton.lu/download/en-lu/factsheet/9ba2ca06-fee5-406f-be87-015075c65f55/Factsheet-FranklinFTSEDevelopedWorldUCITSETF-40162-FF-LU-en-GB.PDF",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2026-03-31",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview and Benchmark(s) and Type identify FTSE Developed Index-NR, quarterly reconstitution, and FTSE Russell ownership/provider language. Index nature: broad-market; index type remains market-cap-weighted."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "broad-market"
+    },
+    {
+      "ticker": "EMGM",
+      "name": "Franklin FTSE Emerging Markets UCITS ETF",
+      "isin": "IE000GTF7GF4",
+      "underlying_index": "FTSE Emerging Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "market-cap-weighted",
+      "universe": "Emerging-market medium- and large-capitalization companies globally",
+      "weighting": "Free-float-adjusted market-capitalization weighted; full replication holds index securities in proportions similar to their benchmark weights",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2024-10-22",
+      "source_urls": [
+        "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/40163/ETD/franklin-ftse-emerging-markets-ucits-etf/IE000GTF7GF4",
+        "https://www.franklintempleton.lu/download/en-lu/factsheet/7b35dbc1-9970-417d-9181-549b9c4e2661/Factsheet-FranklinFTSEEmergingMarketsUCITSETF-(Dis)-40163-ETD-02-FF-LU-en-GB.PDF",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview and Benchmark(s) and Type identify FTSE Emerging Index-NR, quarterly reconstitution, and FTSE Russell ownership/provider language. Index nature: broad-market; index type remains market-cap-weighted."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "broad-market"
+    },
+    {
+      "ticker": "EXCN",
+      "name": "Franklin FTSE Emerging ex China UCITS ETF",
+      "isin": "IE0006D3PGW3",
+      "underlying_index": "FTSE Emerging ex China Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "market-cap-weighted",
+      "universe": "Emerging-market medium- and large-capitalization companies globally, excluding China",
+      "weighting": "Free-float-adjusted market-capitalization weighted; full replication holds index securities in proportions similar to their benchmark weights",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2024-10-22",
+      "source_urls": [
+        "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/40164/SINGLCLASS/franklin-ftse-emerging-ex-china-ucits-etf/IE0006D3PGW3",
+        "https://www.franklintempleton.co.uk/download/en-gb/factsheet/28c71c13-69a2-4dfe-97ba-e0f07434688e/Factsheet-FranklinFTSEEmergingexChinaUCITSETF-40164-FF-GB-en-GB.PDF",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2026-08-31",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview and Benchmark(s) and Type identify FTSE Emerging ex China Index-NR, quarterly reconstitution, and FTSE Russell ownership/provider language. Index nature: broad-market; index type remains market-cap-weighted."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "broad-market"
+    },
+    {
+      "ticker": "FLRA",
+      "name": "Franklin AI, Metaverse and Blockchain UCITS ETF",
+      "isin": "IE000IM4K4K2",
+      "underlying_index": "Solactive Global Metaverse Innovation Index",
+      "index_provider": "Solactive AG",
+      "index_type": "thematic-custom",
+      "universe": "Global listed companies materially exposed to metaverse, blockchain or AI applications, subject to Solactive eligibility screens",
+      "weighting": "40% relevance-score weighting and 60% free-float market-capitalization weighting, with 5% constituent and liquidity caps",
+      "reconstitution_frequency": "Semi-Annually",
+      "inception_date": "2022-09-06",
+      "source_urls": [
+        "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/33308/SINGLCLASS/franklin-ai-metaverse-and-blockchain-ucits-etf/IE000IM4K4K2",
+        "https://www.franklintempleton.ch/download/en-ch/key-information-document/857eb8e7-2640-47c8-9c55-ac520e0a6588/PRIIPSEU_IE000IM4K4K2_en_CH.pdf",
+        "https://www.franklintempleton.lu/download/en-lu/factsheet/92eb0d55-0cd9-438b-80dd-7459b75a2a3a/Factsheet-FranklinAI,MetaverseandBlockchainUCITSETF-33308-FF-LU-en-GB.PDF",
+        "https://solactive.com/downloads/Guideline-Solactive-SMETAIV.pdf"
+      ],
+      "source_as_of": "2026-08-31",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview and Benchmark(s) and Type identify Solactive Global Metaverse Innovation Index-NR, semi-annual rebalancing, and Solactive AG. Solactive Guideline section 2.3 (pp. 8-9) specifies relevance-score plus free-float market-cap weighting and caps. Index nature: thematic."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "thematic"
+    },
+    {
+      "ticker": "FLX5",
+      "name": "Franklin S&P 500 Paris Aligned Climate UCITS ETF",
+      "isin": "IE00BMDPBZ72",
+      "underlying_index": "S&P 500 PAB ESG Index",
+      "index_provider": "S&P Dow Jones Indices LLC",
+      "index_type": "capped-factor",
+      "universe": "U.S. large-capitalization equities from the S&P 500 aligned to Paris Agreement climate objectives",
+      "weighting": "Climate-constrained S&P 500 weighting with climate-alignment, sector and issuer-cap constraints; full replication follows benchmark weights",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2020-07-29",
+      "source_urls": [
+        "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/29819/SINGLCLASS/franklin-s-p-500-paris-aligned-climate-ucits-etf/IE00BMDPBZ72",
+        "https://www.franklintempleton.lu/download/en-lu/factsheet/ab0907cc-355e-4038-8f8d-0213ae5a304f/Factsheet-FranklinS&P500ParisAlignedClimateUCITSETF-29819-FF-LU-en-GB.PDF",
+        "https://www.spglobal.com/spdji/en/documents/methodologies/methodology-sp-pab-climate-select-indices.pdf"
+      ],
+      "source_as_of": "2026-07-31",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview and Benchmark(s) and Type identify S&P 500 PAB ESG Index-NR and quarterly reconstitution; its Important Information section attributes the index to S&P Dow Jones Indices LLC. Index nature: esg-climate; index type is capped-factor because the benchmark applies climate and concentration constraints rather than plain market-cap weighting."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "esg-climate"
+    },
+    {
+      "ticker": "FLXA",
+      "name": "Franklin MSCI World Catholic Principles UCITS ETF",
+      "isin": "IE000AZOUN82",
+      "underlying_index": "MSCI World Universal Select Catholic Principles and Low Carbon Index",
+      "index_provider": "MSCI",
+      "index_type": "capped-factor",
+      "universe": "Developed-market large- and mid-capitalization equities from MSCI World screened for Catholic principles and low-carbon characteristics",
+      "weighting": "MSCI ESG Universal / low-carbon select methodology adjusts parent-index market-cap weights using ESG and low-carbon characteristics with issuer constraints",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2024-04-24",
+      "source_urls": [
+        "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/40161/SINGLCLASS/franklin-msci-world-catholic-principles-ucits-etf/IE000AZOUN82",
+        "https://www.franklintempleton.lu/download/en-lu/factsheet/22ca275f-800e-4789-a632-71542b8f3292/Factsheet-FranklinMSCIWorldCatholicPrinciplesUCITSETF-40161-FF-LU-en-GB.PDF",
+        "https://www.msci.com/indexes/index/755733/msci-world-universal-select-catholic-principles-and-low-carbon-index",
+        "https://www.msci.com/indexes/documents/methodology/3_MSCI_Select_Catholic_Principles_Universal_Index_Methodology_20250203.pdf"
+      ],
+      "source_as_of": null,
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [
+        "source_as_of"
+      ],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview and Benchmark(s) and Type identify the MSCI World Universal Select Catholic Principles and Low Carbon Index-NR and quarterly reconstitution. MSCI methodology applies ESG Universal weighting to the screened universe. Index nature: esg-climate; index type is capped-factor rather than plain market-cap weighting."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "esg-climate"
+    },
+    {
+      "ticker": "FLXB",
+      "name": "Franklin FTSE Brazil UCITS ETF",
+      "isin": "IE00BHZRQY00",
+      "underlying_index": "FTSE Brazil 30/18 Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Brazilian medium- and large-capitalization stocks",
+      "weighting": "Free-float-adjusted market-capitalization weighted with 30/18 issuer capping",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2019-06-04",
+      "source_urls": [
+        "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/27851/SINGLCLASS/franklin-ftse-brazil-ucits-etf/IE00BHZRQY00",
+        "https://www.franklintempleton.co.uk/download/en-gb/factsheet/c7ca75d5-b753-4d4f-932c-40093e2e8eba/Factsheet-FranklinFTSEBrazilUCITSETF-27851-FF-GB-en-GB.PDF",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2026-08-31",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview and Benchmark(s) and Type identify FTSE Brazil 30/18 Capped Index-NR and quarterly reconstitution. Index nature: capped; index type remains float-adjusted-cap-weighted because the cap is applied to a market-cap-weighted parent."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
+    },
+    {
+      "ticker": "FLXC",
+      "name": "Franklin FTSE China UCITS ETF",
+      "isin": "IE00BHZRR147",
+      "underlying_index": "FTSE China 30/18 Capped Index",
+      "index_provider": "FTSE Russell",
+      "index_type": "float-adjusted-cap-weighted",
+      "universe": "Chinese medium- and large-capitalization stocks",
+      "weighting": "Free-float-adjusted market-capitalization weighted with 30/18 issuer capping; the fund uses optimized replication",
+      "reconstitution_frequency": "Quarterly",
+      "inception_date": "2019-06-04",
+      "source_urls": [
+        "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/27852/SINGLCLASS/franklin-ftse-china-ucits-etf/IE00BHZRR147",
+        "https://www.franklintempleton.lu/download/en-lu/factsheet/ab21f2c0-da81-4b7f-a7e9-b70b80e23e8a/Factsheet-FranklinFTSEChinaUCITSETF-27852-FF-LU-en-GB.PDF",
+        "https://research.ftserussell.com/products/downloads/FTSE_Global_Equity_Index_Series.pdf"
+      ],
+      "source_as_of": "2026-03-31",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet Fund Overview and Benchmark(s) and Type identify FTSE China 30/18 Capped Index-NR and quarterly reconstitution. Index nature: capped; index type remains float-adjusted-cap-weighted because the cap is applied to a market-cap-weighted parent."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
+    },
+    {
+      "ticker": "FLXD",
+      "name": "Franklin European Quality Dividend UCITS ETF",
+      "isin": "IE00BF2B0L69",
+      "underlying_index": "LibertyQ European Dividend Index",
+      "index_provider": "MSCI Inc.",
+      "index_type": "capped-factor",
+      "universe": "Developed European medium- and large-capitalization companies with high and persistent dividend income",
+      "weighting": "Rules-based dividend and quality selection with benchmark-like constituent weights; full replication follows the underlying index",
+      "reconstitution_frequency": "Semi-Annual",
+      "inception_date": "2017-09-06",
+      "source_urls": [
+        "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/25801/ETD/franklin-european-quality-dividend-ucits-etf/IE00BF2B0L69",
+        "https://www.franklintempleton.co.uk/download/en-gb/factsheet/8c5bcad6-ff47-4a62-a989-6aa94759d97a/Factsheet-FranklinEuropeanQualityDividendUCITSETF-(Acc)-25801-ETA-FF-GB-en-GB.PDF",
+        "https://www.lseg.com/en/ftse-russell/indices/custom-methodologies"
+      ],
+      "source_as_of": "2026-08-31",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "Franklin factsheet labels the underlying index LibertyQ European Dividend Index-NR and the comparator MSCI Europe IMI ex REITS Index-NR; the product and index disclosures identify MSCI as provider. Index nature: dividend; index type is capped-factor because the strategy applies dividend and quality selection rather than plain market-cap weighting."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "dividend"
+    },
+    {
+      "ticker": "FLXE",
+      "name": "Franklin EM Multi-Factor Equity UCITS ETF",
+      "isin": "IE00BF2B0K52",
+      "underlying_index": "LibertyQ Emerging Markets Index",
+      "index_provider": "MSCI Inc.",
+      "index_type": "capped-factor",
+      "universe": "Emerging-market medium- and large-capitalization equities selected from the MSCI Emerging Markets universe",
+      "weighting": "Rules-based quality, value, momentum and volatility factor selection with benchmark-like constituent weights; full replication follows the underlying index",
+      "reconstitution_frequency": "Semi-Annual",
+      "inception_date": "2017-10-17",
+      "source_urls": [
+        "https://www.franklintempleton.co.uk/our-funds/etf/price-and-performance/products/25800/ETA/franklin-em-multi-factor-equity-ucits-etf/IE00BF2B0K52",
+        "https://dokumenty.analizy.pl/pobierz/etf/E_FTI015_A_USD/KA/2026-06-30",
+        "https://www.msci.com/indexes/index/709646/msci-libertyq-emerging-markets-index",
+        "https://www.msci.com/indexes/documents/methodology/2_MSCI_LibertyQ_Emerging_Markets_Index_Methodology_20210819.pdf"
+      ],
+      "source_as_of": "2026-06-30",
+      "confidence": "medium",
+      "field_confidence": {
+        "ticker": "stated",
+        "name": "stated",
+        "isin": "stated",
+        "underlying_index": "stated",
+        "index_provider": "stated",
+        "index_type": "inferred",
+        "universe": "stated",
+        "weighting": "stated",
+        "reconstitution_frequency": "stated",
+        "inception_date": "stated",
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
+      },
+      "missing_fields": [],
+      "coverage_quality": "complete",
+      "notes": [
+        "The Franklin KID/factsheet evidence identifies LibertyQ Emerging Markets Index-NR, semi-annual reconstitution and MSCI ownership/calculation language; the MSCI methodology documents quality, value, momentum and volatility factor selection. Index nature: factor; index type remains capped-factor."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "factor"
+    }
   ],
   "acquisition":{
   "requested_sources": [
@@ -5470,7 +5885,17 @@
     "https://www.betashares.com.au/fund/australian-bond-fund",
     "https://etf.franklintempleton.com/frar",
     "https://www.franklintempleton.com.au/download/en-au/factsheet/d9ae485b-522b-45b2-a7e5-a2d53d734405/Factsheet-FranklinAustralianAbsoluteReturnBondFund-ClassA-19414-W-FF-AU-en-AU.PDF",
-    "https://www.franklintempleton.com.au/our-products/funds-prices-performance/managed-funds/products/19414/W/franklin-australian-absolute-return-bond-fund/FRT0027AU"
+    "https://www.franklintempleton.com.au/our-products/funds-prices-performance/managed-funds/products/19414/W/franklin-australian-absolute-return-bond-fund/FRT0027AU",
+    "https://www.franklintempleton.lu/download/en-lu/factsheet/9ba2ca06-fee5-406f-be87-015075c65f55/Factsheet-FranklinFTSEDevelopedWorldUCITSETF-40162-FF-LU-en-GB.PDF",
+    "https://www.franklintempleton.lu/download/en-lu/factsheet/92eb0d55-0cd9-438b-80dd-7459b75a2a3a/Factsheet-FranklinAI,MetaverseandBlockchainUCITSETF-33308-FF-LU-en-GB.PDF",
+    "https://solactive.com/downloads/Guideline-Solactive-SMETAIV.pdf",
+    "https://www.franklintempleton.lu/download/en-lu/factsheet/ab0907cc-355e-4038-8f8d-0213ae5a304f/Factsheet-FranklinS&P500ParisAlignedClimateUCITSETF-29819-FF-LU-en-GB.PDF",
+    "https://www.franklintempleton.lu/download/en-lu/factsheet/22ca275f-800e-4789-a632-71542b8f3292/Factsheet-FranklinMSCIWorldCatholicPrinciplesUCITSETF-40161-FF-LU-en-GB.PDF",
+    "https://www.msci.com/indexes/documents/methodology/3_MSCI_Select_Catholic_Principles_Universal_Index_Methodology_20250203.pdf",
+    "https://www.franklintempleton.lu/our-funds/price-and-performance-etfs/products/25801/ETD/franklin-european-quality-dividend-ucits-etf/IE00BF2B0L69",
+    "https://www.franklintempleton.co.uk/download/en-gb/factsheet/8c5bcad6-ff47-4a62-a989-6aa94759d97a/Factsheet-FranklinEuropeanQualityDividendUCITSETF-(Acc)-25801-ETA-FF-GB-en-GB.PDF",
+    "https://www.msci.com/indexes/index/709646/msci-libertyq-emerging-markets-index",
+    "https://www.msci.com/indexes/documents/methodology/2_MSCI_LibertyQ_Emerging_Markets_Index_Methodology_20210819.pdf"
   ],
   "failed_sources": [],
   "excluded_sources": [
@@ -5479,7 +5904,7 @@
       "reason": "Explicitly out of P1b scope."
     }
   ],
-  "record_count": 147,
-  "count_note": "One hundred forty-seven reviewed Franklin ETF records are shipped as a dated, source-backed table; this slice appends the 5 dispatched Europe and Australia fixed-income products while preserving all earlier records in order."
+  "record_count": 157,
+  "count_note": "One hundred fifty-seven reviewed Franklin ETF records are shipped as a dated, source-backed table; this slice appends ten targeted UCITS products while preserving all earlier records in order."
 }
 }
