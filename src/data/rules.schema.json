@@ -97,6 +97,15 @@
             "enum": ["stated", "inferred", "absent", "user-set"],
             "description": "treatment provenance: 'stated' when the doc says it outright, 'inferred' when reasoned from surrounding text, 'absent' when the doc does not address the event, 'user-set' when an operator tuned the value in the coverage settings surface (§11c constraint 2: a user-typed lead time must never render identically to one the methodology states)."
           },
+          "timing": {
+            "enum": ["on-event", "threshold-gated", "at-review"],
+            "description": "When the vendor applies the change: 'on-event' intra-quarter on the event date; 'threshold-gated' intra-quarter unless deferral_condition holds, then at the next review; 'at-review' always at the next scheduled review (QIR / rebalance). Absent = not yet tagged."
+          },
+          "deferral_condition": {
+            "type": "string",
+            "minLength": 1,
+            "description": "For timing 'threshold-gated': when the vendor defers the change to its next review, in the vendor's own terms."
+          },
           "mapping_note": {
             "type": "string",
             "minLength": 1,
@@ -122,7 +131,49 @@
               "rights_moneyness": {
                 "enum": ["in-the-money", "out-of-the-money"],
                 "description": "Whether the rights subscription price is below market price (in-the-money) or at/above it (out-of-the-money)."
+              },
+              "index_membership": {
+                "enum": ["target-only", "acquirer-only", "both", "neither"],
+                "description": "M&A: which deal party is a constituent of the index (target-only = a non-constituent acquires a constituent)."
+              },
+              "consideration": {
+                "enum": ["cash", "stock", "cash-and-stock"],
+                "description": "M&A: how the deal is paid."
               }
+            }
+          }
+        }
+      }
+    },
+    "vendor_profiles": {
+      "type": "array",
+      "description": "Per-vendor facts not tied to one event: the scheduled review calendar (where a deferred change lands) and the policy for events the methodology does not cover. null = not yet sourced.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["vendor", "review_calendar", "uncovered_event_policy"],
+        "properties": {
+          "vendor": {"type": "string"},
+          "review_calendar": {
+            "type": ["object", "null"],
+            "additionalProperties": false,
+            "required": ["frequency", "months", "effective", "source_ref"],
+            "properties": {
+              "frequency": {"enum": ["quarterly", "semi-annual", "annual"]},
+              "months": {"type": "array", "items": {"type": "integer", "minimum": 1, "maximum": 12}, "minItems": 1, "uniqueItems": true},
+              "effective": {"enum": ["third-friday", "last-business-day", "first-business-day"], "description": "Day in each review month the review takes effect, after close."},
+              "source_ref": {"type": "string", "minLength": 1},
+              "note": {"type": "string"}
+            }
+          },
+          "uncovered_event_policy": {
+            "type": ["object", "null"],
+            "additionalProperties": false,
+            "required": ["treatment", "source_ref", "confidence"],
+            "properties": {
+              "treatment": {"type": "string", "minLength": 1},
+              "source_ref": {"type": "string", "minLength": 1},
+              "confidence": {"enum": ["stated", "inferred"]}
             }
           }
         }

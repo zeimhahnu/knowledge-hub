@@ -29,7 +29,7 @@
 
 import curatedRules from "../data/rules.json" with { type: "json" };
 import type { VendorId } from "./vendors.ts";
-import { ruleIndexTypeMatchesFund, type IndexType } from "./fund-master.ts";
+import { isReturnVariant, ruleIndexTypeMatchesFund, type IndexType } from "./fund-master.ts";
 
 export type EntailmentVerdict = "contradicted" | "consistent" | "indeterminate";
 export type RuleScope = "3-d" | "2-d";
@@ -114,6 +114,8 @@ function admissibleRules(
     if (rule.event_type !== eventType) return false;
     const scope = rule.index_type;
     if (!scope || scope === "*") return true;
+    // ponytail: one row per vendor is compared, so PR/TR/NTR rows stay out until the fund's return_variant is passed in.
+    if (isReturnVariant(scope)) return false;
     return indexType != null && ruleIndexTypeMatchesFund(scope, indexType);
   });
 }

@@ -48,6 +48,8 @@ for (const source of raw.source_documents) {
 }
 
 const canonicalIds = CANONICAL_EVENTS.map((e) => e.id)
+// coverage-settings.ts reads its event list from here, so it must be the canonical list.
+assert.deepEqual(raw.event_types, canonicalIds, "rules.json event_types must equal CANONICAL_EVENTS ids, in order")
 
 let violations = 0
 const fail = (msg) => {

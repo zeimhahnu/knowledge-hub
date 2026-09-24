@@ -83,23 +83,9 @@ const APP_VENDOR_LABELS: Record<VendorId, string> = {
   vettafi: "VettaFi",
 };
 
-/** Mirrors `CANONICAL_EVENTS[].id` in src/lib/event-taxonomy.ts — the 13
- * canonical event types, in source-doc order. */
-const APP_EVENT_IDS = [
-  "cash-dividend",
-  "special-dividend",
-  "stock-dividend",
-  "bonus-issue",
-  "stock-split",
-  "spin-off",
-  "rights-issue",
-  "secondary-offering",
-  "private-placement",
-  "return-of-capital",
-  "merger",
-  "tender-offer",
-  "bankruptcy",
-] as const;
+/** rules.json's `event_types` mirrors `CANONICAL_EVENTS[].id` (check-rules
+ * asserts it), so the canonical list comes from the one file already imported. */
+const APP_EVENT_IDS: readonly string[] = rules.event_types;
 
 export interface SettingsDraft {
   schema: 1;

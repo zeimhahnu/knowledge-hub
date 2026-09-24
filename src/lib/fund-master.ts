@@ -15,7 +15,13 @@ export type SourceEvidence = { url: string; publisher: string; retrieved_at: str
  * offering it silently as though it were current.
  */
 export type FundLifecycle = { status: "closed"; effective: string; reason: string; source_urls: string[] };
-export type FundMasterRecord = { lifecycle?: FundLifecycle; ticker: string; name: string; isin: string | null; underlying_index: string | null; index_provider: string | null; index_type: IndexType | null; universe: string | null; weighting: string | null; reconstitution_frequency: string | null; inception_date: string | null; source_urls: string[]; source_as_of: string | null; confidence: EvidenceConfidence; field_confidence: Partial<Record<string, FieldConfidence>>; missing_fields: string[]; coverage_quality: CoverageQuality; notes?: string[] };
+/** The benchmark return series the fund tracks; rules.json keys return-variant rows on the same ids. */
+export type ReturnVariant = "price-return" | "total-return" | "gross-total-return" | "net-total-return";
+const RETURN_VARIANTS: readonly string[] = ["price-return", "total-return", "gross-total-return", "net-total-return"];
+export const isReturnVariant = (indexType: string | undefined): boolean => RETURN_VARIANTS.includes(indexType ?? "");
+/** What kind of index it is - capped, screened and dividend-selected indexes add review-time deletions and caps. */
+export type IndexNature = "broad-market" | "capped" | "factor" | "dividend" | "esg-climate" | "thematic" | "sector";
+export type FundMasterRecord = { lifecycle?: FundLifecycle; return_variant?: ReturnVariant | null; index_nature?: IndexNature | null; ticker: string; name: string; isin: string | null; underlying_index: string | null; index_provider: string | null; index_type: IndexType | null; universe: string | null; weighting: string | null; reconstitution_frequency: string | null; inception_date: string | null; source_urls: string[]; source_as_of: string | null; confidence: EvidenceConfidence; field_confidence: Partial<Record<string, FieldConfidence>>; missing_fields: string[]; coverage_quality: CoverageQuality; notes?: string[] };
 export type FranklinEtfSnapshot = { schema_version: "1.0"; snapshot_id: string; provider: "Franklin Templeton"; acquired_at: string; source_as_of: string; records: FundMasterRecord[]; acquisition: { requested_sources: string[]; successful_sources: string[]; failed_sources: Array<{url:string;reason:string}>; excluded_sources: Array<{name:string;reason:string}>; record_count:number; count_note:string } };
 export type FranklinCatalogRegion = "us" | "canada" | "europe" | "australia" | "other";
 export type FranklinCatalogRecord = { url: string; ticker: string; name: string; source_as_of: string | null; retrieved_at: string; region: FranklinCatalogRegion };
@@ -27,9 +33,14 @@ export const franklinCatalog = catalogData as FranklinEtfCatalog;
 export function activeFranklinCatalog(catalog: FranklinEtfCatalog = franklinCatalog): FranklinCatalogRecord[] { return catalog.records; }
 export function findFranklinFund(ticker: string, snapshot: FranklinEtfSnapshot = franklinSnapshot): FundMasterRecord | null { const normalized = ticker.trim().toUpperCase(); return snapshot.records.find((record) => record.ticker === normalized) ?? null; }
 
-/** Match weighting branches without pretending fund metadata identifies PR/GTR/NTR. */
-export function ruleIndexTypeMatchesFund(ruleIndexType: string | undefined, fundIndexType: IndexType): boolean {
+/**
+ * Match a rule's weighting or return-variant branch to a fund. A return-variant row
+ * matches the fund's recorded variant; with no recorded variant every variant row is
+ * kept (as in 2-D), because dropping them removed MSCI's whole cash-dividend answer.
+ */
+export function ruleIndexTypeMatchesFund(ruleIndexType: string | undefined, fundIndexType: IndexType, returnVariant?: ReturnVariant | null): boolean {
   if (!ruleIndexType || ruleIndexType === "*") return true;
+  if (isReturnVariant(ruleIndexType)) return !returnVariant || ruleIndexType === returnVariant;
   if (ruleIndexType === "market-cap-weighted") {
     return fundIndexType === "market-cap-weighted" || fundIndexType === "float-adjusted-cap-weighted";
   }
@@ -60,5 +71,5 @@ export function resolveFundRules(selectedFundTicker: string | undefined, snapsho
   const lifecycleWarnings = fund.lifecycle?.status === "closed"
     ? [`${ticker} is closed: ${fund.lifecycle.reason} (effective ${fund.lifecycle.effective}). Rules below applied while it traded.`]
     : [];
-  return { resolution: { mode: "fund-resolved", ticker, fund, indexType: fundIndexType, ruleScope: "3-d", warnings: lifecycleWarnings }, rows: rules.filter((rule) => ruleIndexTypeMatchesFund(rule.index_type, fundIndexType)) };
+  return { resolution: { mode: "fund-resolved", ticker, fund, indexType: fundIndexType, ruleScope: "3-d", warnings: lifecycleWarnings }, rows: rules.filter((rule) => ruleIndexTypeMatchesFund(rule.index_type, fundIndexType, fund.return_variant)) };
 }

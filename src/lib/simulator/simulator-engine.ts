@@ -124,7 +124,7 @@ function judgeVendor(
     case "threshold-size": {
       // Map to whichever metric is meaningful for this event family.
       const metric =
-        event === "secondary-offering" || event === "private-placement"
+        event === "primary-offering" || event === "secondary-offering" || event === "private-placement"
           ? ffDelta
           : event === "special-dividend"
             ? yieldPct

@@ -20,6 +20,8 @@ export type CanonicalEventMeta = {
   name: string;
   badge: EventBadge;
   category: EventCategory;
+  /** Offerings, M&A and buybacks have no ex-date; the key date is when the change takes effect. */
+  dateKind?: "effective";
 };
 
 /** Section order per `SOURCES/index-vendor-methodology.md` §1–§13 */
@@ -37,13 +39,26 @@ export const CANONICAL_EVENTS: readonly CanonicalEventMeta[] = [
   { id: "stock-split", name: "Stock Split / Consolidation", badge: "mandatory", category: "Corporate Structure" },
   { id: "spin-off", name: "Spin-Off / Demerger", badge: "mandatory", category: "Corporate Structure" },
   { id: "rights-issue", name: "Rights Issue", badge: "voluntary", category: "Equity Offerings" },
-  { id: "secondary-offering", name: "Secondary Offering", badge: "voluntary", category: "Equity Offerings" },
-  { id: "private-placement", name: "Private Placement", badge: "voluntary", category: "Equity Offerings" },
+  // Primary = the company issues NEW shares (share count rises). Secondary = existing
+  // holders sell (share count unchanged; free float may move). Vendors treat them
+  // differently - FTSE never moves free float intra-quarter on a primary offering.
+  { id: "primary-offering", name: "Primary Offering", badge: "voluntary", category: "Equity Offerings", dateKind: "effective" },
+  { id: "secondary-offering", name: "Secondary Offering / Block Sale", badge: "voluntary", category: "Equity Offerings", dateKind: "effective" },
+  { id: "private-placement", name: "Private Placement", badge: "voluntary", category: "Equity Offerings", dateKind: "effective" },
+  // No vendor methodology names this event; the shares only exist at settlement,
+  // so the uncovered-event policy decides - see rules.json vendor_profiles.
+  { id: "forward-sale-agreement", name: "Forward Sale Agreement", badge: "voluntary", category: "Equity Offerings", dateKind: "effective" },
   { id: "return-of-capital", name: "Return of Capital", badge: "mandatory", category: "Equity Income" },
-  { id: "merger", name: "Mergers & Acquisitions", badge: "mandatory", category: "M&A" },
-  { id: "tender-offer", name: "Tender Offers", badge: "voluntary", category: "M&A" },
-  { id: "bankruptcy", name: "Bankruptcy / Delisting", badge: "mandatory", category: "M&A" },
+  { id: "share-buyback", name: "Share Buyback", badge: "voluntary", category: "Corporate Structure", dateKind: "effective" },
+  { id: "merger", name: "Mergers & Acquisitions", badge: "mandatory", category: "M&A", dateKind: "effective" },
+  { id: "tender-offer", name: "Tender Offers", badge: "voluntary", category: "M&A", dateKind: "effective" },
+  { id: "bankruptcy", name: "Bankruptcy / Delisting", badge: "mandatory", category: "M&A", dateKind: "effective" },
 ] as const;
+
+/** "Ex-date" for distributions, "Effective date" where the event has no ex-date. */
+export function eventDateLabel(eventType: string): "Ex-date" | "Effective date" {
+  return canonicalEventById(eventType)?.dateKind === "effective" ? "Effective date" : "Ex-date";
+}
 
 export type CanonicalEventId = (typeof CANONICAL_EVENTS)[number]["id"];
 

@@ -1,0 +1,497 @@
+{
+  "source": "targeted_fund.csv supplied by Alex 2026-09-24",
+  "scope": "The funds the CoAc hub focuses on; plan-coac-1.0. Fund facts live in the reviewed snapshot, not here.",
+  "funds": [
+    {
+      "ticker": "DIEM",
+      "name": "Franklin Emerging Market Core Dividend Tilt Index ETF",
+      "publisher_code": "2883446",
+      "index_name": "Linked Morningstar Emerging Markets Dividend Enhanced Select Index",
+      "index_publisher": "Morningstar"
+    },
+    {
+      "ticker": "DIVI",
+      "name": "Franklin International Core Dividend Tilt Index ETF",
+      "publisher_code": "2883445",
+      "index_name": "Morningstar Developed Markets ex-North America Dividend Enhanced Select Index",
+      "index_publisher": "Morningstar"
+    },
+    {
+      "ticker": "DWLD",
+      "name": "Franklin FTSE Developed World UCITS ETF",
+      "publisher_code": "AWNT04",
+      "index_name": "FTSE Developed Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "EMGM",
+      "name": "Franklin FTSE Emerging Markets UCITS ETF",
+      "publisher_code": "AWALLEN",
+      "index_name": "FTSE Emerging Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "EXCN",
+      "name": "Franklin FTSE Emerging ex China UCITS ETF",
+      "publisher_code": "AWALEXCN",
+      "index_name": "FTSE Emerging ex China Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FDIV",
+      "name": "Franklin US Quality Moat Dividend Index ETF",
+      "publisher_code": "3386121",
+      "index_name": "Morningstar US Dividend Opportunity Index",
+      "index_publisher": "Morningstar"
+    },
+    {
+      "ticker": "FID",
+      "name": "Franklin FTSE India Index ETF",
+      "publisher_code": "FTCRIND",
+      "index_name": "FTSE India RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLAM",
+      "name": "Franklin FTSE U.S. Index ETF",
+      "publisher_code": "WIUSA",
+      "index_name": "FTSE USA Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLAU",
+      "name": "Franklin FTSE Australia ETF",
+      "publisher_code": "FTCRAU",
+      "index_name": "FTSE Australia RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLAX",
+      "name": "Franklin FTSE Asia Ex Japan ETF",
+      "publisher_code": "FTCRAXJ",
+      "index_name": "FTSE Asia ex Japan RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLBR",
+      "name": "Franklin FTSE Brazil ETF",
+      "publisher_code": "FTCRBRA",
+      "index_name": "FTSE Brazil RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLCA",
+      "name": "Franklin FTSE Canada ETF",
+      "publisher_code": "FTCRCAN",
+      "index_name": "FTSE Canada RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLCD",
+      "name": "Franklin FTSE Canada All Cap Index ETF",
+      "publisher_code": "ACCANXF",
+      "index_name": "FTSE Canada All Cap Domestic Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLCH",
+      "name": "Franklin FTSE China ETF",
+      "publisher_code": "FTCRCHN",
+      "index_name": "FTSE China RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLEE",
+      "name": "Franklin FTSE Europe ETF",
+      "publisher_code": "FTCRDEUR",
+      "index_name": "FTSE Developed Europe RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLEM",
+      "name": "Franklin LibertyQT Emerging Markets Index ETF",
+      "publisher_code": "SEMLMCCP",
+      "index_name": "Solactive GBS Emerging Markets Large & Mid Cap Index",
+      "index_publisher": "Solactive"
+    },
+    {
+      "ticker": "FLEU",
+      "name": "Franklin FTSE Eurozone ETF",
+      "publisher_code": "AWDEZ",
+      "index_name": "FTSE Developed Eurozone Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLGB",
+      "name": "Franklin FTSE United Kingdom ETF",
+      "publisher_code": "FTCRUK",
+      "index_name": "FTSE UK RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLGR",
+      "name": "Franklin FTSE Germany ETF",
+      "publisher_code": "FTCRDEU",
+      "index_name": "FTSE Germany RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLIN",
+      "name": "Franklin FTSE India ETF",
+      "publisher_code": "FTCRIND",
+      "index_name": "FTSE India RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLJA",
+      "name": "Franklin FTSE Japan Index ETF",
+      "publisher_code": "WIJPN",
+      "index_name": "FTSE Japan Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLJH",
+      "name": "Franklin FTSE Japan Hedged ETF",
+      "publisher_code": "FTCRJPN",
+      "index_name": "FTSE Japan RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLJP",
+      "name": "Franklin FTSE Japan ETF",
+      "publisher_code": "FTCRJPN",
+      "index_name": "FTSE Japan RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLKR",
+      "name": "Franklin FTSE South Korea ETF",
+      "publisher_code": "FTCRKOR",
+      "index_name": "FTSE South Korea RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLLA",
+      "name": "Franklin FTSE Latin America ETF",
+      "publisher_code": "FTCRLAM",
+      "index_name": "FTSE Latin America RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLMX",
+      "name": "Franklin FTSE Mexico ETF",
+      "publisher_code": "FTCRMEX",
+      "index_name": "FTSE Mexico RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLQL",
+      "name": "Franklin LibertyQ U.S. Equity ETF",
+      "publisher_code": "FLQL1",
+      "index_name": "LibertyQ US Large Cap Equity Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLQM",
+      "name": "Franklin LibertyQ U.S. Mid Cap Equity ETF",
+      "publisher_code": "FLQM1",
+      "index_name": "LibertyQ US Mid Cap Equity Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLQS",
+      "name": "Franklin LibertyQ U.S. Small Cap Equity ETF",
+      "publisher_code": "FLQS1",
+      "index_name": "LibertyQ US Small Cap Equity Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLRA",
+      "name": "Franklin AI Metaverse & Blockchain UCITS ETF",
+      "publisher_code": "SMETAIVP",
+      "index_name": "Solactive Global Metaverse Innovation Index",
+      "index_publisher": "Solactive"
+    },
+    {
+      "ticker": "FLRU",
+      "name": "Franklin FTSE Russia ETF",
+      "publisher_code": "FTCRRUS",
+      "index_name": "FTSE Russia RIC Capped Net Tax Index",
+      "index_publisher": "FTSE International",
+      "note": "Closed; delisted 2022-12-27."
+    },
+    {
+      "ticker": "FLSA",
+      "name": "Franklin FTSE Saudi Arabia ETF",
+      "publisher_code": "FTCRSAU",
+      "index_name": "FTSE Saudi Arabia RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLSW",
+      "name": "Franklin FTSE Switzerland ETF",
+      "publisher_code": "FTCRCHE",
+      "index_name": "FTSE Switzerland RIC Capped Net Tax Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLTW",
+      "name": "Franklin FTSE Taiwan ETF",
+      "publisher_code": "FTCRTWN",
+      "index_name": "FTSE Taiwan RIC Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLUR",
+      "name": "Franklin FTSE Europe ex U.K. Index ETF",
+      "publisher_code": "SXALMCCP",
+      "index_name": "Solactive GBS Developed Markets ex North America Large & Mid Cap Index",
+      "index_publisher": "Solactive",
+      "note": "Fund name says FTSE Europe ex U.K. but the supplied index is Solactive GBS DM ex North America; to confirm."
+    },
+    {
+      "ticker": "FLUS",
+      "name": "Franklin LibertyQT U.S. Equity Index ETF",
+      "publisher_code": "FLQL1",
+      "index_name": "LibertyQ US Large Cap Equity Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLX5",
+      "name": "Franklin S&P 500 Paris Aligned Climate UCITS ETF",
+      "publisher_code": "SP50PAUP",
+      "index_name": "S&P 500 PAB ESG Index",
+      "index_publisher": "S&P"
+    },
+    {
+      "ticker": "FLXA",
+      "name": "FTICAV-Franklin MSCI World Catholic Principles UCITS ETF",
+      "publisher_code": "755733",
+      "index_name": "MSCI World Universal Select Catholic Principles and Low Carbon Index",
+      "index_publisher": "MSCI"
+    },
+    {
+      "ticker": "FLXB",
+      "name": "Franklin FTSE Brazil UCITS ETF",
+      "publisher_code": "WIBRAFC",
+      "index_name": "FTSE Brazil 30/18 Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLXC",
+      "name": "Franklin FTSE China UCITS ETF",
+      "publisher_code": "WICHNFC",
+      "index_name": "FTSE China 30/18 Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLXD",
+      "name": "Franklin European Quality Dividend UCITS ETF",
+      "publisher_code": "713646",
+      "index_name": "LibertyQ European Dividend Index",
+      "index_publisher": "MSCI",
+      "note": "Supplied as 'MSCI (per data)'; provider to confirm against the factsheet."
+    },
+    {
+      "ticker": "FLXE",
+      "name": "Franklin EM Multi-Factor Equity UCITS ETF",
+      "publisher_code": "709646",
+      "index_name": "LibertyQ Emerging Markets Index",
+      "index_publisher": "MSCI",
+      "note": "Supplied as 'MSCI (per data)'; provider to confirm against the factsheet."
+    },
+    {
+      "ticker": "FLXI",
+      "name": "Franklin FTSE India UCITS ETF",
+      "publisher_code": "WIINDFC",
+      "index_name": "FTSE India 30/18 Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLXJ",
+      "name": "Franklin FTSE Japan UCITS ETF",
+      "publisher_code": "WIJPN",
+      "index_name": "FTSE Japan Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLXK",
+      "name": "Franklin FTSE Korea UCITS ETF",
+      "publisher_code": "WIKORFC",
+      "index_name": "FTSE Korea 30/18 Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLXP",
+      "name": "Franklin STOXX Europe 600 Paris Aligned Climate UCITS ETF",
+      "publisher_code": "SXXPPAB",
+      "index_name": "STOXX Europe 600 PAB Index",
+      "index_publisher": "STOXX"
+    },
+    {
+      "ticker": "FLXS",
+      "name": "Franklin FTSE Saudi Arabia UCITS ETF",
+      "publisher_code": "WISAUFC",
+      "index_name": "FTSE Saudi Arabia 30/18 Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLXT",
+      "name": "Franklin FTSE Taiwan UCITS ETF",
+      "publisher_code": "WITWNFC",
+      "index_name": "FTSE Taiwan 30/18 Capped Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLXU",
+      "name": "Franklin U.S. Equity UCITS ETF",
+      "publisher_code": "FLQL1",
+      "index_name": "LibertyQ US Large Cap Equity Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FLXX",
+      "name": "Franklin Global Quality Dividend UCITS ETF",
+      "publisher_code": "709650",
+      "index_name": "LibertyQ Global Dividend Index",
+      "index_publisher": "MSCI",
+      "note": "Supplied as 'MSCI (per data)'; provider to confirm against the factsheet."
+    },
+    {
+      "ticker": "FMID",
+      "name": "Franklin U.S. Mid Cap Multifactor Index ETF",
+      "publisher_code": "FLQM1",
+      "index_name": "LibertyQ US Mid Cap Equity Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "FOFD",
+      "name": "Franklin Future of Food UCITS ETF",
+      "publisher_code": "SOLSUFOP",
+      "index_name": "Solactive Sustainable Food Index",
+      "index_publisher": "Solactive"
+    },
+    {
+      "ticker": "FOHW",
+      "name": "Franklin Future of Health and Wellness UCITS ETF",
+      "publisher_code": "SOLSUHWP",
+      "index_name": "Solactive Sustainable Health and Wellness Index",
+      "index_publisher": "Solactive"
+    },
+    {
+      "ticker": "FSPJ",
+      "name": "Franklin S&P Japan TOPIX Screened UCITS ETF",
+      "publisher_code": "SPTPSGUP",
+      "index_name": "S&P/TOPIX 150 Guarded Index",
+      "index_publisher": "S&P"
+    },
+    {
+      "ticker": "FSPU",
+      "name": "Franklin S&P 500 Screened UCITS ETF",
+      "publisher_code": "SP5XSGUP",
+      "index_name": "S&P 500 Guarded Index",
+      "index_publisher": "S&P"
+    },
+    {
+      "ticker": "FSPW",
+      "name": "Franklin S&P World Screened UCITS ETF",
+      "publisher_code": "SPWRSGUP",
+      "index_name": "S&P World Guarded Index",
+      "index_publisher": "S&P"
+    },
+    {
+      "ticker": "FTCD",
+      "name": "Franklin S&P 500 Consumer Discretionary UCITS ETF",
+      "publisher_code": "SPSVCDP",
+      "index_name": "S&P 500 Capped 35/20 Consumer Discretionary Index",
+      "index_publisher": "S&P"
+    },
+    {
+      "ticker": "FTCS",
+      "name": "Franklin S&P 500 Communication Services UCITS ETF",
+      "publisher_code": "SPSVCP",
+      "index_name": "S&P 500 Capped 35/20 Communication Services Index",
+      "index_publisher": "S&P"
+    },
+    {
+      "ticker": "FTFN",
+      "name": "Franklin S&P 500 Financials UCITS ETF",
+      "publisher_code": "SPSVFP",
+      "index_name": "S&P 500 Capped 35/20 Financials Index",
+      "index_publisher": "S&P"
+    },
+    {
+      "ticker": "FTTC",
+      "name": "Franklin S&P 500 Information Technology UCITS ETF",
+      "publisher_code": "SPSVITP",
+      "index_name": "S&P 500 Capped 35/20 Information Technology Index",
+      "index_publisher": "S&P"
+    },
+    {
+      "ticker": "FVCH",
+      "name": "Franklin MSCI China Paris Aligned Climate UCITS ETF",
+      "publisher_code": "736106",
+      "index_name": "MSCI China Climate Paris Aligned PAB Index",
+      "index_publisher": "MSCI"
+    },
+    {
+      "ticker": "FVEM",
+      "name": "Franklin MSCI Emerging Markets Paris Aligned Climate UCITS ETF",
+      "publisher_code": "735618",
+      "index_name": "MSCI EM Climate Paris Aligned PAB Index",
+      "index_publisher": "MSCI"
+    },
+    {
+      "ticker": "FVSJ",
+      "name": "Franklin AC Asia Ex Japan UCITS ETF",
+      "publisher_code": "AWAPXJC",
+      "index_name": "FTSE Asia ex Japan ex China Index",
+      "index_publisher": "FTSE International"
+    },
+    {
+      "ticker": "UDIV",
+      "name": "Franklin US Core Dividend Tilt Index ETF",
+      "publisher_code": "2883447",
+      "index_name": "Morningstar US Dividend Enhanced Select Index",
+      "index_publisher": "Morningstar"
+    },
+    {
+      "ticker": "UDVD",
+      "name": "Franklin US Dividend Tilt UCITS ETF",
+      "publisher_code": "2883447",
+      "index_name": "Morningstar US Dividend Enhanced Select Index",
+      "index_publisher": "Morningstar"
+    },
+    {
+      "ticker": "USMC",
+      "name": "Franklin US Mega Cap 100 UCITS ETF",
+      "publisher_code": "SUSM100P",
+      "index_name": "Solactive US Mega Cap 100 Select Index",
+      "index_publisher": "Solactive"
+    },
+    {
+      "ticker": "USPX",
+      "name": "Franklin US Equity Index ETF",
+      "publisher_code": "1911833",
+      "index_name": "Morningstar US Target Market Exposure Index",
+      "index_publisher": "Morningstar",
+      "note": "Supplied row was column-shifted (MSTAR in the code column); realigned."
+    },
+    {
+      "ticker": "XIDV",
+      "name": "Franklin International Dividend Multiplier Index ETF",
+      "publisher_code": "NFDM",
+      "index_name": "VettaFi New Frontier International Dividend Select Index",
+      "index_publisher": "VettaFi",
+      "note": "Supplied row was column-shifted (VF in the code column); realigned."
+    },
+    {
+      "ticker": "XUDV",
+      "name": "Franklin US Dividend Multiplier Index ETF",
+      "publisher_code": "NFUS",
+      "index_name": "VettaFi New Frontier U.S. Dividend Select Index",
+      "index_publisher": "VettaFi",
+      "note": "Supplied row was column-shifted (VF in the code column); realigned."
+    }
+  ]
+}

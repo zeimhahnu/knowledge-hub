@@ -9,9 +9,12 @@
     "stock-split",
     "spin-off",
     "rights-issue",
+    "primary-offering",
     "secondary-offering",
     "private-placement",
+    "forward-sale-agreement",
     "return-of-capital",
+    "share-buyback",
     "merger",
     "tender-offer",
     "bankruptcy"
@@ -169,6 +172,20 @@
     },
     {
       "vendor": "msci",
+      "event_type": "primary-offering",
+      "caev": "OTHR",
+      "index_type": "*",
+      "treatment": "Applied (PAF + divisor) when the share-count change meets the size threshold — ≥5% of pre-event NOS for Standard, ≥10% Small Cap, ≥25% Micro Cap — with 2 full business days advance notice; changes <±1% on post-event NOS deferred to the next Index Review.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/index-vendor-methodology.md §8 (Secondary Offering); msci-corporate-events-methodology-2026.pdf §4.1, §4.2",
+      "confidence": "inferred",
+      "timing": "threshold-gated",
+      "deferral_condition": "Below the size threshold (5% of pre-event NOS Standard, 10% Small Cap, 25% Micro Cap)",
+      "mapping_note": "Seeded from this vendor's offerings rule, which states one treatment for primary and secondary offerings together; pending the per-vendor primary/secondary split (plan-coac-1.0 G6)."
+    },
+    {
+      "vendor": "msci",
       "event_type": "secondary-offering",
       "caev": "OTHR",
       "index_type": "*",
@@ -176,7 +193,9 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/index-vendor-methodology.md §8 (Secondary Offering); msci-corporate-events-methodology-2026.pdf §4.1, §4.2",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "Below the size threshold (5% of pre-event NOS Standard, 10% Small Cap, 25% Micro Cap)"
     },
     {
       "vendor": "msci",
@@ -191,6 +210,17 @@
     },
     {
       "vendor": "msci",
+      "event_type": "forward-sale-agreement",
+      "caev": "OTHR",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "Not named in this vendor's corpus documents; the uncovered-event policy in vendor_profiles applies (plan-coac-1.0 G5).",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "msci",
       "event_type": "return-of-capital",
       "caev": "CAPD",
       "index_type": "*",
@@ -199,6 +229,17 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/index-vendor-methodology.md §10 (Return of Capital); msci-corporate-events-methodology-2026.pdf §3.3",
       "confidence": "stated"
+    },
+    {
+      "vendor": "msci",
+      "event_type": "share-buyback",
+      "caev": "BIDS",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "No buyback rule extracted yet (plan-coac-1.0 G8).",
+      "confidence": "absent"
     },
     {
       "vendor": "msci",
@@ -351,6 +392,20 @@
     },
     {
       "vendor": "sp",
+      "event_type": "primary-offering",
+      "caev": "OTHR",
+      "index_type": "*",
+      "treatment": "Public offerings (including block sales and spot secondaries) receive accelerated implementation only when both thresholds are met: at least 5% of pre-event shares and at least US$150m (a US$1bn+ event is implemented even below 5%). Otherwise implemented at the next quarterly rebalancing.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Non-Mandatory Share and IWF Updates (Accelerated Implementation)",
+      "confidence": "inferred",
+      "timing": "threshold-gated",
+      "deferral_condition": "Below 5% of pre-event shares or US$150M (and under US$1B)",
+      "mapping_note": "Seeded from this vendor's offerings rule, which states one treatment for primary and secondary offerings together; pending the per-vendor primary/secondary split (plan-coac-1.0 G6)."
+    },
+    {
+      "vendor": "sp",
       "event_type": "secondary-offering",
       "caev": "OTHR",
       "index_type": "*",
@@ -358,7 +413,9 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Non-Mandatory Share and IWF Updates (Accelerated Implementation)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "Below 5% of pre-event shares or US$150M (and under US$1B)"
     },
     {
       "vendor": "sp",
@@ -373,6 +430,17 @@
     },
     {
       "vendor": "sp",
+      "event_type": "forward-sale-agreement",
+      "caev": "OTHR",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "Not named in this vendor's corpus documents; the uncovered-event policy in vendor_profiles applies (plan-coac-1.0 G5).",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "sp",
       "event_type": "return-of-capital",
       "caev": "CAPD",
       "index_type": "*",
@@ -381,6 +449,17 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Dividends (Return of Capital)",
       "confidence": "stated"
+    },
+    {
+      "vendor": "sp",
+      "event_type": "share-buyback",
+      "caev": "BIDS",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "No buyback rule extracted yet (plan-coac-1.0 G8).",
+      "confidence": "absent"
     },
     {
       "vendor": "sp",
@@ -544,6 +623,20 @@
     },
     {
       "vendor": "ftse",
+      "event_type": "primary-offering",
+      "caev": "OTHR",
+      "index_type": "*",
+      "treatment": "Share and free-float updates from primary and secondary offerings are implemented intra-quarter with at least two days' notice when they meet the materiality threshold — a USD 1bn investable market-cap change, or a 5% index-shares change plus USD 250m — otherwise deferred to the next quarterly review (or the review following discovery if pricing settled more than five business days earlier).",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §5.2 (Intra-quarter updates); §2.1.5 (Timing of corporate actions and events)",
+      "confidence": "inferred",
+      "timing": "threshold-gated",
+      "deferral_condition": "Below US$1bn investable market cap change and below 5% index shares + US$250m, or found more than 5 business days after pricing",
+      "mapping_note": "Seeded from this vendor's offerings rule, which states one treatment for primary and secondary offerings together; pending the per-vendor primary/secondary split (plan-coac-1.0 G6)."
+    },
+    {
+      "vendor": "ftse",
       "event_type": "secondary-offering",
       "caev": "OTHR",
       "index_type": "*",
@@ -551,7 +644,9 @@
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/ftse-russell-corporate-actions-guide.pdf §5.2 (Intra-quarter updates); §2.1.5 (Timing of corporate actions and events)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "Below US$1bn investable market cap change and below 5% index shares + US$250m, or found more than 5 business days after pricing"
     },
     {
       "vendor": "ftse",
@@ -566,6 +661,17 @@
     },
     {
       "vendor": "ftse",
+      "event_type": "forward-sale-agreement",
+      "caev": "OTHR",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "Not named in this vendor's corpus documents; the uncovered-event policy in vendor_profiles applies (plan-coac-1.0 G5).",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "ftse",
       "event_type": "return-of-capital",
       "caev": "CAPD",
       "index_type": "price-return",
@@ -574,6 +680,17 @@
       "lead_days_confidence": "practitioner",
       "source_ref": "practitioner: Alex, 2026-09-02 (FTSE 5-day proforma tracker); SOURCES/ftse-russell-corporate-actions-guide.pdf §4.2 (Ordinary dividends, special dividends and capital repayments); §4.8.1 (Capital repayment table)",
       "confidence": "stated"
+    },
+    {
+      "vendor": "ftse",
+      "event_type": "share-buyback",
+      "caev": "BIDS",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "No buyback rule extracted yet (plan-coac-1.0 G8).",
+      "confidence": "absent"
     },
     {
       "vendor": "ftse",
@@ -699,13 +816,29 @@
     {
       "vendor": "stoxx",
       "index_type": "*",
+      "event_type": "primary-offering",
+      "caev": "OTHR",
+      "treatment": "A share-count change from a corporate action greater than ±10% from one trading day to the next is announced immediately, implemented two trading days later, and effective the following trading day; other applicable changes follow the quarterly underlying-data schedule. Free-float factor changes over ±5 percentage points use the same two-day process.",
+      "lead_days": 2,
+      "lead_days_confidence": "stated",
+      "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.2 (Free Float Factors and Share Adjustments)",
+      "confidence": "inferred",
+      "timing": "threshold-gated",
+      "deferral_condition": "Free-float-adjusted share change below +/-10%",
+      "mapping_note": "Seeded from this vendor's offerings rule, which states one treatment for primary and secondary offerings together; pending the per-vendor primary/secondary split (plan-coac-1.0 G6)."
+    },
+    {
+      "vendor": "stoxx",
+      "index_type": "*",
       "event_type": "secondary-offering",
       "caev": "OTHR",
       "treatment": "A share-count change from a corporate action greater than ±10% from one trading day to the next is announced immediately, implemented two trading days later, and effective the following trading day; other applicable changes follow the quarterly underlying-data schedule. Free-float factor changes over ±5 percentage points use the same two-day process.",
       "lead_days": 2,
       "lead_days_confidence": "stated",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.2 (Free Float Factors and Share Adjustments)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "Free-float-adjusted share change below +/-10%"
     },
     {
       "vendor": "stoxx",
@@ -720,6 +853,17 @@
     },
     {
       "vendor": "stoxx",
+      "event_type": "forward-sale-agreement",
+      "caev": "OTHR",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "Not named in this vendor's corpus documents; the uncovered-event policy in vendor_profiles applies (plan-coac-1.0 G5).",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "stoxx",
       "index_type": "*",
       "event_type": "return-of-capital",
       "caev": "CAPD",
@@ -728,6 +872,17 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §8.1.6 (Return of Capital and Share Consolidation)",
       "confidence": "stated"
+    },
+    {
+      "vendor": "stoxx",
+      "event_type": "share-buyback",
+      "caev": "BIDS",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "No buyback rule extracted yet (plan-coac-1.0 G8).",
+      "confidence": "absent"
     },
     {
       "vendor": "stoxx",
@@ -884,6 +1039,20 @@
     },
     {
       "vendor": "morningstar",
+      "event_type": "primary-offering",
+      "caev": "OTHR",
+      "index_type": "*",
+      "treatment": "Public/secondary offerings are nonmandatory. Material share and corresponding float changes are accelerated weekly when the offering exceeds both USD 150m and 5% of shares, or exceeds USD 1bn even below 5%; otherwise qualifying changes are implemented at quarterly rebalancing. A subscription offer to existing holders follows the rights-offering treatment.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Corporate Action Category (p. 5); §Subscription Offer (p. 22); §Nonmandatory Corporate Action Methodology (p. 37)",
+      "confidence": "inferred",
+      "timing": "threshold-gated",
+      "deferral_condition": "Below USD 150m and 5% of shares (and below USD 1bn)",
+      "mapping_note": "Seeded from this vendor's offerings rule, which states one treatment for primary and secondary offerings together; pending the per-vendor primary/secondary split (plan-coac-1.0 G6)."
+    },
+    {
+      "vendor": "morningstar",
       "event_type": "secondary-offering",
       "caev": "OTHR",
       "index_type": "*",
@@ -891,7 +1060,9 @@
       "lead_days": null,
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Corporate Action Category (p. 5); §Subscription Offer (p. 22); §Nonmandatory Corporate Action Methodology (p. 37)",
-      "confidence": "stated"
+      "confidence": "stated",
+      "timing": "threshold-gated",
+      "deferral_condition": "Below USD 150m and 5% of shares (and below USD 1bn)"
     },
     {
       "vendor": "morningstar",
@@ -906,6 +1077,17 @@
     },
     {
       "vendor": "morningstar",
+      "event_type": "forward-sale-agreement",
+      "caev": "OTHR",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "Not named in this vendor's corpus documents; the uncovered-event policy in vendor_profiles applies (plan-coac-1.0 G5).",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "morningstar",
       "event_type": "return-of-capital",
       "caev": "CAPD",
       "index_type": "*",
@@ -914,6 +1096,17 @@
       "lead_days_confidence": "absent",
       "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Return of Capital (pp. 13–14)",
       "confidence": "stated"
+    },
+    {
+      "vendor": "morningstar",
+      "event_type": "share-buyback",
+      "caev": "BIDS",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "No buyback rule extracted yet (plan-coac-1.0 G8).",
+      "confidence": "absent"
     },
     {
       "vendor": "morningstar",
@@ -1096,6 +1289,17 @@
     },
     {
       "vendor": "solactive",
+      "event_type": "primary-offering",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1 Corporate Actions (p.12; no dedicated secondary-offering treatment published)",
+      "confidence": "absent",
+      "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
       "event_type": "secondary-offering",
       "index_type": "*",
       "treatment": null,
@@ -1118,6 +1322,17 @@
     },
     {
       "vendor": "solactive",
+      "event_type": "forward-sale-agreement",
+      "caev": "OTHR",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1 Corporate Actions (p.12; forward sale agreements not described - the discretion clause applies)",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "solactive",
       "event_type": "return-of-capital",
       "index_type": "*",
       "treatment": "Return of capital is generally applied as a special dividend free of withholding tax; when repetitive in amount and frequency and paid in lieu of a regular Cash Dividend, it is classified as an ordinary Cash Dividend. No numeric threshold is stated.",
@@ -1126,6 +1341,19 @@
       "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.1.3.7 Return of Capital (p.16)",
       "confidence": "stated",
       "coverage": "framework-default"
+    },
+    {
+      "vendor": "solactive",
+      "event_type": "share-buyback",
+      "caev": "BIDS",
+      "index_type": "*",
+      "treatment": "Mapped from Solactive's Capital Decrease: a company offer to buy back shares at an agreed price is implemented only if the offer price is above the stock's close on the day before the ex-date, via a price adjustment factor. Open-market buybacks are not described; the discretion clause applies.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1.5 Capital Decrease (p.23); §2.1 Corporate Actions discretion clause (p.12)",
+      "confidence": "inferred",
+      "mapping_note": "Solactive calls a fixed-price offer to repurchase shares a Capital Decrease; the methodology does not use the word buyback for it.",
+      "timing": "on-event"
     },
     {
       "vendor": "solactive",
@@ -1313,6 +1541,19 @@
     },
     {
       "vendor": "vettafi",
+      "event_type": "primary-offering",
+      "index_type": "*",
+      "treatment": "Mapped from the policy's broad Share Offerings treatment: share offerings that change shares outstanding are implemented at the rebalancing. The policy does not state a >5% share-count trigger; its >5% figure belongs to weight-smoothing, not this event rule.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §4 Share Offerings, Tenders, and Share Buy-Backs; §II.5 Multi-Constraint Capped Weight Smoothing Process (pp.2,7)",
+      "confidence": "inferred",
+      "coverage": "framework-default",
+      "mapping_note": "App event secondary-offering is a defensible mapping of the policy's broad Share Offerings term; no separate secondary-offering formula is published.",
+      "timing": "at-review"
+    },
+    {
+      "vendor": "vettafi",
       "event_type": "secondary-offering",
       "index_type": "*",
       "treatment": "Mapped from the policy's broad Share Offerings treatment: share offerings that change shares outstanding are implemented at the rebalancing. The policy does not state a >5% share-count trigger; its >5% figure belongs to weight-smoothing, not this event rule.",
@@ -1321,7 +1562,8 @@
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §4 Share Offerings, Tenders, and Share Buy-Backs; §II.5 Multi-Constraint Capped Weight Smoothing Process (pp.2,7)",
       "confidence": "inferred",
       "coverage": "framework-default",
-      "mapping_note": "App event secondary-offering is a defensible mapping of the policy's broad Share Offerings term; no separate secondary-offering formula is published."
+      "mapping_note": "App event secondary-offering is a defensible mapping of the policy's broad Share Offerings term; no separate secondary-offering formula is published.",
+      "timing": "at-review"
     },
     {
       "vendor": "vettafi",
@@ -1336,6 +1578,17 @@
     },
     {
       "vendor": "vettafi",
+      "event_type": "forward-sale-agreement",
+      "caev": "OTHR",
+      "index_type": "*",
+      "treatment": null,
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §4 Share Offerings, Tenders, and Share Buy-Backs (p.2; forward sale agreements not named - a settlement that changes shares outstanding would fall under this section)",
+      "confidence": "absent"
+    },
+    {
+      "vendor": "vettafi",
       "event_type": "return-of-capital",
       "index_type": "*",
       "treatment": null,
@@ -1344,6 +1597,18 @@
       "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §8–§11 Distributions and Dividends (pp.3–4; return of capital not separately addressed)",
       "confidence": "absent",
       "coverage": "framework-default"
+    },
+    {
+      "vendor": "vettafi",
+      "event_type": "share-buyback",
+      "caev": "BIDS",
+      "index_type": "*",
+      "treatment": "Share buy-backs that change shares outstanding are implemented at the rebalancing; the policy has no intra-quarter path for them.",
+      "lead_days": null,
+      "lead_days_confidence": "absent",
+      "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf v1.1.8 (May 2026; sha256:7470738f689760f0bbd64d0ecb95b7248fdf05ba35b9c0a340e9e967be881c7a) §4 Share Offerings, Tenders, and Share Buy-Backs (p.2)",
+      "confidence": "stated",
+      "timing": "at-review"
     },
     {
       "vendor": "vettafi",
@@ -1428,6 +1693,47 @@
       "source_path": "src/data/methodologies/sources/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf",
       "scope": "General VettaFi Index Maintenance Policy; merger approach and weighting branches are index-specific. These rows do not establish universal product coverage.",
       "landmarks": "Mergers p1–2; share offerings/tenders/buybacks and rights p2; splits/dividends/reverse splits p2–3; special dividends and delisting/bankruptcy p3–4; divisor/formula table p8–9."
+    }
+  ],
+  "vendor_profiles": [
+    {
+      "vendor": "msci",
+      "review_calendar": null,
+      "uncovered_event_policy": null
+    },
+    {
+      "vendor": "sp",
+      "review_calendar": null,
+      "uncovered_event_policy": null
+    },
+    {
+      "vendor": "ftse",
+      "review_calendar": null,
+      "uncovered_event_policy": null
+    },
+    {
+      "vendor": "stoxx",
+      "review_calendar": null,
+      "uncovered_event_policy": null
+    },
+    {
+      "vendor": "morningstar",
+      "review_calendar": null,
+      "uncovered_event_policy": null
+    },
+    {
+      "vendor": "solactive",
+      "review_calendar": null,
+      "uncovered_event_policy": {
+        "treatment": "Solactive may apply discretion to decide the most appropriate implementation method for corporate actions the methodology does not describe, including actions that significantly decrease a company's market capitalisation or where a strict application would conflict with the index objective or jeopardise replicability.",
+        "source_ref": "SOURCES/solactive-equity-index-methodology-v1.20-2026-06-16.pdf v1.20 (2026-06-16; sha256:e11e20f81b211862711f0ac519604e04155ed9293294cb5fe207b3cf470db1fb) §2.1 Corporate Actions (p.12)",
+        "confidence": "stated"
+      }
+    },
+    {
+      "vendor": "vettafi",
+      "review_calendar": null,
+      "uncovered_event_policy": null
     }
   ]
 }

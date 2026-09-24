@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 import rules from "../src/data/rules.json" with { type: "json" };
 import { judge } from "../src/lib/screen-methodology.ts";
 import { buildProposedRules } from "../src/lib/ingest.ts";
+import { CANONICAL_EVENTS } from "../src/lib/event-taxonomy.ts";
 import { asRulesDocument, validateRulesDocument } from "../src/lib/rule-validation.ts";
 
 const screenedFixture = Array.from({ length: 80 }, () =>
@@ -12,14 +13,14 @@ const screenedFixture = Array.from({ length: 80 }, () =>
 const verdict = judge(screenedFixture, "vettafi");
 assert.equal(verdict.accepted, true, `screened fixture must be accepted: ${verdict.reasons.join("; ")}`);
 const proposals = buildProposedRules("vettafi", screenedFixture, "src/data/methodologies/2026-09-08/vettafi-fixture.json");
-assert.equal(proposals.length, 13, "one candidate must be proposed per canonical event type");
+assert.equal(proposals.length, CANONICAL_EVENTS.length, "one candidate must be proposed per canonical event type");
 assert.ok(proposals.some((proposal) => proposal.treatment !== null), "screened fixture should produce a treatment candidate");
 
 const absentText = Array.from({ length: 80 }, () =>
   "Solactive methodology describes corporate action index review, dividend data, constituent files, ex-date processing, adjustment factors, free float and market capitalization.",
 ).join(" ");
 const absent = buildProposedRules("solactive", absentText, "src/data/methodologies/2026-09-08/solactive-fixture.json");
-assert.equal(absent.length, 13);
+assert.equal(absent.length, CANONICAL_EVENTS.length);
 assert.ok(absent.every((proposal) => proposal.confidence === "absent" && proposal.treatment === null), "silence must remain absent, not a fabricated treatment");
 
 const approvedCandidate = proposals.find((proposal) => proposal.treatment !== null);

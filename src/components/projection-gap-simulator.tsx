@@ -119,6 +119,7 @@ const FAMILIES_NEEDING_CONTEXT: Set<CanonicalEventId> = new Set([
   "spin-off",
   "cash-dividend",
   "special-dividend",
+  "primary-offering",
   "secondary-offering",
   "private-placement",
 ]);

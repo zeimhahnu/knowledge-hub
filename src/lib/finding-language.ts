@@ -23,9 +23,12 @@ const EVENT_HEADINGS = [
   "Stock Split / Consolidation",
   "Spin-Off / Demerger",
   "Rights Issue",
+  "Primary Offering",
   "Secondary Offering",
   "Private Placement",
+  "Forward Sale Agreement",
   "Return of Capital",
+  "Share Buyback",
   "Mergers & Acquisitions",
   "Tender Offers",
   "Bankruptcy / Delisting",
@@ -139,6 +142,16 @@ function statedFinding(rule: FindingRule): LeadFinding {
       return {
         leadAnswer: "Adjustment applies on the ex-date.",
         reason: "The spin-off is handled as an index event when it becomes effective.",
+      };
+    case "primary-offering":
+      return {
+        leadAnswer: "Adjustment may apply to a primary offering.",
+        reason: "The vendor has a sourced share-change rule for this event.",
+      };
+    case "share-buyback":
+      return {
+        leadAnswer: "Adjustment applies when the buyback changes shares outstanding.",
+        reason: "The vendor has a sourced share-change rule for this event.",
       };
     case "secondary-offering":
       return {

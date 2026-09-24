@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import rules from "../src/data/rules.json" with { type: "json" };
 import { computeEntailment } from "../src/lib/vendor-entailment.ts";
-import { franklinSnapshot, resolveFundRules } from "../src/lib/fund-master.ts";
+import { franklinSnapshot, isReturnVariant, resolveFundRules } from "../src/lib/fund-master.ts";
 
 const all = rules.rules;
 const reviewed = franklinSnapshot.records.filter((r) => r.index_type && r.underlying_index && r.index_provider);
@@ -14,6 +14,8 @@ const { resolution, rows } = resolveFundRules(fund.ticker, franklinSnapshot, all
 assert.equal(resolution.mode, "fund-resolved");
 const agnostic = all.filter((r) => !r.index_type || r.index_type === "*").length;
 const specific = all.filter((r) => r.index_type === fund.index_type).length;
+// No return_variant on the record yet: every PR/TR/NTR row stays, as in 2-D.
+const variantRows = fund.return_variant ? 0 : all.filter((r) => isReturnVariant(r.index_type)).length;
 
 console.log(`fund ${fund.ticker} index_type=${fund.index_type}`);
 console.log(`  total rules ............ ${all.length}`);
@@ -21,17 +23,25 @@ console.log(`  index-agnostic ......... ${agnostic}`);
 console.log(`  specific to this fund .. ${specific}`);
 console.log(`  resolved rule set ...... ${rows.length}`);
 
-assert.equal(rows.length, agnostic + specific, "resolved set must be agnostic + specific");
+assert.equal(rows.length, agnostic + specific + variantRows, "resolved set must be agnostic + specific + return-variant rows");
 assert.ok(rows.length >= agnostic, "resolving a fund must never shrink below the agnostic set");
 assert.ok(rows.length > specific, "the old strict filter returned only the specific rules");
 console.log("  ok  resolving a fund no longer discards index-agnostic rules");
 
 // An index-specific rule for a DIFFERENT index type must still be excluded.
-const foreign = all.find((r) => r.index_type && r.index_type !== "*" && r.index_type !== fund.index_type);
+const foreign = all.find((r) => r.index_type && r.index_type !== "*" && r.index_type !== fund.index_type && !isReturnVariant(r.index_type));
 if (foreign) {
   assert.ok(!rows.some((r) => r === foreign), "rules for another index type must stay excluded");
   console.log("  ok  rules for a different index type are still withheld");
 }
+
+// A recorded return_variant keeps only that variant's rows (MSCI cash dividend: NTR, not PR/TR).
+const variantFund = { ...fund, return_variant: "net-total-return" };
+const variantScoped = resolveFundRules(fund.ticker, { ...franklinSnapshot, records: [variantFund] }, all).rows;
+const msciCash = variantScoped.filter((r) => r.vendor === "msci" && r.event_type === "cash-dividend").map((r) => r.index_type);
+assert.ok(msciCash.includes("net-total-return"), "the fund's own variant row must stay");
+assert.ok(!msciCash.includes("price-return") && !msciCash.includes("total-return"), "other variants' rows must drop");
+console.log("  ok  a recorded return_variant keeps only its own variant rows");
 
 // Per-vendor fund context must resolve contrasting index types in one lookup.
 // Keep this fixture small: the assertion is about the resolver/entailment

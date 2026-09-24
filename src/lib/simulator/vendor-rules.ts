@@ -5,7 +5,7 @@
  */
 
 import type { CanonicalEventId } from "@/lib/event-taxonomy";
-import type { VendorId } from "@/lib/vendors";
+import { VENDOR_IDS, type VendorId } from "@/lib/vendors";
 
 export type Trigger =
   | "always" // vendor publishes/adjusts unconditionally for this event
@@ -711,6 +711,32 @@ export const VENDOR_RULES: Record<CanonicalEventId, EventRuleSet> = {
       trigger: "always",
       reason: "VettaFi documents removal for delisting and bankruptcy, alternate-market pricing, and a 0.01 local-currency fallback when a security is worthless or too illiquid.",
     },
+  },
+};
+
+// ponytail: primary offerings share each vendor's offerings rule until plan-coac-1.0 G6
+// splits them, matching the inferred primary-offering rows in rules.json.
+VENDOR_RULES["primary-offering"] = VENDOR_RULES["secondary-offering"];
+
+const NOT_NAMED: VendorRule = {
+  rule: "Not named in the methodology",
+  trigger: "no-coverage",
+  reason: "The vendor's methodology does not name this event; its general discretion or rebalance policy decides.",
+};
+VENDOR_RULES["forward-sale-agreement"] = Object.fromEntries(VENDOR_IDS.map((v) => [v, NOT_NAMED]));
+VENDOR_RULES["share-buyback"] = {
+  ...VENDOR_RULES["forward-sale-agreement"],
+  solactive: {
+    rule: "Capital Decrease: fixed-price offer above prior close",
+    trigger: "completion-gate",
+    reason: "Solactive implements a fixed-price buyback offer (its Capital Decrease) only when the offer price is above the prior close; open-market buybacks are not described.",
+    citation: "Solactive Equity Index Methodology v1.20 §2.1.5 (p.23)",
+  },
+  vettafi: {
+    rule: "Implemented at the rebalancing",
+    trigger: "scheduled-review",
+    reason: "VettaFi implements buy-backs that change shares outstanding at the rebalancing, never intra-quarter.",
+    citation: "VettaFi Index Maintenance Policy v1.1.8 §4 (p.2)",
   },
 };
 
