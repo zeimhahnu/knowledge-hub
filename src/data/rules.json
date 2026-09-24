@@ -2433,6 +2433,70 @@
         "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Non-Material Share/IWF Changes—Quarterly Implementation and Rebalancing Guidelines (pp.15–16)",
         "note": "The quarterly share/IWF cycle is effective after the close of the third Friday of the third month in each calendar quarter."
       },
+      "index_calendars": [
+        {
+          "indexes": [
+            "S&P 500 Capped 35/20 Communication Services Sector Index",
+            "S&P 500 Capped 35/20 Consumer Discretionary Sector Index",
+            "S&P 500 Capped 35/20 Financials Sector Index",
+            "S&P 500 Capped 35/20 Information Technology Sector Index"
+          ],
+          "frequency": "quarterly",
+          "months": [
+            3,
+            6,
+            9,
+            12
+          ],
+          "effective": "third-friday",
+          "source_ref": "S&P 500 Capped 35/20 sector index methodologies §Index Maintenance; SOURCES/sp-equity-indices-policies-practices.pdf §Non-Material Share/IWF Changes–Quarterly Implementation (p.15) and §Rebalancing Guidelines–Share/IWF Reference Date & Freeze Period (p.16)",
+          "note": "The sector methodologies use quarterly rebalancing; S&P DJI places deferred non-material share/IWF changes after the close of the third Friday in March, June, September and December."
+        },
+        {
+          "indexes": [
+            "S&P 500 Guarded Index",
+            "S&P/TOPIX 150 Guarded Index"
+          ],
+          "frequency": "quarterly",
+          "months": [
+            3,
+            6,
+            9,
+            12
+          ],
+          "effective": "third-friday",
+          "source_ref": "SOURCES/methodology-sp-guarded-indices.pdf §Index Rebalancing; SOURCES/sp-equity-indices-policies-practices.pdf §Non-Material Share/IWF Changes–Quarterly Implementation (p.15) and §Rebalancing Guidelines–Share/IWF Reference Date & Freeze Period (p.16)",
+          "note": "The Guarded methodology specifies quarterly review/rebalancing for these two indexes; the S&P DJI quarterly share/IWF landing date is after the close of the third Friday of March, June, September and December."
+        },
+        {
+          "indexes": [
+            "S&P World Guarded Index"
+          ],
+          "frequency": "semi-annual",
+          "months": [
+            3,
+            9
+          ],
+          "effective": "third-friday",
+          "source_ref": "SOURCES/methodology-sp-guarded-indices.pdf §Index Rebalancing; Franklin S&P World Screened UCITS ETF factsheet Fund Information and Benchmark(s) and Type (p.2)",
+          "note": "The World Guarded methodology/fund benchmark disclosure specifies semi-annual reconstitution; the March and September effective dates use S&P DJI’s third-Friday implementation convention."
+        },
+        {
+          "indexes": [
+            "S&P 500 PAB ESG Index"
+          ],
+          "frequency": "quarterly",
+          "months": [
+            3,
+            6,
+            9,
+            12
+          ],
+          "effective": "third-friday",
+          "source_ref": "SOURCES/methodology-sp-pab-climate-select-indices.pdf §Index Rebalancing; SOURCES/sp-equity-indices-policies-practices.pdf §Non-Material Share/IWF Changes–Quarterly Implementation (p.15) and §Rebalancing Guidelines–Share/IWF Reference Date & Freeze Period (p.16)",
+          "note": "The PAB methodology specifies quarterly reconstitution of the S&P 500-based index; deferred non-material share/IWF changes use the S&P DJI third-Friday March/June/September/December landing dates."
+        }
+      ],
       "uncovered_event_policy": {
         "treatment": "The Index Committee may use discretion to accelerate or delay deletions, apply exceptions for market disruption or data gaps, determine notice periods and effective dates, and may choose not to recognize an event when an ineligible security cannot be valued.",
         "source_ref": "SOURCES/sp-equity-indices-policies-practices.pdf §Additions and Deletions (p.5); §Warrants, Options, Partly Paid Shares, Convertible Bonds, Contingent Value Rights, and Other Ineligible Securities & Share Types (p.12)",
