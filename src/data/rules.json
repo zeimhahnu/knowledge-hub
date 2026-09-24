@@ -2343,6 +2343,76 @@
         "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §4.4 Index Review Treatment (p.59); MSCI GIMI quarterly review calendar",
         "note": "Flagship GIMI cadence: February and August QIRs; May and November SIRs. Product-specific index methodologies can differ."
       },
+      "index_calendars": [
+        {
+          "indexes": [
+            "LibertyQ Emerging Markets Index"
+          ],
+          "frequency": "semi-annual",
+          "months": [
+            5,
+            11
+          ],
+          "effective": "last-business-day",
+          "source_ref": "MSCI LibertyQ Emerging Markets Index Methodology §3.1 (p.8); MSCI Index Calendar (SAIR effective-date convention)",
+          "note": "The index is rebalanced at the close of the last business day of May and November, coinciding with the MSCI SAIRs."
+        },
+        {
+          "indexes": [
+            "LibertyQ European Dividend Index"
+          ],
+          "frequency": "semi-annual",
+          "months": [
+            5,
+            11
+          ],
+          "effective": "last-business-day",
+          "source_ref": "MSCI LibertyQ Dividend Index Methodology, Index Review (p.8); MSCI Index Calendar (SAIR effective-date convention)",
+          "note": "The index family review is semi-annual and follows the May/November SAIR landing cycle."
+        },
+        {
+          "indexes": [
+            "LibertyQ Global Dividend Index"
+          ],
+          "frequency": "semi-annual",
+          "months": [
+            5,
+            11
+          ],
+          "effective": "last-business-day",
+          "source_ref": "MSCI LibertyQ Dividend Index Methodology, Index Review (p.8); MSCI Index Calendar (SAIR effective-date convention)",
+          "note": "The index family review is semi-annual and follows the May/November SAIR landing cycle."
+        },
+        {
+          "indexes": [
+            "MSCI China Climate Paris Aligned PAB Index",
+            "MSCI EM Climate Paris Aligned PAB Index"
+          ],
+          "frequency": "semi-annual",
+          "months": [
+            5,
+            11
+          ],
+          "effective": "last-business-day",
+          "source_ref": "MSCI Climate Paris Aligned Indexes Methodology, Index Review (p.8); MSCI Index Calendar (SAIR effective-date convention)",
+          "note": "Both targeted Climate PAB indexes use the semi-annual May/November review landing cycle; no separate quarterly share/float update is published for these indexes."
+        },
+        {
+          "indexes": [
+            "MSCI World Universal Select Catholic Principles and Low Carbon Index"
+          ],
+          "frequency": "quarterly",
+          "months": [
+            2,
+            5,
+            8,
+            11
+          ],
+          "effective": "last-business-day",
+          "source_ref": "MSCI Select Catholic Principles Universal Index Methodology §3.1 (p.7); MSCI Index Calendar (QIR/SAIR effective-date convention)",
+          "note": "The methodology says the quarterly changes are implemented at the close of the last business day of February, May, August and November."
+        }
+      ],
       "uncovered_event_policy": {
         "treatment": "For corporate events not described in the methodology, combinations of event types, and other exceptional cases, MSCI determines the most appropriate implementation method and announces it before the changes become effective.",
         "source_ref": "SOURCES/msci-corporate-events-methodology-feb-2026.pdf §1 Introduction (p.6)",
@@ -2479,6 +2549,23 @@
         "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §5.7 Index Review Lists (p.12)",
         "note": "Default implementation is after the close of the third Friday; index-specific guides may instead specify another date, commonly the next trading day at open."
       },
+      "index_calendars": [
+        {
+          "indexes": [
+            "STOXX Europe 600 PAB Index"
+          ],
+          "frequency": "quarterly",
+          "months": [
+            3,
+            6,
+            9,
+            12
+          ],
+          "effective": "third-friday",
+          "source_ref": "SOURCES/stoxx-index-methodology-guide-mar-2026.pdf §§19.2.1–19.2.2 (pp.626, 634); SOURCES/stoxx-calculation-guide-apr-2026.pdf §5.7 (p.12)",
+          "note": "The PAB guide says STOXX Europe 600 PAB follows the STOXX Europe calendar and is reviewed quarterly; the Calculation Guide defines the calendar implementation as after the close of the third Friday, with the next trading day effective."
+        }
+      ],
       "uncovered_event_policy": {
         "treatment": "For issues arising while maintaining the methodology, STOXX Committee(s) may exercise documented discretion to preserve an accurate, reliable, representative, and replicable index, considering the event, market access, available alternatives, public information, and feasibility.",
         "source_ref": "SOURCES/stoxx-calculation-guide-apr-2026.pdf §9.1 Exercise of Discretion (p.30)",
