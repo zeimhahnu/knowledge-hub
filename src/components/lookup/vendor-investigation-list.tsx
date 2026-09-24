@@ -192,12 +192,33 @@ function Citation({ source }: { source: string }) {
   );
 }
 
+/** When the change lands (M6) and what the vendor does where its methodology is silent. */
+function TimingAndPolicy({ row }: { row: MatrixRow }) {
+  return (
+    <>
+      {row.deferral && (
+        <p className="text-sm leading-relaxed text-foreground">
+          <span className="font-medium">Timing:</span> {row.deferral.finding}{" "}
+          {row.deferral.reviewSource && <Citation source={row.deferral.reviewSource} />}
+        </p>
+      )}
+      {row.uncoveredPolicy && (
+        <p className="text-sm leading-relaxed text-foreground">
+          <span className="font-medium">Where the methodology is silent:</span> {row.uncoveredPolicy.treatment}{" "}
+          <Citation source={row.uncoveredPolicy.sourceRef} />
+        </p>
+      )}
+    </>
+  );
+}
+
 function TreatmentSummary({ row }: { row: MatrixRow }) {
   if (!row.rulePresent) {
     return (
       <div className="space-y-1.5">
         <p className="text-base font-medium leading-snug text-foreground">{row.leadAnswer}</p>
         <p className="text-sm leading-relaxed text-muted-foreground">{row.leadReason}</p>
+        <TimingAndPolicy row={row} />
       </div>
     );
   }
@@ -205,6 +226,7 @@ function TreatmentSummary({ row }: { row: MatrixRow }) {
     <div className="space-y-1">
       <p className="text-base font-medium leading-snug text-foreground">{row.leadAnswer}</p>
       <p className="text-sm leading-relaxed text-muted-foreground">{row.leadReason}</p>
+      <TimingAndPolicy row={row} />
       <details className="group rounded-[4px] border border-border/70 bg-muted/20 px-3 py-2">
         <summary className="cursor-pointer list-none text-xs font-medium text-foreground outline-none focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
           <span className="underline decoration-border underline-offset-4 group-open:no-underline">Methodology wording</span>

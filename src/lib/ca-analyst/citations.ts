@@ -15,7 +15,13 @@ import type { MatrixRow } from "../lookup-verdict.ts";
  */
 export function collectCitedSources(rows: readonly MatrixRow[]): string[] {
   const seen: string[] = [];
+  const add = (source: string | null | undefined) => {
+    if (source && !seen.includes(source)) seen.push(source);
+  };
   for (const row of rows) {
+    // TimingAndPolicy renders in both branches, ahead of the wording.
+    add(row.deferral?.reviewSource);
+    add(row.uncoveredPolicy?.sourceRef);
     if (!row.rulePresent) continue;
     for (const treatment of row.treatments) {
       if (treatment.sourceRef && !seen.includes(treatment.sourceRef)) seen.push(treatment.sourceRef);

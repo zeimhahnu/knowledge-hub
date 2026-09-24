@@ -23,7 +23,9 @@ import { SurfaceSection } from "@/components/surface-section";
 import { Band } from "@/components/ui/band";
 import { DataRow } from "@/components/ui/data-row";
 import { computeDivergence, type DivergenceResult } from "@/lib/divergence";
-import { canonicalEventById } from "@/lib/event-taxonomy";
+import { canonicalEventById, eventDateLabel } from "@/lib/event-taxonomy";
+import { EventEditor } from "@/components/lookup/event-editor";
+import { classifyDividend, describeClassification, isDividendEvent } from "@/lib/dividend-check";
 import {
   computeLookupVerdict,
   caevForEventType,
@@ -31,12 +33,12 @@ import {
   getScopeVendors,
   lookupDimensions,
   deriveVendorGroups,
-  resolveCompanyName,
   setScopeVendors,
   type LookupFilters,
   type LookupVerdict,
 } from "@/lib/lookup-verdict";
 import type { NewsValidationResult } from "@/lib/news-validation";
+import { companyNameForSymbol, type SymbolSuggestion } from "@/lib/symbol-search";
 import { VENDOR_IDS, VENDOR_LABELS, type VendorId } from "@/lib/vendors";
 import { activeFranklinCatalog, franklinCatalog } from "@/lib/fund-master";
 
@@ -407,6 +409,22 @@ function qualifierLabel(key: string): string {
   return key.replaceAll("_", " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+// The yield input replaces these two raw rule keys (M4).
+const YIELD_KEYS = new Set(["dividend_size_threshold_pct", "threshold_side"]);
+// Always asked for M&A, even before a vendor's rows vary by them: the answers feed the Analyst (M5).
+const MNA_QUESTIONS: Record<string, { label: string; options: [string, string][] }> = {
+  index_membership: {
+    label: "Which party is in the index?",
+    options: [["target-only", "Target only"], ["acquirer-only", "Acquirer only"], ["both", "Both"], ["neither", "Neither"]],
+  },
+  consideration: {
+    label: "How is the deal paid?",
+    options: [["cash", "Cash only"], ["stock", "Stock only"], ["cash-and-stock", "Cash and stock"]],
+  },
+};
+const isMnaEvent = (eventType: string) => eventType === "merger" || eventType === "tender-offer";
+const selectClassName = "min-h-11 rounded-lg border border-border bg-background px-2 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50";
+
 function QualifierControls({
   ticker,
   eventType,
@@ -421,9 +439,12 @@ function QualifierControls({
   onChange: (filters: LookupFilters) => void;
 }) {
   const dimensions = useMemo(() => lookupDimensions(eventType), [eventType]);
-  const hasVariants = dimensions.indexTypes.length > 0;
-  const conditionKeys = Object.keys(dimensions.conditions);
-  if (!hasVariants && conditionKeys.length === 0) return null;
+  const conditionKeys = Object.keys(dimensions.conditions).filter((key) => !YIELD_KEYS.has(key) && !(key in MNA_QUESTIONS));
+  const dividend = isDividendEvent(eventType);
+  const mna = isMnaEvent(eventType);
+  const yieldPct = filters.dividendYieldPct;
+  const dividendChecks = dividend && yieldPct !== undefined ? classifyDividend(eventType, yieldPct) : [];
+  if (conditionKeys.length === 0 && !dividend && !mna) return null;
   const save = (next: LookupFilters) => {
     onChange(next);
     try {
@@ -439,6 +460,37 @@ function QualifierControls({
         </p>
       </div>
       <div className="flex flex-wrap gap-4">
+        {dividend && (
+          <label className="grid gap-1.5 text-sm">
+            <span className="font-medium">Dividend yield (% of share price)</span>
+            <input
+              type="number"
+              inputMode="decimal"
+              min={0}
+              step="0.01"
+              value={yieldPct ?? ""}
+              onChange={(event) => {
+                const value = event.target.valueAsNumber;
+                save({ ...filters, dividendYieldPct: Number.isFinite(value) && value >= 0 ? value : undefined });
+              }}
+              placeholder="e.g. 6.5"
+              className={`${selectClassName} w-40 px-3`}
+            />
+          </label>
+        )}
+        {mna && Object.entries(MNA_QUESTIONS).map(([key, question]) => (
+          <label key={key} className="grid gap-1.5 text-sm">
+            <span className="font-medium">{question.label}</span>
+            <select
+              value={filters.conditions?.[key] ?? ""}
+              onChange={(event) => save({ ...filters, conditions: { ...filters.conditions, [key]: event.target.value || undefined } })}
+              className={selectClassName}
+            >
+              <option value="">I don&apos;t know</option>
+              {question.options.map(([value, label]) => <option key={value} value={value}>{label}</option>)}
+            </select>
+          </label>
+        ))}
         {/* Return variant was a single page-level control, which implied one variant
             across every vendor. A fund is chosen per vendor in Fund context, and two
             vendors can track different return variants of the same fund, so one global
@@ -452,7 +504,7 @@ function QualifierControls({
             <select
               value={filters.conditions?.[key] ?? ""}
               onChange={(event) => save({ ...filters, conditions: { ...filters.conditions, [key]: event.target.value || undefined } })}
-              className="min-h-11 rounded-lg border border-border bg-background px-2 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+              className={selectClassName}
             >
               <option value="">I don&apos;t know</option>
               {dimensions.conditions[key]!.map((value) => (
@@ -464,6 +516,18 @@ function QualifierControls({
           </label>
         ))}
       </div>
+      {dividendChecks.length > 0 && yieldPct !== undefined && (
+        <ul aria-label="Dividend yield cross-check" className="space-y-1 text-sm">
+          {dividendChecks.map((check) => (
+            <li key={check.vendor} className={check.conflicts ? "font-medium text-destructive" : "text-muted-foreground"}>
+              {describeClassification(check, eventType, yieldPct)}
+            </li>
+          ))}
+        </ul>
+      )}
+      {mna && filters.conditions?.index_membership === "neither" && (
+        <p className="text-sm text-muted-foreground">Neither party is a constituent, so no index holds a line to adjust; a vendor may still add the combined company at its next review.</p>
+      )}
     </SurfaceSection>
   );
 }
@@ -544,10 +608,19 @@ export function LookupView({
     confirmationRevision,
   ]);
 
-  const company = useMemo(
-    () => companyParam ?? resolveCompanyName(ticker),
-    [companyParam, ticker],
-  );
+  // A URL without company= (a saved investigation, a pasted link) resolves the name
+  // best-effort from the same symbol search the home page uses.
+  const [resolvedCompany, setResolvedCompany] = useState<string | null>(null);
+  useEffect(() => {
+    if (companyParam) return;
+    const controller = new AbortController();
+    fetch(`/api/symbols/?q=${encodeURIComponent(ticker)}`, { signal: controller.signal })
+      .then((res) => (res.ok ? (res.json() as Promise<{ suggestions?: SymbolSuggestion[] }>) : null))
+      .then((body) => setResolvedCompany(companyNameForSymbol(body?.suggestions ?? [], ticker)))
+      .catch(() => {}); // ponytail: best-effort; the header just omits the name
+    return () => controller.abort();
+  }, [companyParam, ticker]);
+  const company = companyParam ?? resolvedCompany;
   const eventName = canonicalEventById(eventType)?.name ?? eventType;
   const caev = useMemo(() => caevForEventType(eventType), [eventType]);
   const daysOutNum = exDateParsed ? daysOut(exDateParsed, today) : null;
@@ -688,7 +761,7 @@ export function LookupView({
             )}
             <span className="inline-flex items-center gap-1.5 rounded-[4px] border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
               <CalendarDaysIcon className="h-3.5 w-3.5" aria-hidden />
-              ex-date {exDate}
+              {eventDateLabel(eventType).toLowerCase()} {exDate}
             </span>
             {daysOutNum !== null && (
               <span className="inline-flex items-center gap-1.5 rounded-[4px] border border-border bg-card px-3 py-1 text-xs font-medium text-muted-foreground">
@@ -696,6 +769,7 @@ export function LookupView({
                 {daysOutLabel(daysOutNum)}
               </span>
             )}
+            <EventEditor ticker={ticker} company={company} eventType={eventType} exDate={exDate} />
           </div>
           <div className="mt-8 grid gap-5 border-t border-border pt-5 sm:grid-cols-[auto_minmax(0,1fr)] sm:items-end sm:gap-8">
             <div>
@@ -799,7 +873,8 @@ export function LookupView({
               ticker={ticker}
               eventType={eventType}
               exDate={exDate}
-              company={company}
+              // URL value only: a late-resolved name would re-run the news search.
+              company={companyParam}
               onResult={caAnalystEnabled ? handleNewsResult : undefined}
             />
             {analystContext && <CaAnalystDock context={analystContext} />}

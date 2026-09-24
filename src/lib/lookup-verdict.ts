@@ -38,6 +38,8 @@ import {
   type SettingsStorage,
 } from "./coverage-settings.ts";
 import { VENDOR_IDS, type VendorId } from "./vendors.ts";
+import { deferralFor, uncoveredPolicyFor, type Deferral } from "./deferral.ts";
+import { classifyDividend, describeClassification } from "./dividend-check.ts";
 import { franklinSnapshot, resolveFundRules, type FundResolution, type IndexType, type VendorRule } from "./fund-master.ts";
 import {
   getVendorConfirmation,
@@ -139,17 +141,6 @@ export function presentAtVendor(
     "confirmed";
 }
 
-/**
- * Ticker → company name for the query header.
- *
- * ponytail: no ticker→name lookup is wired to this page yet; the header
- * omits the company line until one is (a separate, server-only search slice).
- */
-export function resolveCompanyName(ticker: string): string | null {
-  void ticker;
-  return null;
-}
-
 /** ISO 20022 CAEV code for an event type, from the first rule row that has
  * one (the code is a property of the event, not the vendor). */
 export function caevForEventType(eventType: string): string | null {
@@ -219,16 +210,24 @@ export function lookupDimensions(eventType: string): LookupDimensions {
 export interface LookupFilters {
   indexType?: string;
   conditions?: Record<string, string | undefined>;
+  /** Dividend as % of the share price; picks each vendor's ordinary/special branch (M4). */
+  dividendYieldPct?: number;
 }
 
 function rowMatchesFilters(rule: RuleLike, filters?: LookupFilters): boolean {
-  if (!filters?.indexType && !filters?.conditions) return true;
+  if (!filters?.indexType && !filters?.conditions && filters?.dividendYieldPct === undefined) return true;
   if (filters.indexType && rule.index_type !== "*" && rule.index_type !== filters.indexType)
     return false;
   const rowConditions = rule.conditions as Record<string, unknown> | null;
   for (const [key, selected] of Object.entries(filters.conditions ?? {})) {
     if (!selected) continue;
-    if (rowConditions && String(rowConditions[key]) !== selected) return false;
+    // A row without this key does not vary by it, so it applies to every answer.
+    if (rowConditions?.[key] !== undefined && String(rowConditions[key]) !== selected) return false;
+  }
+  const threshold = rowConditions?.dividend_size_threshold_pct;
+  if (filters.dividendYieldPct !== undefined && typeof threshold === "number") {
+    const special = filters.dividendYieldPct >= threshold;
+    if (special !== (rowConditions?.threshold_side === "at_or_above")) return false;
   }
   return true;
 }
@@ -375,6 +374,10 @@ export interface MatrixRow {
   leadReason: string;
   /** All selected rule variants, retained so the matrix cannot hide rows. */
   treatments: TreatmentVariant[];
+  /** Set when the vendor carries this change to its next review instead of the event date (M6). */
+  deferral: Deferral | null;
+  /** What the vendor does for events its methodology does not name; set only when no rule is stated. */
+  uncoveredPolicy: { treatment: string; sourceRef: string } | null;
 }
 
 export interface VerdictTotals {
@@ -479,7 +482,20 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
     const treatmentStated = selectedRules.some(
       (row) => row.treatment !== null && row.confidence !== "absent",
     );
-    const finding: LeadFinding = leadFindingForRules(
+    const policy = uncoveredPolicyFor(vendor);
+    const extras = {
+      deferral: deferralFor(vendor, selectedRules as { timing?: string; deferral_condition?: string }[], exDate),
+      // Silent means no stated row for the event at all, not rows the user's answers filtered out.
+      uncoveredPolicy: policy && !allRules.some((row) => row.treatment !== null && row.confidence !== "absent") ? { treatment: policy.treatment, sourceRef: policy.source_ref } : null,
+    };
+    const deferral = extras.deferral;
+    const dividendConflict = input.filters?.dividendYieldPct === undefined
+      ? undefined
+      : classifyDividend(eventType, input.filters.dividendYieldPct).find((check) => check.vendor === vendor && check.conflicts);
+    const finding: LeadFinding = dividendConflict ? {
+      leadAnswer: describeClassification(dividendConflict, eventType, input.filters!.dividendYieldPct!),
+      reason: "The vendor classifies by size, not by what the company calls the dividend.",
+    } : leadFindingForRules(
       selectedRules.map((selectedRule) => ({
         eventType,
         indexType: selectedRule.index_type,
@@ -509,6 +525,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         leadAnswer: finding.leadAnswer,
         leadReason: finding.reason,
         treatments,
+        ...extras,
       };
     }
 
@@ -532,6 +549,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         leadAnswer: finding.leadAnswer,
         leadReason: finding.reason,
         treatments,
+        ...extras,
       };
     }
 
@@ -561,6 +579,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
           leadAnswer: finding.leadAnswer,
           leadReason: finding.reason,
           treatments,
+          ...extras,
         };
       }
       // §11c: no number, no source, no verdict. Never feed null to coverageState.
@@ -582,11 +601,34 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         leadAnswer: finding.leadAnswer,
         leadReason: finding.reason,
         treatments,
+        ...extras,
       };
     }
 
+    if (deferral?.timing === "at-review" && !deferral.reviewDate && !present(vendor)) {
+      return {
+        vendor,
+        fundResolution: fundRules.resolution,
+        resolvedIndexType,
+        dataCoverage,
+        state: "not-assessed",
+        applicable: true,
+        assessed: false,
+        confirmation,
+        leadDays: lead.value,
+        source: lead.source,
+        treatment,
+        sourceRef,
+        rulePresent,
+        treatmentStated,
+        leadAnswer: finding.leadAnswer,
+        leadReason: finding.reason,
+        treatments,
+        ...extras,
+      };
+    }
     const state = coverageState({
-      exDate,
+      exDate: deferral?.timing === "at-review" && deferral.reviewDate ? new Date(`${deferral.reviewDate}T00:00:00Z`) : exDate,
       today,
       leadDays: lead.value,
       presentAtVendor: present(vendor),
@@ -609,6 +651,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
       leadAnswer: finding.leadAnswer,
       leadReason: finding.reason,
       treatments,
+      ...extras,
     };
   });
 

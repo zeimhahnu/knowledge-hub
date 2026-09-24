@@ -11,44 +11,17 @@ import { Field, fieldControlClassName } from "@/components/ui/field";
 import { SectionHeader } from "@/components/ui/section-header";
 import { Surface } from "@/components/ui/surface";
 import { Button } from "@/components/ui/button";
-import { CANONICAL_EVENTS } from "@/lib/event-taxonomy";
+import { SymbolTypeahead } from "@/components/home/symbol-typeahead";
+import { CANONICAL_EVENTS, eventDateLabel } from "@/lib/event-taxonomy";
+import { buildLookupUrl, isValidDate, TICKER_RE } from "@/lib/lookup-url";
 import { getStoredInvestigations, removeInvestigation, type StoredInvestigation } from "@/lib/vendor-confirmation";
 import { VENDOR_IDS } from "@/lib/vendors";
 
-const TICKER_RE = /^[A-Za-z0-9.\-^=]{1,15}$/;
-const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
-
-function isValidDate(value: string): boolean {
-  if (!DATE_RE.test(value)) return false;
-
-  const [year, month, day] = value.split("-").map(Number);
-  const date = new Date(Date.UTC(year, month - 1, day));
-
-  return (
-    date.getUTCFullYear() === year &&
-    date.getUTCMonth() === month - 1 &&
-    date.getUTCDate() === day
-  );
-}
-
-/** Returns a lookup route for an already-known corporate action. */
-export function buildLookupUrl(ticker: string, eventType: string, exDate: string): string | null {
-  const normalizedTicker = ticker.trim().toUpperCase();
-  const normalizedEventType = eventType.trim();
-  const normalizedExDate = exDate.trim();
-
-  if (!TICKER_RE.test(normalizedTicker) || !normalizedEventType || !isValidDate(normalizedExDate)) {
-    return null;
-  }
-
-  return `/lookup/${encodeURIComponent(normalizedTicker)}?eventType=${encodeURIComponent(normalizedEventType)}&exDate=${encodeURIComponent(normalizedExDate)}`;
-}
-
 function validationMessage(ticker: string, eventType: string, exDate: string): string | null {
   if (!ticker.trim()) return "Enter a ticker symbol to continue.";
-  if (!TICKER_RE.test(ticker.trim())) return "Use a valid ticker symbol (up to 15 letters, numbers, ., -, ^, or =).";
+  if (!TICKER_RE.test(ticker.trim())) return "Pick a company from the suggestions, or enter a ticker symbol (up to 15 letters, numbers, ., -, ^, or =).";
   if (!eventType) return "Choose the corporate-action type you are reconciling.";
-  if (!isValidDate(exDate)) return "Enter a valid ex-date in YYYY-MM-DD format.";
+  if (!isValidDate(exDate)) return `Enter a valid ${eventDateLabel(eventType).toLowerCase()} in YYYY-MM-DD format.`;
   return null;
 }
 
@@ -70,6 +43,7 @@ function eventLabel(eventType: string): string {
 export default function Home() {
   const router = useRouter();
   const [ticker, setTicker] = useState("");
+  const [company, setCompany] = useState<string | null>(null);
   const [eventType, setEventType] = useState("");
   const [exDate, setExDate] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -106,7 +80,7 @@ export default function Home() {
     event.preventDefault();
 
     const message = validationMessage(ticker, eventType, exDate);
-    const href = buildLookupUrl(ticker, eventType, exDate);
+    const href = buildLookupUrl(ticker, eventType, exDate, company);
     if (message || !href) {
       setError(message ?? "Check the event details and try again.");
       return;
@@ -130,19 +104,8 @@ export default function Home() {
           <Surface className="mt-8 max-w-3xl p-4 sm:p-6">
             <form onSubmit={handleSubmit} noValidate>
               <div className="grid gap-4 md:grid-cols-2">
-                <Field className="md:col-span-2" label="Ticker symbol" htmlFor="ticker" hint="Use the listed security&apos;s ticker, not its fund or index symbol.">
-                  <input
-                    id="ticker"
-                    name="ticker"
-                    type="text"
-                    value={ticker}
-                    onChange={(event) => setTicker(event.target.value.toUpperCase())}
-                    placeholder="e.g. AAPL or TESCO"
-                    autoCapitalize="characters"
-                    autoComplete="off"
-                    maxLength={15}
-                    className={fieldControlClassName("font-mono uppercase")}
-                  />
+                <Field className="md:col-span-2" label="Company or ticker" htmlFor="ticker" hint="Type a ticker or company name, then pick the listed security - not its fund or index symbol.">
+                  <SymbolTypeahead value={ticker} onChange={setTicker} onResolve={setCompany} />
                 </Field>
 
                 <Field label="Event type" htmlFor="event-type">
@@ -152,7 +115,7 @@ export default function Home() {
                   </select>
                 </Field>
 
-                <Field label="Ex-date" htmlFor="ex-date">
+                <Field label={eventDateLabel(eventType)} htmlFor="ex-date">
                   <div className="relative">
                     <input id="ex-date" name="exDate" type="date" autoComplete="off" value={exDate} onChange={(event) => setExDate(event.target.value)} className={fieldControlClassName("ca-date-control py-2")} />
                   </div>
@@ -197,12 +160,12 @@ export default function Home() {
                     className="absolute inset-0 rounded-[4px] outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     <span className="sr-only">
-                      Continue {investigation.ticker} {eventLabel(investigation.eventType)}, ex-date {investigation.exDate}
+                      Continue {investigation.ticker} {eventLabel(investigation.eventType)}, {eventDateLabel(investigation.eventType).toLowerCase()} {investigation.exDate}
                     </span>
                   </Link>
                   <div>
                     <p className="font-mono text-xs uppercase tracking-[0.14em] text-accent">{investigation.ticker}</p>
-                    <p className="mt-1 text-sm text-foreground">Ex-date {investigation.exDate}</p>
+                    <p className="mt-1 text-sm text-foreground">{eventDateLabel(investigation.eventType)} {investigation.exDate}</p>
                   </div>
                   <div>
                     <p className="font-medium text-foreground">{eventLabel(investigation.eventType)}</p>

@@ -4,6 +4,7 @@ import { Band } from "@/components/ui/band";
 import { Surface } from "@/components/ui/surface";
 import { RouteShell } from "@/components/route-shell";
 import { canonicalEventById } from "@/lib/event-taxonomy";
+import { isValidDate, TICKER_RE } from "@/lib/lookup-url";
 
 /**
  * /lookup/[ticker] — the page that ties the P0 slices together (§7a).
@@ -11,20 +12,6 @@ import { canonicalEventById } from "@/lib/event-taxonomy";
  * the (interactive, localStorage-dependent) rendering to LookupView.
  * The user supplies the event — there is no detection step (§7a step 1).
  */
-
-const TICKER_RE = /^[A-Za-z0-9.\-^=]{1,15}$/;
-const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
-
-function isValidDate(s: string): boolean {
-  if (!DATE_RE.test(s)) return false;
-  const [y, m, d] = s.split("-").map(Number);
-  const dt = new Date(Date.UTC(y, m - 1, d));
-  return (
-    dt.getUTCFullYear() === y &&
-    dt.getUTCMonth() === m - 1 &&
-    dt.getUTCDate() === d
-  );
-}
 
 type LookupPageProps = {
   params: Promise<{ ticker: string }>;

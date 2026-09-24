@@ -19,6 +19,12 @@ type YahooQuote = {
 
 type YahooSearchResponse = { quotes?: unknown };
 
+/** The company name for an exact symbol match, or null - a fuzzy hit would put the wrong issuer in the header. */
+export function companyNameForSymbol(suggestions: readonly SymbolSuggestion[], ticker: string): string | null {
+  const wanted = ticker.trim().toUpperCase();
+  return suggestions.find((suggestion) => suggestion.symbol.toUpperCase() === wanted)?.name ?? null;
+}
+
 /** Returns a trimmed query or null when it cannot be sent to Yahoo. */
 export function validateSymbolQuery(value: string): string | null {
   const query = value.trim();

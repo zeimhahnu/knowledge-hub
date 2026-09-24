@@ -2,17 +2,20 @@
 
 import { KeyboardEvent, useEffect, useId, useRef, useState } from "react";
 
+import { fieldControlClassName } from "@/components/ui/field";
 import type { SymbolSuggestion } from "@/lib/symbol-search";
 import { shouldSuppressSearch } from "./symbol-typeahead-state";
 
 type SymbolTypeaheadProps = {
   value: string;
   onChange: (value: string) => void;
+  /** The picked suggestion's company name; null again as soon as the user types. */
+  onResolve?: (companyName: string | null) => void;
 };
 
 type SearchResponse = { suggestions?: SymbolSuggestion[]; warning?: string };
 
-export function SymbolTypeahead({ value, onChange }: SymbolTypeaheadProps) {
+export function SymbolTypeahead({ value, onChange, onResolve }: SymbolTypeaheadProps) {
   const listboxId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
   const [suggestions, setSuggestions] = useState<SymbolSuggestion[]>([]);
@@ -56,6 +59,7 @@ export function SymbolTypeahead({ value, onChange }: SymbolTypeaheadProps) {
   function handleChange(nextValue: string) {
     lastSelectedSymbolRef.current = null;
     setResolvedCompanyName(null);
+    onResolve?.(null);
     onChange(nextValue);
     setSuggestions([]);
     setWarning(null);
@@ -67,6 +71,7 @@ export function SymbolTypeahead({ value, onChange }: SymbolTypeaheadProps) {
     const symbol = suggestion.symbol.toUpperCase();
     lastSelectedSymbolRef.current = symbol;
     setResolvedCompanyName(suggestion.name);
+    onResolve?.(suggestion.name);
     onChange(symbol);
     setSuggestions([]);
     setWarning(null);
@@ -106,11 +111,11 @@ export function SymbolTypeahead({ value, onChange }: SymbolTypeaheadProps) {
         onFocus={() => value.trim() && setIsOpen(true)}
         onBlur={() => window.setTimeout(() => setIsOpen(false), 150)}
         onKeyDown={handleKeyDown}
-        placeholder="e.g. AAPL or Tesco…"
+        placeholder="e.g. AAPL or Tesco"
         autoCapitalize="characters"
         autoComplete="off"
         maxLength={40}
-        className="min-h-12 w-full rounded-xl border border-border bg-background px-4 pr-52 text-base font-medium uppercase outline-none transition-colors placeholder:normal-case placeholder:text-muted-foreground focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-ring"
+        className={fieldControlClassName("font-mono uppercase pr-52 placeholder:normal-case")}
         role="combobox"
         aria-autocomplete="list"
         aria-controls={listboxId}
@@ -128,7 +133,7 @@ export function SymbolTypeahead({ value, onChange }: SymbolTypeaheadProps) {
         </span>
       )}
       {isOpen && (suggestions.length > 0 || warning) && (
-        <div className="absolute z-10 mt-2 w-full overflow-hidden rounded-xl border border-border bg-card shadow-lg">
+        <div className="absolute z-10 mt-2 w-full overflow-hidden rounded-[4px] border border-border bg-card shadow-lg">
           {suggestions.length > 0 && (
             <ul id={listboxId} role="listbox" aria-label="Ticker suggestions" className="max-h-72 overflow-y-auto p-1">
               {suggestions.map((suggestion, index) => (
@@ -137,7 +142,7 @@ export function SymbolTypeahead({ value, onChange }: SymbolTypeaheadProps) {
                     type="button"
                     onMouseDown={(event) => event.preventDefault()}
                     onClick={() => selectSuggestion(suggestion)}
-                    className={`flex min-h-11 w-full items-baseline gap-2 rounded-lg px-3 py-2 text-left text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring ${index === activeIndex ? "bg-muted" : "hover:bg-muted/70"}`}
+                    className={`flex min-h-11 w-full items-baseline gap-2 rounded-[4px] px-3 py-2 text-left text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-ring ${index === activeIndex ? "bg-muted" : "hover:bg-muted/70"}`}
                   >
                     <span className="font-semibold">{suggestion.symbol}</span>
                     <span className="min-w-0 flex-1 truncate text-muted-foreground">— {suggestion.name}</span>
