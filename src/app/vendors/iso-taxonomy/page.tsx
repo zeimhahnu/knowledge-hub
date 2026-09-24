@@ -18,14 +18,20 @@ type EventRow = {
   masterCategory: string;
   isoCAEV: string;
   swiftMT564: string;
-  msci: string;
-  spdj: string;
-  ftse: string;
-  stoxx: string;
-  solactive: string;
-  morningstar: string;
-  vettafi: string;
-};
+  sourceByVendor?: Partial<Record<VendorKey, string>>;
+} & Record<VendorKey, string>;
+
+type VendorKey = "msci" | "spdj" | "ftse" | "stoxx" | "solactive" | "morningstar" | "vettafi";
+
+const VENDOR_COLUMNS: readonly { key: VendorKey; label: string }[] = [
+  { key: "msci", label: "MSCI" },
+  { key: "spdj", label: "S&P DJI" },
+  { key: "ftse", label: "FTSE Russell" },
+  { key: "stoxx", label: "STOXX" },
+  { key: "solactive", label: "Solactive" },
+  { key: "morningstar", label: "Morningstar" },
+  { key: "vettafi", label: "VettaFi" },
+];
 
 const MASTER_TABLE: EventRow[] = [
   {
@@ -125,6 +131,27 @@ const MASTER_TABLE: EventRow[] = [
     vettafi: "M&A",
   },
   {
+    masterCategory: "Merger & Acquisition (Acquirer in Index)",
+    isoCAEV: "MRGR",
+    swiftMT564: "NEWM (Merger)",
+    msci: "Acquisitions of Listed Non-Index Constituent Securities",
+    spdj: "Acquirer acquires a private or non-index company",
+    ftse: "Constituent acquires a non-constituent",
+    stoxx: "Merger / Takeover (at least one component)",
+    solactive: "Mergers & Acquisitions",
+    morningstar: "Merger and Acquisition (no constituent-status branch)",
+    vettafi: "Between Component Stocks",
+    sourceByVendor: {
+      msci: "msci-corporate-events-methodology-feb-2026.pdf §2.3.2",
+      spdj: "sp-equity-indices-policies-practices.pdf, Mergers & Acquisitions",
+      ftse: "ftse-russell-corporate-actions-guide.pdf §§4.10–4.11",
+      stoxx: "stoxx-calculation-guide-apr-2026.pdf §8.3",
+      solactive: "solactive-equity-index-methodology-v1.20-2026-06-16.pdf §2.1.7, pp.26–27",
+      morningstar: "morningstar-corporate-action-methodology-2026.pdf, Mergers and Acquisitions pp.28–29",
+      vettafi: "vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf §2.1, pp.1–2",
+    },
+  },
+  {
     masterCategory: "Tender Offer",
     isoCAEV: "TEND",
     swiftMT564: "NEWM (Tender Offer)",
@@ -185,6 +212,90 @@ const MASTER_TABLE: EventRow[] = [
     vettafi: "IPO",
   },
   {
+    masterCategory: "Primary Offering",
+    isoCAEV: "OTHR",
+    swiftMT564: "NEWM (Other)",
+    msci: "Primary Offering",
+    spdj: "Public Offering",
+    ftse: "Primary Offering",
+    stoxx: "Share-count change from a corporate action",
+    solactive: "Corporate Action",
+    morningstar: "Public / Secondary Offering",
+    vettafi: "Share Offering",
+    sourceByVendor: {
+      msci: "msci-corporate-events-methodology-feb-2026.pdf §4.2",
+      spdj: "sp-equity-indices-policies-practices.pdf, Non-Mandatory Share and IWF Updates",
+      ftse: "ftse-russell-corporate-actions-guide.pdf §5.2",
+      stoxx: "stoxx-calculation-guide-apr-2026.pdf §8.2",
+      solactive: "solactive-equity-index-methodology-v1.20-2026-06-16.pdf §2.1, p.12",
+      morningstar: "morningstar-corporate-action-methodology-2026.pdf, Corporate Action Category p.5",
+      vettafi: "vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf §4, p.2",
+    },
+  },
+  {
+    masterCategory: "Secondary Offering / Block Sale",
+    isoCAEV: "OTHR",
+    swiftMT564: "NEWM (Other)",
+    msci: "Secondary Offering / Block Sale",
+    spdj: "Public Offering (block sale / spot secondary)",
+    ftse: "Secondary Offering",
+    stoxx: "Share-count change from a corporate action",
+    solactive: "Not separately named",
+    morningstar: "Public / Secondary Offering",
+    vettafi: "Share Offering",
+    sourceByVendor: {
+      msci: "msci-corporate-events-methodology-feb-2026.pdf §4.2",
+      spdj: "sp-equity-indices-policies-practices.pdf, Accelerated Implementation",
+      ftse: "ftse-russell-corporate-actions-guide.pdf §5.2",
+      stoxx: "stoxx-calculation-guide-apr-2026.pdf §8.2",
+      solactive: "solactive-equity-index-methodology-v1.20-2026-06-16.pdf §2.1, p.12",
+      morningstar: "morningstar-corporate-action-methodology-2026.pdf, Corporate Action Category p.5",
+      vettafi: "vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf §4, p.2",
+    },
+  },
+  {
+    masterCategory: "Private Placement",
+    isoCAEV: "OTHR",
+    swiftMT564: "NEWM (Other)",
+    msci: "Private Placement",
+    spdj: "Private Placement",
+    ftse: "Private Placement",
+    stoxx: "Not separately named",
+    solactive: "Not separately named",
+    morningstar: "Private Placement",
+    vettafi: "Share Offering",
+    sourceByVendor: {
+      msci: "msci-corporate-events-methodology-feb-2026.pdf §4.2",
+      spdj: "sp-equity-indices-policies-practices.pdf, Non-Mandatory Share and IWF Updates",
+      ftse: "ftse-russell-corporate-actions-guide.pdf §5, note 5",
+      stoxx: "stoxx-calculation-guide-apr-2026.pdf §8.2 (no dedicated term)",
+      solactive: "solactive-equity-index-methodology-v1.20-2026-06-16.pdf §2.1, p.12 (no dedicated term)",
+      morningstar: "morningstar-corporate-action-methodology-2026.pdf, Corporate Action Category p.5",
+      vettafi: "vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf §4, p.2 (no dedicated term)",
+    },
+  },
+  {
+    masterCategory: "Forward Sale Agreement",
+    isoCAEV: "OTHR",
+    swiftMT564: "NEWM (Other)",
+    msci: "Not named",
+    spdj: "Forward Sales Agreements",
+    ftse: "Not named",
+    stoxx: "Not named",
+    solactive: "Not named",
+    morningstar: "Not named",
+    vettafi: "Not named",
+    sourceByVendor: {
+      msci: "No dedicated term found in msci-corporate-events-methodology-feb-2026.pdf",
+      spdj: "sp-equity-indices-policies-practices.pdf, U.S. and Canada accelerated rules p.15",
+      ftse: "No dedicated term found in ftse-russell-corporate-actions-guide.pdf",
+      stoxx: "No dedicated term found in stoxx-calculation-guide-apr-2026.pdf",
+      solactive: "solactive-equity-index-methodology-v1.20-2026-06-16.pdf §2.1, p.12",
+      morningstar: "No dedicated term found in morningstar-corporate-action-methodology-2026.pdf",
+      vettafi: "vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf §4, p.2",
+    },
+  },
+  {
     masterCategory: "Scrip Dividend",
     isoCAEV: "DVSC",
     swiftMT564: "NEWM (Scrip Dividend)",
@@ -220,6 +331,27 @@ const MASTER_TABLE: EventRow[] = [
     morningstar: "Buyback",
     vettafi: "Buyback",
   },
+  {
+    masterCategory: "Share Buyback",
+    isoCAEV: "BIDS / SHOP",
+    swiftMT564: "NEWM (Buyback)",
+    msci: "Share Buy-backs / Progressive Open-Market Buybacks",
+    spdj: "Dutch Auction / Self-Tender Offer Buyback",
+    ftse: "Compulsory Partial Tender / Buyback",
+    stoxx: "Repurchase of Shares / Self-Tender",
+    solactive: "Capital Decrease",
+    morningstar: "Dutch Auctions / Buyback of Shares / Self-Tender Offer Buybacks",
+    vettafi: "Share Buy-Backs",
+    sourceByVendor: {
+      msci: "msci-corporate-events-methodology-feb-2026.pdf §§2.4.1–2.4.3, 2.6.2, pp.14–15, 17",
+      spdj: "sp-equity-indices-policies-practices.pdf, Non-Mandatory Share and IWF Updates p.14",
+      ftse: "ftse-russell-corporate-actions-guide.pdf §4.8, pp.11–12",
+      stoxx: "stoxx-calculation-guide-apr-2026.pdf §8.1.7, p.22",
+      solactive: "solactive-equity-index-methodology-v1.20-2026-06-16.pdf §2.1.5, p.23",
+      morningstar: "morningstar-corporate-action-methodology-2026.pdf, Nonmandatory Methodology p.37",
+      vettafi: "vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf §4, p.2",
+    },
+  },
 ];
 
 const CAEV_CODES = [
@@ -254,8 +386,6 @@ const CAEV_CODES = [
   { code: "BRUP", name: "Bankruptcy", desc: "Insolvency proceedings; OFFO is the Offeror narrative qualifier on field 70a, not an event" },
 ];
 
-const VENDORS = ["MSCI", "S&P DJI", "FTSE Russell", "STOXX", "Solactive", "Morningstar", "VettaFi"];
-
 export default function IsoTaxonomyPage() {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -266,10 +396,7 @@ export default function IsoTaxonomyPage() {
       search === "" ||
       row.masterCategory.toLowerCase().includes(search.toLowerCase()) ||
       row.isoCAEV.toLowerCase().includes(search.toLowerCase()) ||
-      VENDORS.some(
-        (v) =>
-          (row as Record<string, string>)[v.toLowerCase().replace(" ", "")]?.toLowerCase().includes(search.toLowerCase())
-      )
+      VENDOR_COLUMNS.some(({ key }) => row[key].toLowerCase().includes(search.toLowerCase()))
   );
 
   return (
@@ -374,9 +501,9 @@ export default function IsoTaxonomyPage() {
                     <th className="w-32 break-words px-2 py-2 text-left font-semibold text-muted-foreground">Event</th>
                     <th className="w-16 break-words px-1.5 py-2 text-center font-semibold text-muted-foreground">ISO CAEV</th>
                     <th className="w-24 break-words px-1.5 py-2 text-center font-semibold text-muted-foreground">SWIFT MT564</th>
-                    {VENDORS.map((v) => (
-                      <th key={v} className="break-words px-1.5 py-2 text-center font-semibold text-muted-foreground">
-                        {v}
+                    {VENDOR_COLUMNS.map(({ key, label }) => (
+                      <th key={key} className="break-words px-1.5 py-2 text-center font-semibold text-muted-foreground">
+                        {label}
                       </th>
                     ))}
                   </tr>
@@ -410,19 +537,21 @@ export default function IsoTaxonomyPage() {
                           </span>
                         </td>
                         <td className="break-words px-1.5 py-2 text-center text-[10px] text-muted-foreground">{row.swiftMT564}</td>
-                        {[
-                          row.msci, row.spdj, row.ftse, row.stoxx,
-                          row.solactive, row.morningstar, row.vettafi,
-                        ].map((val, j) => (
+                        {VENDOR_COLUMNS.map(({ key }) => (
                           <td
-                            key={j}
+                            key={key}
                             className={`break-words px-1.5 py-2 text-center text-muted-foreground ${
-                              val.includes("not separately") || val.includes("ineligible") || val.includes("handled via")
+                              row[key].toLowerCase().includes("not separately") || row[key].toLowerCase().includes("ineligible") || row[key].toLowerCase().includes("handled via") || row[key].toLowerCase() === "not named"
                                 ? "text-muted-foreground/50 italic"
                                 : ""
                             }`}
                           >
-                            {val}
+                            <div>{row[key]}</div>
+                            {row.sourceByVendor?.[key] && (
+                              <div className="mt-1 text-[9px] font-normal leading-tight text-muted-foreground/70">
+                                Source: {row.sourceByVendor[key]}
+                              </div>
+                            )}
                           </td>
                         ))}
                       </tr>
@@ -434,10 +563,7 @@ export default function IsoTaxonomyPage() {
           <div className="grid gap-2 md:hidden">
             {filtered.map((row) => {
               const isHighlighted = selectedCategory === row.masterCategory;
-              const vendors = [
-                ["MSCI", row.msci], ["S&P DJI", row.spdj], ["FTSE Russell", row.ftse],
-                ["STOXX", row.stoxx], ["Solactive", row.solactive], ["Morningstar", row.morningstar], ["VettaFi", row.vettafi],
-              ] as const;
+              const vendors = VENDOR_COLUMNS.map(({ key, label }) => [label, row[key], row.sourceByVendor?.[key]] as const);
               return (
                 <button
                   type="button"
@@ -451,10 +577,11 @@ export default function IsoTaxonomyPage() {
                   </div>
                   <p className="ca-meta mt-2 break-words">{row.swiftMT564}</p>
                   <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-2">
-                    {vendors.map(([vendor, value]) => (
+                    {vendors.map(([vendor, value, source]) => (
                       <div key={vendor} className="min-w-0 border-t border-border pt-2">
                         <p className="ca-meta">{vendor}</p>
                         <p className="mt-1 break-words text-[11px] leading-relaxed text-muted-foreground">{value}</p>
+                        {source && <p className="mt-1 break-words text-[9px] leading-tight text-muted-foreground/70">Source: {source}</p>}
                       </div>
                     ))}
                   </div>
