@@ -14,8 +14,10 @@ const { resolution, rows } = resolveFundRules(fund.ticker, franklinSnapshot, all
 assert.equal(resolution.mode, "fund-resolved");
 const agnostic = all.filter((r) => !r.index_type || r.index_type === "*").length;
 const specific = all.filter((r) => r.index_type === fund.index_type).length;
-// No return_variant on the record yet: every PR/TR/NTR row stays, as in 2-D.
-const variantRows = fund.return_variant ? 0 : all.filter((r) => isReturnVariant(r.index_type)).length;
+// Without a recorded variant every PR/TR/NTR row stays; with one, only its branch stays.
+const variantRows = fund.return_variant
+  ? all.filter((r) => r.index_type === fund.return_variant).length
+  : all.filter((r) => isReturnVariant(r.index_type)).length;
 
 console.log(`fund ${fund.ticker} index_type=${fund.index_type}`);
 console.log(`  total rules ............ ${all.length}`);

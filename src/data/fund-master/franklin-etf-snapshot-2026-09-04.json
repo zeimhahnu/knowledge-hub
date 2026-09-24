@@ -9,7 +9,7 @@
       "ticker": "FLJP",
       "name": "Franklin FTSE Japan ETF",
       "isin": null,
-      "underlying_index": "FTSE Japan Capped Index",
+      "underlying_index": "FTSE Japan RIC Capped Index",
       "index_provider": "FTSE Russell",
       "index_type": "market-cap-weighted",
       "universe": "Japanese large- and mid-capitalization stocks",
@@ -32,7 +32,9 @@
         "universe": "stated",
         "weighting": "stated",
         "reconstitution_frequency": "stated",
-        "inception_date": "absent"
+        "inception_date": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin",
@@ -40,8 +42,13 @@
       ],
       "coverage_quality": "complete",
       "notes": [
-        "The reviewed acquisition evidence did not expose ISIN or inception date reliably; those fields remain explicitly missing."
-      ]
+        "The reviewed acquisition evidence did not expose ISIN or inception date reliably; those fields remain explicitly missing.",
+        "Official benchmark definition uses FTSE Japan RIC Capped Index; corrected from FTSE Japan Capped Index.",
+        "Return variant: Benchmark line identifies NR/net total return.",
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLQS",
@@ -70,16 +77,23 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "isin": "absent",
-        "inception_date": "absent"
+        "inception_date": "absent",
+        "return_variant": "absent",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin",
-        "inception_date"
+        "inception_date",
+        "return_variant"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "Index type is classified as capped-factor because the published LibertyQ methodology combines explicit factor weights rather than a plain market-capitalization weighting."
-      ]
+        "Index type is classified as capped-factor because the published LibertyQ methodology combines explicit factor weights rather than a plain market-capitalization weighting.",
+        "Return variant: The underlying-index return presentation does not name a single allowed return series; return_variant remains null.",
+        "Index nature: factor; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": null,
+      "index_nature": "factor"
     },
     {
       "ticker": "FLCA",
@@ -132,7 +146,7 @@
       "ticker": "FLGB",
       "name": "Franklin FTSE United Kingdom ETF",
       "isin": null,
-      "underlying_index": "FTSE UK Capped Index",
+      "underlying_index": "FTSE UK RIC Capped Index",
       "index_provider": "FTSE Russell",
       "index_type": "float-adjusted-cap-weighted",
       "universe": "United Kingdom large- and mid-capitalization stocks",
@@ -158,22 +172,30 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "absent"
+        "source_as_of": "absent",
+        "return_variant": "absent",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin",
-        "source_as_of"
+        "source_as_of",
+        "return_variant"
       ],
       "coverage_quality": "partial",
       "notes": [
-        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
-      ]
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources.",
+        "Official benchmark definition uses FTSE UK RIC Capped Index; corrected from FTSE UK Capped Index.",
+        "Return variant: Benchmark(s) line does not name a single allowed return series; return_variant remains null.",
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": null,
+      "index_nature": "capped"
     },
     {
       "ticker": "FLGR",
       "name": "Franklin FTSE Germany ETF",
       "isin": null,
-      "underlying_index": "FTSE Germany Capped Index",
+      "underlying_index": "FTSE Germany RIC Capped Index",
       "index_provider": "FTSE Russell",
       "index_type": "float-adjusted-cap-weighted",
       "universe": "German large- and mid-capitalization stocks",
@@ -199,7 +221,9 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "absent"
+        "source_as_of": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin",
@@ -207,8 +231,13 @@
       ],
       "coverage_quality": "partial",
       "notes": [
-        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
-      ]
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources.",
+        "Official benchmark definition uses FTSE Germany RIC Capped Index; corrected from FTSE Germany Capped Index.",
+        "Return variant: Benchmark line identifies NR/net total return.",
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLSW",
@@ -302,7 +331,7 @@
       "ticker": "FLKR",
       "name": "Franklin FTSE South Korea ETF",
       "isin": null,
-      "underlying_index": "FTSE South Korea Capped Index",
+      "underlying_index": "FTSE South Korea RIC Capped Index",
       "index_provider": "FTSE Russell",
       "index_type": "float-adjusted-cap-weighted",
       "universe": "South Korean large- and mid-capitalization stocks",
@@ -328,7 +357,9 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "absent"
+        "source_as_of": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin",
@@ -336,14 +367,19 @@
       ],
       "coverage_quality": "partial",
       "notes": [
-        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
-      ]
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources.",
+        "Official benchmark definition uses FTSE South Korea RIC Capped Index; corrected from FTSE South Korea Capped Index.",
+        "Return variant: Benchmark line identifies NR/net total return.",
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLMX",
       "name": "Franklin FTSE Mexico ETF",
       "isin": null,
-      "underlying_index": "FTSE Mexico Capped Index",
+      "underlying_index": "FTSE Mexico RIC Capped Index",
       "index_provider": "FTSE Russell",
       "index_type": "float-adjusted-cap-weighted",
       "universe": "Mexican large- and mid-capitalization stocks",
@@ -369,7 +405,9 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "absent"
+        "source_as_of": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin",
@@ -377,8 +415,13 @@
       ],
       "coverage_quality": "partial",
       "notes": [
-        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources."
-      ]
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping. ISIN was not included because it was not reliably exposed by the reviewed primary sources.",
+        "Official benchmark definition uses FTSE Mexico RIC Capped Index; corrected from FTSE Mexico Capped Index.",
+        "Return variant: Benchmark line identifies NR/net total return.",
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLBR",
@@ -497,15 +540,21 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "isin": "absent"
+        "isin": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "The fund tracks the FTSE Developed Eurozone Index; the published factsheet labels the index reconstitution frequency semiannually."
-      ]
+        "The fund tracks the FTSE Developed Eurozone Index; the published factsheet labels the index reconstitution frequency semiannually.",
+        "Return variant: Benchmark line identifies NR/net total return.",
+        "Index nature: broad-market; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "broad-market"
     },
     {
       "ticker": "FLRU",
@@ -585,15 +634,21 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "isin": "absent"
+        "isin": "absent",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping."
-      ]
+        "The factsheet reports semiannual index reconstitution; the prospectus separately describes quarterly issuer capping.",
+        "Return variant: Benchmark line identifies NR/net total return.",
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLQL",
@@ -622,15 +677,22 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "isin": "absent"
+        "isin": "absent",
+        "return_variant": "absent",
+        "index_nature": "inferred"
       },
       "missing_fields": [
-        "isin"
+        "isin",
+        "return_variant"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "Index type is classified as capped-factor because the underlying index applies explicit multifactor selection and minimum/maximum weight constraints rather than plain market-cap weighting."
-      ]
+        "Index type is classified as capped-factor because the underlying index applies explicit multifactor selection and minimum/maximum weight constraints rather than plain market-cap weighting.",
+        "Return variant: The underlying-index return presentation does not name a single allowed return series; return_variant remains null.",
+        "Index nature: factor; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": null,
+      "index_nature": "factor"
     },
     {
       "ticker": "XUDV",
@@ -1123,15 +1185,21 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "stated"
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
-      ]
+        "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field.",
+        "Return variant: Benchmark line identifies NR/net total return.",
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLJH",
@@ -1162,15 +1230,21 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "stated"
+        "source_as_of": "stated",
+        "return_variant": "stated",
+        "index_nature": "inferred"
       },
       "missing_fields": [
         "isin"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "FLJH is not a copy of FLJP: its underlying index is the currency-hedged FTSE Japan variant. ISIN remains null because this slice does not promote an identifier without a directly reviewed source field."
-      ]
+        "FLJH is not a copy of FLJP: its underlying index is the currency-hedged FTSE Japan variant. ISIN remains null because this slice does not promote an identifier without a directly reviewed source field.",
+        "Return variant: Benchmark line identifies NR/net total return.",
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": "net-total-return",
+      "index_nature": "capped"
     },
     {
       "ticker": "FLTW",
@@ -1331,15 +1405,22 @@
         "weighting": "stated",
         "reconstitution_frequency": "stated",
         "inception_date": "stated",
-        "source_as_of": "stated"
+        "source_as_of": "stated",
+        "return_variant": "absent",
+        "index_nature": "inferred"
       },
       "missing_fields": [
-        "isin"
+        "isin",
+        "return_variant"
       ],
       "coverage_quality": "complete",
       "notes": [
-        "The explicit multifactor construction is classified as capped-factor rather than market-cap-weighted. ISIN remains null."
-      ]
+        "The explicit multifactor construction is classified as capped-factor rather than market-cap-weighted. ISIN remains null.",
+        "Return variant: The underlying-index return presentation does not name a single allowed return series; return_variant remains null.",
+        "Index nature: factor; classification follows the plan precedence and the cited benchmark methodology."
+      ],
+      "return_variant": null,
+      "index_nature": "factor"
     },
     {
       "ticker": "LVHD",
@@ -1918,16 +1999,23 @@
       "weighting": "stated",
       "reconstitution_frequency": "absent",
       "inception_date": "stated",
-      "source_as_of": "stated"
+      "source_as_of": "stated",
+      "return_variant": "absent",
+      "index_nature": "inferred"
     },
     "missing_fields": [
       "isin",
-      "reconstitution_frequency"
+      "reconstitution_frequency",
+      "return_variant"
     ],
     "coverage_quality": "complete",
     "notes": [
-      "The reviewed fund facts state market-capitalization weighting; reconstitution frequency was not explicitly exposed. ISIN remains null."
-    ]
+      "The reviewed fund facts state market-capitalization weighting; reconstitution frequency was not explicitly exposed. ISIN remains null.",
+      "Return variant: The document names price and total return methodologies but no single benchmark return series; return_variant remains null.",
+      "Index nature: broad-market; classification follows the plan precedence and the cited benchmark methodology."
+    ],
+    "return_variant": null,
+    "index_nature": "broad-market"
   },
   {
     "ticker": "FLUR",
