@@ -2681,6 +2681,22 @@
       "index_calendars": [
         {
           "indexes": [
+            "Solactive GBS Developed Markets ex North America Large & Mid Cap CAD Index",
+            "Solactive GBS Emerging Markets Large & Mid Cap CAD Index"
+          ],
+          "frequency": "quarterly",
+          "months": [
+            2,
+            5,
+            8,
+            11
+          ],
+          "effective": "first-wednesday",
+          "source_ref": "https://www.solactive.com/downloads/Guideline-Solactive-GBS-Benchmark-Series.pdf §§2.2, 4 (pp.7, 12, 16)",
+          "note": "The GBS family guideline reviews index composition on Selection Day and implements it after the close on Adjustment Day; Adjustment Day is the first Wednesday in February, May, August and November, or the following eligible rebalancing day when needed. This is the deferred share/float/IWF landing calendar for both target indexes."
+        },
+        {
+          "indexes": [
             "Solactive Global Metaverse Innovation Index"
           ],
           "frequency": "semi-annual",
