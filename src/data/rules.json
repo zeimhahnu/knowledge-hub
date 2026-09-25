@@ -2508,9 +2508,8 @@
         {
           "indexes": [
             "LibertyQ US Large Cap Equity Index",
-            "LibertyQ U.S. Large Cap Equity Index",
-            "LibertyQ U.S. Mid Cap Equity Index",
-            "LibertyQ U.S. Small Cap Equity Index"
+            "LibertyQ US Mid Cap Equity Index",
+            "LibertyQ US Small Cap Equity Index"
           ],
           "frequency": "quarterly",
           "months": [
@@ -2526,7 +2525,7 @@
             "12": "second-friday"
           },
           "source_ref": "https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/libertyq-us-equity-index-series-ground-rules.pdf §1.3, §7.1.1–§7.1.3 (pp.3, 18); https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/russell-us-indexes-construction-and-methodology.pdf §4.2.3, §9.3.1, Appendix F (pp.9, 30, 46)",
-          "note": "LibertyQ follows the Russell US process unless its own rules state otherwise (§1.3). Large Cap is reviewed quarterly, while Mid Cap and Small Cap constituents are reviewed semi-annually (§7.1.1); for deferred share/free-float changes, the parent Russell quarterly update cycle is the landing cycle: third Friday of March, fourth Friday of June, third Friday of September and second Friday of December (§9.3.1). The June/December implementation dates also follow the benchmark review dates (§7.1.3; Russell Appendix F), so this records share/float landing dates rather than the Mid/Small constituent-review cadence. The fund master currently spells the Mid/Small aliases as U.S.; CA-16 owns that spelling cleanup, so this entry uses its current exact keys without reconciliation."
+          "note": "LibertyQ follows the Russell US process unless its own rules state otherwise (§1.3). Large Cap is reviewed quarterly, while Mid Cap and Small Cap constituents are reviewed semi-annually (§7.1.1); for deferred share/free-float changes, the parent Russell quarterly update cycle is the landing cycle: third Friday of March, fourth Friday of June, third Friday of September and second Friday of December (§9.3.1). The June/December implementation dates also follow the benchmark review dates (§7.1.3; Russell Appendix F), so this records share/float landing dates rather than the Mid/Small constituent-review cadence. The fund master uses the canonical punctuation-free US spellings; this calendar remains quarterly because it is the deferred share/free-float landing calendar, not a substitute for the Mid/Small constituent-review cadence."
         },
         {
           "indexes": [
@@ -2654,7 +2653,6 @@
           "indexes": [
             "Linked Morningstar Emerging Markets Dividend Enhanced Select Index",
             "Morningstar Developed Markets ex-North America Dividend Enhanced Select Index",
-            "Morningstar U.S. Dividend Enhanced Select Index",
             "Morningstar US Dividend Enhanced Select Index"
           ],
           "frequency": "quarterly",

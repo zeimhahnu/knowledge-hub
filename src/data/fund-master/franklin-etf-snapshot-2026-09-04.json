@@ -54,7 +54,7 @@
       "ticker": "FLQS",
       "name": "Franklin U.S. Small Cap Multifactor Index ETF",
       "isin": null,
-      "underlying_index": "LibertyQ U.S. Small Cap Equity Index",
+      "underlying_index": "LibertyQ US Small Cap Equity Index",
       "index_provider": "FTSE Russell",
       "index_type": "capped-factor",
       "universe": "U.S. small-cap equities selected from the Russell 2000 Index",
@@ -669,7 +669,7 @@
       "ticker": "FLQL",
       "name": "Franklin U.S. Large Cap Multifactor Index ETF",
       "isin": null,
-      "underlying_index": "LibertyQ U.S. Large Cap Equity Index",
+      "underlying_index": "LibertyQ US Large Cap Equity Index",
       "index_provider": "FTSE Russell",
       "index_type": "capped-factor",
       "universe": "U.S. large-cap equities selected from the Russell 1000 Index",
@@ -1217,7 +1217,8 @@
       "notes": [
         "ISIN remains null because this slice does not promote an identifier without a directly reviewed source field.",
         "Return variant: Benchmark line identifies NR/net total return.",
-        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+        "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology.",
+        "Fund-level cadence evidence: Franklin FLIN factsheet, Fund Overview (p. 2), states Semiannually. This is retained as FLIN's fund-level disclosure and is not forced to match FID merely because both funds name FTSE India RIC Capped Index."
       ],
       "return_variant": "net-total-return",
       "index_nature": "capped"
@@ -1405,7 +1406,7 @@
       "ticker": "FLQM",
       "name": "Franklin U.S. Mid Cap Multifactor Index ETF",
       "isin": null,
-      "underlying_index": "LibertyQ U.S. Mid Cap Equity Index",
+      "underlying_index": "LibertyQ US Mid Cap Equity Index",
       "index_provider": "FTSE Russell",
       "index_type": "capped-factor",
       "universe": "U.S. mid-capitalization companies selected from the Russell Midcap parent index",
@@ -1529,7 +1530,7 @@
       "ticker": "UDIV",
       "name": "Franklin U.S. Core Dividend Tilt Index ETF",
       "isin": null,
-      "underlying_index": "Morningstar U.S. Dividend Enhanced Select Index",
+      "underlying_index": "Morningstar US Dividend Enhanced Select Index",
       "index_provider": "Morningstar",
       "index_type": "capped-factor",
       "universe": "U.S. large- and mid-capitalization stocks representing the top 85% of float-adjusted market capitalization of the U.S. equity market",
@@ -1565,7 +1566,7 @@
       "coverage_quality": "complete",
       "notes": [
         "The dividend-enhanced optimizer is not plain market-cap weighting; it is classified as capped-factor. ISIN remains null.",
-        "Return variant: null because the current benchmark line names the Linked Morningstar U.S. Dividend Enhanced Select Index without a single allowed return-series suffix; the historical pre-2022 linked component is not used to infer the current variant. Index nature: dividend; the optimizer targets higher dividend yield than the parent benchmark. Index type remains capped-factor."
+        "Return variant: null because the current benchmark line names the Linked Morningstar US Dividend Enhanced Select Index without a single allowed return-series suffix; the historical pre-2022 linked component is not used to infer the current variant. Index nature: dividend; the optimizer targets higher dividend yield than the parent benchmark. Index type remains capped-factor."
       ],
       "return_variant": null,
       "index_nature": "dividend"
@@ -2110,7 +2111,7 @@
       "ticker": "FLUS",
       "name": "Franklin U.S. Large Cap Multifactor Index ETF",
       "isin": null,
-      "underlying_index": "LibertyQ U.S. Large Cap Equity Index",
+      "underlying_index": "LibertyQ US Large Cap Equity Index",
       "index_provider": "FTSE Russell",
       "index_type": "capped-factor",
       "universe": "U.S. large-capitalization equity securities selected from the Russell 1000 Index",
@@ -2276,7 +2277,7 @@
       "ticker": "FMID",
       "name": "Franklin U.S. Mid Cap Multifactor Index ETF",
       "isin": null,
-      "underlying_index": "LibertyQ U.S. Mid Cap Equity Index",
+      "underlying_index": "LibertyQ US Mid Cap Equity Index",
       "index_provider": "FTSE Russell",
       "index_type": "capped-factor",
       "universe": "U.S. mid-capitalization equity securities selected from the Russell Midcap Index",
@@ -2399,7 +2400,8 @@
     "notes": [
       "The Canadian fund seeks to replicate the U.S.-listed Franklin FTSE India ETF and its FTSE India RIC Capped Index; the RIC cap is a weighting constraint, not a tax classification.",
       "Return variant: benchmark line identifies NR/net total return; recorded from the cited source.",
-      "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology."
+      "Index nature: capped; classification follows the plan precedence and the cited benchmark methodology.",
+      "Fund-level cadence evidence: Franklin's current FID product page, Fund Overview > Reconstitution Frequency (web table; no printed page), states Quarterly. The linked FID factsheet's Fund Overview (p. 3) names FTSE India Capped Index-NR but does not state a reconstitution, review, or rebalance frequency; Quarterly is retained as the product-page fund disclosure, not inferred as the shared index schedule."
     ],
     "return_variant": "net-total-return",
     "index_nature": "capped"

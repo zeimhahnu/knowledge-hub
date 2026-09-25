@@ -15,6 +15,33 @@ assert.equal(new Set(snapshot.records.map((r) => r.index_type).filter((type) => 
 // One spelling per provider: "MSCI" and "MSCI Inc." split one vendor in two on screen (2026-09-24).
 const spellings = new Map(); for (const r of snapshot.records) if (r.index_provider) { const base = r.index_provider.replace(/,?\s+(Inc\.|LLC|Ltd\.)$/, ""); assert.equal(spellings.get(base) ?? r.index_provider, r.index_provider, `two spellings of ${base}`); spellings.set(base, r.index_provider); }
 const { franklinSnapshot, resolveFundRules } = await import("../src/lib/fund-master.ts");
+const { vendorProfiles } = await import("../src/lib/deferral.ts");
+const targeted = JSON.parse(await readFile("src/data/fund-master/targeted-funds.json", "utf8"));
+const canonicalIndexes = {
+  FLQL: "LibertyQ US Large Cap Equity Index",
+  FLQM: "LibertyQ US Mid Cap Equity Index",
+  FLQS: "LibertyQ US Small Cap Equity Index",
+  FLUS: "LibertyQ US Large Cap Equity Index",
+  FMID: "LibertyQ US Mid Cap Equity Index",
+  FLXU: "LibertyQ US Large Cap Equity Index",
+  UDIV: "Morningstar US Dividend Enhanced Select Index",
+  UDVD: "Morningstar US Dividend Enhanced Select Index",
+};
+for (const [ticker, indexName] of Object.entries(canonicalIndexes)) {
+  assert.equal(franklinSnapshot.records.find((record) => record.ticker === ticker)?.underlying_index, indexName, `${ticker} runtime index spelling`);
+  assert.equal(targeted.funds.find((fund) => fund.ticker === ticker)?.index_name, indexName, `${ticker} targeted index spelling`);
+}
+const ftseCalendarNames = new Set(vendorProfiles.find((profile) => profile.vendor === "ftse").index_calendars.flatMap((calendar) => calendar.indexes));
+for (const indexName of new Set(Object.values(canonicalIndexes).filter((name) => name.startsWith("LibertyQ")))) assert(ftseCalendarNames.has(indexName), `FTSE calendar missing canonical index: ${indexName}`);
+const morningstarCalendarNames = new Set(vendorProfiles.find((profile) => profile.vendor === "morningstar").index_calendars.flatMap((calendar) => calendar.indexes));
+assert(morningstarCalendarNames.has(canonicalIndexes.UDIV), "Morningstar calendar missing canonical index");
+assert(!ftseCalendarNames.has("LibertyQ U.S. Large Cap Equity Index") && !morningstarCalendarNames.has("Morningstar U.S. Dividend Enhanced Select Index"), "legacy punctuation aliases must not return");
+const fid = franklinSnapshot.records.find((record) => record.ticker === "FID");
+const flin = franklinSnapshot.records.find((record) => record.ticker === "FLIN");
+assert.equal(fid.reconstitution_frequency, "Quarterly", "FID retains its cited fund-level cadence");
+assert.equal(flin.reconstitution_frequency, "Semiannually", "FLIN retains its cited fund-level cadence");
+assert.match(fid.notes.join(" "), /FID product page.*Quarterly.*factsheet.*p\. 3.*does not state/);
+assert.match(flin.notes.join(" "), /FLIN factsheet.*p\. 2.*Semiannually/);
 const rules = [{ vendor: "ftse", event_type: "cash-dividend", index_type: "market-cap-weighted" }];
 const resolved = resolveFundRules("fljp", franklinSnapshot, rules); assert.equal(resolved.resolution.mode, "fund-resolved"); assert.equal(resolved.resolution.indexType, "market-cap-weighted"); assert.equal(resolveFundRules(undefined, franklinSnapshot, rules).resolution.mode, "p0-compat"); assert.equal(resolveFundRules("unknown", franklinSnapshot, rules).resolution.mode, "fund-unresolved"); for (const ticker of ["INCE", "YLDE", "PGRO"]) { const active = franklinSnapshot.records.find((r) => r.ticker === ticker); assert.equal(active.index_type, "active"); assert.equal(active.underlying_index, null); assert.equal(active.index_provider, null); assert(active.missing_fields.includes("underlying_index")); assert(active.missing_fields.includes("index_provider")); assert.equal(resolveFundRules(ticker, franklinSnapshot, rules).resolution.mode, "fund-unresolved"); }
 console.log("check-fund-master: PASS (schema, provenance, dated snapshot, resolver, VettaFi exclusion, Solactive coverage)");
