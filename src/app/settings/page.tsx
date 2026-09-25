@@ -104,7 +104,7 @@ function VendorCard({
         <h2 className="ca-section-title">{label}</h2>
         <div className="flex min-w-40 flex-1 items-center gap-2 sm:max-w-xs">
           <label className="sr-only" htmlFor={`lead-${vendor}`}>
-            {label} publication publication horizon in days
+            {label} publication horizon in days
           </label>
           <input
             id={`lead-${vendor}`}
