@@ -40,7 +40,7 @@ import {
 import { VENDOR_IDS, type VendorId } from "./vendors.ts";
 import { deferralFor, uncoveredPolicyFor, type Deferral } from "./deferral.ts";
 import { classifyDividend, describeClassification } from "./dividend-check.ts";
-import { franklinSnapshot, resolveFundRules, type FundResolution, type IndexType, type VendorRule } from "./fund-master.ts";
+import { franklinSnapshot, resolveFundRules, type FundResolution, type IndexType, type ReturnVariant, type VendorRule } from "./fund-master.ts";
 import {
   getVendorConfirmation,
   type VendorConfirmation,
@@ -347,6 +347,8 @@ export interface MatrixRow {
   fundResolution: FundResolution;
   /** Null means this vendor remains at honest 2-D scope. */
   resolvedIndexType: IndexType | null;
+  /** Null means this vendor has no resolved return series; entailment keeps all variant rows. */
+  resolvedReturnVariant: ReturnVariant | null;
   /** Corpus fact: treatment stated, methodology silent, or no sourced row. */
   dataCoverage: DataCoverage;
   state: MatrixState;
@@ -459,6 +461,9 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
     const resolvedIndexType: IndexType | null = fundRules.resolution.mode === "fund-resolved"
       ? fundRules.resolution.indexType
       : null;
+    const resolvedReturnVariant: ReturnVariant | null = fundRules.resolution.mode === "fund-resolved"
+      ? fundRules.resolution.fund.return_variant ?? null
+      : null;
     const applicable =
       securityInVendorUniverse(ticker, vendor) &&
       vendorAppliesToEvent(vendor, eventType);
@@ -512,6 +517,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         vendor,
         fundResolution: fundRules.resolution,
         resolvedIndexType,
+        resolvedReturnVariant,
         dataCoverage,
         state: "not-applicable",
         applicable: false,
@@ -536,6 +542,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         vendor,
         fundResolution: fundRules.resolution,
         resolvedIndexType,
+        resolvedReturnVariant,
         dataCoverage,
         state: "not-checked",
         applicable: true,
@@ -561,6 +568,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
           vendor,
           fundResolution: fundRules.resolution,
           resolvedIndexType,
+          resolvedReturnVariant,
           dataCoverage,
           state: coverageState({
             exDate,
@@ -588,6 +596,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         vendor,
         fundResolution: fundRules.resolution,
         resolvedIndexType,
+        resolvedReturnVariant,
         dataCoverage,
         state: "not-assessed",
         applicable: true,
@@ -611,6 +620,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
         vendor,
         fundResolution: fundRules.resolution,
         resolvedIndexType,
+        resolvedReturnVariant,
         dataCoverage,
         state: "not-assessed",
         applicable: true,
@@ -638,6 +648,7 @@ export function computeLookupVerdict(input: LookupVerdictInput): LookupVerdict {
       vendor,
       fundResolution: fundRules.resolution,
       resolvedIndexType,
+      resolvedReturnVariant,
       dataCoverage,
       state,
       applicable: true,

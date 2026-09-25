@@ -29,7 +29,7 @@
 
 import curatedRules from "../data/rules.json" with { type: "json" };
 import type { VendorId } from "./vendors.ts";
-import { isReturnVariant, ruleIndexTypeMatchesFund, type IndexType } from "./fund-master.ts";
+import { isReturnVariant, ruleIndexTypeMatchesFund, type IndexType, type ReturnVariant } from "./fund-master.ts";
 
 export type EntailmentVerdict = "contradicted" | "consistent" | "indeterminate";
 export type RuleScope = "3-d" | "2-d";
@@ -77,6 +77,8 @@ export interface EntailmentInput {
   rules: readonly EntailmentRule[];
   /** Per-vendor resolved index types; null is the honest 2-D scope. */
   indexTypes?: Readonly<Record<string, IndexType | null | undefined>>;
+  /** Per-vendor resolved return variants; null keeps the deliberate all-variant fallback. */
+  returnVariants?: Readonly<Record<string, ReturnVariant | null | undefined>>;
   /** Backwards-compatible page-level value for callers that have one fund. */
   indexType?: IndexType | null;
 }
@@ -109,13 +111,15 @@ function admissibleRules(
   rules: readonly EntailmentRule[],
   eventType: string,
   indexType: IndexType | null | undefined,
+  returnVariant: ReturnVariant | null | undefined,
 ): EntailmentRule[] {
   return rules.filter((rule) => {
     if (rule.event_type !== eventType) return false;
     const scope = rule.index_type;
     if (!scope || scope === "*") return true;
-    // ponytail: one row per vendor is compared, so PR/TR/NTR rows stay out until the fund's return_variant is passed in.
-    if (isReturnVariant(scope)) return false;
+    // A resolved fund with no recorded variant keeps every variant row; an
+    // unresolved 2-D lookup still admits only index-agnostic rules.
+    if (isReturnVariant(scope)) return indexType != null && (returnVariant == null || scope === returnVariant);
     return indexType != null && ruleIndexTypeMatchesFund(scope, indexType);
   });
 }
@@ -152,12 +156,19 @@ export function computeEntailment(input: EntailmentInput): VendorEntailment[] {
     }
     return input.indexType ?? null;
   };
+  const returnVariantFor = (vendor: string): ReturnVariant | null => {
+    if (input.returnVariants && Object.prototype.hasOwnProperty.call(input.returnVariants, vendor)) {
+      return input.returnVariants[vendor] ?? null;
+    }
+    return null;
+  };
   const ruleFor = (vendor: string) =>
-    admissibleRules(rules, eventType, indexTypeFor(vendor)).find((r) => r.vendor === vendor);
+    admissibleRules(rules, eventType, indexTypeFor(vendor), returnVariantFor(vendor)).find((r) => r.vendor === vendor);
   const comparable = (subjectVendor: string, peerVendor: string): boolean => {
     // Cross-vendor inference is valid only inside the same resolved scope.
     // An unresolved 2-D row must not borrow a resolved 3-D rule either.
-    return indexTypeFor(subjectVendor) === indexTypeFor(peerVendor);
+    return indexTypeFor(subjectVendor) === indexTypeFor(peerVendor) &&
+      returnVariantFor(subjectVendor) === returnVariantFor(peerVendor);
   };
 
   return absent.map((vendor): VendorEntailment => {

@@ -45,6 +45,54 @@ assert.ok(msciCash.includes("net-total-return"), "the fund's own variant row mus
 assert.ok(!msciCash.includes("price-return") && !msciCash.includes("total-return"), "other variants' rows must drop");
 console.log("  ok  a recorded return_variant keeps only its own variant rows");
 
+// Entailment must use the same per-vendor return-variant context as the lookup.
+// These rows deliberately share the event but differ only by return series.
+const variantEntailmentRules = [
+  { vendor: "msci", event_type: "cash-dividend", index_type: "net-total-return", treatment: "MSCI NTR", source_ref: "fixture:msci:ntr" },
+  { vendor: "msci", event_type: "cash-dividend", index_type: "price-return", treatment: "MSCI PR", source_ref: "fixture:msci:pr" },
+  { vendor: "msci", event_type: "cash-dividend", index_type: "total-return", treatment: "MSCI TR", source_ref: "fixture:msci:tr" },
+  { vendor: "morningstar", event_type: "cash-dividend", index_type: "net-total-return", treatment: "Morningstar NTR", source_ref: "fixture:morningstar:ntr" },
+];
+const ntrContext = {
+  msci: fund.index_type,
+  morningstar: fund.index_type,
+};
+const ntrVariants = { msci: "net-total-return", morningstar: "net-total-return" };
+const matchingNtr = computeEntailment({
+  eventType: "cash-dividend",
+  absent: ["msci"],
+  confirmed: ["morningstar"],
+  rules: variantEntailmentRules,
+  indexTypes: ntrContext,
+  returnVariants: ntrVariants,
+});
+assert.equal(matchingNtr[0].verdict, "contradicted", "matching NTR rows must participate in entailment");
+assert.deepEqual(matchingNtr[0].drivers, ["morningstar"]);
+console.log("  ok  matching NTR rows participate in entailment");
+
+const withoutMsciNtr = variantEntailmentRules.filter((rule) => !(rule.vendor === "msci" && rule.index_type === "net-total-return"));
+const nonMatchingNtr = computeEntailment({
+  eventType: "cash-dividend",
+  absent: ["msci"],
+  confirmed: ["morningstar"],
+  rules: withoutMsciNtr,
+  indexTypes: ntrContext,
+  returnVariants: ntrVariants,
+});
+assert.equal(nonMatchingNtr[0].verdict, "indeterminate", "PR/TR rows must not judge an NTR fund");
+console.log("  ok  PR/TR rows do not participate for an NTR fund");
+
+const unresolvedVariant = computeEntailment({
+  eventType: "cash-dividend",
+  absent: ["msci"],
+  confirmed: ["morningstar"],
+  rules: variantEntailmentRules,
+  indexTypes: ntrContext,
+  returnVariants: { msci: null, morningstar: null },
+});
+assert.equal(unresolvedVariant[0].verdict, "contradicted", "a null return variant must keep the deliberate variant-row fallback");
+console.log("  ok  null return_variant keeps the deliberate all-variant fallback");
+
 // Per-vendor fund context must resolve contrasting index types in one lookup.
 // Keep this fixture small: the assertion is about the resolver/entailment
 // contract, not about whichever event currently has enough curated rows.

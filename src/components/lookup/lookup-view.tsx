@@ -636,6 +636,9 @@ export function LookupView({
             indexTypes: Object.fromEntries(
               [...groups.supplied, ...groups.expectedAbsent].map((row) => [row.vendor, row.resolvedIndexType]),
             ),
+            returnVariants: Object.fromEntries(
+              [...groups.supplied, ...groups.expectedAbsent].map((row) => [row.vendor, row.resolvedReturnVariant]),
+            ),
           })
         : [],
     [groups, eventType],
