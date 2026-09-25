@@ -2731,6 +2731,7 @@
         "source_ref": "VENDORS/vettafi.md §Rebalancing Schedule; SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf §I Index Maintenance (p.1)",
         "note": "Flagship quarterly reconstitution/rebalance occurs on the third Friday of the last month of each calendar quarter; individual index rulebooks can vary."
       },
+      "index_calendars": [],
       "uncovered_event_policy": {
         "treatment": "The policy names its covered maintenance categories but does not specify a treatment for an event outside them; it expressly reserves Committee expert judgment for extreme financial distress and allows retention after a bankruptcy review.",
         "source_ref": "SOURCES/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf §I Index Maintenance and §§12.2–12.3 (pp.1, 4)",
