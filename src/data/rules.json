@@ -2626,6 +2626,26 @@
     {
       "vendor": "morningstar",
       "review_calendar": null,
+      "index_calendars": [
+        {
+          "indexes": [
+            "Linked Morningstar Emerging Markets Dividend Enhanced Select Index",
+            "Morningstar Developed Markets ex-North America Dividend Enhanced Select Index",
+            "Morningstar U.S. Dividend Enhanced Select Index",
+            "Morningstar US Dividend Enhanced Select Index"
+          ],
+          "frequency": "quarterly",
+          "months": [
+            3,
+            6,
+            9,
+            12
+          ],
+          "effective": "third-friday",
+          "source_ref": "https://indexes.morningstar.com/api/docs/685d6f91464188bb0d601139 Construction Rules for the Morningstar Dividend Enhanced Select Indexes §Reconstitution and Rebalancing (p.7)",
+          "note": "The source covers all four Dividend Enhanced Select indexes: reconstitutions and rebalances are quarterly on the third Friday of March, June, September and December; adjustments are implemented after Friday close and reflected the following Monday."
+        }
+      ],
       "uncovered_event_policy": {
         "treatment": "Morningstar seeks to apply the stated method, but the relevant Index Methodology Committee may adopt an alternative approach for market, supervisory, legal, financial, or tax reasons and reports nonstandard processing to the Index Oversight Committee.",
         "source_ref": "SOURCES/morningstar-corporate-action-methodology-2026.pdf §Exceptions (p.41)",
