@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
  * Proves the selected ingest store can persist and read two documents without
- * collision, and that the filesystem backend fails clearly on a read-only mount.
+ * collision, and that the filesystem backend fails clearly on an unavailable root.
  */
 import assert from "node:assert/strict";
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 
@@ -94,6 +94,10 @@ try {
   assert.notEqual(localFirst.proposalPath, localSecond.proposalPath, "local documents must use different keys");
   assert.equal((await listProposalFiles(rootDir)).length, 2, "both local documents must remain readable");
 
+  // Use a regular file as the configured root so the failure is portable: unlike
+  // /sys, this setup is available on both Linux and Windows.
+  const unavailableRoot = path.join(rootDir, "not-a-directory");
+  await writeFile(unavailableRoot, "filesystem root blocker");
   await assert.rejects(
     persistIngestedDocument({
       vendor: "vettafi",
@@ -102,13 +106,13 @@ try {
       text: "VettaFi methodology corporate action adjustment.",
       pageCount: 1,
       retrievedAt: new Date("2026-09-09T00:00:00.000Z"),
-      rootDir: "/sys",
+      rootDir: unavailableRoot,
     }),
     (error) => error instanceof StorageUnavailableError && error.code === "STORAGE_UNAVAILABLE",
-    "a read-only filesystem must fail as storage unavailable",
+    "an unavailable filesystem root must fail as storage unavailable",
   );
 
-  console.log("OK — selected Blob and filesystem backends round-trip two documents, preserve both keys, and reject read-only filesystem writes");
+  console.log("OK — selected Blob and filesystem backends round-trip two documents, preserve both keys, and reject unavailable filesystem roots");
 } finally {
   if (originalStorage === undefined) delete process.env.INGEST_STORAGE;
   else process.env.INGEST_STORAGE = originalStorage;
