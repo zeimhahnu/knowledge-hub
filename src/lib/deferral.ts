@@ -12,6 +12,8 @@ export type ReviewCalendar = {
   months: number[];
   /** "<first|second|third|fourth|last>-<weekday|business-day>", e.g. third-friday, last-business-day. */
   effective: string;
+  /** Optional mixed-month form; when present it replaces `effective` for every listed month. */
+  effective_by_month?: Record<string, string>;
   source_ref: string;
   note?: string;
 };
@@ -59,6 +61,41 @@ const isWeekend = (date: Date): boolean => date.getUTCDay() === 0 || date.getUTC
 
 const ORDINALS = ["first", "second", "third", "fourth"];
 const WEEKDAYS = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+const EFFECTIVE_DAY = /^(first|second|third|fourth|last)-(monday|tuesday|wednesday|thursday|friday|business-day)$/;
+
+/** Validate the cross-property calendar rules the JSON Schema cannot express. */
+export function validateReviewCalendar(calendar: ReviewCalendar): void {
+  if (!calendar || !Array.isArray(calendar.months) || calendar.months.length === 0
+    || calendar.months.some((month) => !Number.isInteger(month) || month < 1 || month > 12)
+    || new Set(calendar.months).size !== calendar.months.length) {
+    throw new RangeError("review calendar months must be unique integers from 1 to 12");
+  }
+
+  const hasEffective = Object.prototype.hasOwnProperty.call(calendar, "effective");
+  const hasEffectiveByMonth = Object.prototype.hasOwnProperty.call(calendar, "effective_by_month");
+  if (hasEffective === hasEffectiveByMonth) {
+    throw new RangeError("review calendar must define exactly one of effective or effective_by_month");
+  }
+  if (hasEffective && (typeof calendar.effective !== "string" || !EFFECTIVE_DAY.test(calendar.effective))) {
+    throw new RangeError(`unknown review day "${calendar.effective}"`);
+  }
+  if (!hasEffectiveByMonth) return;
+
+  const rules = calendar.effective_by_month;
+  if (!rules || typeof rules !== "object" || Array.isArray(rules)) {
+    throw new RangeError("effective_by_month must be an object");
+  }
+  const expected = new Set(calendar.months.map(String));
+  const actual = new Set(Object.keys(rules));
+  if (actual.size !== expected.size || [...actual].some((month) => !expected.has(month))) {
+    throw new RangeError("effective_by_month must cover precisely the calendar months");
+  }
+  for (const [month, rule] of Object.entries(rules)) {
+    if (!/^(?:[1-9]|1[0-2])$/.test(month) || !EFFECTIVE_DAY.test(rule)) {
+      throw new RangeError(`unknown review day "${rule}" for month ${month}`);
+    }
+  }
+}
 
 /** The day `rule` names in a month: the nth (or last) weekday or business day. */
 function effectiveDay(year: number, month: number, rule: string): Date {
@@ -81,10 +118,12 @@ function effectiveDay(year: number, month: number, rule: string): Date {
  * ponytail: weekends only - an exchange holiday moves a real review by a day; add a holiday table if that matters.
  */
 export function nextReviewDate(calendar: ReviewCalendar, from: Date): Date {
+  validateReviewCalendar(calendar);
   const months = [...calendar.months].sort((a, b) => a - b);
   for (let year = from.getUTCFullYear(); year <= from.getUTCFullYear() + 1; year += 1) {
     for (const month of months) {
-      const date = effectiveDay(year, month, calendar.effective);
+      const rule = calendar.effective_by_month?.[String(month)] ?? calendar.effective;
+      const date = effectiveDay(year, month, rule);
       if (date > from) return date;
     }
   }

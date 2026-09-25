@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { nextReviewDate, deferralFor, vendorProfiles } from "../src/lib/deferral.ts";
+import { nextReviewDate, deferralFor, validateReviewCalendar, vendorProfiles } from "../src/lib/deferral.ts";
 import { franklinSnapshot } from "../src/lib/fund-master.ts";
 import { PROVIDER_VENDOR } from "../src/lib/vendors.ts";
 import { classifyDividend } from "../src/lib/dividend-check.ts";
@@ -9,6 +9,11 @@ import { setVendorDefault } from "../src/lib/coverage-settings.ts";
 const day = (iso) => new Date(`${iso}T00:00:00Z`);
 const ymd = (date) => date.toISOString().slice(0, 10);
 const quarterly = (effective) => ({ frequency: "quarterly", months: [3, 6, 9, 12], effective, source_ref: "test" });
+const mixed = {
+  frequency: "quarterly", months: [3, 6, 9, 12],
+  effective_by_month: { "3": "third-friday", "6": "fourth-friday", "9": "third-friday", "12": "last-business-day" },
+  source_ref: "test",
+};
 
 // Review calendar arithmetic.
 assert.equal(ymd(nextReviewDate(quarterly("third-friday"), day("2026-10-01"))), "2026-12-18");
@@ -23,7 +28,15 @@ assert.equal(ymd(nextReviewDate(inMonth("first-wednesday", 3), day("2026-01-01")
 assert.equal(ymd(nextReviewDate(inMonth("second-business-day", 3), day("2026-01-01"))), "2026-03-03");
 assert.equal(ymd(nextReviewDate(inMonth("last-friday", 7), day("2026-01-01"))), "2026-07-31");
 assert.throws(() => nextReviewDate(inMonth("third-fryday", 3), day("2026-01-01")), /unknown review day/);
-console.log("  ok  nextReviewDate: third Friday, nth weekday, nth and last business day, year roll");
+assert.equal(ymd(nextReviewDate(mixed, day("2026-01-01"))), "2026-03-20", "mixed calendar uses March rule");
+assert.equal(ymd(nextReviewDate(mixed, day("2026-03-20"))), "2026-06-26", "mixed calendar uses June rule");
+assert.equal(ymd(nextReviewDate(mixed, day("2026-06-26"))), "2026-09-18", "mixed calendar uses September rule");
+assert.equal(ymd(nextReviewDate(mixed, day("2026-09-18"))), "2026-12-31", "mixed calendar uses December rule");
+assert.throws(() => validateReviewCalendar({ ...mixed, effective: "third-friday" }), /exactly one/);
+assert.throws(() => validateReviewCalendar({ ...mixed, effective_by_month: Object.fromEntries(Object.entries(mixed.effective_by_month).filter(([month]) => month !== "6")) }), /cover precisely/);
+assert.throws(() => validateReviewCalendar({ ...mixed, effective_by_month: { ...mixed.effective_by_month, "2": "third-friday" } }), /cover precisely/);
+assert.throws(() => validateReviewCalendar({ ...mixed, effective_by_month: { ...mixed.effective_by_month, "6": "third-fryday" } }), /unknown review day/);
+console.log("  ok  nextReviewDate: single-effective compatibility, mixed-month rules, year roll, invalid-shape rejection");
 
 // Every calendar in rules.json must compute, and a per-index one must name an index
 // the fund master carries under that vendor - a typo would silently fall back.
