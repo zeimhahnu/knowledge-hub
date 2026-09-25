@@ -11,7 +11,7 @@ export type ReviewCalendar = {
   frequency: string;
   months: number[];
   /** "<first|second|third|fourth|last>-<weekday|business-day>", e.g. third-friday, last-business-day. */
-  effective: string;
+  effective?: string;
   /** Optional mixed-month form; when present it replaces `effective` for every listed month. */
   effective_by_month?: Record<string, string>;
   source_ref: string;
@@ -123,6 +123,7 @@ export function nextReviewDate(calendar: ReviewCalendar, from: Date): Date {
   for (let year = from.getUTCFullYear(); year <= from.getUTCFullYear() + 1; year += 1) {
     for (const month of months) {
       const rule = calendar.effective_by_month?.[String(month)] ?? calendar.effective;
+      if (!rule) throw new RangeError(`review calendar has no rule for month ${month}`);
       const date = effectiveDay(year, month, rule);
       if (date > from) return date;
     }

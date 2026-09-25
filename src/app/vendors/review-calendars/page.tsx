@@ -19,9 +19,16 @@ export const revalidate = 86400;
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
+function formatEffectiveDay(effective: string | undefined): string {
+  if (!effective) return "Unspecified day";
+  return effective.replace("-", " ").replace(/(monday|tuesday|wednesday|thursday|friday)/, (d) => d[0].toUpperCase() + d.slice(1));
+}
+
 function schedule(calendar: ReviewCalendar): string {
-  const day = calendar.effective.replace("-", " ").replace(/(monday|tuesday|wednesday|thursday|friday)/, (d) => d[0].toUpperCase() + d.slice(1));
   const months = [...calendar.months].sort((a, b) => a - b).map((m) => MONTHS[m - 1]).join(", ");
+  const day = calendar.effective_by_month
+    ? [...calendar.months].sort((a, b) => a - b).map((month) => `${MONTHS[month - 1]}: ${formatEffectiveDay(calendar.effective_by_month?.[String(month)])}`).join(", ")
+    : formatEffectiveDay(calendar.effective);
   return `${calendar.frequency[0].toUpperCase()}${calendar.frequency.slice(1)} · ${months} · ${day}`;
 }
 
