@@ -2768,7 +2768,36 @@
         "source_ref": "VENDORS/vettafi.md §Rebalancing Schedule; src/data/methodologies/sources/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf §I Index Maintenance (p.1)",
         "note": "Flagship quarterly reconstitution/rebalance occurs on the third Friday of the last month of each calendar quarter; individual index rulebooks can vary."
       },
-      "index_calendars": [],
+      "index_calendars": [
+        {
+          "indexes": [
+            "VettaFi New Frontier International Dividend Select Index"
+          ],
+          "frequency": "semi-annual",
+          "months": [
+            3,
+            9
+          ],
+          "effective": "third-friday",
+          "source_ref": "https://index-docs.vettafi.com/Documents/910535de-4c8a-4d36-934f-9e7d16e1c9d2/VettaFi%20New%20Frontier%20Dividend%20Select%20Indexes.pdf §Dates, §Index Maintenance (pp.3, 5)",
+          "note": "The methodology sets the International reconstitution/rebalance on the third Friday after close in March and September; changes related to rebalances are as of the Rebalance Date and share weights are computed as of the Weight Date."
+        },
+        {
+          "indexes": [
+            "VettaFi New Frontier U.S. Dividend Select Index"
+          ],
+          "frequency": "quarterly",
+          "months": [
+            3,
+            6,
+            9,
+            12
+          ],
+          "effective": "third-friday",
+          "source_ref": "https://index-docs.vettafi.com/Documents/910535de-4c8a-4d36-934f-9e7d16e1c9d2/VettaFi%20New%20Frontier%20Dividend%20Select%20Indexes.pdf §Dates, §Index Maintenance (pp.3, 5)",
+          "note": "The methodology sets the U.S. reconstitution/rebalance quarterly after close on the third Friday of the calendar quarter; changes related to rebalances are as of the Rebalance Date and share weights are computed as of the Weight Date."
+        }
+      ],
       "uncovered_event_policy": {
         "treatment": "The policy names its covered maintenance categories but does not specify a treatment for an event outside them; it expressly reserves Committee expert judgment for extreme financial distress and allows retention after a bankruptcy review.",
         "source_ref": "src/data/methodologies/sources/vettafi-index-maintenance-policy-v1.1.8-2026-05.pdf §I Index Maintenance and §§12.2–12.3 (pp.1, 4)",
