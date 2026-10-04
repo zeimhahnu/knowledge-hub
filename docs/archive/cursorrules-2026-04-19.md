@@ -1,3 +1,12 @@
+> **ARCHIVED — 2026-10-03.** This was the repository's `.cursorrules`
+> (`alwaysApply: true`) until it was retired as part of FL-82. It is kept here
+> verbatim as a historical record only and is no longer applied to any agent.
+>
+> Do not follow it. Current rules live in [`AGENTS.md`](../../AGENTS.md), which
+> replaces this file. The Cursor developer role, the Telegram spec-handoff loop,
+> main-only branching, and the blanket glassmorphism/bento mandates it prescribed
+> described a workflow that no longer exists.
+
 ---
 description: 
 alwaysApply: true
